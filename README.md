@@ -1,40 +1,51 @@
-### Frappe Intelligence
+# Frappe Intelligence
 
-An AI agent integrated with any frappe custom app
+A scoped AI workflow agent for Frappe. Not a general chatbot — it guides users through ordered business workflows, enforces topic scope before spending any LLM tokens, and works identically on desk, portal, and WhatsApp.
 
-### Installation
+**Three modes in one widget:**
+- **Ask** — free-form chat with RAG, tool use, and streaming
+- **Agent** — multi-step guided workflows with scope enforcement
+- **Document** — async OCR + LLM extraction pipeline with confidence review
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
-
-```bash
-cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch version-16
-bench install-app frappe_intelligence
-```
-
-### Contributing
-
-This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
+## Quick Install
 
 ```bash
-cd apps/frappe_intelligence
-pre-commit install
+bench get-app frappe_intelligence
+bench --site <site> install-app frappe_intelligence
+sudo apt install -y libgl1 libglib2.0-0 ffmpeg   # self-hosted only
+bench --site <site> migrate
+bench build --app frappe_intelligence
 ```
 
-Pre-commit is configured to use the following tools for checking and formatting your code:
+Then open **Frappe desk → Intelligence → AI Settings** to configure the AI provider.
 
-- ruff
-- eslint
-- prettier
-- pyupgrade
-### CI
+## Bench Commands
 
-This app can use GitHub Actions for CI. The following workflows are configured:
+| Command | What it does |
+|---------|--------------|
+| `bench fi-setup-ollama` | Install Ollama binary, start service, pull default model |
+| `bench fi-setup-ollama --model <model>` | Pull a specific model |
+| `bench fi-setup-ollama --skip-install` | Skip binary install, just pull the model |
+| `bench fi-check-deps` | Print status of all Python packages, ffmpeg, Ollama |
 
-- CI: Installs this app and runs unit tests on every push to `develop` branch.
-- Linters: Runs [Frappe Semgrep Rules](https://github.com/frappe/semgrep-rules) and [pip-audit](https://pypi.org/project/pip-audit/) on every pull request.
+## Documentation
 
+| Document | What it covers |
+|----------|---------------|
+| [ARCHITECTURE.md](frappe_intelligence/docs/ARCHITECTURE.md) | System layers, data flows, DocType map |
+| [CONFIGURATION.md](frappe_intelligence/docs/CONFIGURATION.md) | AI Settings: providers, chat, WhatsApp, widget |
+| [WORKFLOWS.md](frappe_intelligence/docs/WORKFLOWS.md) | Building workflows: steps, scope, knowledge packs, post-processors |
+| [DOCUMENT_PIPELINE.md](frappe_intelligence/docs/DOCUMENT_PIPELINE.md) | Document templates, extraction rules, training |
+| [INTEGRATION.md](frappe_intelligence/docs/INTEGRATION.md) | Adding the app to another Frappe app |
+| [API_REFERENCE.md](frappe_intelligence/docs/API_REFERENCE.md) | All whitelisted endpoints |
+| [WIDGET_GUIDE.md](frappe_intelligence/docs/WIDGET_GUIDE.md) | Widget user guide |
+| [DEPLOYMENT.md](frappe_intelligence/docs/DEPLOYMENT.md) | Self-hosted and Frappe Cloud setup |
 
-### License
+## Requirements
 
-mit
+- Frappe v15 / v16, Python 3.10+
+- One of: Ollama server (local), or Anthropic API key (cloud)
+
+## License
+
+MIT

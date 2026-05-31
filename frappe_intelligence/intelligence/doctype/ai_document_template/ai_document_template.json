@@ -1,0 +1,107 @@
+{
+    "actions": [],
+    "allow_import": 1,
+    "allow_rename": 1,
+    "autoname": "field:document_type_key",
+    "creation": "2026-05-15 00:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "document_name",
+        "document_type_key",
+        "column_break_1",
+        "model_preference",
+        "is_active",
+        "section_break_2",
+        "detection_keywords",
+        "section_break_3",
+        "extraction_rules"
+    ],
+    "fields": [
+        {
+            "fieldname": "document_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Document Name",
+            "reqd": 1,
+            "translatable": 1
+        },
+        {
+            "fieldname": "document_type_key",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Document Type Key",
+            "reqd": 1,
+            "unique": 1,
+            "description": "Unique slug identifier, e.g. national_address or commercial_register."
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "model_preference",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Model Preference",
+            "options": "Heuristic\nVLM\nBoth",
+            "default": "Heuristic"
+        },
+        {
+            "fieldname": "is_active",
+            "fieldtype": "Check",
+            "label": "Is Active",
+            "default": "1"
+        },
+        {
+            "fieldname": "section_break_2",
+            "fieldtype": "Section Break",
+            "label": "Classification"
+        },
+        {
+            "fieldname": "detection_keywords",
+            "fieldtype": "Text",
+            "label": "Detection Keywords",
+            "description": "Comma-separated keywords used to classify an incoming document to this template."
+        },
+        {
+            "fieldname": "section_break_3",
+            "fieldtype": "Section Break",
+            "label": "Extraction Rules"
+        },
+        {
+            "fieldname": "extraction_rules",
+            "fieldtype": "Table",
+            "label": "Extraction Rules",
+            "options": "AI Extraction Rule"
+        }
+    ],
+    "grid_page_length": 50,
+    "links": [],
+    "modified": "2026-05-15 00:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Intelligence",
+    "name": "AI Document Template",
+    "naming_rule": "By fieldname",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "import": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "creation",
+    "sort_order": "ASC",
+    "states": [],
+    "track_changes": 1
+}

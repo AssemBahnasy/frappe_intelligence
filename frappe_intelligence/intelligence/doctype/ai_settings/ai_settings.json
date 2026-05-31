@@ -1,0 +1,388 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-05-15 21:06:53.542723",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "model_tab",
+  "provider_section",
+  "ai_provider",
+  "enable_ollama_fallback",
+  "claude_section",
+  "claude_api_key",
+  "column_break_claude",
+  "claude_model",
+  "gemini_section",
+  "gemini_api_key",
+  "column_break_gemini",
+  "gemini_model",
+  "ollama_section",
+  "ollama_base_url",
+  "ollama_model",
+  "column_break_ollama",
+  "ollama_timeout",
+  "chat_tab",
+  "chat_section",
+  "system_prompt",
+  "response_language",
+  "column_break_vynl",
+  "voice_language",
+  "extraction_section",
+  "confidence_threshold",
+  "scope_similarity_threshold",
+  "column_break_lncl",
+  "extraction_mode",
+  "keep_model_loaded",
+  "navigation_tab",
+  "navigation_section",
+  "route_map",
+  "whatsapp_tab",
+  "whatsapp_section",
+  "enable_ai_on_whatsapp",
+  "whatsapp_account",
+  "column_break_wa",
+  "whatsapp_workflow",
+  "whatsapp_max_reply_chars",
+  "whatsapp_system_prompt_section",
+  "whatsapp_system_prompt",
+  "widget_tab",
+  "widget_section",
+  "assistant_name",
+  "widget_icon",
+  "column_break_ahbo",
+  "widget_color",
+  "text_color",
+  "access_section",
+  "widget_roles",
+  "column_break_zned"
+ ],
+ "fields": [
+  {
+   "fieldname": "model_tab",
+   "fieldtype": "Tab Break",
+   "label": "Model"
+  },
+  {
+   "fieldname": "provider_section",
+   "fieldtype": "Section Break",
+   "label": "AI Provider"
+  },
+  {
+   "default": "Ollama",
+   "description": "Choose the AI backend. Configure the matching section below.",
+   "fieldname": "ai_provider",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Provider",
+   "options": "Ollama\nClaude\nGemini",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.ai_provider!='Ollama'",
+   "description": "If the selected provider fails (unreachable, wrong key, rate-limited), automatically retry with Ollama. Requires Ollama to be installed and running.",
+   "fieldname": "enable_ollama_fallback",
+   "fieldtype": "Check",
+   "label": "Enable Ollama Fallback"
+  },
+  {
+   "depends_on": "eval:doc.ai_provider=='Gemini'",
+   "fieldname": "gemini_section",
+   "fieldtype": "Section Break",
+   "label": "Gemini Configuration"
+  },
+  {
+   "depends_on": "eval:doc.ai_provider=='Gemini'",
+   "description": "Google API key. Get one at aistudio.google.com (free tier available).",
+   "fieldname": "gemini_api_key",
+   "fieldtype": "Password",
+   "label": "Gemini API Key"
+  },
+  {
+   "fieldname": "column_break_gemini",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "gemini-2.0-flash",
+   "depends_on": "eval:doc.ai_provider=='Gemini'",
+   "description": "Model ID. gemini-2.0-flash is fast and cheap; gemini-1.5-pro is more capable.",
+   "fieldname": "gemini_model",
+   "fieldtype": "Data",
+   "label": "Gemini Model"
+  },
+  {
+   "depends_on": "eval:doc.ai_provider=='Ollama' || doc.enable_ollama_fallback==1",
+   "fieldname": "ollama_section",
+   "fieldtype": "Section Break",
+   "label": "Ollama Configuration"
+  },
+  {
+   "default": "http://localhost:11434",
+   "description": "URL where the Ollama server is running.",
+   "fieldname": "ollama_base_url",
+   "fieldtype": "Data",
+   "label": "Ollama Base URL"
+  },
+  {
+   "default": "qwen2.5:7b",
+   "description": "Model name to use for extraction and chat (must be pulled in Ollama).",
+   "fieldname": "ollama_model",
+   "fieldtype": "Data",
+   "label": "Ollama Model"
+  },
+  {
+   "fieldname": "column_break_ollama",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "60",
+   "description": "Seconds to wait for a response before giving up.",
+   "fieldname": "ollama_timeout",
+   "fieldtype": "Int",
+   "label": "Timeout (seconds)"
+  },
+  {
+   "depends_on": "eval:doc.ai_provider=='Claude'",
+   "fieldname": "claude_section",
+   "fieldtype": "Section Break",
+   "label": "Claude Configuration"
+  },
+  {
+   "description": "Anthropic API key. Get one at console.anthropic.com.",
+   "fieldname": "claude_api_key",
+   "fieldtype": "Password",
+   "label": "Claude API Key"
+  },
+  {
+   "fieldname": "column_break_claude",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "claude-haiku-4-5-20251001",
+   "description": "Model ID to use. haiku is fast and cheap; sonnet is more capable.",
+   "fieldname": "claude_model",
+   "fieldtype": "Data",
+   "label": "Claude Model"
+  },
+  {
+   "fieldname": "chat_tab",
+   "fieldtype": "Tab Break",
+   "label": "Chat"
+  },
+  {
+   "fieldname": "chat_section",
+   "fieldtype": "Section Break",
+   "label": "Chat Behaviour"
+  },
+  {
+   "description": "Custom AI persona for chat and voice replies. Leave empty to use the default assistant prompt.",
+   "fieldname": "system_prompt",
+   "fieldtype": "Long Text",
+   "label": "System Prompt"
+  },
+  {
+   "description": "Language the AI will use when replying to text and voice commands. \nDefault: 'Auto' detects the language from each message.",
+   "fieldname": "response_language",
+   "fieldtype": "Table",
+   "label": "Response Language",
+   "options": "AI Response Language"
+  },
+  {
+   "fieldname": "column_break_vynl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "ISO 639-1 code for voice input (e.g. 'ar', 'en'). Leave empty to auto-detect.",
+   "fieldname": "voice_language",
+   "fieldtype": "Data",
+   "label": "Voice Transcription Language"
+  },
+  {
+   "fieldname": "extraction_section",
+   "fieldtype": "Section Break",
+   "label": "Extraction Behaviour"
+  },
+  {
+   "default": "0.6",
+   "description": "Minimum confidence score (0.0\u20131.0) to auto-accept extraction results. Below this threshold the widget pauses and asks the user to review before post-processors fire.",
+   "fieldname": "confidence_threshold",
+   "fieldtype": "Float",
+   "label": "Confidence Threshold"
+  },
+  {
+   "default": "0.05",
+   "description": "Cosine similarity threshold (0.0\u20131.0) for scope enforcement. Messages scoring below this against the workflow scope_description are rejected as out-of-scope. Lower = more permissive.",
+   "fieldname": "scope_similarity_threshold",
+   "fieldtype": "Float",
+   "label": "Scope Similarity Threshold"
+  },
+  {
+   "default": "Batch with Fallback",
+   "depends_on": "eval:doc.ai_provider=='Ollama' || doc.enable_ollama_fallback==1",
+   "description": "<b>Per Field</b> \u2014 One Ollama call per field. Slowest but most reliable. Best for small hardware or unstable models.<br><b>Batch</b> \u2014 One call for all fields at once. Fastest, but a single malformed response fails every field.<br><b>Batch with Fallback</b> \u2014 Tries batch first; automatically retries any failed field individually. Best of both worlds.<br><b>Parallel</b> \u2014 Fires all per-field calls concurrently. Fast without the batch JSON risk, but causes a higher CPU/RAM spike.",
+   "fieldname": "extraction_mode",
+   "fieldtype": "Select",
+   "label": "Extraction Mode",
+   "options": "\nPer Field\nBatch\nBatch with Fallback\nParallel"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.ai_provider=='Ollama' || doc.enable_ollama_fallback==1",
+   "description": "Keep the Ollama model in RAM between requests. Eliminates cold-start delay (10\u201330 s) at the cost of permanent memory usage (amount varies by the Ollama model size set in the Ollama Configuration section).",
+   "fieldname": "keep_model_loaded",
+   "fieldtype": "Check",
+   "label": "Keep Model Loaded"
+  },
+  {
+   "fieldname": "whatsapp_tab",
+   "fieldtype": "Tab Break",
+   "label": "WhatsApp"
+  },
+  {
+   "fieldname": "whatsapp_section",
+   "fieldtype": "Section Break",
+   "label": "WhatsApp Channel"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_ai_on_whatsapp",
+   "fieldtype": "Check",
+   "label": "Enable AI on WhatsApp",
+   "description": "Master switch. When enabled, incoming WhatsApp messages are processed by the AI engine."
+  },
+  {
+   "depends_on": "eval:doc.enable_ai_on_whatsapp==1",
+   "fieldname": "whatsapp_account",
+   "fieldtype": "Link",
+   "label": "WhatsApp Account",
+   "options": "WhatsApp Account",
+   "description": "Default account used for AI-generated outgoing replies."
+  },
+  {
+   "fieldname": "column_break_wa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.enable_ai_on_whatsapp==1",
+   "fieldname": "whatsapp_workflow",
+   "fieldtype": "Link",
+   "label": "AI Workflow for WhatsApp",
+   "options": "AI Workflow",
+   "description": "Workflow that governs AI WhatsApp sessions."
+  },
+  {
+   "default": "1000",
+   "depends_on": "eval:doc.enable_ai_on_whatsapp==1",
+   "fieldname": "whatsapp_max_reply_chars",
+   "fieldtype": "Int",
+   "label": "Max Reply Length (chars)",
+   "description": "Soft target. Replies longer than this are split into multiple messages."
+  },
+  {
+   "depends_on": "eval:doc.enable_ai_on_whatsapp==1",
+   "fieldname": "whatsapp_system_prompt_section",
+   "fieldtype": "Section Break",
+   "label": "WhatsApp System Prompt"
+  },
+  {
+   "depends_on": "eval:doc.enable_ai_on_whatsapp==1",
+   "fieldname": "whatsapp_system_prompt",
+   "fieldtype": "Small Text",
+   "label": "WhatsApp System Prompt",
+   "description": "WhatsApp-specific system prompt. Use plain text only — no markdown. WhatsApp renders asterisks and underscores literally."
+  },
+  {
+   "fieldname": "navigation_tab",
+   "fieldtype": "Tab Break",
+   "label": "Navigation"
+  },
+  {
+   "fieldname": "navigation_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Map document type keys to Frappe routes. The widget offers a 'Go to...' button after classifying a document in global mode.",
+   "fieldname": "route_map",
+   "fieldtype": "Table",
+   "label": "Route Map",
+   "options": "AI Route Map"
+  },
+  {
+   "fieldname": "widget_tab",
+   "fieldtype": "Tab Break",
+   "label": "Widget"
+  },
+  {
+   "fieldname": "widget_section",
+   "fieldtype": "Section Break",
+   "label": "Widget Appearance"
+  },
+  {
+   "fieldname": "assistant_name",
+   "fieldtype": "Data",
+   "label": "Assistant Name"
+  },
+  {
+   "fieldname": "widget_icon",
+   "fieldtype": "Attach Image",
+   "label": "Widget Icon"
+  },
+  {
+   "fieldname": "column_break_ahbo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "widget_color",
+   "fieldtype": "Color",
+   "label": "Widget Color"
+  },
+  {
+   "fieldname": "text_color",
+   "fieldtype": "Color",
+   "label": "Text Color"
+  },
+  {
+   "fieldname": "access_section",
+   "fieldtype": "Section Break",
+   "label": "Access Control"
+  },
+  {
+   "description": "Roles allowed to see and use the widget. Leave empty to allow all logged-in users.",
+   "fieldname": "widget_roles",
+   "fieldtype": "Table",
+   "label": "Allowed Roles",
+   "options": "AI Widget Role"
+  },
+  {
+   "fieldname": "column_break_zned",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_lncl",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-05-16 23:04:22.420755",
+ "modified_by": "Administrator",
+ "module": "Intelligence",
+ "name": "AI Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "read": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

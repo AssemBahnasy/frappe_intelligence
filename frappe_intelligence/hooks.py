@@ -5,6 +5,9 @@ app_description = "An AI agent integrated with any frappe custom app"
 app_email = "bahnasyassem@gmail.com"
 app_license = "mit"
 
+# Bench CLI commands (run with: bench fi-setup-ollama / bench fi-check-deps)
+bench_commands = ["frappe_intelligence.commands"]
+
 # Apps
 # ------------------
 
@@ -26,7 +29,10 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/frappe_intelligence/css/frappe_intelligence.css"
-# app_include_js = "/assets/frappe_intelligence/js/frappe_intelligence.js"
+app_include_js = [
+    "fi.bundle.js",
+    "fi.pages.bundle.js",
+]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/frappe_intelligence/css/frappe_intelligence.css"
@@ -86,7 +92,8 @@ app_license = "mit"
 # ------------
 
 # before_install = "frappe_intelligence.install.before_install"
-# after_install = "frappe_intelligence.install.after_install"
+after_install = "frappe_intelligence.install.after_install"
+after_migrate = ["frappe_intelligence.utils.whatsapp_setup.add_whatsapp_roles"]
 
 # Uninstallation
 # ------------
@@ -138,16 +145,22 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+# Safe to declare even when frappe_whatsapp is not installed —
+# Frappe only fires the hook if the DocType actually exists on this site.
+doc_events = {
+    "WhatsApp Message": {
+        "after_insert": "frappe_intelligence.engine.whatsapp_handler.on_whatsapp_message"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
+
+scheduler_events = {
+    "daily": [
+        "frappe_intelligence.tasks.expire_old_sessions",
+    ],
+}
 
 # scheduler_events = {
 # 	"all": [
@@ -255,4 +268,3 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

@@ -1,0 +1,39 @@
+{
+    "actions": [],
+    "creation": "2026-05-16 00:00:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "topic",
+        "content"
+    ],
+    "fields": [
+        {
+            "fieldname": "topic",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Topic",
+            "reqd": 1,
+            "description": "Short label identifying what this entry covers (e.g. 'Payment Terms', 'Supplier Onboarding')."
+        },
+        {
+            "fieldname": "content",
+            "fieldtype": "Long Text",
+            "label": "Content",
+            "reqd": 1,
+            "description": "Knowledge content retrieved as context for relevant chat queries."
+        }
+    ],
+    "istable": 1,
+    "links": [],
+    "modified": "2026-05-16 00:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Intelligence",
+    "name": "AI Knowledge Entry",
+    "owner": "Administrator",
+    "permissions": [],
+    "sort_field": "creation",
+    "sort_order": "ASC",
+    "states": []
+}

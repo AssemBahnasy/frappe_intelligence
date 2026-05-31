@@ -1,0 +1,185 @@
+{
+    "actions": [],
+    "allow_import": 1,
+    "allow_rename": 0,
+    "autoname": "field:workflow_key",
+    "creation": "2026-05-17 00:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "workflow_key",
+        "title",
+        "is_active",
+        "column_break_1",
+        "allow_desk",
+        "allow_portal",
+        "allow_whatsapp",
+        "section_break_scope",
+        "scope_description",
+        "out_of_scope_reply",
+        "section_break_steps",
+        "steps",
+        "section_break_knowledge",
+        "knowledge_packs",
+        "section_break_processors",
+        "post_processors",
+        "section_break_advanced",
+        "confidence_threshold",
+        "completion_message",
+        "column_break_advanced",
+        "excluded_keywords"
+    ],
+    "fields": [
+        {
+            "fieldname": "workflow_key",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Workflow Key",
+            "reqd": 1,
+            "unique": 1,
+            "description": "Slug identifier used in code, e.g. service_request. Must be unique."
+        },
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Title",
+            "reqd": 1,
+            "description": "Human-readable name, e.g. Service Request."
+        },
+        {
+            "fieldname": "is_active",
+            "fieldtype": "Check",
+            "label": "Is Active",
+            "default": "1",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "allow_desk",
+            "fieldtype": "Check",
+            "label": "Allow: Frappe Desk",
+            "default": "1"
+        },
+        {
+            "fieldname": "allow_portal",
+            "fieldtype": "Check",
+            "label": "Allow: Portal",
+            "default": "0"
+        },
+        {
+            "fieldname": "allow_whatsapp",
+            "fieldtype": "Check",
+            "label": "Allow: WhatsApp",
+            "default": "0"
+        },
+        {
+            "fieldname": "section_break_scope",
+            "fieldtype": "Section Break",
+            "label": "Scope Definition"
+        },
+        {
+            "fieldname": "scope_description",
+            "fieldtype": "Long Text",
+            "label": "Scope Description",
+            "reqd": 1,
+            "description": "Describe what this workflow handles in plain language. Injected into the LLM system prompt as the agent's mandate. Used for scope enforcement — messages dissimilar to this description are rejected as out-of-scope."
+        },
+        {
+            "fieldname": "out_of_scope_reply",
+            "fieldtype": "Small Text",
+            "label": "Out-of-Scope Reply",
+            "description": "Reply returned immediately when the user's message is out of scope. No LLM tokens are consumed. Write it in the language your users expect."
+        },
+        {
+            "fieldname": "section_break_steps",
+            "fieldtype": "Section Break",
+            "label": "Workflow Steps"
+        },
+        {
+            "fieldname": "steps",
+            "fieldtype": "Table",
+            "label": "Steps",
+            "options": "AI Workflow Step"
+        },
+        {
+            "fieldname": "section_break_knowledge",
+            "fieldtype": "Section Break",
+            "label": "Knowledge Packs"
+        },
+        {
+            "fieldname": "knowledge_packs",
+            "fieldtype": "Table",
+            "label": "Knowledge Packs",
+            "options": "AI Workflow Knowledge Pack"
+        },
+        {
+            "fieldname": "section_break_processors",
+            "fieldtype": "Section Break",
+            "label": "Step Post-Processors"
+        },
+        {
+            "fieldname": "post_processors",
+            "fieldtype": "Table",
+            "label": "Post-Processors",
+            "options": "AI Workflow Post Processor"
+        },
+        {
+            "fieldname": "section_break_advanced",
+            "fieldtype": "Section Break",
+            "label": "Advanced"
+        },
+        {
+            "fieldname": "confidence_threshold",
+            "fieldtype": "Float",
+            "label": "Confidence Threshold (override)",
+            "description": "Minimum confidence score (0.0–1.0) for document extraction auto-accept. Overrides the global AI Settings value for sessions on this workflow. Leave 0 to use the global setting."
+        },
+        {
+            "fieldname": "completion_message",
+            "fieldtype": "Small Text",
+            "label": "Completion Message",
+            "description": "Message shown to the user when all workflow steps are complete. Defaults to a generic confirmation if left blank."
+        },
+        {
+            "fieldname": "column_break_advanced",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "excluded_keywords",
+            "fieldtype": "Long Text",
+            "label": "Excluded Keywords (one per line)",
+            "description": "Words or phrases specific to this workflow that should never be blocked by the scope keyword gate. Example: terms from your business domain that match generic off-topic patterns."
+        }
+    ],
+    "grid_page_length": 50,
+    "links": [],
+    "modified": "2026-05-17 00:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Intelligence",
+    "name": "AI Workflow",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "title",
+    "sort_order": "ASC",
+    "states": [],
+    "title_field": "title",
+    "track_changes": 1
+}

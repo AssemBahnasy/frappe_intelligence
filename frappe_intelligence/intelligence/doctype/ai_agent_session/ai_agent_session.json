@@ -1,0 +1,139 @@
+{
+    "actions": [],
+    "allow_import": 0,
+    "allow_rename": 0,
+    "creation": "2026-05-17 00:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "channel",
+        "channel_id",
+        "status",
+        "column_break_1",
+        "workflow",
+        "current_step",
+        "section_break_linked",
+        "linked_doctype",
+        "linked_docname",
+        "section_break_data",
+        "collected_data",
+        "last_user_message_at",
+        "section_break_turns",
+        "turns"
+    ],
+    "fields": [
+        {
+            "fieldname": "channel",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Channel",
+            "options": "desk\nportal\nwhatsapp",
+            "reqd": 1
+        },
+        {
+            "fieldname": "channel_id",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Channel ID",
+            "reqd": 1,
+            "description": "Frappe session SID (desk), portal username (portal), or formatted phone number (WhatsApp — matches WhatsApp Profiles.number)."
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "active\ncompleted\nabandoned\npaused",
+            "default": "active",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "workflow",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Workflow",
+            "options": "AI Workflow"
+        },
+        {
+            "fieldname": "current_step",
+            "fieldtype": "Data",
+            "label": "Current Step Key",
+            "description": "step_key of the active step. Blank when workflow is complete."
+        },
+        {
+            "fieldname": "section_break_linked",
+            "fieldtype": "Section Break",
+            "label": "Linked Record"
+        },
+        {
+            "fieldname": "linked_doctype",
+            "fieldtype": "Link",
+            "label": "Linked DocType",
+            "options": "DocType",
+            "description": "The Frappe document being built by this session."
+        },
+        {
+            "fieldname": "linked_docname",
+            "fieldtype": "Dynamic Link",
+            "label": "Linked Document",
+            "options": "linked_doctype"
+        },
+        {
+            "fieldname": "section_break_data",
+            "fieldtype": "Section Break",
+            "label": "Collected Data"
+        },
+        {
+            "fieldname": "collected_data",
+            "fieldtype": "JSON",
+            "label": "Collected Data",
+            "description": "Accumulated field values across all completed steps, keyed by step_key."
+        },
+        {
+            "fieldname": "last_user_message_at",
+            "fieldtype": "Datetime",
+            "label": "Last User Message At",
+            "read_only": 1
+        },
+        {
+            "fieldname": "section_break_turns",
+            "fieldtype": "Section Break",
+            "label": "Conversation Turns"
+        },
+        {
+            "fieldname": "turns",
+            "fieldtype": "Table",
+            "label": "Turns",
+            "options": "AI Agent Turn"
+        }
+    ],
+    "grid_page_length": 50,
+    "links": [],
+    "modified": "2026-05-17 00:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Intelligence",
+    "name": "AI Agent Session",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "track_changes": 0
+}

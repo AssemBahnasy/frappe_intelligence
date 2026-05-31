@@ -1,0 +1,97 @@
+{
+    "actions": [],
+    "allow_import": 1,
+    "allow_rename": 0,
+    "creation": "2026-05-15 00:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "target_doctype",
+        "document_type_key",
+        "column_break_1",
+        "label",
+        "is_active",
+        "section_break_workflow",
+        "workflow",
+        "step_key"
+    ],
+    "fields": [
+        {
+            "fieldname": "target_doctype",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Target DocType",
+            "options": "DocType",
+            "reqd": 1,
+            "description": "The Frappe DocType that requires this document (e.g. Facility)."
+        },
+        {
+            "fieldname": "document_type_key",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Document Type Key",
+            "reqd": 1,
+            "description": "Slug matching the AI Document Template (e.g. saudi_national_address)."
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "label",
+            "fieldtype": "Data",
+            "label": "Display Label",
+            "description": "Human-readable label shown in the widget checklist and bubble."
+        },
+        {
+            "fieldname": "is_active",
+            "fieldtype": "Check",
+            "label": "Is Active",
+            "default": "1"
+        },
+        {
+            "fieldname": "section_break_workflow",
+            "fieldtype": "Section Break",
+            "label": "Workflow Context"
+        },
+        {
+            "fieldname": "workflow",
+            "fieldtype": "Link",
+            "label": "Workflow",
+            "options": "AI Workflow",
+            "description": "Link to the AI Workflow this requirement belongs to. Leave blank if not workflow-specific."
+        },
+        {
+            "fieldname": "step_key",
+            "fieldtype": "Data",
+            "label": "Step Key",
+            "description": "step_key of the AI Workflow Step that requires this document. Leave blank if applies to all steps."
+        }
+    ],
+    "grid_page_length": 50,
+    "links": [],
+    "modified": "2026-05-15 00:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Intelligence",
+    "name": "AI Document Requirement",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "target_doctype",
+    "sort_order": "ASC",
+    "states": [],
+    "track_changes": 0
+}
