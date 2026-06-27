@@ -453,7 +453,11 @@ def test_connection() -> dict:
     frappe.only_for("System Manager")
     _enforce_rate_limit()
     from frappe_intelligence.models.llm_factory import get_adapter
-    _, error = get_adapter().chat("Say 'ok' in one word.")
+    adapter = get_adapter()
+    if hasattr(adapter, "test_connection"):
+        ok, error = adapter.test_connection()
+        return {"ok": ok} if not error else {"ok": False, "error": error}
+    _, error = adapter.chat("Say 'ok' in one word.")
     return {"ok": True} if not error else {"ok": False, "error": error}
 
 

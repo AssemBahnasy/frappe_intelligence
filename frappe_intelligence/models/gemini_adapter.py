@@ -189,6 +189,17 @@ class GeminiAdapter(LLMAdapter):
         except Exception as exc:  # noqa: BLE001
             return None, self._friendly_error(exc)
 
+    def test_connection(self) -> tuple[bool, str | None]:
+        """Lightweight connectivity check — validates API key without a full generation call."""
+        client, err = self._get_client()
+        if err:
+            return False, err
+        try:
+            client.models.get(model=self.model)
+            return True, None
+        except Exception as exc:
+            return False, self._friendly_error(exc)
+
     def _get_client(self):
         """Return (google.genai.Client, None) or (None, error_message)."""
         if self._client is not None:
@@ -208,14 +219,14 @@ class GeminiAdapter(LLMAdapter):
                 "Run: bench pip install google-genai"
             )
 
-        # Default 60 s — prevents the streaming call from hanging forever
-        # when the API is slow to respond or the model is loading.
-        # Override via site_config.json: {"gemini_timeout": 90}
-        timeout = float(frappe.conf.get("gemini_timeout", 60))
+        # google-genai HttpOptions.timeout is in milliseconds.
+        # Config value is in seconds for readability; convert here.
+        timeout_s = float(frappe.conf.get("gemini_timeout", 60))
+        timeout_ms = int(timeout_s * 1000)
         try:
             self._client = genai.Client(
                 api_key=self.api_key,
-                http_options={"timeout": timeout},
+                http_options={"timeout": timeout_ms},
             )
         except TypeError:
             # Older SDK versions that don't accept http_options — no timeout.
@@ -226,12 +237,17 @@ class GeminiAdapter(LLMAdapter):
     def _friendly_error(exc: Exception) -> str:
         name = type(exc).__name__
         msg = str(exc)
-        if "API_KEY_INVALID" in msg or "401" in msg or "403" in msg:
+        if "API_KEY_INVALID" in msg or "INVALID_ARGUMENT" in msg or "API key not valid" in msg or "401" in msg or "403" in msg:
             return "Invalid Gemini API key. Please check AI Settings."
         if "RESOURCE_EXHAUSTED" in msg or "429" in msg:
             return "Gemini API quota exceeded. Please wait and try again."
         if "ConnectionError" in name or "connect" in msg.lower():
             return "Cannot connect to the Gemini API. Check your internet connection."
+        if "timed out" in msg.lower() or "TimeoutError" in name or "Timeout" in name:
+            return (
+                "Gemini API request timed out. This may be a temporary network issue. "
+                "You can increase the timeout in site_config.json: {\"gemini_timeout\": 120}"
+            )
         return f"Gemini API error: {msg}"
 
 

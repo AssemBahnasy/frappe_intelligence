@@ -92,6 +92,12 @@ class _FallbackAdapter:
         self._primary = primary
         self._fallback = fallback
 
+    def test_connection(self) -> tuple[bool, str | None]:
+        if hasattr(self._primary, "test_connection"):
+            return self._primary.test_connection()
+        _, error = self._primary.chat("Say 'ok' in one word.")
+        return (True, None) if not error else (False, error)
+
     def chat(
         self,
         prompt: str,
