@@ -23,13 +23,13 @@
 				v-model="draft"
 				rows="2"
 				dir="auto"
-				:placeholder="__('Ask about your data, or describe a task…')"
+				:placeholder="placeholder"
 				@input="grow"
 				@keydown.enter.exact="on_enter"
 			></textarea>
 			<div class="fi-input-actions">
-				<button ref="mode_button" type="button" class="fi-mode">
-					{{ __("Ask") }}
+				<button ref="mode_button" type="button" class="fi-mode" :class="{ agent: store.mode === 'Agent' }">
+					{{ store.mode === "Agent" ? __("Agent") : __("Ask") }}
 					<Icon name="chevron-down" size="xs" />
 				</button>
 				<span class="fi-spacer"></span>
@@ -59,6 +59,11 @@ const input_id = `fi-message-${frappe.utils.get_random(6)}`;
 const MAX_INPUT_HEIGHT = 168;
 
 const chip = computed(() => (store.context_dismissed ? "" : context_label(store.context)));
+const placeholder = computed(() =>
+	store.has_pending_proposals
+		? __("Reply, or ask for a change to the proposal…")
+		: __("Ask about your data, or describe a task…")
+);
 
 function on_enter(e) {
 	if (e.isComposing) return;
@@ -79,20 +84,30 @@ function grow() {
 	el.style.height = `${Math.min(el.scrollHeight, MAX_INPUT_HEIGHT)}px`;
 }
 
-// Mode menu: Frappe's own menu. Agent mode arrives with change approvals.
+// Mode menu: Frappe's own menu, rebuilt on every open so the choice shows as selected.
 const mode_button = ref(null);
 let mode_menu = null;
 onMounted(() => {
+	const agent_allowed = frappe.boot.fi_assistant.agent_mode;
 	mode_menu = new frappe.ui.Dropdown({
 		trigger: mode_button.value,
 		side: "top",
 		align: "start",
-		options: [
-			{ label: __("Ask"), description: __("Reads and explains. Never changes data."), selected: true },
+		options: () => [
+			{
+				label: __("Ask"),
+				description: __("Reads and explains. Never changes data."),
+				selected: store.mode === "Ask",
+				onclick: () => (store.mode = "Ask"),
+			},
 			{
 				label: __("Agent"),
-				description: __("Prepares changes. You approve each one first."),
-				disabled: true,
+				description: agent_allowed
+					? __("Prepares changes. You approve each one first.")
+					: __("Turned off in AI Settings."),
+				selected: store.mode === "Agent",
+				disabled: !agent_allowed,
+				onclick: () => (store.mode = "Agent"),
 			},
 		],
 	});
@@ -193,6 +208,10 @@ textarea::placeholder {
 .fi-mode:hover,
 .fi-mode[aria-expanded="true"] {
 	background: var(--surface-gray-3);
+}
+.fi-mode.agent {
+	background: var(--surface-violet-2);
+	color: var(--ink-violet-6);
 }
 .fi-send {
 	display: inline-flex;

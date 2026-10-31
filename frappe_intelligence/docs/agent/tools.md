@@ -17,7 +17,11 @@
 | `new_document` | `desk.py` | Browser opens a new unsaved form with values filled in; the user saves |
 | `show_chart` | `desk.py` | Chart drawn under the answer (bar, line, pie, percentage, donut) |
 
-**Frappe MCP** tools are Frappe's own (`frappe/mcp/tools`), the same ones its built-in MCP server exposes. They run through REST API v2, so permissions, validation and argument checking are exactly those of `/api/v2/document/…`. Write tools from the same set (`create_document`, `update_document`, `delete_document`) come with Agent mode in step 5, behind the user's approval.
+**Frappe MCP** tools are Frappe's own (`frappe/mcp/tools`), the same ones its built-in MCP server exposes. They run through REST API v2, so permissions, validation and argument checking are exactly those of `/api/v2/document/…`.
+
+## Agent mode only
+
+`create_document`, `update_document`, `delete_document`, `submit_document`, `cancel_document` (`changes.py`). Each has a `preview` that builds the approval card; it runs only after the user confirms. See [approvals.md](approvals.md).
 
 ## Declaring a tool
 
@@ -28,8 +32,9 @@ AgentTool(
 	parameters={…JSON schema…},
 	run=run_report,          # takes the arguments dict, returns JSON-serialisable data
 	label=_lt("Running {report_name}"),   # step label shown to the user
-	modes=READ_MODES,        # which modes offer it
+	modes=READ_MODES,        # which modes offer it (AGENT_ONLY for changes)
 	browser_action=False,    # True: the result's "action" is performed by the browser
+	preview=None,            # a change: builds the approval card; run waits for the user
 )
 ```
 

@@ -27,6 +27,10 @@ def can_use_assistant(user: str | None = None) -> bool:
 	return not allowed or bool(roles.intersection(allowed))
 
 
+def agent_mode_allowed() -> bool:
+	return bool(frappe.get_cached_doc("AI Settings").allow_agent_mode)
+
+
 def ensure_assistant_access() -> None:
 	if not can_use_assistant():
 		frappe.throw(_("You are not allowed to use the assistant."), frappe.PermissionError)

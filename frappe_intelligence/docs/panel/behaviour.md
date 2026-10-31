@@ -12,7 +12,7 @@ A greeting with the user's first name and up to two groups of starter questions 
 
 - **Enter** sends, **Shift+Enter** adds a line; the box grows up to about seven lines.
 - The chip above the box names the page the user is on ("Customer list", "Sales Invoice · ACC-…") and is sent as context. **×** leaves it out for this page; it comes back on the next page.
-- The mode menu offers **Ask**; **Agent** is shown disabled until step 5.
+- The mode menu offers **Ask** and **Agent** (disabled with "Turned off in AI Settings" unless Agent mode is allowed). The chip turns violet in Agent mode.
 
 ## While the answer is written
 
@@ -35,6 +35,12 @@ A greeting with the user's first name and up to two groups of starter questions 
 - Under the answer: **Copy as Markdown**, **thumbs up / down** (stored on the message, `rate_reply`), and when it was asked.
 
 Browser actions from the agent (open a page, open a form, start a new document) run when the answer finishes.
+
+## Changes in Agent mode (board 2c)
+
+A proposed change shows as a card: what will happen, the values with field labels, a note ("Saved as Draft. You submit it." or "Nothing is saved until you confirm."), **Reject** and **Confirm**. While a card waits, the box reads "Reply, or ask for a change to the proposal…"; sending a message instead rejects the card.
+
+After a decision the card becomes one line: a spinner while it runs, then a check with a link to the created document ("You confirmed"), × with the error, or "You rejected". The assistant's report continues under it.
 
 ## Width and theme
 

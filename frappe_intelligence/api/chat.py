@@ -8,23 +8,50 @@ from frappe import _
 from frappe_intelligence.agent import runs, transcript
 from frappe_intelligence.agent.loop import Hooks, run_turn
 from frappe_intelligence.engine.chat import workflow_reply
-from frappe_intelligence.utils.access import ensure_assistant_access, limit_requests
+from frappe_intelligence.utils.access import agent_mode_allowed, ensure_assistant_access, limit_requests
 
 MAX_MESSAGE_LENGTH = 4000
 CONVERSATION_LIST_LIMIT = 20
+DESK_MODES = ("Ask", "Agent")
 
 
 @frappe.whitelist(methods=["POST"])
 @limit_requests
-def send_message(message: str, conversation: str | None = None, context: dict | str | None = None) -> dict:
-	"""Store `message` and answer it in the background. Follow the run on the `fi_assistant` realtime event."""
+def send_message(
+	message: str,
+	conversation: str | None = None,
+	context: dict | str | None = None,
+	mode: str = "Ask",
+) -> dict:
+	"""Store `message` and answer it in the background. Follow the run on the `fi_assistant` realtime event.
+
+	A change still waiting for approval is rejected: the user moved on without confirming it.
+	"""
 	ensure_assistant_access()
 	text = _validated(message)
 	doc = _desk_conversation(conversation)
 	runs.ensure_idle(doc)
+	doc.mode = _validated_mode(mode)
+	doc.reject_pending()
 	doc.add_user_message(text, frappe.parse_json(context) if context else None)
 	run_id = runs.start(doc)
 	return {"conversation": doc.name, "run_id": run_id}
+
+
+@frappe.whitelist(methods=["POST"])
+@limit_requests
+def decide_proposal(conversation: str, call_id: str, approve: bool) -> dict:
+	"""Confirm or reject a proposed change. Once none is left waiting, the answer continues in the
+	background: approved changes run first, then the model reports back."""
+	ensure_assistant_access()
+	# Row lock: a double click cannot approve, and run, the same change twice.
+	doc = _desk_conversation(conversation, for_update=True)
+	runs.ensure_idle(doc)
+	doc.decide(call_id, frappe.utils.sbool(approve))
+	if doc.pending_proposals():
+		doc.save()
+		return {"run_id": None}
+	return {"run_id": runs.start(doc)}
 
 
 @frappe.whitelist(methods=["POST"])
@@ -119,6 +146,14 @@ def handle_widget_input(
 	frappe.throw(_("Unknown input_type '{0}'. Expected: file, voice, text.").format(input_type))
 
 
+def _validated_mode(mode: str) -> str:
+	if mode not in DESK_MODES:
+		frappe.throw(_("Unknown mode: {0}").format(mode))
+	if mode == "Agent" and not agent_mode_allowed():
+		frappe.throw(_("Agent mode is turned off in AI Settings."), frappe.PermissionError)
+	return mode
+
+
 def _validated(message: str | None) -> str:
 	text = (message or "").strip()
 	if not text:
@@ -128,11 +163,11 @@ def _validated(message: str | None) -> str:
 	return text
 
 
-def _desk_conversation(name: str | None):
+def _desk_conversation(name: str | None, for_update: bool = False):
 	"""The user's conversation to continue, or a new unsaved one."""
 	if not name:
 		return frappe.get_doc({"doctype": "AI Conversation", "mode": "Ask", "channel": "Desk"})
-	doc = frappe.get_doc("AI Conversation", name)
+	doc = frappe.get_doc("AI Conversation", name, for_update=for_update)
 	doc.check_permission("write")
 	if doc.channel != "Desk" or doc.mode == "Workflow":
 		frappe.throw(_("This conversation cannot be continued here."))

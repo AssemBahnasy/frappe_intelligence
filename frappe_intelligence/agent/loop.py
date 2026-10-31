@@ -1,4 +1,7 @@
-"""The agent loop: model → tools → results → model, until the model answers in plain text."""
+"""The agent loop: model → tools → results → model, until the model answers in plain text.
+
+In Agent mode a change the model asks for becomes a proposal: the turn pauses, and the next run
+(after the user confirms or rejects) applies the decision before calling the model again."""
 
 from __future__ import annotations
 
@@ -8,7 +11,7 @@ from dataclasses import dataclass, field
 from frappe import _
 
 from frappe_intelligence.agent import prompts
-from frappe_intelligence.agent.tools import execute, step_label, tools_for
+from frappe_intelligence.agent.tools import execute, needs_approval, propose, step_label, tools_for
 from frappe_intelligence.providers import ProviderError, Reply, get_provider
 from frappe_intelligence.providers.base import OnText
 
@@ -47,6 +50,7 @@ class TurnResult:
 	steps: list[Step] = field(default_factory=list)
 	error: str | None = None
 	stopped: bool = False
+	proposals: list[dict] = field(default_factory=list)  # changes waiting for the user
 
 
 def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
@@ -62,6 +66,7 @@ def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
 	result = TurnResult()
 
 	try:
+		_run_approved(conversation, hooks, result)
 		for _step in range(MAX_STEPS):
 			_stop_if_asked(hooks)
 			reply = _complete(provider, conversation, text, context, system, specs, hooks)
@@ -72,6 +77,9 @@ def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
 				break
 			_run_tools(conversation, reply, hooks, result)
 			hooks.checkpoint()
+			if result.proposals:
+				result.reply = reply.text
+				break
 		else:
 			result.reply = _("I stopped after {0} steps. Ask me to continue if you need more.").format(
 				MAX_STEPS
@@ -119,14 +127,43 @@ def _run_tools(conversation, reply: Reply, hooks: Hooks, result: TurnResult) -> 
 			conversation.add_tool_result(call, STOPPED_RESULT, is_error=True)
 			_record(result, hooks, Step(call.id, call.name, label, "stopped"))
 			continue
-		_record(result, hooks, Step(call.id, call.name, label, "running"), announce_only=True)
-		outcome = execute(call.name, call.arguments, conversation.mode)
-		conversation.add_tool_result(call, outcome.content, outcome.is_error)
-		_record(result, hooks, Step(call.id, call.name, label, "failed" if outcome.is_error else "done"))
-		if outcome.action:
-			result.actions.append(outcome.action)
+		if needs_approval(call.name):
+			_propose(conversation, call, result)
+			continue
+		_execute(conversation, call, label, hooks, result)
 	if stopped:
 		raise Stopped
+
+
+def _execute(conversation, call, label: str, hooks: Hooks, result: TurnResult, row=None) -> None:
+	"""Run a tool call and store its result; `row` is an approved proposal waiting for it."""
+	_record(result, hooks, Step(call.id, call.name, label, "running"), announce_only=True)
+	outcome = execute(call.name, call.arguments, conversation.mode)
+	if row is None:
+		conversation.add_tool_result(call, outcome.content, outcome.is_error)
+	else:
+		row.content, row.is_error = outcome.content, int(outcome.is_error)
+	_record(result, hooks, Step(call.id, call.name, label, "failed" if outcome.is_error else "done"))
+	if outcome.action:
+		result.actions.append(outcome.action)
+
+
+def _propose(conversation, call, result: TurnResult) -> None:
+	"""An invalid change goes back to the model to fix; a valid one waits for the user."""
+	outcome = propose(call.name, call.arguments, conversation.mode)
+	if outcome.is_error:
+		conversation.add_tool_result(call, outcome.content, is_error=True)
+		return
+	conversation.add_proposal(call, outcome.preview)
+	result.proposals.append({"call_id": call.id, "preview": outcome.preview})
+
+
+def _run_approved(conversation, hooks: Hooks, result: TurnResult) -> None:
+	approved = conversation.approved_to_run()
+	for row, call in approved:
+		_execute(conversation, call, step_label(call.name, call.arguments), hooks, result, row)
+	if approved:
+		hooks.checkpoint()
 
 
 def _record(result: TurnResult, hooks: Hooks, step: Step, announce_only: bool = False) -> None:

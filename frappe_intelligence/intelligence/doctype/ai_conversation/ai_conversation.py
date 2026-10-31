@@ -13,6 +13,9 @@ TITLE_LENGTH = 80
 # Messages sent to the model per turn; older ones stay stored and visible.
 HISTORY_LIMIT = 40
 STOPPED_NOTICE = "stopped"
+# Tool results the model reads for proposals the user did not approve.
+REJECTED_RESULT = "The user rejected this change. Do not try it again unless they ask."
+MOVED_ON_RESULT = "The user did not confirm this change and sent a new message instead."
 
 
 class AIConversation(Document):
@@ -49,6 +52,48 @@ class AIConversation(Document):
 			},
 		)
 
+	def add_proposal(self, call: ToolCall, preview: dict) -> None:
+		"""A change waiting for the user; its result is filled in once they decide."""
+		self.append(
+			"messages",
+			{
+				"role": "tool",
+				"tool_name": call.name,
+				"tool_call_id": call.id,
+				"approval": "Pending",
+				"preview": _json(preview),
+			},
+		)
+
+	def decide(self, call_id: str, approve: bool) -> None:
+		row = next((row for row in self.messages if row.tool_call_id == call_id and row.role == "tool"), None)
+		if not row or row.approval != "Pending":
+			frappe.throw(frappe._("This change is no longer waiting for a decision."))
+		row.approval = "Approved" if approve else "Rejected"
+		if not approve:
+			row.content = REJECTED_RESULT
+
+	def pending_proposals(self) -> list:
+		return [row for row in self.messages if row.approval == "Pending"]
+
+	def reject_pending(self) -> None:
+		for row in self.pending_proposals():
+			row.approval, row.content = "Rejected", MOVED_ON_RESULT
+
+	def approved_to_run(self) -> list[tuple]:
+		"""Approved changes not run yet, with the tool call each answers."""
+		calls = {
+			call["id"]: ToolCall(**call)
+			for row in self.messages
+			if row.role == "assistant" and row.tool_calls
+			for call in frappe.parse_json(row.tool_calls)
+		}
+		return [
+			(row, calls[row.tool_call_id])
+			for row in self.messages
+			if row.approval == "Approved" and not row.content and row.tool_call_id in calls
+		]
+
 	def add_stopped(self) -> None:
 		"""Marks the turn as stopped by the user; system rows are never sent to the model."""
 		self.append("messages", {"role": "system", "content": STOPPED_NOTICE})
@@ -64,7 +109,11 @@ class AIConversation(Document):
 
 	def provider_messages(self) -> list[Message]:
 		rows = [
-			row for row in self.messages if row.role != "system" and not (row.is_error and row.role != "tool")
+			row
+			for row in self.messages
+			if row.role != "system"
+			and not (row.is_error and row.role != "tool")
+			and row.approval != "Pending"
 		]
 		current_turn = max((i for i, row in enumerate(rows) if row.role == "user"), default=0)
 		start = min(current_turn, max(len(rows) - HISTORY_LIMIT, 0))

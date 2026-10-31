@@ -4,7 +4,7 @@ All endpoints are called via `frappe.call` from the browser or `frappe.call` / d
 
 | Module | Endpoints |
 |---|---|
-| `api.chat` | `send_message`, `stop_message`, `get_conversation`, `list_conversations`, `rate_reply`, `handle_widget_input` |
+| `api.chat` | `send_message`, `decide_proposal`, `stop_message`, `get_conversation`, `list_conversations`, `rate_reply`, `handle_widget_input` |
 | `api.documents` | `process_document`, `get_log_status`, `confirm_extraction`, `submit_correction`, `list_templates`, `get_required_documents`, `register_post_processor` |
 | `api.settings` | `get_widget_settings`, `get_route_map`, `test_connection`, `is_whatsapp_installed`, `is_whatsapp_enabled` |
 | `api.builder` | `list_workflows`, `get_workflow_for_builder`, `save_workflow_builder`, `preview_step_prompt` |
@@ -27,10 +27,23 @@ Stores the message and answers it in a background job (Ask mode). POST only. The
 | `message` | str | ✓ | Max 4000 chars |
 | `conversation` | str | ✗ | Omit to start a new conversation |
 | `context` | object | ✗ | `{doctype, docname, tab, list_filters, route}` of the page the user is on |
+| `mode` | str | ✗ | `Ask` (default) or `Agent`; Agent needs **Allow Agent Mode** |
 
 ```json
 {"conversation": "a1b2c3d4e5", "run_id": "1bda4f3701d16586"}
 ```
+
+### `decide_proposal`
+
+Confirms or rejects a change proposed in Agent mode. POST only.
+
+| Param | Type | Required |
+|-------|------|----------|
+| `conversation` | str | ✓ |
+| `call_id` | str | ✓ |
+| `approve` | bool | ✓ |
+
+Returns `{"run_id": …}` once no change is left waiting (the answer continues in the background), or `{"run_id": null}` while others still wait. See [agent/approvals.md](agent/approvals.md).
 
 ### `stop_message`
 

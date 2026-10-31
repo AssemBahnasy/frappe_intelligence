@@ -5,23 +5,35 @@ from __future__ import annotations
 import json
 from types import SimpleNamespace as NS
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import frappe
 
 from frappe_intelligence.agent import loop, prompts
-from frappe_intelligence.agent.tools import AgentTool, ToolError, desk, execute
-from frappe_intelligence.intelligence.doctype.ai_conversation.ai_conversation import AIConversation
+from frappe_intelligence.agent.tools import AgentTool, ToolError, changes, desk, execute
+from frappe_intelligence.intelligence.doctype.ai_conversation.ai_conversation import (
+	MOVED_ON_RESULT,
+	REJECTED_RESULT,
+	AIConversation,
+)
 from frappe_intelligence.providers import Message, ProviderError, Reply, ToolCall
 
 
 class FakeConversation:
 	mode = "Ask"
 
-	def __init__(self, text="How many customers?", context=None):
+	def __init__(self, text="How many customers?", context=None, approved=None):
 		self.messages: list[Message] = [Message(role="user", content=text)]
 		self.context = context
 		self.errors: list[str] = []
+		self.proposals: list = []
+		self.approved = approved or []
+
+	def add_proposal(self, call, preview):
+		self.proposals.append((call.id, preview))
+
+	def approved_to_run(self):
+		return self.approved
 
 	def current_question(self):
 		return self.messages[0].content, self.context
@@ -61,10 +73,12 @@ class ScriptedProvider:
 		return reply
 
 
-def run(provider, outcome=None, hooks=None, **conversation):
+def run(provider, outcome=None, hooks=None, proposal=None, **conversation):
 	conversation = FakeConversation(**conversation)
 	outcome = outcome or NS(content='{"result": 3}', is_error=False, action=None)
 	with (
+		patch.object(loop, "needs_approval", side_effect=lambda name: name == "create_document"),
+		patch.object(loop, "propose", return_value=proposal) as propose,
 		patch.object(loop, "get_provider", return_value=provider),
 		patch.object(loop, "tools_for", return_value=[]),
 		patch.object(loop, "step_label", side_effect=lambda name, arguments: f"label:{name}"),
@@ -74,6 +88,7 @@ def run(provider, outcome=None, hooks=None, **conversation):
 		patch.object(loop, "_", side_effect=lambda text: text),
 	):
 		result = loop.run_turn(conversation, hooks)
+	run.propose = propose
 	return result, conversation, execute_tool
 
 
@@ -131,6 +146,48 @@ class TestLoop(TestCase):
 		self.assertEqual(conversation.errors, [result.reply])
 
 
+class TestApprovals(TestCase):
+	def test_a_change_pauses_the_turn_until_the_user_decides(self):
+		call = tool_call(name="create_document")
+		preview = {"title": "Create Payment Entry", "fields": []}
+		reply = Reply(text="Here is the payment.", tool_calls=[call], stop_reason="tool_calls")
+		provider = ScriptedProvider(reply)
+		result, conversation, execute_tool = run(provider, proposal=NS(is_error=False, preview=preview))
+		self.assertEqual(result.proposals, [{"call_id": "c1", "preview": preview}])
+		self.assertEqual(result.reply, "Here is the payment.")
+		self.assertEqual(conversation.proposals, [("c1", preview)])
+		self.assertEqual(len(provider.calls), 1)
+		execute_tool.assert_not_called()
+
+	def test_an_invalid_change_goes_back_to_the_model(self):
+		call = tool_call(name="create_document")
+		provider = ScriptedProvider(
+			Reply(tool_calls=[call], stop_reason="tool_calls"), Reply(text="Which customer?")
+		)
+		invalid = NS(is_error=True, content="customer: Field required", preview=None)
+		result, conversation, _ = run(provider, proposal=invalid)
+		self.assertEqual(result.proposals, [])
+		self.assertEqual(result.reply, "Which customer?")
+		tool_rows = [m for m in conversation.messages if m.role == "tool"]
+		self.assertEqual(tool_rows[0].content, "customer: Field required")
+
+	def test_approved_changes_run_before_the_model_is_asked(self):
+		row = NS(content="", is_error=0)
+		approved = [(row, tool_call(name="create_document"))]
+		outcome = NS(content='{"created": "ACC-PAY-1"}', is_error=False, action=None)
+		steps = []
+		result, _, execute_tool = run(
+			ScriptedProvider(Reply(text="Created ACC-PAY-1.")),
+			outcome,
+			loop.Hooks(on_step=steps.append),
+			approved=approved,
+		)
+		execute_tool.assert_called_once_with("create_document", {"doctype": "Customer"}, "Ask")
+		self.assertEqual(row.content, '{"created": "ACC-PAY-1"}')
+		self.assertEqual([s.status for s in steps], ["running", "done"])
+		self.assertEqual(result.reply, "Created ACC-PAY-1.")
+
+
 class TestStop(TestCase):
 	def test_stop_mid_answer_keeps_the_streamed_text(self):
 		streamed = []
@@ -159,16 +216,29 @@ class TestStop(TestCase):
 
 	def test_stop_before_the_first_model_call(self):
 		provider = ScriptedProvider(Reply(text="unused"))
-		result, conversation, _ = run(provider, hooks=loop.Hooks(should_stop=lambda: True))
+		result, *_ = run(provider, hooks=loop.Hooks(should_stop=lambda: True))
 		self.assertTrue(result.stopped)
 		self.assertEqual(provider.calls, [])
 
 
 class TestExecute(TestCase):
 	def setUp(self):
-		patcher = patch("frappe_intelligence.agent.tools._", side_effect=lambda text: text)
-		patcher.start()
-		self.addCleanup(patcher.stop)
+		for target, kwargs in (
+			("frappe_intelligence.agent.tools._", {"side_effect": lambda text: text}),
+			("frappe_intelligence.agent.tools.frappe.db", {"new": MagicMock()}),
+		):
+			patcher = patch(target, **kwargs)
+			self.db = patcher.start()
+			self.addCleanup(patcher.stop)
+
+	def test_a_failed_run_is_rolled_back(self):
+		def fail(args):
+			raise ToolError("Missing customer")
+
+		with self.with_tool(fail):
+			execute("probe", {}, "Ask")
+		self.db.savepoint.assert_called_once()
+		self.db.rollback.assert_called_once_with(save_point="fi_assistant_tool")
 
 	def with_tool(self, run, **kwargs):
 		tool = AgentTool(
@@ -236,6 +306,28 @@ class TestDeskTools(TestCase):
 			desk.show_chart({"labels": ["Q3"], "datasets": [{"values": [1]}], "type": "radar"})
 
 
+class TestChangeTools(TestCase):
+	def setUp(self):
+		settings = NS(agent_excluded_doctypes=[NS(excluded_doctype="Item")])
+		for target, kwargs in (
+			("_", {"side_effect": lambda text: text}),
+			("frappe.get_cached_doc", {"return_value": settings}),
+			("_run_mcp", {"return_value": {"name": "T-1"}}),
+		):
+			patcher = patch(f"frappe_intelligence.agent.tools.changes.{target}", **kwargs)
+			patcher.start()
+			self.addCleanup(patcher.stop)
+
+	def test_settings_are_checked_again_when_the_change_runs(self):
+		with patch.object(changes, "agent_mode_allowed", return_value=True):
+			self.assertEqual(changes.run_create({"doctype": "ToDo", "data": {}})["created"], "T-1")
+			for doctype in ("Item", "User"):
+				with self.assertRaises(ToolError):
+					changes.run_create({"doctype": doctype, "data": {}})
+		with patch.object(changes, "agent_mode_allowed", return_value=False), self.assertRaises(ToolError):
+			changes.run_delete({"doctype": "ToDo", "name": "T-1"})
+
+
 class TestPrompts(TestCase):
 	def test_page_notes(self):
 		self.assertEqual(prompts.page_note(None), "")
@@ -286,3 +378,52 @@ class TestConversationHistory(TestCase):
 		messages = self.history(rows, limit=3)
 		self.assertEqual(messages[0].content, "now")
 		self.assertEqual(len(messages), 6)
+
+
+class TestProposalRecords(TestCase):
+	"""AI Conversation's proposal methods over plain rows."""
+
+	@staticmethod
+	def rows():
+		call = {"id": "c1", "name": "create_document", "arguments": {"doctype": "Customer", "data": {}}}
+		return [
+			frappe._dict(role="user", content="add a customer", approval=None, tool_call_id=None),
+			frappe._dict(
+				role="assistant", content="", tool_calls=json.dumps([call]), approval=None, tool_call_id=None
+			),
+			frappe._dict(role="tool", tool_call_id="c1", content=None, approval="Pending", is_error=0),
+		]
+
+	def setUp(self):
+		patcher = patch(
+			"frappe_intelligence.intelligence.doctype.ai_conversation.ai_conversation.frappe.throw",
+			side_effect=frappe.ValidationError,
+		)
+		patcher.start()
+		self.addCleanup(patcher.stop)
+
+	def test_approving_queues_the_change_with_its_call(self):
+		doc = NS(messages=self.rows())
+		AIConversation.decide(doc, "c1", True)
+		[(row, call)] = AIConversation.approved_to_run(doc)
+		self.assertEqual(
+			(row.approval, call.name, call.arguments["doctype"]), ("Approved", "create_document", "Customer")
+		)
+
+	def test_rejecting_answers_the_call_for_the_model(self):
+		doc = NS(messages=self.rows())
+		AIConversation.decide(doc, "c1", False)
+		self.assertEqual(doc.messages[2].content, REJECTED_RESULT)
+		self.assertEqual(AIConversation.approved_to_run(doc), [])
+
+	def test_a_change_can_be_decided_only_once(self):
+		doc = NS(messages=self.rows())
+		AIConversation.decide(doc, "c1", True)
+		with self.assertRaises(frappe.ValidationError):
+			AIConversation.decide(doc, "c1", True)
+
+	def test_a_new_message_rejects_what_is_still_waiting(self):
+		doc = NS(messages=self.rows())
+		doc.pending_proposals = lambda: AIConversation.pending_proposals(doc)
+		AIConversation.reject_pending(doc)
+		self.assertEqual((doc.messages[2].approval, doc.messages[2].content), ("Rejected", MOVED_ON_RESULT))

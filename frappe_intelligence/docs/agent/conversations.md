@@ -24,6 +24,7 @@ One DocType holds every conversation: desk chats and guided workflows on the des
 | `is_error` | Error notices (never sent to the model) and failed tool results (sent, so the model can recover) |
 | `context` | Page the user was on |
 | `raw`, `raw_provider` | The provider's own form of an assistant turn, replayed only to the same provider |
+| `approval`, `preview` | Proposed changes: `Pending`, `Approved`, `Rejected`, and the card the user saw ([approvals.md](approvals.md)) |
 
 JSON values are stored as text because Frappe's JSON field rejects lists.
 

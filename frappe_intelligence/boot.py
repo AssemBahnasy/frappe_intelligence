@@ -4,7 +4,7 @@ import frappe
 from frappe import _
 
 from frappe_intelligence.agent import suggestions
-from frappe_intelligence.utils.access import can_use_assistant
+from frappe_intelligence.utils.access import agent_mode_allowed, can_use_assistant
 
 
 def boot_session(bootinfo):
@@ -13,4 +13,5 @@ def boot_session(bootinfo):
 	bootinfo.fi_assistant = {
 		"name": frappe.get_cached_doc("AI Settings").assistant_name or _("Assistant"),
 		"suggestions": suggestions.for_user(),
+		"agent_mode": agent_mode_allowed(),
 	}

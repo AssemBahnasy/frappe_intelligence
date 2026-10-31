@@ -1,11 +1,11 @@
-"""A conversation as the panel shows it: one entry per question, with its steps and answer."""
+"""A conversation as the panel shows it: one entry per question, with its steps, changes and answer."""
 
 from __future__ import annotations
 
 import frappe
 
 from frappe_intelligence.agent.loop import STOPPED_RESULT
-from frappe_intelligence.agent.tools import registry, step_label
+from frappe_intelligence.agent.tools import needs_approval, registry, step_label
 from frappe_intelligence.intelligence.doctype.ai_conversation.ai_conversation import STOPPED_NOTICE
 
 
@@ -15,16 +15,11 @@ def turns(conversation) -> list[dict]:
 	for row in conversation.messages:
 		if row.role == "user":
 			steps = {}
-			result.append(
-				{"id": row.name, "question": row.content, "created": row.creation, "steps": [], "actions": []}
-			)
+			result.append(_turn(row))
 		elif not result:
 			continue
-		elif row.role == "assistant" and row.tool_calls:
-			for call in frappe.parse_json(row.tool_calls):
-				step = {"label": step_label(call["name"], call.get("arguments") or {}), "status": "running"}
-				steps[call["id"]] = step
-				result[-1]["steps"].append(step)
+		elif row.role == "tool" and row.approval:
+			result[-1]["proposals"].append(_proposal(row))
 		elif row.role == "tool":
 			_finish_step(steps.get(row.tool_call_id), row, result[-1])
 		elif row.role == "system" and row.content == STOPPED_NOTICE:
@@ -32,8 +27,54 @@ def turns(conversation) -> list[dict]:
 		elif row.role == "assistant" and row.is_error:
 			result[-1]["error"] = row.content
 		elif row.role == "assistant":
-			result[-1].update(answer=row.content, answer_id=row.name, feedback=row.feedback or None)
+			_add_reply(row, steps, result[-1])
 	return result
+
+
+def _turn(row) -> dict:
+	return {
+		"id": row.name,
+		"question": row.content,
+		"created": row.creation,
+		"steps": [],
+		"proposals": [],
+		"actions": [],
+		"answer": "",
+		"report": "",
+	}
+
+
+def _add_reply(row, steps: dict, turn: dict) -> None:
+	for call in frappe.parse_json(row.tool_calls or "[]"):
+		if needs_approval(call["name"]):
+			continue  # shown as a change card instead
+		step = {"label": step_label(call["name"], call.get("arguments") or {}), "status": "running"}
+		steps[call["id"]] = step
+		turn["steps"].append(step)
+	if row.content:
+		# Text written after a change was proposed reports on it, so it shows under the change.
+		part = "report" if turn["proposals"] else "answer"
+		turn[part] = "\n\n".join(filter(None, [turn[part], row.content]))
+		turn.update(answer_id=row.name, feedback=row.feedback or None)
+
+
+def _proposal(row) -> dict:
+	"""status: pending, rejected, done (approved and made) or failed (approved, but it did not work)."""
+	status = row.approval.lower()
+	if row.approval == "Approved":
+		status = "failed" if row.is_error else ("done" if row.content else "approved")
+	return {
+		"call_id": row.tool_call_id,
+		"status": status,
+		"preview": frappe.parse_json(row.preview) if row.preview else {},
+		"error": row.content if row.is_error else None,
+		"result": _created_name(row) if status == "done" else None,
+	}
+
+
+def _created_name(row) -> str | None:
+	result = frappe.parse_json(row.content)
+	return result.get("created") if isinstance(result, dict) else None
 
 
 def _finish_step(step: dict | None, row, turn: dict) -> None:

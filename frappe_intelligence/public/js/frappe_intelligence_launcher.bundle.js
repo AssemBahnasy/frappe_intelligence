@@ -41,7 +41,6 @@ function add_launchers() {
 	if ($utilities?.length && !$utilities.find(`.${LAUNCHER}`).length) {
 		sidebar.dock
 			.make_utility({ label, icon: "sparkles", css_class: LAUNCHER })
-			.attr("aria-pressed", !!panel?.is_open)
 			.on("click", toggle)
 			.appendTo($utilities);
 		// The dock takes over search and notifications while pinned (dock.js → apply_pin).
@@ -60,6 +59,8 @@ function add_launchers() {
 		});
 	}
 	sync_sidebar_row();
+	// Built after the panel may have reopened, so take its state now.
+	if (panel) mark_open(panel.is_open);
 }
 
 // Same rule as search and notifications: one entry, in the dock when it owns them, else in the

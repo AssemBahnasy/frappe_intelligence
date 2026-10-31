@@ -57,6 +57,9 @@
   "column_break_ahbo",
   "widget_color",
   "text_color",
+  "agent_section",
+  "allow_agent_mode",
+  "agent_excluded_doctypes",
   "access_section",
   "widget_roles",
   "column_break_zned"
@@ -370,6 +373,26 @@
    "label": "Text Color"
   },
   {
+   "fieldname": "agent_section",
+   "fieldtype": "Section Break",
+   "label": "Agent Mode"
+  },
+  {
+   "default": "0",
+   "description": "Let the assistant prepare changes (create, update, submit, cancel, delete). Every change is shown to the user and runs only after they confirm it.",
+   "fieldname": "allow_agent_mode",
+   "fieldtype": "Check",
+   "label": "Allow Agent Mode"
+  },
+  {
+   "depends_on": "eval:doc.allow_agent_mode",
+   "description": "DocTypes the assistant must never change, in addition to users, roles, permissions and these settings.",
+   "fieldname": "agent_excluded_doctypes",
+   "fieldtype": "Table MultiSelect",
+   "label": "Excluded DocTypes",
+   "options": "AI Excluded DocType"
+  },
+  {
    "fieldname": "access_section",
    "fieldtype": "Section Break",
    "label": "Access Control"
@@ -394,7 +417,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-10-31 16:00:00.000000",
+ "modified": "2026-10-31 22:00:00.000000",
  "modified_by": "Administrator",
  "module": "Intelligence",
  "name": "AI Settings",

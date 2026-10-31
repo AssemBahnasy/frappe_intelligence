@@ -2,16 +2,18 @@
 // Answers arrive as `fi_assistant` realtime events (agent/runs.py); see docs/agent/live-replies.md.
 
 import { defineStore } from "pinia";
-import { onScopeDispose, reactive, ref } from "vue";
+import { computed, onScopeDispose, reactive, ref } from "vue";
 import { perform_action } from "./actions";
 import { page_context } from "./page_context";
 
 const API = "frappe_intelligence.api.chat";
 const EVENT = "fi_assistant";
 const CONVERSATION_KEY = "fi_assistant_conversation";
+const WATCH_SECONDS = 15;
 
 export const useAssistant = defineStore("fi_assistant", () => {
 	const conversation = ref(null);
+	const mode = ref("Ask"); // Ask or Agent
 	const turns = ref([]);
 	const run = ref(null); // { id, turn } while an answer is being written
 	const loading = ref(false);
@@ -32,6 +34,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 				message: text,
 				conversation: conversation.value,
 				context: context_dismissed.value ? null : page_context({ with_tab: true }),
+				mode: mode.value,
 			});
 			set_conversation(r.conversation);
 			run.value = { id: r.run_id, turn };
@@ -62,18 +65,20 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		if (e.run_id !== run.value.id) return;
 		const turn = run.value.turn;
 		if (e.type === "text") {
-			turn.answer = (turn.answer || "") + e.text;
+			const part = turn.reporting ? "report" : "answer";
+			turn[part] = (turn[part] || "") + e.text;
 		} else if (e.type === "step") {
 			const step = turn.steps.find((s) => s.call_id === e.call_id);
 			step ? Object.assign(step, e) : turn.steps.push({ ...e });
 		} else if (e.type === "done") {
 			Object.assign(turn, {
 				pending: false,
-				answer: e.reply || turn.answer,
+				answer: turn.reporting ? turn.answer : turn.answer || e.reply,
 				error: e.error,
 				stopped: e.stopped,
 				actions: e.actions || [],
 			});
+			turn.proposals.push(...(e.proposals || []).map((p) => ({ ...p, status: "pending" })));
 			run.value = null;
 			turn.actions.forEach(perform_action);
 			refresh(); // picks up stored ids, used by feedback
@@ -85,6 +90,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		try {
 			const r = await frappe.xcall(`${API}.get_conversation`, { name });
 			set_conversation(r.name);
+			mode.value = r.mode === "Agent" && frappe.boot.fi_assistant.agent_mode ? "Agent" : "Ask";
 			turns.value = r.turns;
 			const last = turns.value.at(-1);
 			run.value = r.active_run && last ? { id: r.active_run, turn: last } : null;
@@ -101,6 +107,25 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		const r = await frappe.xcall(`${API}.get_conversation`, { name: conversation.value });
 		turns.value = r.turns;
 	}
+
+	// Confirm or reject a proposed change; the answer continues once none is left waiting.
+	async function decide(turn, proposal, approve) {
+		const r = await frappe.xcall(`${API}.decide_proposal`, {
+			conversation: conversation.value,
+			call_id: proposal.call_id,
+			approve,
+		});
+		proposal.status = approve ? "approved" : "rejected";
+		if (r.run_id) {
+			turn.reporting = true; // what the model writes now reports on the change
+			turn.pending = true;
+			run.value = { id: r.run_id, turn };
+		}
+	}
+
+	const has_pending_proposals = computed(() =>
+		turns.value.some((t) => t.proposals?.some((p) => p.status === "pending"))
+	);
 
 	function new_chat() {
 		set_conversation(null);
@@ -138,16 +163,32 @@ export const useAssistant = defineStore("fi_assistant", () => {
 	}
 
 	// Not frappe.router.on: its off() cannot remove a handler (event_emitter.js).
+	// A run whose worker died never sends "done", and a realtime event can be missed: while a run
+	// is open, ask the server now and then whether it is still going.
+	async function watch_run() {
+		if (!run.value || !conversation.value) return;
+		const id = run.value.id;
+		const r = await frappe.xcall(`${API}.get_conversation`, { name: conversation.value }).catch(() => null);
+		if (r && run.value?.id === id && r.active_run !== id) {
+			run.value = null;
+			turns.value = r.turns;
+		}
+	}
+	const watcher = setInterval(watch_run, WATCH_SECONDS * 1000);
+
 	frappe.realtime.on(EVENT, on_event);
 	$(document).on("page-change.fi_assistant", track_page);
 	onScopeDispose(() => {
+		clearInterval(watcher);
 		frappe.realtime.off(EVENT, on_event);
 		$(document).off("page-change.fi_assistant");
 	});
 
 	return {
 		conversation,
+		mode,
 		turns,
+		has_pending_proposals,
 		run,
 		loading,
 		context,
@@ -159,6 +200,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		restore,
 		list_conversations,
 		rate,
+		decide,
 	};
 });
 
@@ -168,8 +210,10 @@ function new_turn(question) {
 		question,
 		created: frappe.datetime.now_datetime(),
 		steps: [],
+		proposals: [],
 		actions: [],
 		answer: "",
+		report: "",
 		pending: true,
 	};
 }

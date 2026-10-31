@@ -1,5 +1,5 @@
 <template>
-	<div class="fi-turn">
+	<div ref="root" class="fi-turn">
 		<div class="fi-question" dir="auto">{{ turn.question }}</div>
 
 		<Steps :steps="turn.steps" :pending="turn.pending" />
@@ -9,14 +9,21 @@
 			{{ turn.stopping ? __("Stopping…") : __("Thinking…") }}
 		</div>
 
-		<div v-if="turn.answer" ref="body" class="fi-markdown" dir="auto" v-html="html" @click="follow_link"></div>
+		<div v-if="turn.answer" class="fi-markdown" dir="auto" v-html="html" @click="follow_link"></div>
+
+		<template v-for="proposal in turn.proposals || []" :key="proposal.call_id">
+			<ProposalCard v-if="proposal.status === 'pending'" :turn="turn" :proposal="proposal" />
+			<ChangeResult v-else :proposal="proposal" />
+		</template>
+
+		<div v-if="turn.report" class="fi-markdown" dir="auto" v-html="report_html" @click="follow_link"></div>
 
 		<ChartBlock v-for="(chart, i) in charts" :key="i" :chart="chart" />
 
 		<div v-if="turn.error" class="fi-error" role="alert">{{ turn.error }}</div>
 		<div v-else-if="turn.stopped && !turn.pending" class="fi-meta">{{ __("Stopped.") }}</div>
 
-		<div v-if="!turn.pending && turn.answer" class="fi-footer">
+		<div v-if="!turn.pending && full_text" class="fi-footer">
 			<button class="fi-small-button" :title="__('Copy as Markdown')" :aria-label="__('Copy as Markdown')" @click="copy">
 				<Icon name="copy" size="xs" />
 			</button>
@@ -44,20 +51,24 @@ import { computed, nextTick, ref, watch } from "vue";
 import { open_route } from "../actions";
 import { useAssistant } from "../store";
 import { enhance_tables } from "../tables";
+import ChangeResult from "./ChangeResult.vue";
 import ChartBlock from "./ChartBlock.vue";
 import Icon from "./Icon.vue";
+import ProposalCard from "./ProposalCard.vue";
 import Steps from "./Steps.vue";
 
 const props = defineProps({ turn: { type: Object, required: true } });
 const store = useAssistant();
-const body = ref(null);
+const root = ref(null);
 
 const html = computed(() => frappe.markdown(props.turn.answer || ""));
+const report_html = computed(() => frappe.markdown(props.turn.report || ""));
+const full_text = computed(() => [props.turn.answer, props.turn.report].filter(Boolean).join("\n\n"));
 const charts = computed(() => (props.turn.actions || []).filter((a) => a.type === "chart"));
 const thinking = computed(() => {
 	const t = props.turn;
 	const step_running = t.steps.some((s) => s.status === "running");
-	return t.pending && !t.answer && !step_running;
+	return t.pending && !(t.reporting ? t.report : t.answer) && !step_running;
 });
 const feedback_options = [
 	{ value: "Good", icon: "thumbs-up", label: __("Good answer") },
@@ -66,11 +77,11 @@ const feedback_options = [
 
 // Tables become sortable and paged once the answer is complete.
 watch(
-	() => [props.turn.pending, html.value],
+	() => [props.turn.pending, html.value, report_html.value],
 	async ([pending]) => {
 		if (pending) return;
 		await nextTick();
-		body.value && enhance_tables(body.value);
+		root.value && enhance_tables(root.value);
 	},
 	{ immediate: true }
 );
@@ -84,7 +95,7 @@ function follow_link(e) {
 }
 
 function copy() {
-	frappe.utils.copy_to_clipboard(props.turn.answer);
+	frappe.utils.copy_to_clipboard(full_text.value);
 }
 </script>
 

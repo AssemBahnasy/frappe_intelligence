@@ -14,7 +14,6 @@ Answers come from the agent ([../agent/README.md](../agent/README.md)) and strea
 
 | Feature | Arrives in |
 |---|---|
-| Agent mode (shown disabled in the mode menu) | Step 5 |
 | Attach a document | Step 6 |
 | Guided workflows in the mode menu | Step 7 |
 | Voice input, Arabic translations of new strings, right-to-left review | Step 9 |

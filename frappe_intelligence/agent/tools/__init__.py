@@ -15,6 +15,8 @@ from frappe.utils.response import json_handler
 ASK = "Ask"
 AGENT = "Agent"
 READ_MODES = frozenset({ASK, AGENT})
+AGENT_ONLY = frozenset({AGENT})
+SAVEPOINT = "fi_assistant_tool"
 
 
 class ToolError(Exception):
@@ -31,6 +33,12 @@ class AgentTool:
 	modes: frozenset[str] = READ_MODES
 	# The result carries an `action` the browser performs (open a form, draw a chart).
 	browser_action: bool = False
+	# Changes data: `preview` builds the approval card; `run` happens only after the user confirms.
+	preview: Callable[[dict], dict] | None = None
+
+	@property
+	def needs_approval(self) -> bool:
+		return self.preview is not None
 
 	def spec(self) -> dict:
 		return {"name": self.name, "description": self.description, "parameters": self.parameters}
@@ -43,15 +51,17 @@ class AgentTool:
 
 @dataclass
 class Outcome:
-	content: str
+	content: str = ""
 	is_error: bool = False
 	action: dict | None = None
+	preview: dict | None = None
 
 
 def registry() -> dict[str, AgentTool]:
-	from frappe_intelligence.agent.tools import desk, frappe_data, knowledge, reports
+	from frappe_intelligence.agent.tools import changes, desk, frappe_data, knowledge, reports
 
-	return {tool.name: tool for module in (frappe_data, reports, knowledge, desk) for tool in module.TOOLS}
+	modules = (frappe_data, reports, knowledge, desk, changes)
+	return {tool.name: tool for module in modules for tool in module.TOOLS}
 
 
 def tools_for(mode: str) -> list[AgentTool]:
@@ -64,26 +74,54 @@ def step_label(name: str, arguments: dict) -> str:
 	return tool.step_label(arguments) if tool else name
 
 
-def execute(name: str, arguments: dict, mode: str) -> Outcome:
+def needs_approval(name: str) -> bool:
 	tool = registry().get(name)
-	if not tool or mode not in tool.modes:
-		return Outcome(_("Tool {0} is not available in {1} mode.").format(name, mode), is_error=True)
+	return bool(tool and tool.needs_approval)
 
-	outcome = Outcome("")
-	try:
-		result = tool.run(arguments)
-	except ToolError as exc:
-		outcome.content, outcome.is_error = str(exc), True
-	except (frappe.PermissionError, frappe.DoesNotExistError, frappe.ValidationError) as exc:
-		outcome.content, outcome.is_error = _frappe_message(exc), True
-	except Exception:
-		frappe.log_error(f"Assistant tool {name} failed")
-		outcome.content, outcome.is_error = _("The tool failed unexpectedly."), True
+
+def execute(name: str, arguments: dict, mode: str) -> Outcome:
+	"""Run the tool. A failed run is rolled back so a half-made change never stays."""
+	tool, outcome = _available(name, mode)
+	if not tool:
+		return outcome
+	frappe.db.savepoint(SAVEPOINT)
+	result = _guarded(name, lambda: tool.run(arguments), outcome)
+	if outcome.is_error:
+		frappe.db.rollback(save_point=SAVEPOINT)
 	else:
 		outcome.content = result if isinstance(result, str) else json.dumps(result, default=json_handler)
 		if tool.browser_action:
 			outcome.action = result["action"]
 	return outcome
+
+
+def propose(name: str, arguments: dict, mode: str) -> Outcome:
+	"""Check a change and build its approval card, without making it."""
+	tool, outcome = _available(name, mode)
+	if tool:
+		outcome.preview = _guarded(name, lambda: tool.preview(arguments), outcome)
+	return outcome
+
+
+def _available(name: str, mode: str) -> tuple[AgentTool | None, Outcome]:
+	tool = registry().get(name)
+	if not tool or mode not in tool.modes:
+		return None, Outcome(_("Tool {0} is not available in {1} mode.").format(name, mode), is_error=True)
+	return tool, Outcome()
+
+
+def _guarded(name: str, call: Callable[[], Any], outcome: Outcome) -> Any:
+	"""Run `call`; on failure put the message the model should read into `outcome`."""
+	try:
+		return call()
+	except ToolError as exc:
+		outcome.content = str(exc)
+	except (frappe.PermissionError, frappe.DoesNotExistError, frappe.ValidationError) as exc:
+		outcome.content = _frappe_message(exc)
+	except Exception:
+		frappe.log_error(f"Assistant tool {name} failed")
+		outcome.content = _("The tool failed unexpectedly.")
+	outcome.is_error = True
 
 
 def _frappe_message(exc: Exception) -> str:

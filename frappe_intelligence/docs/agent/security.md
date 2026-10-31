@@ -18,7 +18,8 @@ The agent acts as the signed-in user:
 - `run_report` uses `frappe.desk.query_report.run`, which checks the report and its reference DocType.
 - `open_document` checks the DocType permission before saying whether a record exists.
 - `new_document` checks create permission; nothing is saved without the user.
-- Write tools are not offered in Ask mode, and `execute()` refuses a tool outside the conversation's mode even if a model asks for it.
+- Write tools exist only in Agent mode (off unless **AI Settings → Allow Agent Mode**), and `execute()` refuses a tool outside the conversation's mode even if a model asks for it.
+- In Agent mode every change waits for the user's confirmation; see [approvals.md](approvals.md) for excluded DocTypes, the row lock and rollback.
 
 ## Document and workflow endpoints
 

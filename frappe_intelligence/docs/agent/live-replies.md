@@ -28,7 +28,7 @@ All events use the realtime event **`fi_assistant`**, are sent only to the conve
 |---|---|---|
 | `text` | `text` | Answer text so far since the last event. Batched: sent every 0.15 s or 200 characters |
 | `step` | `call_id`, `tool`, `label`, `status` | `status`: `running`, `done`, `failed`, `stopped`. `label` is translated, e.g. "Reading Customer list" |
-| `done` | `reply`, `actions`, `steps`, `error`, `stopped` | Always the last event of a run; `actions` are the browser actions to perform |
+| `done` | `reply`, `actions`, `steps`, `error`, `stopped`, `proposals` | Always the last event of a run; `actions` are the browser actions to perform; `proposals` are changes waiting for approval (`call_id`, `preview`) |
 
 Between `send_message` and the first event the model is thinking (and, on a local model, this can take a while); show a waiting state.
 
@@ -47,6 +47,10 @@ The run still ends with `done`, marked `stopped: true`.
 ## One run per conversation
 
 `send_message` refuses a new message while the conversation's run is queued or running (`runs.ensure_idle`). Running means `active_run` is set **and** its job is queued or started, so a run whose worker died does not block the conversation.
+
+## Missed events and dead workers
+
+A run whose worker is stopped mid-answer never sends `done`, and a realtime event can be lost. While a run is open the panel calls `get_conversation` every 15 seconds; when `active_run` is no longer its run it reloads the conversation and stops waiting. Work already saved stays: a confirmed change and its result are committed together after each tool batch.
 
 ## After a reload
 

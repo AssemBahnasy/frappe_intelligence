@@ -33,7 +33,7 @@ The app moves into this structure step by step; each step deletes the code it re
 | 2 | `agent/` (loop, prompts, tools), `api/` package, AI Conversation (replaces AI Agent Session), server-side access, Frappe rate limits, security fixes | Done |
 | 3 | Live replies: background job per run, `fi_assistant` events with run id, Stop, progress saved per step | Done |
 | 4 | Assistant panel (boards 1, 2a, 2b): docked panel, dock and sidebar entries, Ctrl+., live steps, Stop, history, tables, charts, feedback; old floating widget no longer loaded | Done |
-| 5 | Agent mode approvals | Pending |
+| 5 | Agent mode: change tools, approval cards, decide endpoint with row lock, savepoints, excluded DocTypes, Allow Agent Mode setting | Done |
 | 6 | Document review | Pending |
 | 7 | `workflows/` on the desk | Pending |
 | 8 | Field writer | Pending |

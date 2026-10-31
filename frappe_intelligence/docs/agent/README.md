@@ -14,6 +14,7 @@ api/chat.send_message                                              ← returns {
 |---|---|
 | The loop: steps, limits, errors, context | [loop.md](loop.md) |
 | Live replies: background job, realtime events, Stop | [live-replies.md](live-replies.md) |
+| Agent mode: change proposals and approvals | [approvals.md](approvals.md) |
 | Tools: what exists, how they are declared, adding one | [tools.md](tools.md) |
 | AI Conversation: storage, history sent to the model, retention | [conversations.md](conversations.md) |
 | Access, permissions and rate limits | [security.md](security.md) |
@@ -23,14 +24,15 @@ api/chat.send_message                                              ← returns {
 | Mode | Tools | Status |
 |---|---|---|
 | Ask | Read data, run reports, search knowledge, open pages and new forms | Built |
-| Agent | Ask tools plus changes the user approves | Step 5 |
+| Agent | Ask tools plus changes the user approves ([approvals.md](approvals.md)) | Built |
 | Workflow | Guided workflows (`engine/chat.workflow_reply`) | Moves to `workflows/` in step 7 |
 
 ## Endpoints (`api/chat.py`)
 
 | Endpoint | Purpose |
 |---|---|
-| `send_message(message, conversation=None, context=None)` | Stores the message and answers it in a background job; creates the conversation when none is given. Returns `{conversation, run_id}`; the answer arrives as `fi_assistant` events |
+| `send_message(message, conversation=None, context=None, mode="Ask")` | Stores the message and answers it in a background job; creates the conversation when none is given; `mode` is `Ask` or `Agent`. Returns `{conversation, run_id}`; the answer arrives as `fi_assistant` events |
+| `decide_proposal(conversation, call_id, approve)` | Confirms or rejects a proposed change; returns `run_id` once nothing is left waiting |
 | `stop_message(conversation, run_id)` | Stops a running answer |
 | `get_conversation(name)` | One of the user's conversations as turns (question, steps, answer, actions, feedback, stopped), and `active_run` while one is running |
 | `rate_reply(conversation, message, feedback)` | Thumbs up (`Good`) or down (`Bad`) on an answer; empty clears it |
@@ -51,6 +53,7 @@ api/chat.send_message                                              ← returns {
 | `agent/tools/reports.py` | `search_reports`, `run_report` |
 | `agent/tools/knowledge.py` | `search_knowledge` (AI Knowledge Packs) |
 | `agent/tools/desk.py` | Browser actions: `navigate`, `open_document`, `new_document`, `show_chart` |
+| `agent/tools/changes.py` | Agent mode changes: create, update, delete, submit, cancel |
 | `intelligence/doctype/ai_conversation/` | Conversation storage and history rebuild |
 | `tests/test_agent.py` | Loop, Stop, dispatch, prompts and history tests over fakes |
 | `tests/test_runs.py` | Background run tests over fakes |
