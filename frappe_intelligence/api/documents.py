@@ -7,7 +7,7 @@ import json as _json
 import frappe
 
 from frappe_intelligence.documents import review
-from frappe_intelligence.engine.orchestrator import fire_post_processors, link_log_to_record
+from frappe_intelligence.documents.pipeline import fire_post_processors
 from frappe_intelligence.utils.access import ensure_assistant_access, limit_requests
 from frappe_intelligence.utils.file_utils import validate_file_access
 
@@ -16,31 +16,6 @@ def ensure_record_access(doctype: str | None, docname: str | None) -> None:
 	"""Post-processors and record links write to the record, so the user must be able to."""
 	if doctype and docname:
 		frappe.has_permission(doctype, "write", docname, throw=True)
-
-
-def process_widget_file(
-	file_url: str, doctype: str | None, docname: str | None, workflow_key: str | None
-) -> dict:
-	"""Read a file uploaded in the widget synchronously and link the result to the open record."""
-	validate_file_access(file_url)
-	ensure_record_access(doctype, docname)
-
-	from frappe_intelligence.engine.orchestrator import AIEngine
-
-	result = AIEngine().process(file_url=file_url)
-	if doctype and docname and result.get("log_name"):
-		link_log_to_record(result["log_name"], doctype, docname, result.get("document_type_key"))
-
-	result["needs_review"] = result.get("status") == "success" and result.get(
-		"confidence_score", 0.0
-	) < review.confidence_threshold(workflow_key)
-	if not result["needs_review"]:
-		fire_post_processors(result.get("document_type_key"), result, doctype, docname)
-
-	frappe.publish_realtime(
-		"ai_processing_update", {"message": "Extraction complete!"}, user=frappe.session.user
-	)
-	return result
 
 
 def _assert_log_access(log_name: str) -> None:
@@ -94,12 +69,12 @@ def process_document(file_url: str, target_doctype: str | None = None) -> dict:
 	ensure_assistant_access()
 	validate_file_access(file_url)
 
-	from frappe_intelligence.engine.orchestrator import AIEngine
+	from frappe_intelligence.documents.pipeline import AIEngine
 
 	log = AIEngine()._create_log(file_url)
 
 	frappe.enqueue(
-		"frappe_intelligence.engine.orchestrator.process_document_background",
+		"frappe_intelligence.documents.pipeline.process_document_background",
 		queue="long",
 		timeout=600,
 		log_name=log.name,
@@ -116,14 +91,14 @@ def get_log_status(log_name: str) -> dict:
 	"""
 	Return the current status of an AI Processing Log.
 
-	Used by the widget as a polling fallback when the socket.io realtime
+	A polling fallback for clients when the ``ai_processing_complete`` realtime
 	event does not arrive (dev proxies, VPN, etc.).
 
 	Returns
 	-------
 	``{"status": "Pending"|"Processing"|"Completed"|"Failed", "result": dict|None}``
 	The ``result`` key mirrors the shape of the ``ai_processing_complete``
-	realtime payload so the widget can call ``_handleProcessingResult`` directly.
+	realtime payload, so a client handles both the same way.
 	"""
 	_assert_log_access(log_name)
 
@@ -217,7 +192,7 @@ def get_required_documents(doctype: str, docname: str) -> dict:
 	"""
 	Return present/missing required AI document types for a Frappe record.
 
-	Used by the widget's proactive bubble and Smart Checklist.
+	For a record's document checklist (portals and integrations).
 
 	Returns
 	-------

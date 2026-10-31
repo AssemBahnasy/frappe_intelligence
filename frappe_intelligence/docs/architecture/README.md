@@ -16,7 +16,7 @@ frappe_intelligence/
 ├── workflows/      guided workflows and the scope gate
 ├── documents/      file reading, transcription, extraction
 ├── writer/         Write with AI: one field's text                → docs/writer/
-├── channels/       WhatsApp bridge
+├── channels/       WhatsApp bridge                               → docs/workflows/turn.md
 ├── utils/          small shared helpers
 ├── intelligence/   the Frappe module: DocTypes, report, page, sidebar
 ├── public/js/      assistant panel, field writer, workflow builder
@@ -38,6 +38,6 @@ The app moves into this structure step by step; each step deletes the code it re
 | 6 | Document review (board 3a): paperclip in the panel, files read before the model, review card, confirmed values used, training pairs and log links, `fill_form` for the open new form; `documents/templates.py` shared with the old pipeline | Done |
 | 7 | `workflows/` (board 3b): workflows in the panel (start, progress bar, quick replies, Exit), steps that move forward on every channel (answers read with the AI, completion check, topic gate fixed for short answers), filled form per Target DocType; `engine/chat.py`, `workflow.py`, `scope.py` removed | Done |
 | 8 | Write with AI (board 3d): sparkles button beside long text fields in every form, popover, text written in a background job, Undo; `writer/`, `api/writer.py`, AI Settings → Write with AI in Forms | Done |
-| 9 | Arabic / RTL pass, `channels/`, cleanup | Pending |
+| 9 | Arabic and right to left (board 3c): numbers isolated in Arabic answers, number columns; all strings in Arabic in `locale/ar.po` (gettext); voice input in the panel (Whisper on the server); `channels/whatsapp.py`, `documents/pipeline.py`, `engine/` removed; old widget, its endpoints, Route Map and appearance settings removed; WhatsApp role hook removed; Workflow Builder bundle loaded only on its page; OCR and voice packages optional; `utils/background.py` shared by Write with AI and voice | Done |
 
 Desk chat runs through `agent/`, guided workflows through `workflows/`; both use the same background runs on the desk.

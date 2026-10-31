@@ -124,12 +124,12 @@ def portal_upload_document(
 	_assert_portal_user(customer)
 	validate_file_access(file_url)
 
-	from frappe_intelligence.engine.orchestrator import AIEngine
+	from frappe_intelligence.documents.pipeline import AIEngine
 
 	log = AIEngine()._create_log(file_url)
 
 	frappe.enqueue(
-		"frappe_intelligence.engine.orchestrator.process_document_background",
+		"frappe_intelligence.documents.pipeline.process_document_background",
 		queue="long",
 		timeout=600,
 		log_name=log.name,

@@ -126,15 +126,15 @@ def check_deps() -> None:
 	"""
 	_step("Python packages")
 	_check_python("pypdf", "PDF text extraction")
-	_check_python("easyocr", "Image OCR (Arabic + English)")
-	_check_python("faster_whisper", "Voice transcription")
+	_check_python("easyocr", "Photos and scanned PDFs (optional: the ocr extra)")
+	_check_python("faster_whisper", "Voice input (optional: the voice extra)")
 	_check_python("openai", "OpenAI and Ollama providers")
 	_check_python("anthropic", "Claude provider")
 	_check_python("google.genai", "Gemini provider")
 	_check_python("requests", "HTTP client (Ollama model checks)")
 
 	_step("System tools")
-	_check_binary("ffmpeg", "Audio decoding for Faster-Whisper")
+	_check_binary("ffmpeg", "Audio decoding for voice input (optional)")
 
 	_step("Ollama service")
 	result = subprocess.run(["ollama", "list"], capture_output=True, text=True)

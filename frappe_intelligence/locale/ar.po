@@ -1,0 +1,2892 @@
+# Arabic translations for Frappe Intelligence.
+# Copyright (C) 2026 AssemBahnasy
+# This file is distributed under the same license as the Frappe Intelligence project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Frappe Intelligence VERSION\n"
+"Report-Msgid-Bugs-To: bahnasyassem@gmail.com\n"
+"POT-Creation-Date: 2026-11-01 02:24+0307\n"
+"PO-Revision-Date: 2026-11-01 01:46+0307\n"
+"Last-Translator: bahnasyassem@gmail.com\n"
+"Language: ar\n"
+"Language-Team: bahnasyassem@gmail.com\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=0 && n%100<=2 ?"
+" 4 : 5);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:36
+msgid "+ Create AI Workflow"
+msgstr "+ إنشاء سير عمل ذكاء اصطناعي"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:41
+msgid "+ New Workflow"
+msgstr "+ سير عمل جديد"
+
+#. Description of the 'Confidence Score' (Float) field in DocType 'AI
+#. Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:60
+msgid "0.0 – 1.0 aggregate confidence of the extraction."
+msgstr "درجة الثقة الإجمالية للاستخراج من 0.0 إلى 1.0."
+
+#: frappe_intelligence/public/js/assistant/components/Steps.vue:44
+msgid "1 step"
+msgstr "خطوة واحدة"
+
+#. Description of the 'Extraction Mode' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:248
+msgid ""
+"<b>Per Field</b> — One model call per field. Slowest but most reliable. Best for small hardware or unstable "
+"models.<br><b>Batch</b> — One call for all fields at once. Fastest, but a single malformed response fails every "
+"field.<br><b>Batch with Fallback</b> — Tries batch first; automatically retries any failed field individually. Best "
+"of both worlds.<br><b>Parallel</b> — Fires all per-field calls concurrently. Fast without the batch JSON risk, but "
+"causes a higher CPU/RAM spike."
+msgstr ""
+"<b>لكل حقل</b> — استدعاء واحد للنموذج لكل حقل. الأبطأ لكنه الأكثر موثوقية. الأنسب للأجهزة المحدودة أو النماذج غير "
+"المستقرة.<br><b>دفعة واحدة</b> — استدعاء واحد لجميع الحقول معًا. الأسرع، لكن استجابة واحدة غير صالحة تُفشل جميع "
+"الحقول.<br><b>دفعة مع بديل</b> — يجرّب الدفعة أولًا، ثم يعيد تلقائيًا محاولة أي حقل فشل بشكل منفرد. يجمع مزايا "
+"الطريقتين.<br><b>متوازٍ</b> — يُطلق جميع استدعاءات الحقول في وقت واحد. سريع دون مخاطر JSON في وضع الدفعة، لكنه يسبب "
+"ارتفاعًا أكبر في استهلاك CPU/RAM."
+
+#: frappe_intelligence/agent/tools/desk.py:77
+#, python-brace-format
+msgid "A chart needs between 1 and {0} datasets."
+msgstr "يحتاج المخطط إلى عدد من مجموعات البيانات بين 1 و{0}."
+
+#: frappe_intelligence/agent/tools/desk.py:75
+#, python-brace-format
+msgid "A chart needs between 1 and {0} labels."
+msgstr "يحتاج المخطط إلى عدد من التسميات بين 1 و{0}."
+
+#. Description of the 'Write with AI in Forms' (Check) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:362
+msgid ""
+"A sparkles button beside long text fields in forms: the user describes what the field should say and the AI writes it"
+" in place. Nothing is saved until the user saves the form."
+msgstr ""
+"زر بأيقونة اللمعات بجانب الحقول النصية الطويلة في النماذج: يصف المستخدم ما يجب أن يحتويه الحقل ويكتبه الذكاء "
+"الاصطناعي في مكانه. لا يُحفظ شيء حتى يحفظ المستخدم النموذج."
+
+#. Description of the 'Off-topic' (Check) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:63
+msgid "A workflow redirect, written without AI."
+msgstr "توجيه إلى سير العمل، كُتب دون الذكاء الاصطناعي."
+
+#. Name of a DocType
+#. Label of the session (Link) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:148
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:76
+msgid "AI Conversation"
+msgstr "محادثة الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:130
+msgid "AI Conversation Message"
+msgstr "رسالة محادثة الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:76
+msgid "AI Document Requirement"
+msgstr "متطلب مستند الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:84
+msgid "AI Document Template"
+msgstr "قالب مستند الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_excluded_doctype/ai_excluded_doctype.json:25
+msgid "AI Excluded DocType"
+msgstr "نوع مستند مستثنى من الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:68
+msgid "AI Extraction Rule"
+msgstr "قاعدة استخراج الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_entry/ai_knowledge_entry.json:33
+msgid "AI Knowledge Entry"
+msgstr "إدخال معرفة الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:79
+msgid "AI Knowledge Pack"
+msgstr "حزمة معرفة الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:50
+msgid "AI Post Processor"
+msgstr "معالج لاحق للذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:135
+msgid "AI Processing Log"
+msgstr "سجل معالجة الذكاء الاصطناعي"
+
+#. Label of the provider_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:71
+msgid "AI Provider"
+msgstr "مزوّد خدمة الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_response_language/ai_response_language.json:29
+msgid "AI Response Language"
+msgstr "لغة رد الذكاء الاصطناعي"
+
+#. Name of a report
+#: frappe_intelligence/intelligence/report/ai_session_analytics/ai_session_analytics.json:17
+msgid "AI Session Analytics"
+msgstr "تحليلات جلسات الذكاء الاصطناعي"
+
+#. Name of a DocType
+#. Label of a Workspace Sidebar Item
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:395
+#: frappe_intelligence/workspace_sidebar/intelligence.json:97
+msgid "AI Settings"
+msgstr "إعدادات الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:87
+msgid "AI Training Pair"
+msgstr "زوج تدريب الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_widget_role/ai_widget_role.json:25
+msgid "AI Widget Role"
+msgstr "دور مساعد الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:163
+msgid "AI Workflow"
+msgstr "سير عمل الذكاء الاصطناعي"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/ai_workflow_builder.js:5
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:17
+msgid "AI Workflow Builder"
+msgstr "منشئ سير عمل الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_workflow_knowledge_pack/ai_workflow_knowledge_pack.json:27
+msgid "AI Workflow Knowledge Pack"
+msgstr "حزمة معرفة سير عمل الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_workflow_post_processor/ai_workflow_post_processor.json:35
+msgid "AI Workflow Post Processor"
+msgstr "المعالج اللاحق لسير عمل الذكاء الاصطناعي"
+
+#. Name of a DocType
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:98
+msgid "AI Workflow Step"
+msgstr "خطوة سير عمل الذكاء الاصطناعي"
+
+#. Label of the whatsapp_workflow (Link) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:296
+msgid "AI Workflow for WhatsApp"
+msgstr "سير عمل الذكاء الاصطناعي لواتساب"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:90
+msgid "AI can make mistakes. Check important figures."
+msgstr "قد يخطئ الذكاء الاصطناعي. تحقّق من الأرقام المهمة."
+
+#. Description of the 'OpenAI API Key' (Password) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:154
+msgid "API key from platform.openai.com, or from the compatible service set in Base URL."
+msgstr "مفتاح API من platform.openai.com، أو من الخدمة المتوافقة المحددة في الرابط الأساسي."
+
+#. Option for the 'Status' (Select) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:51
+msgid "Abandoned"
+msgstr "متروكة"
+
+#. Label of the access_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:370
+msgid "Access Control"
+msgstr "التحكم في الوصول"
+
+#: frappe_intelligence/api/portal.py:52
+msgid "Access denied."
+msgstr "تم رفض الوصول."
+
+#: frappe_intelligence/agent/suggestions.py:15
+msgid "Accounts"
+msgstr "الحسابات"
+
+#. Option for the 'Status' (Select) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:51
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:29
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:38
+msgid "Active"
+msgstr "نشطة"
+
+#. Label of the active_run (Data) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:82
+msgid "Active Run"
+msgstr "التشغيل الحالي"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:43
+msgid "Add Field"
+msgstr "إضافة حقل"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:5
+msgid "Add Pack"
+msgstr "إضافة حزمة"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:5
+msgid "Add Requirement"
+msgstr "إضافة متطلب"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepSequencer.vue:5
+msgid "Add Step"
+msgstr "إضافة خطوة"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:15
+msgid "Add a constraint or description…"
+msgstr "أضف قيدًا أو وصفًا…"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:19
+msgid "Add line"
+msgstr "إضافة سطر"
+
+#. Label of the section_break_advanced (Section Break) field in DocType 'AI
+#. Workflow'
+#. Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:133
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:76
+msgid "Advanced"
+msgstr "متقدم"
+
+#. Option for the 'Mode' (Select) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:41
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:48
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:264
+msgid "Agent"
+msgstr "الوكيل"
+
+#. Label of the agent_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:338
+msgid "Agent Mode"
+msgstr "وضع الوكيل"
+
+#. Label of the session (Link) field in DocType 'AI Training Pair'
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:39
+msgid "Agent Session"
+msgstr "جلسة الوكيل"
+
+#: frappe_intelligence/agent/tools/changes.py:37 frappe_intelligence/api/chat.py:127
+msgid "Agent mode is turned off in AI Settings."
+msgstr "وضع الوكيل معطّل في إعدادات الذكاء الاصطناعي."
+
+#: frappe_intelligence/public/js/assistant/components/WorkflowBar.vue:60
+#, python-brace-format
+msgid "All {0} steps done"
+msgstr "اكتملت جميع الخطوات ({0})"
+
+#. Label of the allow_agent_mode (Check) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:345
+msgid "Allow Agent Mode"
+msgstr "السماح بوضع الوكيل"
+
+#. Label of the allow_desk (Check) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:64
+msgid "Allow: Frappe Desk"
+msgstr "السماح: Frappe Desk"
+
+#. Label of the allow_portal (Check) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:70
+msgid "Allow: Portal"
+msgstr "السماح: البوابة"
+
+#. Label of the allow_whatsapp (Check) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:76
+msgid "Allow: WhatsApp"
+msgstr "السماح: واتساب"
+
+#. Label of the widget_roles (Table) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:376
+msgid "Allowed Roles"
+msgstr "الأدوار المسموح بها"
+
+#: frappe_intelligence/api/chat.py:105
+msgid "Answer not found in this conversation."
+msgstr "لم يتم العثور على الإجابة في هذه المحادثة."
+
+#. Description of the 'Claude API Key' (Password) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:178
+msgid "Anthropic API key. Get one at console.anthropic.com."
+msgstr "مفتاح API من Anthropic. احصل عليه من console.anthropic.com."
+
+#. Label of the applied (Check) field in DocType 'AI Training Pair'
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:56
+msgid "Applied"
+msgstr "مُطبَّق"
+
+#. Label of the approval (Select) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:81
+msgid "Approval"
+msgstr "الموافقة"
+
+#. Option for the 'Approval' (Select) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:82
+msgid "Approved"
+msgstr "تمت الموافقة"
+
+#. Option for the 'Mode' (Select) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:41
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:48
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:258
+msgid "Ask"
+msgstr "سؤال"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:119
+msgid "Ask about your data, or describe a task…"
+msgstr "اسأل عن بياناتك أو صِف مهمة…"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:5
+msgid "Assign Processor"
+msgstr "تعيين معالج"
+
+#. Label of the widget_tab (Tab Break) field in DocType 'AI Settings'
+#. Label of the widget_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/boot.py:18 frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:323
+msgid "Assistant"
+msgstr "المساعد"
+
+#. Label of the assistant_name (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:333
+msgid "Assistant Name"
+msgstr "اسم المساعد"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:55
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:56
+msgid "Attach a file"
+msgstr "إرفاق ملف"
+
+#. Label of the attachments (JSON) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:111
+msgid "Attachments"
+msgstr "المرفقات"
+
+#: frappe_intelligence/api/chat.py:143
+msgid "Attachments must be a list of file URLs."
+msgstr "يجب أن تكون المرفقات قائمة بروابط ملفات."
+
+#: frappe_intelligence/api/portal.py:40
+msgid "Authentication required."
+msgstr "يلزم تسجيل الدخول."
+
+#. Description of the 'Active Run' (Data) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:79
+msgid "Background job answering right now; empty when idle."
+msgstr "مهمة الخلفية التي تجيب الآن؛ فارغ عند عدم وجود نشاط."
+
+#. Option for the 'Feedback' (Select) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:74
+msgid "Bad"
+msgstr "سيئة"
+
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:90
+msgid "Bad answer"
+msgstr "إجابة سيئة"
+
+#. Label of the openai_base_url (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:169
+msgid "Base URL"
+msgstr "الرابط الأساسي"
+
+#. Option for the 'Extraction Mode' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:252
+msgid "Batch"
+msgstr "دفعة واحدة"
+
+#. Option for the 'Extraction Mode' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:252
+msgid "Batch with Fallback"
+msgstr "دفعة مع بديل"
+
+#. Option for the 'Model Preference' (Select) field in DocType 'AI Document
+#. Template'
+#. Option for the 'Extraction Strategy' (Select) field in DocType 'AI
+#. Extraction Rule'
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:47
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:41
+msgid "Both"
+msgstr "كلاهما"
+
+#: frappe_intelligence/agent/suggestions.py:32
+msgid "Buying"
+msgstr "المشتريات"
+
+#. Label of the callback_method (Data) field in DocType 'AI Post Processor'
+#: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:28
+msgid "Callback Method (dotted path)"
+msgstr "دالة الاستدعاء (مسار منقّط)"
+
+#: frappe_intelligence/agent/tools/changes.py:150
+#, python-brace-format
+msgid "Cancel {0} {1}"
+msgstr "إلغاء {0} {1}"
+
+#: frappe_intelligence/agent/tools/changes.py:204
+#, python-brace-format
+msgid "Cancelling {doctype} {name}"
+msgstr "جارٍ إلغاء {doctype} {name}"
+
+#: frappe_intelligence/providers/base.py:154
+#, python-brace-format
+msgid "Cannot reach {0} at {3}."
+msgstr "تعذّر الوصول إلى {0} على {3}."
+
+#. Label of the channel (Select) field in DocType 'AI Conversation'
+#. Label of the channel (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:62
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:68
+msgid "Channel"
+msgstr "القناة"
+
+#. Label of the channel_id (Data) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:70
+msgid "Channel ID"
+msgstr "معرّف القناة"
+
+#. Description of the 'Channel' (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:71
+msgid "Channel that originated this processing job."
+msgstr "القناة التي بدأت مهمة المعالجة هذه."
+
+#: frappe_intelligence/agent/suggestions.py:19
+msgid "Chart monthly sales for this year"
+msgstr "ارسم مخططًا للمبيعات الشهرية لهذا العام"
+
+#: frappe_intelligence/agent/tools/desk.py:73
+#, python-brace-format
+msgid "Chart type must be one of: {0}"
+msgstr "يجب أن يكون نوع المخطط أحد الأنواع التالية: {0}"
+
+#. Label of the chat_tab (Tab Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:197
+msgid "Chat"
+msgstr "المحادثة"
+
+#. Label of the chat_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:202
+msgid "Chat Behaviour"
+msgstr "سلوك المحادثة"
+
+#. Description of the 'Provider' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:75
+msgid "Choose the AI backend. Configure the matching section below."
+msgstr "اختر خدمة الذكاء الاصطناعي، ثم اضبط القسم المطابق أدناه."
+
+#. Label of the section_break_2 (Section Break) field in DocType 'AI Document
+#. Template'
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:59
+msgid "Classification"
+msgstr "التصنيف"
+
+#. Option for the 'Provider' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:80
+msgid "Claude"
+msgstr "Claude"
+
+#. Label of the claude_api_key (Password) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:181
+msgid "Claude API Key"
+msgstr "مفتاح Claude API"
+
+#. Label of the claude_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:175
+msgid "Claude Configuration"
+msgstr "إعدادات Claude"
+
+#. Label of the claude_model (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:192
+msgid "Claude Model"
+msgstr "نموذج Claude"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:51
+msgid "Clear"
+msgstr "مسح"
+
+#: frappe_intelligence/public/js/assistant/components/Panel.vue:22
+msgid "Close"
+msgstr "إغلاق"
+
+#. Label of the collected_data (JSON) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:111
+msgid "Collected Data"
+msgstr "البيانات المجمّعة"
+
+#. Description of the 'Detection Keywords' (Text) field in DocType 'AI Document
+#. Template'
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:65
+msgid "Comma-separated keywords used to classify an incoming document to this template."
+msgstr "كلمات مفتاحية مفصولة بفواصل تُستخدم لتصنيف المستند الوارد ضمن هذا القالب."
+
+#. Option for the 'Status' (Select) field in DocType 'AI Conversation'
+#. Option for the 'Status' (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:51
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:57
+msgid "Completed"
+msgstr "مكتملة"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:74
+msgid "Completion Check"
+msgstr "التحقق من الاكتمال"
+
+#. Label of the completion_check (Data) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:81
+msgid "Completion Check (Python callable)"
+msgstr "فحص الإكمال (دالة Python)"
+
+#. Label of the completion_message (Small Text) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:144
+msgid "Completion Message"
+msgstr "رسالة الإكمال"
+
+#. Label of the confidence_score (Float) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:63
+msgid "Confidence Score"
+msgstr "درجة الثقة"
+
+#. Label of the confidence_threshold (Float) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:237
+msgid "Confidence Threshold"
+msgstr "حد الثقة"
+
+#. Label of the confidence_threshold (Float) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:138
+msgid "Confidence Threshold (override)"
+msgstr "حد الثقة (تجاوز)"
+
+#: frappe_intelligence/public/js/assistant/components/ProposalCard.vue:20
+msgid "Confirm"
+msgstr "تأكيد"
+
+#: frappe_intelligence/public/js/assistant/components/ChangeResult.vue:19
+msgid "Confirmed · running"
+msgstr "تم التأكيد · قيد التنفيذ"
+
+#: frappe_intelligence/public/js/assistant/components/ChangeResult.vue:21
+msgid "Confirmed, but it did not work"
+msgstr "تم التأكيد، لكنه لم ينجح"
+
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.js:16
+#, python-brace-format
+msgid "Connected successfully to {0}!"
+msgstr "تم الاتصال بنجاح بـ {0}!"
+
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.js:21
+msgid "Connection Failed"
+msgstr "فشل الاتصال"
+
+#. Label of the content (Long Text) field in DocType 'AI Conversation Message'
+#. Label of the content (Long Text) field in DocType 'AI Knowledge Entry'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:38
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_entry/ai_knowledge_entry.json:23
+msgid "Content"
+msgstr "المحتوى"
+
+#. Label of the context (JSON) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:105
+msgid "Context"
+msgstr "السياق"
+
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:37
+msgid "Copy as Markdown"
+msgstr "نسخ بتنسيق Markdown"
+
+#. Label of the section_break_3 (Section Break) field in DocType 'AI Training
+#. Pair'
+#. Label of the corrected_extraction (JSON) field in DocType 'AI Training Pair'
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:73
+msgid "Corrected Extraction"
+msgstr "الاستخراج المصحَّح"
+
+#. Label of the correction_source (Data) field in DocType 'AI Training Pair'
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:50
+msgid "Correction Source"
+msgstr "مصدر التصحيح"
+
+#. Description of the 'Scope Similarity Threshold' (Float) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:241
+msgid ""
+"Cosine similarity threshold (0.0–1.0) for scope enforcement. Messages scoring below this against the workflow "
+"scope_description are rejected as out-of-scope. Lower = more permissive."
+msgstr ""
+"حد تشابه جيب التمام (0.0–1.0) لتطبيق نطاق المحادثة. تُرفض الرسائل التي تقل درجتها عن هذا الحد مقارنةً بقيمة "
+"scope_description لسير العمل باعتبارها خارج النطاق. القيمة الأقل = تساهل أكبر."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:120
+msgid "Could not load DocType fields."
+msgstr "تعذّر تحميل حقول نوع المستند."
+
+#: frappe_intelligence/public/js/assistant/store.js:252
+msgid "Could not send the message. Please try again."
+msgstr "تعذّر إرسال الرسالة. يرجى المحاولة مرة أخرى."
+
+#: frappe_intelligence/agent/tools/frappe_data.py:19
+#, python-brace-format
+msgid "Counting {doctype}"
+msgstr "جارٍ عدّ {doctype}"
+
+#: frappe_intelligence/agent/tools/changes.py:97
+#, python-brace-format
+msgid "Create {0}"
+msgstr "إنشاء {0}"
+
+#: frappe_intelligence/agent/tools/changes.py:168
+#, python-brace-format
+msgid "Creating {doctype}"
+msgstr "جارٍ إنشاء {doctype}"
+
+#. Label of the current_step (Data) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:102
+msgid "Current Step Key"
+msgstr "مفتاح الخطوة الحالية"
+
+#. Description of the 'System Prompt' (Long Text) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:205
+msgid "Custom AI persona for chat and voice replies. Leave empty to use the default assistant prompt."
+msgstr "شخصية مخصصة للذكاء الاصطناعي في ردود المحادثة والصوت. اتركه فارغًا لاستخدام موجّه المساعد الافتراضي."
+
+#. Label of a Workspace Sidebar Item
+#: frappe_intelligence/workspace_sidebar/intelligence.json:15
+msgid "Dashboard"
+msgstr "لوحة القيادة"
+
+#. Description of the 'WhatsApp Account' (Link) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:281
+msgid "Default account used for AI-generated outgoing replies."
+msgstr "الحساب الافتراضي المستخدم للردود الصادرة التي ينشئها الذكاء الاصطناعي."
+
+#: frappe_intelligence/agent/tools/changes.py:122
+#, python-brace-format
+msgid "Delete {0} {1}"
+msgstr "حذف {0} {1}"
+
+#: frappe_intelligence/agent/tools/changes.py:186
+#, python-brace-format
+msgid "Deleting {doctype} {name}"
+msgstr "جارٍ حذف {doctype} {name}"
+
+#: frappe_intelligence/api/writer.py:40
+msgid "Describe what the field should say."
+msgstr "صِف ما يجب أن يتضمنه الحقل."
+
+#. Description of the 'Scope Description' (Long Text) field in DocType 'AI
+#. Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json
+msgid ""
+"Describe what this workflow handles in plain language. Injected into the LLM system prompt as the agent's mandate. "
+"Used for scope enforcement — messages dissimilar to this description are rejected as out-of-scope."
+msgstr ""
+"صِف بلغة بسيطة ما يتولاه سير العمل هذا. يُضاف إلى موجّه النظام للنموذج اللغوي بوصفه مهمة الوكيل. ويُستخدم لفرض "
+"النطاق، فتُرفض الرسائل التي لا تشبه هذا الوصف لأنها خارج النطاق."
+
+#. Label of the description (Small Text) field in DocType 'AI Knowledge Pack'
+#. Label of the description (Small Text) field in DocType 'AI Post Processor'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:48
+#: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:35
+msgid "Description"
+msgstr "الوصف"
+
+#. Option for the 'Channel' (Select) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:63
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:89
+msgid "Desk"
+msgstr "المكتب"
+
+#. Name of a role
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:168
+msgid "Desk User"
+msgstr "مستخدم المكتب"
+
+#. Description of the 'Context' (JSON) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:102
+msgid "Desk page the user was on when sending the message."
+msgstr "صفحة المكتب التي كان المستخدم عليها عند إرسال الرسالة."
+
+#. Label of the details_section (Section Break) field in DocType 'AI
+#. Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:93
+msgid "Details"
+msgstr "التفاصيل"
+
+#. Label of the detection_keywords (Text) field in DocType 'AI Document
+#. Template'
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:64
+msgid "Detection Keywords"
+msgstr "كلمات الكشف المفتاحية"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:61
+#: frappe_intelligence/public/js/assistant/components/ReviewCard.vue:26
+msgid "Discard"
+msgstr "تجاهل"
+
+#. Label of the label (Data) field in DocType 'AI Document Requirement'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:43
+msgid "Display Label"
+msgstr "التسمية المعروضة"
+
+#. Label of the excluded_doctype (Link) field in DocType 'AI Excluded DocType'
+#: frappe_intelligence/intelligence/doctype/ai_excluded_doctype/ai_excluded_doctype.json:15
+msgid "DocType"
+msgstr "نوع المستند"
+
+#. Description of the 'Excluded DocTypes' (Table MultiSelect) field in DocType
+#. 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:349
+msgid "DocTypes the assistant must never change, in addition to users, roles, permissions and these settings."
+msgstr "أنواع المستندات التي يجب ألا يغيّرها المساعد أبدًا، إضافةً إلى المستخدمين والأدوار والصلاحيات وهذه الإعدادات."
+
+#. Label of the document_name (Data) field in DocType 'AI Document Template'
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:25
+msgid "Document Name"
+msgstr "اسم المستند"
+
+#. Label of a Workspace Sidebar Item
+#: frappe_intelligence/workspace_sidebar/intelligence.json:37
+msgid "Document Requirement"
+msgstr "متطلبات المستند"
+
+#. Label of the document_template (Link) field in DocType 'AI Processing Log'
+#. Label of the document_template (Link) field in DocType 'AI Training Pair'
+#. Label of a Workspace Sidebar Item
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:37
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:25
+#: frappe_intelligence/workspace_sidebar/intelligence.json:49
+msgid "Document Template"
+msgstr "قالب المستند"
+
+#. Label of the document_type_key (Data) field in DocType 'AI Document
+#. Requirement'
+#. Template'
+#. Label of the document_type_key (Data) field in DocType 'AI Post Processor'
+#. Label of the document_type_key (Data) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:32
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:33
+#: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:21
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:45
+msgid "Document Type Key"
+msgstr "مفتاح نوع المستند"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:4
+msgid "Documents the agent must collect at this step"
+msgstr "المستندات التي يجب أن يجمعها الوكيل في هذه الخطوة"
+
+#: frappe_intelligence/agent/tools/desk.py:165
+msgid "Drawing a chart"
+msgstr "جارٍ رسم مخطط"
+
+#: frappe_intelligence/agent/tools/desk.py:81
+msgid "Each dataset needs one number per label."
+msgstr "تحتاج كل مجموعة بيانات إلى رقم واحد لكل تسمية."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:18
+msgid "Edit"
+msgstr "تعديل"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:25
+msgid "Edit as raw text"
+msgstr "تعديل كنص خام"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/WhatsAppFlow.vue:35
+msgid "Edit flow"
+msgstr "تعديل النموذج"
+
+#. Label of the enable_ai_on_whatsapp (Check) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:277
+msgid "Enable AI on WhatsApp"
+msgstr "تفعيل الذكاء الاصطناعي على واتساب"
+
+#. Label of the enable_ollama_fallback (Check) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:89
+msgid "Enable Ollama Fallback"
+msgstr "تفعيل Ollama كبديل"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/WhatsAppFlow.vue:4
+msgid "Enable WhatsApp channel on the workflow to configure this."
+msgstr "فعّل قناة واتساب في سير العمل لضبط هذا الإعداد."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:63
+msgid "End of workflow"
+msgstr "نهاية سير العمل"
+
+#: frappe_intelligence/public/js/assistant/components/WorkflowBar.vue:61
+msgid "Ended"
+msgstr "انتهى"
+
+#. Label of the section_break_4 (Section Break) field in DocType 'AI Processing
+#. Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:122
+msgid "Error"
+msgstr "خطأ"
+
+#. Label of the error_message (Text) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:127
+msgid "Error Message"
+msgstr "رسالة الخطأ"
+
+#. Label of the agent_excluded_doctypes (Table MultiSelect) field in DocType
+#. 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:352
+msgid "Excluded DocTypes"
+msgstr "أنواع المستندات المستثناة"
+
+#. Label of the excluded_keywords (Long Text) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:154
+msgid "Excluded Keywords (one per line)"
+msgstr "الكلمات المستثناة (كلمة في كل سطر)"
+
+#. Description of the 'Order' (Int) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json
+msgid "Execution sequence — lower number runs first."
+msgstr "ترتيب التنفيذ؛ الرقم الأصغر يُنفَّذ أولًا."
+
+#: frappe_intelligence/public/js/assistant/components/WorkflowBar.vue:8
+msgid "Exit"
+msgstr "خروج"
+
+#. Label of the section_break_3 (Section Break) field in DocType 'AI Processing
+#. Log'
+#. Label of the extracted_data (JSON) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:112
+msgid "Extracted Data"
+msgstr "البيانات المستخرجة"
+
+#. Label of the extraction_section (Section Break) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:230
+msgid "Extraction Behaviour"
+msgstr "سلوك الاستخراج"
+
+#. Label of the extraction_mode (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:251
+msgid "Extraction Mode"
+msgstr "وضع الاستخراج"
+
+#. Label of the section_break_3 (Section Break) field in DocType 'AI Document
+#. Template'
+#. Label of the extraction_rules (Table) field in DocType 'AI Document
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:70
+msgid "Extraction Rules"
+msgstr "قواعد الاستخراج"
+
+#. Label of the extraction_strategy (Select) field in DocType 'AI Extraction
+#. Rule'
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:40
+msgid "Extraction Strategy"
+msgstr "استراتيجية الاستخراج"
+
+#. Option for the 'Status' (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:57
+msgid "Failed"
+msgstr "فشل"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:219
+msgid "Failed to load workflow."
+msgstr "تعذّر تحميل سير العمل."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:192
+msgid "Failed to load workflows."
+msgstr "تعذّر تحميل مسارات العمل."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:316
+msgid "Failed to save workflow."
+msgstr "تعذّر حفظ سير العمل."
+
+#. Label of the feedback (Select) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:73
+msgid "Feedback"
+msgstr "التقييم"
+
+#: frappe_intelligence/api/chat.py:100
+msgid "Feedback must be Good or Bad."
+msgstr "يجب أن يكون التقييم جيدًا أو سيئًا."
+
+#. Label of the field_key (Data) field in DocType 'AI Extraction Rule'
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:22
+msgid "Field Key"
+msgstr "مفتاح الحقل"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:17
+msgid "Field Name"
+msgstr "اسم الحقل"
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:136
+msgid "Field updated"
+msgstr "تم تحديث الحقل"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:5
+msgid "Fields the agent must collect at this step"
+msgstr "الحقول التي يجب أن يجمعها الوكيل في هذه الخطوة"
+
+#. Label of the file_url (Data) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:30
+msgid "File URL"
+msgstr "رابط الملف"
+
+#: frappe_intelligence/utils/file_utils.py:46
+#, python-brace-format
+msgid "File not found: {0}"
+msgstr "الملف غير موجود: {0}"
+
+#: frappe_intelligence/documents/reader.py:125 frappe_intelligence/utils/file_utils.py:97
+msgid "File path is outside the allowed directory."
+msgstr "مسار الملف خارج المجلد المسموح به."
+
+#. Description of the 'Attachments' (JSON) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:108
+msgid "Files the user sent with this message."
+msgstr "الملفات التي أرسلها المستخدم مع هذه الرسالة."
+
+#: frappe_intelligence/agent/tools/desk.py:138
+#, python-brace-format
+msgid "Filling in the {doctype} form"
+msgstr "جارٍ تعبئة نموذج {doctype}"
+
+#. Description of the 'Approval' (Select) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:77
+msgid "For a change the assistant proposed: waiting for the user, approved or rejected."
+msgstr "لتغيير اقترحه المساعد: بانتظار المستخدم، أو تمت الموافقة عليه، أو رُفض."
+
+#: frappe_intelligence/install.py:26
+msgid ""
+"Frappe Intelligence installed. Open AI Settings to configure your AI provider (Ollama or Claude). Run  bench fi-"
+"check-deps  to verify dependencies."
+msgstr ""
+"تم تثبيت Frappe Intelligence. افتح إعدادات الذكاء الاصطناعي لإعداد مزوّد الخدمة (Ollama أو Claude). شغّل  bench fi-"
+"check-deps  للتحقق من المتطلبات."
+
+#. Description of the 'Target DocType' (Link) field in DocType 'AI Workflow
+#. Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:53
+msgid "Frappe document type to create or update at this step."
+msgstr "نوع مستند Frappe الذي يُنشأ أو يُحدَّث في هذه الخطوة."
+
+#. Description of the 'Knowledge Entries' (Table) field in DocType 'AI
+#. Knowledge Pack'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:71
+msgid "Free-text knowledge snippets retrieved as context when users ask related questions."
+msgstr "مقتطفات معرفية نصية حرة تُسترجع كسياق عندما يطرح المستخدمون أسئلة ذات صلة."
+
+#. Description of the 'Callback Method (dotted path)' (Data) field in DocType
+#. 'AI Post Processor'
+#: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:30
+msgid "Fully-qualified Python callable, e.g. hawya.intelligence.handlers.fill_facility_address"
+msgstr "دالة Python قابلة للاستدعاء بمسارها الكامل، مثل hawya.intelligence.handlers.fill_facility_address"
+
+#. Option for the 'Provider' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:80
+msgid "Gemini"
+msgstr "Gemini"
+
+#. Label of the gemini_api_key (Password) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:102
+msgid "Gemini API Key"
+msgstr "مفتاح Gemini API"
+
+#. Label of the gemini_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:95
+msgid "Gemini Configuration"
+msgstr "إعدادات Gemini"
+
+#. Label of the gemini_model (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:114
+msgid "Gemini Model"
+msgstr "نموذج Gemini"
+
+#: frappe_intelligence/agent/suggestions.py:56
+msgid "Getting started"
+msgstr "البدء"
+
+#. Option for the 'Feedback' (Select) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:74
+msgid "Good"
+msgstr "جيدة"
+
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:89
+msgid "Good answer"
+msgstr "إجابة جيدة"
+
+#. Description of the 'Gemini API Key' (Password) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:99
+msgid "Google API key. Get one at aistudio.google.com (free tier available)."
+msgstr "مفتاح API من Google. احصل عليه من aistudio.google.com (تتوفر باقة مجانية)."
+
+#: frappe_intelligence/public/js/assistant/components/WorkflowBar.vue:2
+msgid "Guided workflow"
+msgstr "سير عمل موجّه"
+
+#: frappe_intelligence/public/js/assistant/components/EmptyState.vue:26
+msgid "Guided workflows"
+msgstr "سير العمل الموجّه"
+
+#: frappe_intelligence/agent/suggestions.py:48
+msgid "HR"
+msgstr "الموارد البشرية"
+
+#. Option for the 'Model Preference' (Select) field in DocType 'AI Document
+#. Template'
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:47
+msgid "Heuristic"
+msgstr "استدلالي"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:25
+msgid "Hide raw text"
+msgstr "إخفاء النص الخام"
+
+#: frappe_intelligence/public/js/assistant/components/Panel.vue:19
+msgid "History"
+msgstr "السجل"
+
+#: frappe_intelligence/public/js/assistant/components/EmptyState.vue:53
+#, python-brace-format
+msgid "How can I help, {0}?"
+msgstr "كيف يمكنني المساعدة يا {0}؟"
+
+#: frappe_intelligence/public/js/assistant/components/EmptyState.vue:53
+msgid "How can I help?"
+msgstr "كيف يمكنني المساعدة؟"
+
+#: frappe_intelligence/agent/suggestions.py:52
+msgid "How many active employees do we have per department?"
+msgstr "كم عدد الموظفين النشطين في كل قسم؟"
+
+#: frappe_intelligence/agent/suggestions.py:44
+msgid "How many items do we have in stock?"
+msgstr "كم عدد الأصناف المتوفرة في المخزون؟"
+
+#: frappe_intelligence/agent/suggestions.py:27
+msgid "How many open sales orders do we have?"
+msgstr "كم عدد أوامر البيع المفتوحة لدينا؟"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:33
+msgid "Human label"
+msgstr "التسمية المقروءة"
+
+#. Description of the 'Display Label' (Data) field in DocType 'AI Document
+#. Requirement'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:44
+msgid "Human-readable label shown in the widget checklist and bubble."
+msgstr "تسمية مقروءة تظهر في قائمة التحقق والفقاعة داخل الأداة."
+
+#. Description of the 'Title' (Data) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:48
+msgid "Human-readable name, e.g. Service Request."
+msgstr "اسم مقروء، مثل طلب خدمة."
+
+#: frappe_intelligence/public/js/assistant/components/EmptyState.vue:7
+msgid "I can look up your records, run reports and explain any screen."
+msgstr "يمكنني البحث في سجلاتك وتشغيل التقارير وشرح أي شاشة."
+
+#: frappe_intelligence/workflows/records.py:33
+#, python-brace-format
+msgid "I opened a new {0} with these details. Check it and save it."
+msgstr "فتحت {0} جديدًا بهذه التفاصيل. راجعه واحفظه."
+
+#: frappe_intelligence/agent/loop.py:89
+#, python-brace-format
+msgid "I stopped after {0} steps. Ask me to continue if you need more."
+msgstr "توقفت بعد {0} خطوات. اطلب مني المتابعة إذا احتجت إلى المزيد."
+
+#. Description of the 'Voice Transcription Language' (Data) field in DocType
+#. 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:222
+msgid "ISO 639-1 code for voice input (e.g. 'ar', 'en'). Leave empty to auto-detect."
+msgstr "رمز ISO 639-1 للإدخال الصوتي (مثل 'ar'، 'en'). اتركه فارغًا للكشف التلقائي."
+
+#. Description of the 'Enable Ollama Fallback' (Check) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:86
+msgid ""
+"If the selected provider fails (unreachable, wrong key, rate-limited), automatically retry with Ollama. Requires "
+"Ollama to be installed and running."
+msgstr ""
+"إذا فشل مزوّد الخدمة المحدد (تعذّر الوصول إليه، أو المفتاح غير صحيح، أو تجاوز حد الطلبات)، تُعاد المحاولة تلقائيًا "
+"باستخدام Ollama. يتطلب تثبيت Ollama وتشغيله."
+
+#: frappe_intelligence/public/js/assistant/uploads.js:24
+msgid "Image"
+msgstr "صورة"
+
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.py:38
+#, python-brace-format
+msgid "Imported {0} template(s), skipped {1} (already exist). Added {2} knowledge entry/entries."
+msgstr "تم استيراد {0} قالب، وتخطي {1} (موجودة مسبقًا). تمت إضافة {2} إدخال معرفة."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:29
+msgid "Inactive"
+msgstr "غير نشط"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:5
+msgid "Injected into the agent's system prompt. Also used for scope enforcement."
+msgstr "يُضاف إلى موجّه النظام للوكيل. ويُستخدم أيضًا لفرض النطاق."
+
+#. Label of a Desktop Icon
+#. Title of a Workspace Sidebar
+#: frappe_intelligence/desktop_icon/intelligence.json:10 frappe_intelligence/workspace_sidebar/intelligence.json:110
+msgid "Intelligence"
+msgstr "الذكاء الاصطناعي"
+
+#: frappe_intelligence/utils/file_utils.py:38 frappe_intelligence/utils/file_utils.py:87
+msgid "Invalid file URL. Only /files/ and /private/files/ URLs are accepted."
+msgstr "رابط ملف غير صالح. تُقبل فقط الروابط التي تبدأ بـ /files/ و /private/files/."
+
+#: frappe_intelligence/documents/reader.py:119
+msgid "Invalid file URL. Only /files/ and /private/files/ are accepted."
+msgstr "رابط ملف غير صالح. لا يُقبل إلا /files/ و/private/files/."
+
+#. Label of the is_active (Check) field in DocType 'AI Document Requirement'
+#. Label of the is_active (Check) field in DocType 'AI Document Template'
+#. Label of the is_active (Check) field in DocType 'AI Knowledge Pack'
+#. Label of the is_active (Check) field in DocType 'AI Post Processor'
+#. Label of the is_active (Check) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:49
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:53
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:42
+#: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:41
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:53
+msgid "Is Active"
+msgstr "نشط"
+
+#. Label of the is_error (Check) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:59
+msgid "Is Error"
+msgstr "خطأ"
+
+#. Label of the json_file (Attach) field in DocType 'AI Knowledge Pack'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:58
+msgid "JSON File"
+msgstr "ملف JSON"
+
+#. Description of the 'Required Fields' (JSON) field in DocType 'AI Workflow
+#. Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:71
+#, python-brace-format
+msgid "JSON object mapping fieldname to display label, e.g. {\"full_name\": \"Full Name\", \"email\": \"Email\"}."
+msgstr "كائن JSON يربط اسم الحقل بالتسمية المعروضة، مثل {\"full_name\": \"Full Name\", \"email\": \"Email\"}."
+
+#. Label of the keep_model_loaded (Check) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:260
+msgid "Keep Model Loaded"
+msgstr "إبقاء النموذج محمّلًا"
+
+#. Description of the 'Keep Model Loaded' (Check) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:257
+msgid ""
+"Keep the Ollama model in RAM between requests. Eliminates cold-start delay (10–30 s) at the cost of permanent memory "
+"usage (amount varies by the Ollama model size set in the Ollama Configuration section)."
+msgstr ""
+"إبقاء نموذج Ollama في الذاكرة RAM بين الطلبات. يلغي تأخير بدء التشغيل البارد (10–30 ثانية) مقابل استهلاك دائم للذاكرة"
+" (يختلف مقداره حسب حجم نموذج Ollama المحدد في قسم إعدادات Ollama)."
+
+#: frappe_intelligence/api/writer.py:42
+#, python-brace-format
+msgid "Keep the description under {0} characters."
+msgstr "اجعل الوصف أقل من {0} حرفًا."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:15
+msgid "Key"
+msgstr "المفتاح"
+
+#. Label of the knowledge_section (Section Break) field in DocType 'AI
+#. Knowledge Pack'
+#. Label of the knowledge_entries (Table) field in DocType 'AI Knowledge Pack'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:64
+msgid "Knowledge Entries"
+msgstr "إدخالات المعرفة"
+
+#. Label of the pack (Link) field in DocType 'AI Workflow Knowledge Pack'
+#. Label of a Workspace Sidebar Item
+#: frappe_intelligence/intelligence/doctype/ai_workflow_knowledge_pack/ai_workflow_knowledge_pack.json:15
+#: frappe_intelligence/workspace_sidebar/intelligence.json:61
+msgid "Knowledge Pack"
+msgstr "حزمة المعرفة"
+
+#. Label of the section_break_knowledge (Section Break) field in DocType 'AI
+#. Workflow'
+#. Label of the knowledge_packs (Table) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:111
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:103
+msgid "Knowledge Packs"
+msgstr "حزم المعرفة"
+
+#. Description of the 'Content' (Long Text) field in DocType 'AI Knowledge
+#. Entry'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_entry/ai_knowledge_entry.json:25
+msgid "Knowledge content retrieved as context for relevant chat queries."
+msgstr "محتوى معرفي يُسترجع كسياق لاستفسارات المحادثة ذات الصلة."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:4
+msgid "Knowledge packs injected into the agent's context for this workflow"
+msgstr "حزم المعرفة التي تُضاف إلى سياق الوكيل في سير العمل هذا"
+
+#. Label of the llm_hint (Text) field in DocType 'AI Extraction Rule'
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:57
+msgid "LLM Hint"
+msgstr "تلميح للنموذج اللغوي"
+
+#. Label of the label (Data) field in DocType 'AI Extraction Rule'
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:29
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:18
+msgid "Label"
+msgstr "التسمية"
+
+#. Label of the language (Link) field in DocType 'AI Response Language'
+#: frappe_intelligence/intelligence/doctype/ai_response_language/ai_response_language.json:16
+msgid "Language"
+msgstr "اللغة"
+
+#. Description of the 'Response Language' (Table) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:211
+msgid ""
+"Language the AI will use when replying to text and voice commands. \n"
+"Default: 'Auto' detects the language from each message."
+msgstr ""
+"اللغة التي سيستخدمها الذكاء الاصطناعي عند الرد على الأوامر النصية والصوتية. \n"
+"الافتراضي: 'Auto' يكتشف اللغة من كل رسالة."
+
+#. Label of the last_user_message_at (Datetime) field in DocType 'AI
+#. Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:75
+msgid "Last User Message At"
+msgstr "وقت آخر رسالة من المستخدم"
+
+#. Description of the 'Base URL' (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:166
+msgid ""
+"Leave empty for OpenAI. Set it to use an OpenAI-compatible service such as Azure OpenAI, OpenRouter, Groq or a vLLM "
+"server."
+msgstr ""
+"اتركه فارغًا لاستخدام OpenAI. اضبطه لاستخدام خدمة متوافقة مع OpenAI مثل Azure OpenAI أو OpenRouter أو Groq أو خادم "
+"vLLM."
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:10
+msgid "Leave this page out"
+msgstr "استبعاد هذه الصفحة"
+
+#. Description of the 'Allow Agent Mode' (Check) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:342
+msgid ""
+"Let the assistant prepare changes (create, update, submit, cancel, delete). Every change is shown to the user and "
+"runs only after they confirm it."
+msgstr ""
+"يتيح للمساعد تجهيز التغييرات (إنشاء، تحديث، اعتماد، إلغاء، حذف). يُعرض كل تغيير على المستخدم ولا يُنفَّذ إلا بعد "
+"تأكيده."
+
+#. Description of the 'Workflow' (Link) field in DocType 'AI Document
+#. Requirement'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:62
+msgid "Link to the AI Workflow this requirement belongs to. Leave blank if not workflow-specific."
+msgstr "رابط سير عمل الذكاء الاصطناعي الذي ينتمي إليه هذا المتطلب. اتركه فارغًا إذا لم يكن خاصًا بسير عمل معيّن."
+
+#. Label of the linked_doctype (Link) field in DocType 'AI Conversation'
+#. Label of the linked_doctype (Link) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:122
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:89
+msgid "Linked DocType"
+msgstr "نوع المستند المرتبط"
+
+#. Label of the linked_docname (Dynamic Link) field in DocType 'AI
+#. Conversation'
+#. Label of the linked_docname (Dynamic Link) field in DocType 'AI Processing
+#. Log'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:128
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:96
+msgid "Linked Document"
+msgstr "المستند المرتبط"
+
+#. Label of the linked_section (Section Break) field in DocType 'AI
+#. Conversation'
+#. Label of the section_break_link (Section Break) field in DocType 'AI
+#. Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:117
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:83
+msgid "Linked Record"
+msgstr "السجل المرتبط"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:11
+msgid "Load from DocType"
+msgstr "تحميل من نوع المستند"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:7
+msgid "Loading workflow…"
+msgstr "جارٍ تحميل سير العمل…"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:11
+msgid "Loading…"
+msgstr "جارٍ التحميل…"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:21
+msgid "Mandatory"
+msgstr "إلزامي"
+
+#. Description of the 'Enable AI on WhatsApp' (Check) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:274
+msgid "Master switch. When enabled, incoming WhatsApp messages are processed by the AI engine."
+msgstr "المفتاح الرئيسي. عند تفعيله، يعالج محرك الذكاء الاصطناعي رسائل واتساب الواردة."
+
+#. Label of the whatsapp_max_reply_chars (Int) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:305
+msgid "Max Reply Length (chars)"
+msgstr "أقصى طول للرد (بالأحرف)"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:29
+msgid "Message"
+msgstr "الرسالة"
+
+#: frappe_intelligence/api/chat.py:134
+msgid "Message is empty."
+msgstr "الرسالة فارغة."
+
+#. Description of the 'Completion Message' (Small Text) field in DocType 'AI
+#. Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:145
+msgid "Message shown to the user when all workflow steps are complete. Defaults to a generic confirmation if left blank."
+msgstr "الرسالة التي تظهر للمستخدم عند إكمال جميع خطوات سير العمل. إذا تُركت فارغة تُستخدم رسالة تأكيد عامة."
+
+#. Label of the messages_section (Section Break) field in DocType 'AI
+#. Conversation'
+#. Label of the messages (Table) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:134
+msgid "Messages"
+msgstr "الرسائل"
+
+#: frappe_intelligence/api/chat.py:136
+#, python-brace-format
+msgid "Messages are limited to {0} characters."
+msgstr "الحد الأقصى للرسائل {0} حرفًا."
+
+#. Description of the 'Confidence Threshold (override)' (Float) field in
+#. DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json
+msgid ""
+"Minimum confidence score (0.0–1.0) for document extraction auto-accept. Overrides the global AI Settings value for "
+"sessions on this workflow. Leave 0 to use the global setting."
+msgstr ""
+"أدنى درجة ثقة (0.0–1.0) لقبول استخراج المستندات تلقائيًا. تتجاوز القيمة العامة في إعدادات الذكاء الاصطناعي للجلسات "
+"على سير العمل هذا. اتركها 0 لاستخدام الإعداد العام."
+
+#. Description of the 'Confidence Threshold' (Float) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:234
+msgid ""
+"Minimum confidence score (0.0–1.0) to auto-accept extraction results. Below this threshold the widget pauses and asks"
+" the user to review before post-processors fire."
+msgstr ""
+"أدنى درجة ثقة (0.0–1.0) لقبول نتائج الاستخراج تلقائيًا. إذا كانت الدرجة أقل من هذا الحد، يتوقف المساعد ويطلب من "
+"المستخدم المراجعة قبل تشغيل المعالجات اللاحقة."
+
+#. Label of the mode (Select) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:40
+msgid "Mode"
+msgstr "الوضع"
+
+#. Label of the model_tab (Tab Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:66
+msgid "Model"
+msgstr "النموذج"
+
+#. Description of the 'OpenAI Model' (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:160
+msgid "Model ID your OpenAI account (or compatible service) offers."
+msgstr "معرّف النموذج الذي يوفّره حسابك في OpenAI (أو خدمة متوافقة)."
+
+#. Description of the 'Claude Model' (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:189
+msgid "Model ID, for example claude-opus-5-5, claude-sonnet-5-5 or claude-haiku-5-5."
+msgstr "معرّف النموذج، مثل claude-opus-5-5 أو claude-sonnet-5-5 أو claude-haiku-5-5."
+
+#. Description of the 'Gemini Model' (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:111
+msgid "Model ID. gemini-2.0-flash is fast and cheap; gemini-1.5-pro is more capable."
+msgstr "معرّف النموذج. gemini-2.0-flash سريع ومنخفض التكلفة، وgemini-1.5-pro أعلى قدرة."
+
+#. Label of the model_preference (Select) field in DocType 'AI Document
+#. Template'
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:46
+msgid "Model Preference"
+msgstr "تفضيل النموذج"
+
+#. Description of the 'Ollama Model' (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:131
+msgid "Model name to use for extraction and chat (must be pulled in Ollama)."
+msgstr "اسم النموذج المستخدم في الاستخراج والمحادثة (يجب تنزيله في Ollama)."
+
+#. Description of the 'LLM Hint' (Text) field in DocType 'AI Extraction Rule'
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:58
+msgid "Natural-language prompt hint passed to the Vision-Language Model."
+msgstr "تلميح بلغة طبيعية يُمرَّر إلى نموذج الرؤية واللغة."
+
+#: frappe_intelligence/public/js/assistant/components/ProposalCard.vue:6
+msgid "Needs approval"
+msgstr "بحاجة إلى موافقة"
+
+#: frappe_intelligence/public/js/assistant/components/Panel.vue:16
+msgid "New chat"
+msgstr "محادثة جديدة"
+
+#: frappe_intelligence/public/js/assistant/page_context.js:22
+#, python-brace-format
+msgid "New {0}"
+msgstr "{0} جديد"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:57
+msgid "Next Step"
+msgstr "الخطوة التالية"
+
+#. Label of the next_step_key (Data) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:87
+msgid "Next Step Key"
+msgstr "مفتاح الخطوة التالية"
+
+#: frappe_intelligence/public/js/assistant/tables.js:85
+msgid "Next page"
+msgstr "الصفحة التالية"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/WhatsAppFlow.vue:27
+msgid "No WhatsApp flows found. Create one in the WhatsApp Flow DocType."
+msgstr "لم يتم العثور على نماذج واتساب. أنشئ واحدًا في نوع المستند WhatsApp Flow."
+
+#: frappe_intelligence/public/js/assistant/components/Panel.vue:58
+msgid "No conversations yet"
+msgstr "لا توجد محادثات بعد"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:27
+msgid "No document requirements for this step."
+msgstr "لا توجد متطلبات مستندات لهذه الخطوة."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:16
+msgid "No knowledge packs assigned."
+msgstr "لم تُعيَّن أي حزم معرفة."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:43
+msgid "No packs found."
+msgstr "لم يُعثر على حزم."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:23
+msgid "No post-processors assigned to this step."
+msgstr "لم تُعيَّن أي معالجات لاحقة لهذه الخطوة."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:51
+msgid "No processors found."
+msgstr "لم يُعثر على معالجات."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/PromptPreview.vue:18
+msgid "No prompt yet."
+msgstr "لا يوجد موجّه بعد."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:39
+msgid "No required fields yet."
+msgstr "لا توجد حقول مطلوبة بعد."
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:196
+msgid "No speech was heard. Please try again."
+msgstr "لم يُسمع أي كلام. حاول مرة أخرى."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepSequencer.vue:38
+msgid "No steps yet. Click the Add Step button to begin."
+msgstr "لا توجد خطوات بعد. انقر على زر إضافة خطوة للبدء."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:55
+msgid "No templates found."
+msgstr "لم يُعثر على قوالب."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:34
+msgid "No workflows yet."
+msgstr "لا توجد مسارات عمل بعد."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/WhatsAppFlow.vue:16
+msgid "None"
+msgstr "لا شيء"
+
+#: frappe_intelligence/public/js/assistant/components/ReviewCard.vue:20
+msgid "Not found — enter or leave blank"
+msgstr "غير موجود — أدخله أو اتركه فارغًا"
+
+#: frappe_intelligence/agent/tools/changes.py:69
+msgid "Nothing is saved until you confirm."
+msgstr "لن يُحفظ شيء حتى تؤكد."
+
+#. Label of the off_topic (Check) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:66
+msgid "Off-topic"
+msgstr "خارج الموضوع"
+
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:18
+msgid "Off-topic · answered without AI"
+msgstr "خارج الموضوع · أُجيب دون الذكاء الاصطناعي"
+
+#. Option for the 'Provider' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:80
+msgid "Ollama"
+msgstr "Ollama"
+
+#. Label of the ollama_base_url (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:127
+msgid "Ollama Base URL"
+msgstr "عنوان URL الأساسي لـ Ollama"
+
+#. Label of the ollama_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:120
+msgid "Ollama Configuration"
+msgstr "إعدادات Ollama"
+
+#. Label of the ollama_model (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:134
+msgid "Ollama Model"
+msgstr "نموذج Ollama"
+
+#: frappe_intelligence/providers/ollama.py:31
+#, python-brace-format
+msgid "Ollama has no model {0}. Run: ollama pull {0}"
+msgstr "لا يوجد لدى Ollama النموذج {0}. شغّل: ollama pull {0}"
+
+#: frappe_intelligence/agent/tools/desk.py:24
+msgid "Only desk routes that start with /app/ can be opened."
+msgstr "لا يمكن فتح إلا مسارات المكتب التي تبدأ بـ /app/."
+
+#: frappe_intelligence/public/js/frappe_intelligence_launcher.bundle.js:81
+msgid "Open the Assistant"
+msgstr "فتح المساعد"
+
+#. Option for the 'Provider' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:80
+msgid "OpenAI"
+msgstr "OpenAI"
+
+#. Label of the openai_api_key (Password) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:157
+msgid "OpenAI API Key"
+msgstr "مفتاح API لـ OpenAI"
+
+#. Label of the openai_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:151
+msgid "OpenAI Configuration"
+msgstr "إعدادات OpenAI"
+
+#. Label of the openai_model (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:163
+msgid "OpenAI Model"
+msgstr "نموذج OpenAI"
+
+#: frappe_intelligence/agent/tools/desk.py:123
+#, python-brace-format
+msgid "Opening a new {doctype}"
+msgstr "جارٍ فتح {doctype} جديد"
+
+#: frappe_intelligence/agent/tools/desk.py:100
+msgid "Opening a page"
+msgstr "جارٍ فتح صفحة"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:22
+msgid "Opening message shown to the user at this step"
+msgstr "الرسالة الافتتاحية التي تظهر للمستخدم في هذه الخطوة"
+
+#. Description of the 'Prompt to User' (Small Text) field in DocType 'AI
+#. Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:42
+msgid "Opening message shown when the agent enters this step."
+msgstr "الرسالة الافتتاحية التي تظهر عند دخول الوكيل هذه الخطوة."
+
+#: frappe_intelligence/agent/tools/desk.py:108 frappe_intelligence/agent/tools/frappe_data.py:16
+#, python-brace-format
+msgid "Opening {doctype} {name}"
+msgstr "جارٍ فتح {doctype} {name}"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:79
+msgid "Optional Python callable"
+msgstr "دالة Python اختيارية"
+
+#. Description of the 'Completion Check (Python callable)' (Data) field in
+#. DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:82
+msgid ""
+"Optional dotted Python path e.g. myapp.validators.check_customer_complete. Called with (session_doc, collected_data)."
+" Must return bool."
+msgstr ""
+"مسار Python اختياري مفصول بنقاط، مثل myapp.validators.check_customer_complete. يُستدعى مع (session_doc, "
+"collected_data). يجب أن يُرجع قيمة bool."
+
+#. Label of the step_order (Int) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:25
+msgid "Order"
+msgstr "الترتيب"
+
+#. Label of the section_break_2 (Section Break) field in DocType 'AI Training
+#. Pair'
+#. Label of the original_extraction (JSON) field in DocType 'AI Training Pair'
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:63
+msgid "Original Extraction"
+msgstr "الاستخراج الأصلي"
+
+#. Label of the out_of_scope_reply (Small Text) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:94
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:38
+msgid "Out-of-Scope Reply"
+msgstr "رد خارج النطاق"
+
+#: frappe_intelligence/public/js/assistant/uploads.js:23
+msgid "PDF"
+msgstr "ملف PDF"
+
+#. Label of the pack_name (Data) field in DocType 'AI Knowledge Pack'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:25
+msgid "Pack Name"
+msgstr "اسم الحزمة"
+
+#. Label of the section_break_2 (Section Break) field in DocType 'AI Knowledge
+#. Pack'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:53
+msgid "Package File"
+msgstr "ملف الحزمة"
+
+#. Option for the 'Extraction Mode' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:252
+msgid "Parallel"
+msgstr "متوازٍ"
+
+#. Option for the 'Status' (Select) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:51
+msgid "Paused"
+msgstr "متوقفة مؤقتًا"
+
+#. Option for the 'Approval' (Select) field in DocType 'AI Conversation
+#. Message'
+#. Option for the 'Status' (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:82
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:57
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#. Option for the 'Extraction Mode' (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:252
+msgid "Per Field"
+msgstr "لكل حقل"
+
+#: frappe_intelligence/workflows/turn.py:62
+#, python-brace-format
+msgid "Please tell me: {0}"
+msgstr "يرجى إخباري: {0}"
+
+#. Option for the 'Channel' (Select) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:63
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:90
+msgid "Portal"
+msgstr "البوابة"
+
+#. Description of the 'Channel ID' (Data) field in DocType 'AI Conversation'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:67
+msgid "Portal user or WhatsApp number the conversation belongs to. Empty for desk conversations."
+msgstr "مستخدم البوابة أو رقم واتساب الذي تتبع له المحادثة. فارغ لمحادثات المكتب."
+
+#. Label of the processor (Link) field in DocType 'AI Workflow Post Processor'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_post_processor/ai_workflow_post_processor.json:23
+msgid "Post Processor"
+msgstr "المعالج اللاحق"
+
+#. Label of the post_processors (Table) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:127
+msgid "Post-Processors"
+msgstr "المعالجات اللاحقة"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:4
+msgid "Post-processors run after the agent completes this step"
+msgstr "تعمل المعالجات اللاحقة بعد أن يُكمل الوكيل هذه الخطوة"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:266
+msgid "Prepares changes. You approve each one first."
+msgstr "يُعدّ التغييرات، وتوافق على كل منها أولًا."
+
+#. Label of the preview (JSON) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:88
+msgid "Preview"
+msgstr "معاينة"
+
+#: frappe_intelligence/public/js/assistant/tables.js:84
+msgid "Previous page"
+msgstr "الصفحة السابقة"
+
+#. Option for the 'Status' (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:57
+msgid "Processing"
+msgstr "قيد المعالجة"
+
+#. Label of the processing_log (Link) field in DocType 'AI Training Pair'
+#. Label of a Workspace Sidebar Item
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:33
+#: frappe_intelligence/workspace_sidebar/intelligence.json:73
+msgid "Processing Log"
+msgstr "سجل المعالجة"
+
+#: frappe_intelligence/api/documents.py:36
+#, python-brace-format
+msgid "Processing log not found: {0}"
+msgstr "لم يتم العثور على سجل المعالجة: {0}"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/PromptPreview.vue:5
+msgid "Prompt Preview"
+msgstr "معاينة الموجّه"
+
+#. Label of the prompt_to_user (Small Text) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:41
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:17
+msgid "Prompt to User"
+msgstr "الرسالة إلى المستخدم"
+
+#: frappe_intelligence/public/js/assistant/components/ProposalCard.vue:2
+msgid "Proposed change"
+msgstr "التغيير المقترح"
+
+#. Label of the raw_provider (Data) field in DocType 'AI Conversation Message'
+#. Label of the ai_provider (Select) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:122
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:79
+msgid "Provider"
+msgstr "مزوّد الخدمة"
+
+#. Label of the raw (JSON) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:117
+msgid "Provider Payload"
+msgstr "بيانات مزوّد الخدمة"
+
+#. Description of the 'Regex Pattern' (Small Text) field in DocType 'AI
+#. Extraction Rule'
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:52
+msgid "Python-compatible regex to extract this field."
+msgstr "تعبير نمطي متوافق مع Python لاستخراج هذا الحقل."
+
+#. Label of the section_break_2 (Section Break) field in DocType 'AI Processing
+#. Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:102
+msgid "Raw OCR Text"
+msgstr "نص OCR الخام"
+
+#. Label of the raw_text (Long Text) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:107
+msgid "Raw Text"
+msgstr "النص الخام"
+
+#: frappe_intelligence/utils/optional.py:29
+msgid "Reading photos and scanned PDF pages needs the OCR package, which is not installed on this server."
+msgstr "تتطلب قراءة الصور وصفحات PDF الممسوحة ضوئيًا حزمة OCR، وهي غير مثبتة على هذا الخادم."
+
+#: frappe_intelligence/agent/tools/frappe_data.py:14
+#, python-brace-format
+msgid "Reading {doctype} fields"
+msgstr "جارٍ قراءة حقول {doctype}"
+
+#: frappe_intelligence/agent/tools/frappe_data.py:15
+#, python-brace-format
+msgid "Reading {doctype} list"
+msgstr "جارٍ قراءة قائمة {doctype}"
+
+#: frappe_intelligence/agent/tools/documents.py:40
+#, python-brace-format
+msgid "Reading {file_name}"
+msgstr "جارٍ قراءة {file_name}"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:259
+msgid "Reads and explains. Never changes data."
+msgstr "يقرأ ويشرح، ولا يغيّر البيانات أبدًا."
+
+#: frappe_intelligence/api/voice.py:34
+msgid "Recording not found."
+msgstr "لم يتم العثور على التسجيل الصوتي."
+
+#. Option for the 'Extraction Strategy' (Select) field in DocType 'AI
+#. Extraction Rule'
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:41
+msgid "Regex"
+msgstr "تعبير نمطي"
+
+#. Label of the regex_pattern (Small Text) field in DocType 'AI Extraction
+#. Rule'
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:51
+msgid "Regex Pattern"
+msgstr "نمط التعبير النمطي"
+
+#: frappe_intelligence/public/js/assistant/components/ProposalCard.vue:16
+msgid "Reject"
+msgstr "رفض"
+
+#. Option for the 'Approval' (Select) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:82
+msgid "Rejected"
+msgstr "مرفوض"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:12
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:17
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:23
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:19
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:35
+msgid "Remove"
+msgstr "إزالة"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepSequencer.vue:31
+msgid "Remove step"
+msgstr "إزالة الخطوة"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepSequencer.vue:106
+#, python-brace-format
+msgid "Remove step \"{0}\"? This cannot be undone."
+msgstr "إزالة الخطوة \"{0}\"؟ لا يمكن التراجع عن ذلك."
+
+#: frappe_intelligence/public/js/assistant/components/FileChip.vue:14
+#, python-brace-format
+msgid "Remove {0}"
+msgstr "إزالة {0}"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/PromptPreview.vue:15
+msgid "Rendering…"
+msgstr "جارٍ العرض…"
+
+#. Description of the 'Out-of-Scope Reply' (Small Text) field in DocType 'AI
+#. Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:95
+msgid ""
+"Reply returned immediately when the user's message is out of scope. No LLM tokens are consumed. Write it in the "
+"language your users expect."
+msgstr ""
+"الرد الذي يُرسل فورًا عندما تكون رسالة المستخدم خارج النطاق. لا تُستهلك أي رموز من النموذج اللغوي. اكتبه باللغة التي "
+"يتوقعها مستخدموك."
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:118
+msgid "Reply, or ask for a change to the proposal…"
+msgstr "ردّ، أو اطلب تعديلًا على المقترح…"
+
+#. Label of the section_break_fields (Section Break) field in DocType 'AI
+#. Workflow Step'
+#. Label of the required_fields (JSON) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:65
+msgid "Required Fields"
+msgstr "الحقول المطلوبة"
+
+#: frappe_intelligence/public/js/assistant/components/Panel.vue:7
+msgid "Resize"
+msgstr "تغيير الحجم"
+
+#. Label of the response_language (Table) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:214
+msgid "Response Language"
+msgstr "لغة الرد"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:39
+msgid "Returned immediately when the user's message is off-topic. No LLM tokens consumed."
+msgstr "يُرسل فورًا عندما تكون رسالة المستخدم خارج الموضوع. لا تُستهلك أي رموز من النموذج اللغوي."
+
+#: frappe_intelligence/public/js/assistant/components/ReviewCard.vue:9
+msgid "Review needed"
+msgstr "المراجعة مطلوبة"
+
+#. Label of the role (Select) field in DocType 'AI Conversation Message'
+#. Label of the role (Link) field in DocType 'AI Widget Role'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:30
+#: frappe_intelligence/intelligence/doctype/ai_widget_role/ai_widget_role.json:15
+msgid "Role"
+msgstr "الدور"
+
+#. Description of the 'Allowed Roles' (Table) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:373
+msgid "Roles allowed to see and use the widget. Leave empty to allow all logged-in users."
+msgstr "الأدوار المسموح لها برؤية المساعد واستخدامه. اتركه فارغًا للسماح لجميع المستخدمين المسجّلين."
+
+#: frappe_intelligence/agent/tools/reports.py:72
+#, python-brace-format
+msgid "Running {report_name}"
+msgstr "جارٍ تشغيل {report_name}"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:68
+msgid "Save"
+msgstr "حفظ"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:89
+msgid "Saved after every answer. You can leave and come back."
+msgstr "يُحفظ بعد كل إجابة، ويمكنك المغادرة والعودة."
+
+#: frappe_intelligence/agent/tools/changes.py:67
+msgid "Saved as Draft. You submit it."
+msgstr "حُفظ كمسودة. الاعتماد يكون منك."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:67
+msgid "Saving…"
+msgstr "جارٍ الحفظ…"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:92
+msgid "Scope"
+msgstr "النطاق"
+
+#. Label of the section_break_scope (Section Break) field in DocType 'AI
+#. Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:82
+msgid "Scope Definition"
+msgstr "تعريف النطاق"
+
+#. Label of the scope_description (Long Text) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:87
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:4
+msgid "Scope Description"
+msgstr "وصف النطاق"
+
+#. Label of the scope_similarity_threshold (Float) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:244
+msgid "Scope Similarity Threshold"
+msgstr "حد تشابه النطاق"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:36
+msgid "Search DocType…"
+msgstr "ابحث عن نوع المستند…"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:41
+msgid "Search templates…"
+msgstr "ابحث في القوالب…"
+
+#: frappe_intelligence/agent/tools/frappe_data.py:13
+msgid "Searching DocTypes"
+msgstr "جارٍ البحث في أنواع المستندات"
+
+#: frappe_intelligence/agent/tools/reports.py:58
+msgid "Searching reports"
+msgstr "جارٍ البحث في التقارير"
+
+#: frappe_intelligence/agent/tools/knowledge.py:51
+msgid "Searching the knowledge base"
+msgstr "جارٍ البحث في قاعدة المعرفة"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:29
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:37
+msgid "Search…"
+msgstr "بحث…"
+
+#. Description of the 'Timeout (seconds)' (Int) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:142
+msgid "Seconds to wait for the AI provider before giving up."
+msgstr "عدد الثواني التي يُنتظر فيها مزوّد خدمة الذكاء الاصطناعي قبل التوقف."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:35
+msgid "Select Document Template"
+msgstr "اختر قالب مستند"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:23
+msgid "Select Knowledge Pack"
+msgstr "اختر حزمة معرفة"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:31
+msgid "Select Post-Processor"
+msgstr "اختر معالجًا لاحقًا"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:86
+msgid "Select a step to edit"
+msgstr "اختر خطوة لتعديلها"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/PromptPreview.vue:11
+msgid "Select a step to preview its rendered prompt."
+msgstr "اختر خطوة لمعاينة موجّهها بعد العرض."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:18
+msgid "Select a workflow to edit, or create a new one."
+msgstr "اختر سير عمل لتعديله، أو أنشئ سير عمل جديدًا."
+
+#: frappe_intelligence/agent/suggestions.py:24
+msgid "Selling"
+msgstr "المبيعات"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:81
+msgid "Send"
+msgstr "إرسال"
+
+#: frappe_intelligence/api/chat.py:145
+#, python-brace-format
+msgid "Send at most {0} files with a message."
+msgstr "أرسل {0} ملفات كحد أقصى مع الرسالة."
+
+#. Description of the 'AI Conversation' (Link) field in DocType 'AI Processing
+#. Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:78
+msgid "Session that triggered this document processing job."
+msgstr "الجلسة التي بدأت مهمة معالجة هذا المستند."
+
+#. Description of the 'Applied' (Check) field in DocType 'AI Training Pair'
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:58
+msgid "Set to 1 once this correction has been incorporated into the model or rules."
+msgstr "تُضبط على 1 بعد دمج هذا التصحيح في النموذج أو القواعد."
+
+#. Description of the 'Topic' (Data) field in DocType 'AI Knowledge Entry'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_entry/ai_knowledge_entry.json:18
+msgid "Short label identifying what this entry covers (e.g. 'Payment Terms', 'Supplier Onboarding')."
+msgstr "تسمية قصيرة تحدد ما يغطيه هذا الإدخال (مثل 'شروط الدفع'، 'تسجيل الموردين')."
+
+#. Description of the 'Document Type Key' (Data) field in DocType 'AI
+#. Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:41
+msgid "Slug identifier of the matched template (e.g. saudi_cr)."
+msgstr "المعرّف النصي للقالب المطابق (مثل saudi_cr)."
+
+#. Description of the 'Workflow Key' (Data) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:40
+msgid "Slug identifier used in code, e.g. service_request. Must be unique."
+msgstr "معرّف نصي يُستخدم في الكود، مثل service_request. يجب أن يكون فريدًا."
+
+#. Description of the 'Step Key' (Data) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:35
+msgid "Slug identifier, e.g. create_customer. Must be unique within a workflow."
+msgstr "معرّف نصي، مثل create_customer. يجب أن يكون فريدًا داخل سير العمل."
+
+#. Description of the 'Document Type Key' (Data) field in DocType 'AI Document
+#. Requirement'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:34
+msgid "Slug matching the AI Document Template (e.g. saudi_national_address)."
+msgstr "معرّف نصي يطابق قالب مستند الذكاء الاصطناعي (مثل saudi_national_address)."
+
+#. Description of the 'Max Reply Length (chars)' (Int) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:302
+msgid "Soft target. Replies longer than this are split into multiple messages."
+msgstr "حد تقريبي. تُقسَّم الردود الأطول من ذلك إلى عدة رسائل."
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:239
+msgid "Start a guided workflow"
+msgstr "بدء سير عمل موجّه"
+
+#. Label of the status (Select) field in DocType 'AI Conversation'
+#. Label of the processing_status (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:50
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:56
+msgid "Status"
+msgstr "الحالة"
+
+#. Label of the step_key (Data) field in DocType 'AI Document Requirement'
+#. Label of the step_key (Data) field in DocType 'AI Workflow Post Processor'
+#. Label of the step_key (Data) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:67
+#: frappe_intelligence/intelligence/doctype/ai_workflow_post_processor/ai_workflow_post_processor.json:16
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:33
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:5
+msgid "Step Key"
+msgstr "مفتاح الخطوة"
+
+#. Label of the section_break_processors (Section Break) field in DocType 'AI
+#. Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:122
+msgid "Step Post-Processors"
+msgstr "المعالجات اللاحقة للخطوة"
+
+#: frappe_intelligence/public/js/assistant/components/WorkflowBar.vue:62
+#, python-brace-format
+msgid "Step {0} of {1} · {2}"
+msgstr "الخطوة {0} من {1} · {2}"
+
+#. Label of the steps (Table) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:105
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepSequencer.vue:4
+msgid "Steps"
+msgstr "الخطوات"
+
+#: frappe_intelligence/agent/suggestions.py:40
+msgid "Stock"
+msgstr "المخزون"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:79
+msgid "Stop"
+msgstr "إيقاف"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:176
+msgid "Stop recording"
+msgstr "إيقاف التسجيل"
+
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:34
+msgid "Stopped."
+msgstr "تم الإيقاف."
+
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:12
+msgid "Stopping…"
+msgstr "جارٍ الإيقاف…"
+
+#: frappe_intelligence/agent/tools/changes.py:149
+#, python-brace-format
+msgid "Submit {0} {1}"
+msgstr "اعتماد {0} {1}"
+
+#: frappe_intelligence/agent/tools/changes.py:195
+#, python-brace-format
+msgid "Submitting {doctype} {name}"
+msgstr "جارٍ اعتماد {doctype} {name}"
+
+#. Name of a role
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:159
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:87
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:97
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:92
+#: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:61
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:145
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:401
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:98
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:174
+msgid "System Manager"
+msgstr "مدير النظام"
+
+#. Label of the system_prompt (Long Text) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:208
+msgid "System Prompt"
+msgstr "موجّه النظام"
+
+#. Label of the target_doctype (Link) field in DocType 'AI Document
+#. Requirement'
+#. Label of the target_doctype (Link) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:23
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:51
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:29
+msgid "Target DocType"
+msgstr "نوع المستند المستهدف"
+
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.js:9
+msgid "Test Connection"
+msgstr "اختبار الاتصال"
+
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.js:10
+msgid "Testing connection…"
+msgstr "جارٍ اختبار الاتصال…"
+
+#: frappe_intelligence/channels/whatsapp.py:189
+msgid "Thank you! Your request has been submitted."
+msgstr "شكرًا لك! تم إرسال طلبك."
+
+#: frappe_intelligence/workflows/turn.py:192
+msgid "Thank you, that's everything. Your answers:"
+msgstr "شكرًا لك، هذا كل شيء. إجاباتك:"
+
+#: frappe_intelligence/workflows/scope.py:60
+msgid "That's outside this workflow."
+msgstr "هذا خارج نطاق سير العمل هذا."
+
+#: frappe_intelligence/agent/loop.py:216
+msgid "The AI declined to answer this request."
+msgstr "رفض الذكاء الاصطناعي الإجابة عن هذا الطلب."
+
+#: frappe_intelligence/agent/loop.py:217
+msgid "The AI returned an empty answer. Please try rephrasing."
+msgstr "أعاد الذكاء الاصطناعي إجابة فارغة. يرجى إعادة صياغة السؤال."
+
+#: frappe_intelligence/writer/text.py:34
+msgid "The AI returned no text. Please describe it differently."
+msgstr "لم يُرجع الذكاء الاصطناعي أي نص. يرجى وصفه بطريقة مختلفة."
+
+#. Description of the 'Target DocType' (Link) field in DocType 'AI Document
+#. Requirement'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:26
+msgid "The Frappe DocType that requires this document (e.g. Facility)."
+msgstr "نوع المستند في Frappe الذي يتطلب هذا المستند (مثل Facility)."
+
+#. Description of the 'Linked DocType' (Link) field in DocType 'AI Processing
+#. Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:86
+msgid "The Frappe document this log belongs to (set by the widget)."
+msgstr "مستند Frappe الذي ينتمي إليه هذا السجل (تحدده الأداة)."
+
+#: frappe_intelligence/agent/runs.py:80
+msgid "The assistant hit an unexpected error. Please try again."
+msgstr "واجه المساعد خطأً غير متوقع. يرجى المحاولة مرة أخرى."
+
+#: frappe_intelligence/agent/tools/changes.py:40
+#, python-brace-format
+msgid "The assistant is not allowed to change {0}."
+msgstr "لا يُسمح للمساعد بتعديل {0}."
+
+#: frappe_intelligence/agent/runs.py:35
+msgid "The assistant is still answering in this conversation."
+msgstr "لا يزال المساعد يجيب في هذه المحادثة."
+
+#: frappe_intelligence/public/js/assistant/voice.js:19
+msgid "The browser was not allowed to use the microphone."
+msgstr "لم يُسمح للمتصفح باستخدام الميكروفون."
+
+#: frappe_intelligence/agent/tools/documents.py:24
+msgid "The file could not be read. It may be damaged or empty."
+msgstr "تعذّرت قراءة الملف. قد يكون تالفًا أو فارغًا."
+
+#: frappe_intelligence/public/js/assistant/uploads.js:16
+msgid "The file could not be uploaded."
+msgstr "تعذّر رفع الملف."
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:129
+msgid "The form changed before the text was ready."
+msgstr "تغيّر النموذج قبل أن يجهز النص."
+
+#. Description of the 'Provider Payload' (JSON) field in DocType 'AI
+#. Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:114
+msgid "The provider's own form of the turn, replayed unchanged to the same provider."
+msgstr "صيغة الدور الخاصة بمزوّد الخدمة، وتُعاد كما هي إلى المزوّد نفسه."
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:211
+msgid "The recording could not be turned into text."
+msgstr "تعذّر تحويل التسجيل إلى نص."
+
+#. Description of the 'Linked Document' (Dynamic Link) field in DocType 'AI
+#. Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:93
+msgid "The specific record this log was created for."
+msgstr "السجل المحدد الذي أُنشئ هذا السجل من أجله."
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:152
+msgid "The text could not be written. Please try again."
+msgstr "تعذّرت كتابة النص. يرجى المحاولة مرة أخرى."
+
+#: frappe_intelligence/agent/tools/__init__.py:142
+msgid "The tool failed unexpectedly."
+msgstr "فشلت الأداة بشكل غير متوقع."
+
+#. Description of the 'Feedback' (Select) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:70
+msgid "The user's rating of this answer."
+msgstr "تقييم المستخدم لهذه الإجابة."
+
+#: frappe_intelligence/workflows/steps.py:101
+msgid "These answers could not be checked. Please check them and send them again."
+msgstr "تعذّر التحقق من هذه الإجابات. يرجى مراجعتها وإرسالها مرة أخرى."
+
+#: frappe_intelligence/workflows/steps.py:107
+msgid "These answers did not pass this step's check."
+msgstr "لم تجتز هذه الإجابات التحقق الخاص بهذه الخطوة."
+
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:12
+msgid "Thinking…"
+msgstr "جارٍ التفكير…"
+
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.py:91
+msgid "This change is no longer waiting for a decision."
+msgstr "لم يعد هذا التغيير بانتظار قرار."
+
+#: frappe_intelligence/api/chat.py:168
+msgid "This conversation cannot be continued here."
+msgstr "لا يمكن متابعة هذه المحادثة هنا."
+
+#: frappe_intelligence/api/workflows.py:34
+msgid "This conversation is not a guided workflow."
+msgstr "هذه المحادثة ليست سير عمل موجّهًا."
+
+#: frappe_intelligence/utils/background.py:47
+msgid "This could not be done. Please try again."
+msgstr "تعذّر تنفيذ ذلك. يرجى المحاولة مرة أخرى."
+
+#: frappe_intelligence/agent/tools/reports.py:32
+msgid "This report is prepared in the background. Ask the user to open it from the desk."
+msgstr "يُعَدّ هذا التقرير في الخلفية. اطلب من المستخدم فتحه من المكتب."
+
+#: frappe_intelligence/public/js/shared/background.js:20
+msgid "This took too long. Please try again."
+msgstr "استغرق هذا وقتًا طويلًا. يرجى المحاولة مرة أخرى."
+
+#: frappe_intelligence/workflows/turn.py:52
+msgid "This workflow has no steps yet."
+msgstr "لا يحتوي سير العمل هذا على خطوات بعد."
+
+#: frappe_intelligence/api/workflows.py:20 frappe_intelligence/workflows/sessions.py:40
+#: frappe_intelligence/workflows/turn.py:70
+msgid "This workflow is not available here."
+msgstr "سير العمل هذا غير متاح هنا."
+
+#: frappe_intelligence/workflows/turn.py:80
+msgid "This workflow was changed after this conversation started, so it cannot continue. Please start it again."
+msgstr "تم تغيير سير العمل هذا بعد بدء هذه المحادثة، لذلك لا يمكن متابعته. يرجى بدئه من جديد."
+
+#. Label of the request_timeout (Int) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:145
+msgid "Timeout (seconds)"
+msgstr "المهلة (بالثواني)"
+
+#. Label of the title (Data) field in DocType 'AI Conversation'
+#. Label of the title (Data) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:31
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:46
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:6
+msgid "Title"
+msgstr "العنوان"
+
+#. Label of the tool_name (Data) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:48
+msgid "Tool"
+msgstr "الأداة"
+
+#. Label of the tool_call_id (Data) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:53
+msgid "Tool Call ID"
+msgstr "معرّف استدعاء الأداة"
+
+#. Label of the tool_calls (JSON) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:99
+msgid "Tool Calls"
+msgstr "استدعاءات الأدوات"
+
+#. Description of the 'Tool Calls' (JSON) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:96
+#, python-brace-format
+msgid "Tool calls requested by the assistant: [{id, name, arguments}]."
+msgstr "استدعاءات الأدوات التي طلبها المساعد: [{id, name, arguments}]."
+
+#: frappe_intelligence/agent/tools/__init__.py:128
+#, python-brace-format
+msgid "Tool {0} is not available in {1} mode."
+msgstr "الأداة {0} غير متاحة في وضع {1}."
+
+#. Label of the topic (Data) field in DocType 'AI Knowledge Entry'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_entry/ai_knowledge_entry.json:16
+msgid "Topic"
+msgstr "الموضوع"
+
+#. Label of a Workspace Sidebar Item
+#: frappe_intelligence/workspace_sidebar/intelligence.json:85
+msgid "Training Pair"
+msgstr "زوج تدريب"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:267
+msgid "Turned off in AI Settings."
+msgstr "معطّل في إعدادات الذكاء الاصطناعي."
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:177
+msgid "Turning your recording into text…"
+msgstr "جارٍ تحويل تسجيلك إلى نص…"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:116
+msgid "Type your answer…"
+msgstr "اكتب إجابتك…"
+
+#. Description of the 'Ollama Base URL' (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:124
+msgid "URL where the Ollama server is running."
+msgstr "عنوان URL الذي يعمل عليه خادم Ollama."
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:142
+msgid "Undo"
+msgstr "تراجع"
+
+#. Description of the 'Document Type Key' (Data) field in DocType 'AI Document
+#. Template'
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:36
+msgid "Unique slug identifier, e.g. national_address or commercial_register."
+msgstr "معرّف نصي فريد، مثل national_address أو commercial_register."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:12
+msgid "Unique slug, no spaces"
+msgstr "معرّف فريد بدون مسافات"
+
+#: frappe_intelligence/providers/__init__.py:40
+#, python-brace-format
+msgid "Unknown AI provider: {0}"
+msgstr "مزوّد خدمة ذكاء اصطناعي غير معروف: {0}"
+
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.js:22
+msgid "Unknown error"
+msgstr "خطأ غير معروف"
+
+#: frappe_intelligence/api/chat.py:125
+#, python-brace-format
+msgid "Unknown mode: {0}"
+msgstr "وضع غير معروف: {0}"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:56
+msgid "Unsaved changes"
+msgstr "تغييرات غير محفوظة"
+
+#: frappe_intelligence/public/js/assistant/components/Panel.vue:61
+msgid "Untitled"
+msgstr "بدون عنوان"
+
+#: frappe_intelligence/agent/tools/changes.py:109
+#, python-brace-format
+msgid "Update {0} {1}"
+msgstr "تحديث {0} {1}"
+
+#: frappe_intelligence/agent/tools/changes.py:177
+#, python-brace-format
+msgid "Updating {doctype} {name}"
+msgstr "جارٍ تحديث {doctype} {name}"
+
+#. Description of the 'JSON File' (Attach) field in DocType 'AI Knowledge Pack'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:59
+msgid "Upload a knowledge-pack JSON bundle to import all templates and rules at once."
+msgstr "ارفع ملف JSON لحزمة معرفة لاستيراد جميع القوالب والقواعد دفعة واحدة."
+
+#: frappe_intelligence/public/js/assistant/components/FileChip.vue:8
+msgid "Uploading…"
+msgstr "جارٍ الرفع…"
+
+#: frappe_intelligence/public/js/assistant/components/ReviewCard.vue:29
+msgid "Use these values"
+msgstr "استخدام هذه القيم"
+
+#. Description of the 'Correction Source' (Data) field in DocType 'AI Training
+#. Pair'
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:51
+msgid "User or system that provided the correction."
+msgstr "المستخدم أو النظام الذي قدّم التصحيح."
+
+#. Option for the 'Model Preference' (Select) field in DocType 'AI Document
+#. Template'
+#. Option for the 'Extraction Strategy' (Select) field in DocType 'AI
+#. Extraction Rule'
+#: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:47
+#: frappe_intelligence/intelligence/doctype/ai_extraction_rule/ai_extraction_rule.json:41
+msgid "VLM"
+msgstr "VLM"
+
+#: frappe_intelligence/api/chat.py:157
+msgid "Values must be an object of field keys and values."
+msgstr "يجب أن تكون القيم كائنًا من مفاتيح الحقول وقيمها."
+
+#: frappe_intelligence/public/js/assistant/components/ReviewCard.vue:3
+#, python-brace-format
+msgid "Values read from {0}"
+msgstr "القيم المقروءة من {0}"
+
+#. Label of the version (Data) field in DocType 'AI Knowledge Pack'
+#: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:32
+msgid "Version"
+msgstr "الإصدار"
+
+#. Label of the voice_language (Data) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:225
+msgid "Voice Transcription Language"
+msgstr "لغة تحويل الصوت إلى نص"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:178
+msgid "Voice input"
+msgstr "إدخال صوتي"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:178
+#, python-brace-format
+msgid "Voice input ({0})"
+msgstr "إدخال صوتي ({0})"
+
+#: frappe_intelligence/public/js/assistant/voice.js:13
+msgid "Voice input needs a secure connection (HTTPS)."
+msgstr "يتطلب الإدخال الصوتي اتصالًا آمنًا (HTTPS)."
+
+#: frappe_intelligence/api/voice.py:22 frappe_intelligence/utils/optional.py:31
+msgid "Voice input needs the transcription package, which is not installed on this server."
+msgstr "يحتاج الإدخال الصوتي إلى حزمة التفريغ الصوتي، وهي غير مثبّتة على هذا الخادم."
+
+#: frappe_intelligence/agent/suggestions.py:59
+msgid "What can you help me with?"
+msgstr "بماذا يمكنك مساعدتي؟"
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:72
+msgid "What should this field say?"
+msgstr "ماذا يجب أن يتضمن هذا الحقل؟"
+
+#. Description of the 'Preview' (JSON) field in DocType 'AI Conversation
+#. Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:85
+msgid "What the user saw on the approval card."
+msgstr "ما رآه المستخدم في بطاقة الموافقة."
+
+#. Option for the 'Channel' (Select) field in DocType 'AI Conversation'
+#. Label of the whatsapp_tab (Tab Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:63
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:265
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:91
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#. Label of the whatsapp_account (Link) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:284
+msgid "WhatsApp Account"
+msgstr "حساب واتساب"
+
+#. Label of the whatsapp_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:270
+msgid "WhatsApp Channel"
+msgstr "قناة واتساب"
+
+#. Label of the whatsapp_flow (Link) field in DocType 'AI Workflow Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:58
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/WhatsAppFlow.vue:9
+msgid "WhatsApp Flow"
+msgstr "WhatsApp Flow"
+
+#. Description of the 'WhatsApp Flow' (Link) field in DocType 'AI Workflow
+#. Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:60
+msgid "WhatsApp Flow to send for structured data collection on WhatsApp channel. Leave blank to use text back-and-forth."
+msgstr "WhatsApp Flow الذي يُرسل لجمع بيانات منظمة على قناة واتساب. اتركه فارغًا لاستخدام تبادل الرسائل النصية."
+
+#. Label of the whatsapp_system_prompt_section (Section Break) field in DocType
+#. 'AI Settings'
+#. Label of the whatsapp_system_prompt (Small Text) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:311
+msgid "WhatsApp System Prompt"
+msgstr "موجّه النظام لواتساب"
+
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.js:39
+msgid "WhatsApp integration requires the frappe_whatsapp app to be installed."
+msgstr "يتطلب تكامل واتساب تثبيت تطبيق frappe_whatsapp."
+
+#. Description of the 'WhatsApp System Prompt' (Small Text) field in DocType
+#. 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:315
+msgid ""
+"WhatsApp-specific system prompt. Use plain text only — no markdown. WhatsApp renders asterisks and underscores "
+"literally."
+msgstr "موجّه نظام خاص بواتساب. استخدم نصًا عاديًا فقط، دون Markdown. يعرض واتساب النجوم والشرطات السفلية كما هي."
+
+#: frappe_intelligence/agent/suggestions.py:20
+msgid "Which customers owe the most right now?"
+msgstr "أي العملاء عليهم أكبر المبالغ المستحقة حاليًا؟"
+
+#: frappe_intelligence/agent/suggestions.py:43
+msgid "Which items are below their reorder level?"
+msgstr "ما الأصناف التي انخفضت عن مستوى إعادة الطلب؟"
+
+#: frappe_intelligence/agent/suggestions.py:35
+msgid "Which purchase orders are still to be received?"
+msgstr "ما أوامر الشراء التي لم تُستلم بعد؟"
+
+#: frappe_intelligence/agent/suggestions.py:60
+msgid "Which reports can I run?"
+msgstr "ما التقارير التي يمكنني تشغيلها؟"
+
+#: frappe_intelligence/agent/suggestions.py:18
+msgid "Which sales invoices become overdue this week?"
+msgstr "ما فواتير المبيعات التي يحل موعد استحقاقها هذا الأسبوع؟"
+
+#: frappe_intelligence/agent/suggestions.py:36
+msgid "Which suppliers did we buy from most this year?"
+msgstr "من أي الموردين اشترينا أكثر هذا العام؟"
+
+#: frappe_intelligence/agent/suggestions.py:28
+msgid "Who are our top 5 customers this quarter?"
+msgstr "من هم أفضل 5 عملاء لدينا هذا الربع؟"
+
+#: frappe_intelligence/agent/suggestions.py:51
+msgid "Who is on leave this week?"
+msgstr "من في إجازة هذا الأسبوع؟"
+
+#. Description of the 'Excluded Keywords (one per line)' (Long Text) field in
+#. DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:155
+msgid ""
+"Words or phrases specific to this workflow that should never be blocked by the scope keyword gate. Example: terms "
+"from your business domain that match generic off-topic patterns."
+msgstr ""
+"كلمات أو عبارات خاصة بسير العمل هذا يجب ألا يحجبها فلتر الكلمات المفتاحية للنطاق أبدًا. مثال: مصطلحات من مجال عملك "
+"تطابق أنماطًا عامة لما هو خارج الموضوع."
+
+#. Option for the 'Mode' (Select) field in DocType 'AI Conversation'
+#. Label of the workflow_section (Section Break) field in DocType 'AI
+#. Conversation'
+#. Label of the workflow (Link) field in DocType 'AI Conversation'
+#. Label of the workflow (Link) field in DocType 'AI Document Requirement'
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:41
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:91
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:60
+msgid "Workflow"
+msgstr "سير العمل"
+
+#. Label of a Workspace Sidebar Item
+#: frappe_intelligence/workspace_sidebar/intelligence.json:25
+msgid "Workflow Builder"
+msgstr "منشئ سير العمل"
+
+#. Label of the section_break_workflow (Section Break) field in DocType 'AI
+#. Document Requirement'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:55
+msgid "Workflow Context"
+msgstr "سياق سير العمل"
+
+#. Label of the workflow_key (Data) field in DocType 'AI Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:37
+msgid "Workflow Key"
+msgstr "مفتاح سير العمل"
+
+#. Label of the section_break_steps (Section Break) field in DocType 'AI
+#. Workflow'
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:100
+msgid "Workflow Steps"
+msgstr "خطوات سير العمل"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:20
+msgid "Workflow key is read-only"
+msgstr "مفتاح سير العمل للقراءة فقط"
+
+#: frappe_intelligence/public/js/assistant/components/WorkflowBar.vue:16
+msgid "Workflow progress"
+msgstr "تقدّم سير العمل"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:314
+msgid "Workflow saved."
+msgstr "تم حفظ سير العمل."
+
+#. Description of the 'Agent Session' (Link) field in DocType 'AI Training
+#. Pair'
+#: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:41
+msgid "Workflow session during which this correction was submitted."
+msgstr "جلسة سير العمل التي أُرسل خلالها هذا التصحيح."
+
+#. Description of the 'AI Workflow for WhatsApp' (Link) field in DocType 'AI
+#. Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:293
+msgid "Workflow that governs AI WhatsApp sessions."
+msgstr "سير العمل الذي يحكم جلسات الذكاء الاصطناعي على واتساب."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:11
+msgid "Workflow title"
+msgstr "عنوان سير العمل"
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:78
+msgid "Write"
+msgstr "كتابة"
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:49
+msgid "Write with AI"
+msgstr "اكتب بالذكاء الاصطناعي"
+
+#. Label of the allow_field_writer (Check) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:365
+msgid "Write with AI in Forms"
+msgstr "اكتب بالذكاء الاصطناعي في النماذج"
+
+#: frappe_intelligence/api/writer.py:36
+msgid "Write with AI is turned off in AI Settings."
+msgstr "ميزة اكتب بالذكاء الاصطناعي معطّلة في إعدادات الذكاء الاصطناعي."
+
+#: frappe_intelligence/api/writer.py:63
+msgid "Write with AI works on long text fields you can edit."
+msgstr "تعمل ميزة اكتب بالذكاء الاصطناعي على حقول النص الطويل التي يمكنك تعديلها."
+
+#. Label of the writer_section (Section Break) field in DocType 'AI Settings'
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:358
+msgid "Writing Help"
+msgstr "المساعدة في الكتابة"
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:108
+#, python-brace-format
+msgid "Writing {0}…"
+msgstr "جارٍ كتابة {0}…"
+
+#: frappe_intelligence/utils/access.py:40
+msgid "You are not allowed to use the assistant."
+msgstr "غير مسموح لك باستخدام المساعد."
+
+#: frappe_intelligence/api/writer.py:65
+msgid "You cannot edit this field."
+msgstr "لا يمكنك تعديل هذا الحقل."
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:131
+msgid "You changed the field while the text was written, so it was left as it is."
+msgstr "غيّرت الحقل أثناء كتابة النص، لذلك تُرك كما هو."
+
+#: frappe_intelligence/public/js/assistant/components/ChangeResult.vue:26
+msgid "You checked the values"
+msgstr "راجعت القيم"
+
+#: frappe_intelligence/public/js/assistant/components/ChangeResult.vue:20
+msgid "You confirmed"
+msgstr "أكّدت"
+
+#: frappe_intelligence/public/js/assistant/components/ChangeResult.vue:27
+msgid "You discarded the values"
+msgstr "تجاهلت القيم"
+
+#: frappe_intelligence/utils/file_utils.py:51
+msgid "You do not have permission to access this file."
+msgstr "ليس لديك صلاحية الوصول إلى هذا الملف."
+
+#: frappe_intelligence/api/documents.py:41
+msgid "You do not have permission to access this processing log."
+msgstr "ليس لديك صلاحية للوصول إلى سجل المعالجة هذا."
+
+#: frappe_intelligence/api/documents.py:203
+msgid "You do not have permission to read this record."
+msgstr "ليس لديك صلاحية لقراءة هذا السجل."
+
+#: frappe_intelligence/public/js/assistant/components/ChangeResult.vue:22
+msgid "You rejected"
+msgstr "رفضت"
+
+#: frappe_intelligence/public/js/assistant/components/ReviewCard.vue:4
+msgid "Your edits are used, and kept to improve future reads."
+msgstr "تُستخدم تعديلاتك وتُحفظ لتحسين القراءات القادمة."
+
+#. Option for the 'Role' (Select) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:31
+msgid "assistant"
+msgstr "المساعد"
+
+#. Option for the 'Channel' (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:69
+msgid "desk"
+msgstr "المكتب"
+
+#: frappe_intelligence/agent/tools/changes.py:97 frappe_intelligence/agent/tools/changes.py:109
+#: frappe_intelligence/agent/tools/changes.py:122 frappe_intelligence/workflows/records.py:33
+msgid "doctype"
+msgstr "نوع المستند"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:44
+msgid "e.g. I can only assist with service requests on this workflow."
+msgstr "مثال: لا يمكنني المساعدة إلا في طلبات الخدمة ضمن سير العمل هذا."
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:10
+msgid "e.g. create_customer"
+msgstr "مثال: create_customer"
+
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:27
+msgid "fieldname"
+msgstr "اسم الحقل"
+
+#: frappe_intelligence/utils/file_utils.py:34
+msgid "file_url is required."
+msgstr "الحقل file_url مطلوب."
+
+#. Option for the 'Channel' (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:69
+msgid "portal"
+msgstr "البوابة"
+
+#. Description of the 'Step Key' (Data) field in DocType 'AI Document
+#. Requirement'
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:68
+msgid "step_key of the AI Workflow Step that requires this document. Leave blank if applies to all steps."
+msgstr "قيمة step_key لخطوة سير عمل الذكاء الاصطناعي التي تتطلب هذا المستند. اتركه فارغًا إذا كان ينطبق على جميع الخطوات."
+
+#. Description of the 'Next Step Key' (Data) field in DocType 'AI Workflow
+#. Step'
+#: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:88
+msgid "step_key of the step to advance to after this one completes. Leave blank if this is the final step."
+msgstr "قيمة step_key للخطوة التي يُنتقل إليها بعد اكتمال هذه الخطوة. اتركه فارغًا إذا كانت هذه الخطوة الأخيرة."
+
+#. Option for the 'Role' (Select) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:31
+msgid "system"
+msgstr "النظام"
+
+#. Option for the 'Role' (Select) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:31
+msgid "tool"
+msgstr "أداة"
+
+#. Option for the 'Role' (Select) field in DocType 'AI Conversation Message'
+#: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:31
+msgid "user"
+msgstr "المستخدم"
+
+#. Option for the 'Channel' (Select) field in DocType 'AI Processing Log'
+#: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:69
+msgid "whatsapp"
+msgstr "واتساب"
+
+#: frappe_intelligence/providers/base.py:148
+#, python-brace-format
+msgid "{0} API key is not set in AI Settings."
+msgstr "لم يتم تعيين مفتاح API الخاص بـ {0} في إعدادات الذكاء الاصطناعي."
+
+#: frappe_intelligence/providers/base.py:153
+#, python-brace-format
+msgid "{0} did not answer within {2} seconds."
+msgstr "لم يستجب {0} خلال {2} ثانية."
+
+#: frappe_intelligence/providers/base.py:151
+#, python-brace-format
+msgid "{0} has no model named {1}."
+msgstr "لا يوجد لدى {0} نموذج باسم {1}."
+
+#: frappe_intelligence/agent/tools/desk.py:56
+#, python-brace-format
+msgid "{0} has none of these fields. Read its fields first."
+msgstr "لا يحتوي {0} على أي من هذه الحقول. اقرأ حقوله أولًا."
+
+#: frappe_intelligence/public/js/assistant/page_context.js:24
+#, python-brace-format
+msgid "{0} list"
+msgstr "قائمة {0}"
+
+#: frappe_intelligence/providers/base.py:149
+#, python-brace-format
+msgid "{0} model is not set in AI Settings."
+msgstr "لم يتم تعيين نموذج {0} في إعدادات الذكاء الاصطناعي."
+
+#: frappe_intelligence/public/js/assistant/components/ReviewCard.vue:8
+#, python-brace-format
+msgid "{0} of {1} fields found"
+msgstr "تم العثور على {0} من {1} حقول"
+
+#: frappe_intelligence/providers/base.py:152
+#, python-brace-format
+msgid "{0} rate limit reached. Try again shortly."
+msgstr "تم بلوغ حد الطلبات لدى {0}. حاول مرة أخرى بعد قليل."
+
+#: frappe_intelligence/providers/base.py:150
+#, python-brace-format
+msgid "{0} rejected the API key."
+msgstr "رفض {0} مفتاح API."
+
+#: frappe_intelligence/providers/base.py:156
+#, python-brace-format
+msgid "{0} request failed: {4}"
+msgstr "فشل طلب {0}: {4}"
+
+#: frappe_intelligence/agent/tools/changes.py:76
+#, python-brace-format
+msgid "{0} rows"
+msgstr "{0} صفوف"
+
+#: frappe_intelligence/public/js/assistant/components/Composer.vue:243
+#: frappe_intelligence/public/js/assistant/components/EmptyState.vue:36
+#: frappe_intelligence/public/js/assistant/components/Steps.vue:44
+#, python-brace-format
+msgid "{0} steps"
+msgstr "الخطوات: {0}"
+
+#: frappe_intelligence/providers/base.py:155
+#, python-brace-format
+msgid "{0} stopped before finishing a tool call. Try a shorter request."
+msgstr "توقف {0} قبل إكمال استدعاء الأداة. جرّب طلبًا أقصر."
+
+#: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:69
+#, python-brace-format
+msgid "{0} to write"
+msgstr "{0} للكتابة"
+
+#: frappe_intelligence/agent/tools/changes.py:137
+#, python-brace-format
+msgid "{0} {1} cannot be changed this way in its current state."
+msgstr "لا يمكن تغيير {0} {1} بهذه الطريقة في حالته الحالية."
+
+#: frappe_intelligence/agent/tools/changes.py:87 frappe_intelligence/agent/tools/desk.py:33
+#, python-brace-format
+msgid "{0} {1} does not exist."
+msgstr "{0} {1} غير موجود."
+
+#: frappe_intelligence/public/js/assistant/tables.js:100
+#, python-brace-format
+msgid "{0}–{1} of {2}"
+msgstr "{0}–{1} من {2}"
+

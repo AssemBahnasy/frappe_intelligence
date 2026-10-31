@@ -1,35 +1,8 @@
-"""Settings the widget and the AI Settings form read."""
+"""What the AI Settings form asks the server: connection test, WhatsApp availability."""
 
 from __future__ import annotations
 
 import frappe
-
-from frappe_intelligence.utils.access import allowed_roles, can_use_assistant
-
-
-@frappe.whitelist()
-def get_widget_settings() -> dict:
-	"""Appearance, route map and access for the widget, read on every desk page load."""
-	settings = frappe.get_cached_doc("AI Settings")
-	return {
-		"widget_color": settings.widget_color or "",
-		"widget_icon": settings.widget_icon or "",
-		"text_color": settings.text_color or "",
-		"assistant_name": settings.assistant_name or "",
-		"route_map": get_route_map(),
-		"allowed_roles": allowed_roles(),
-		"can_use": can_use_assistant(),
-	}
-
-
-@frappe.whitelist()
-def get_route_map() -> dict:
-	"""``{document_type_key: {"label", "route"}}`` from AI Settings → Route Map."""
-	return {
-		row.document_type_key: {"label": row.label or row.document_type_key, "route": row.route}
-		for row in frappe.get_cached_doc("AI Settings").route_map
-		if row.document_type_key and row.route
-	}
 
 
 @frappe.whitelist()

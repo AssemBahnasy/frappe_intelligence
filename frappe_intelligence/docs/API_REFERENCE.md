@@ -4,17 +4,19 @@ All endpoints are called via `frappe.call` from the browser or `frappe.call` / d
 
 | Module | Endpoints |
 |---|---|
-| `api.chat` | `send_message`, `decide_proposal`, `stop_message`, `get_conversation`, `list_conversations`, `rate_reply`, `handle_widget_input` |
+| `api.chat` | `send_message`, `decide_proposal`, `stop_message`, `get_conversation`, `list_conversations`, `rate_reply` |
 | `api.documents` | `process_document`, `get_log_status`, `confirm_extraction`, `submit_correction`, `list_templates`, `get_required_documents`, `register_post_processor` |
-| `api.settings` | `get_widget_settings`, `get_route_map`, `test_connection`, `is_whatsapp_installed`, `is_whatsapp_enabled` |
+| `api.settings` | `test_connection`, `is_whatsapp_installed`, `is_whatsapp_enabled` |
 | `api.workflows` | `start_workflow`, `exit_workflow` |
-| `api.writer` | `write_field`, `get_written` |
+| `api.writer` | `write_field` |
+| `api.voice` | `transcribe` |
+| `api.jobs` | `job_result` |
 | `api.builder` | `list_workflows`, `get_workflow_for_builder`, `save_workflow_builder`, `preview_step_prompt` |
 | `api.portal` | `portal_chat`, `portal_upload_document`, `portal_get_session_state` |
 
 ## Access and rate limiting
 
-Endpoints that reach a model require a desk user allowed by **AI Settings → Allowed Roles**. `send_message`, `start_workflow`, `write_field`, `handle_widget_input`, `process_document`, `portal_chat` and `portal_upload_document` are limited to **20 calls / user / 60 s** by Frappe's `rate_limit`. Details: [agent/security.md](agent/security.md).
+Endpoints that reach a model require a desk user allowed by **AI Settings → Allowed Roles**. `send_message`, `start_workflow`, `write_field`, `transcribe`, `process_document`, `portal_chat` and `portal_upload_document` are limited to **20 calls / user / 60 s** by Frappe's `rate_limit`. Details: [agent/security.md](agent/security.md).
 
 ---
 
@@ -95,7 +97,7 @@ POST only. `conversation`: the user's workflow conversation. Sets it Paused (onl
 
 ### `write_field`
 
-POST only. Writes one long text field in the background and returns `{"job": id}`; the text arrives on the `fi_field_writer` realtime event as `{job, text}` or `{job, error}`. See [writer/server.md](writer/server.md).
+POST only. Writes one long text field in the background and returns `{"job": id}`; the text is the job's value (see [Background jobs](#background-jobs-apijobs)). See [writer/server.md](writer/server.md).
 
 | Param | Type | Required | Notes |
 |-------|------|----------|-------|
@@ -106,9 +108,19 @@ POST only. Writes one long text field in the background and returns `{"job": id}
 | `context` | object | ✗ | The form's other values by field name; only readable fields are used |
 | `docname` | str | ✗ | Omit on a new form |
 
-### `get_written`
+## Voice input (`api.voice`)
 
-`job`: the user's own job. Returns `{text}`, `{error}` or `{pending: true}`; for when the realtime event was missed.
+### `transcribe`
+
+POST only. `file_url`: a recording the user just uploaded as a private File. Turns it into text in the background (Whisper, on this server) and returns `{"job": id}`; the text is the job's value. The recording is deleted afterwards. Refused when the voice package is not installed. See [panel/voice.md](panel/voice.md).
+
+## Background jobs (`api.jobs`)
+
+Write with AI and voice input run as short background jobs (`utils/background.py`). The result arrives on the `fi_job` realtime event as `{job, value}` or `{job, error}`.
+
+### `job_result`
+
+`job`: a job the user started. Returns `{value}`, `{error}` or `{pending: true}`; for a browser that missed the event.
 
 ---
 
@@ -183,35 +195,6 @@ Save a user correction as an AI Training Pair. Access: log owner or System Manag
 
 ---
 
-## Widget Input (`api.chat`)
-
-### `handle_widget_input`
-
-Entry point of the current widget for its three input modes; text and voice go through the agent loop, or through the workflow when `chat_mode="agent"`. The new panel uses `send_message`.
-
-| Param | Type | Required | Notes |
-|-------|------|----------|-------|
-| `input_type` | str | ✓ | `"file"` / `"voice"` / `"text"` |
-| `file_url` | str | for file/voice | Must start with `/files/` or `/private/files/` |
-| `text_input` | str | for text | Max 4000 chars |
-| `doctype` | str | ✗ | Context hint for schema injection |
-| `docname` | str | ✗ | Context hint |
-| `widget_mode` | str | ✗ | `"desk"` / `"portal"` |
-| `chat_mode` | str | ✗ | `"ask"` / `"agent"` |
-| `workflow_key` | str | ✗ | Required when `chat_mode="agent"` |
-
-```json
-// text response
-{"reply": "There are 2 Item records in the system.", "action": null, "action_data": null}
-
-// voice response
-{"transcript": "Show me all invoices", "reply": "…", "action": null}
-
-// file response — same shape as process_document async result
-```
-
----
-
 ## Templates & Documents (`api.documents`)
 
 ### `list_templates`
@@ -224,22 +207,7 @@ All active AI Document Templates.
 
 ---
 
-## Widget Settings (`api.settings`)
-
-### `get_widget_settings`
-
-Appearance, route map, allowed roles and whether the current user may use the assistant. Called on every page load.
-
-```json
-{
-  "widget_color": "#6c63ff",
-  "widget_icon": "",
-  "assistant_name": "AI Assistant",
-  "route_map": {"supplier_invoice": {"label": "Purchase Invoice", "route": "/app/purchase-invoice/new"}},
-  "allowed_roles": [],
-  "can_use": true
-}
-```
+## Required documents (`api.documents`)
 
 ### `get_required_documents`
 
@@ -263,7 +231,7 @@ Present/missing required documents for a record.
 
 ### `list_workflows`
 
-Active workflows for the widget workflow selector.
+Workflows for the Workflow Builder's picker.
 
 ```json
 [{"workflow_key": "service_request", "title": "Service Request"}]

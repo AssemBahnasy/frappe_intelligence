@@ -38,7 +38,6 @@ api/chat.send_message                                              ← returns {
 | `get_conversation(name)` | One of the user's conversations as turns (question, steps, answer, actions, feedback, stopped), and `active_run` while one is running |
 | `rate_reply(conversation, message, feedback)` | Thumbs up (`Good`) or down (`Bad`) on an answer; empty clears it |
 | `list_conversations(limit=20)` | The user's recent desk conversations |
-| `handle_widget_input(...)` | Entry point of the current widget; runs the same loop synchronously until the new panel replaces it |
 
 ## Code map
 

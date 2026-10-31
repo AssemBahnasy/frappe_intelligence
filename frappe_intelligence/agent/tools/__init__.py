@@ -50,7 +50,16 @@ class AgentTool:
 
 
 class _Blank(dict):
-	"""Arguments for a step label; one the model left out shows as empty."""
+	"""Arguments for a step label, the DocType in the user's language; one the model left out shows
+	as empty."""
+
+	def __init__(self, arguments: dict):
+		super().__init__(
+			{
+				key: _(value) if key == "doctype" and isinstance(value, str) else value
+				for key, value in arguments.items()
+			}
+		)
 
 	def __missing__(self, key: str) -> str:
 		return ""

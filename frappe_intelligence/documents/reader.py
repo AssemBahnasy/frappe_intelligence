@@ -24,6 +24,8 @@ import threading
 
 import frappe
 
+from frappe_intelligence.utils import optional
+
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
@@ -133,14 +135,10 @@ def _get_ocr_reader():
 	if _ocr_reader is None:
 		with _ocr_lock:
 			if _ocr_reader is None:
-				try:
-					import easyocr  # noqa: PLC0415
+				optional.require(optional.OCR)
+				import easyocr
 
-					_ocr_reader = easyocr.Reader(["ar", "en"], gpu=False)
-				except ImportError as exc:
-					raise ImportError(
-						"easyocr is required for image OCR. Install it with: pip install easyocr"
-					) from exc
+				_ocr_reader = easyocr.Reader(["ar", "en"], gpu=False)
 	return _ocr_reader
 
 
@@ -167,7 +165,7 @@ def _extract_pdf(path: str) -> str:
 	2. pypdf fallback — text-only, no OCR (used only when fitz is absent).
 	"""
 	try:
-		import fitz  # PyMuPDF  # noqa: PLC0415
+		import fitz  # PyMuPDF
 
 		return _extract_pdf_fitz(path, fitz)
 	except ImportError:
@@ -175,17 +173,21 @@ def _extract_pdf(path: str) -> str:
 
 
 def _extract_pdf_fitz(path: str, fitz) -> str:
-	"""Per-page extraction: digital text or rendered-image OCR via PyMuPDF."""
-	import numpy as np  # noqa: PLC0415
-
+	"""Per-page extraction: digital text or rendered-image OCR via PyMuPDF. Without the OCR package,
+	scanned pages are skipped; a PDF with only scanned pages says the package is missing."""
 	doc = fitz.open(path)
 	pages_text: list[str] = []
+	scanned = False
 	try:
 		for page in doc:
 			text = page.get_text().strip()
 			if text:
 				pages_text.append(text)
+			elif not optional.installed(optional.OCR):
+				scanned = True
 			else:
+				import numpy as np
+
 				# Scanned page — render at 2× zoom for better OCR accuracy.
 				pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))
 				img = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)
@@ -194,13 +196,15 @@ def _extract_pdf_fitz(path: str, fitz) -> str:
 				pages_text.append(_ocr_image(img))
 	finally:
 		doc.close()
+	if scanned and not pages_text:
+		optional.require(optional.OCR)
 	return "\n".join(pages_text).strip()
 
 
 def _extract_pdf_pypdf(path: str) -> str:
 	"""Text-only extraction via pypdf (no OCR fallback)."""
 	try:
-		from pypdf import PdfReader  # noqa: PLC0415
+		from pypdf import PdfReader
 	except ImportError as exc:
 		raise ImportError(
 			"pypdf is required for PDF text extraction. Install it with: pip install pypdf"

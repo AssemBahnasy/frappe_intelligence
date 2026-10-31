@@ -321,6 +321,13 @@ class TestExecute(TestCase):
 		self.assertEqual(tool.step_label({"file_name": "bill.pdf"}), "Reading bill.pdf")
 		self.assertEqual(tool.step_label({}), "Reading ")
 
+	def test_step_labels_name_the_doctype_in_the_users_language(self):
+		from frappe_intelligence.agent import tools
+
+		tool = AgentTool(name="p", description="", parameters={}, run=None, label="Counting {doctype}")
+		with patch.object(tools, "_", side_effect={"Customer": "العميل"}.get):
+			self.assertEqual(tool.step_label({"doctype": "Customer"}), "Counting العميل")
+
 	def test_tools_outside_the_mode_are_refused(self):
 		with self.with_tool(lambda args: {}, modes=frozenset({"Agent"})):
 			self.assertTrue(execute("probe", {}, "Ask").is_error)

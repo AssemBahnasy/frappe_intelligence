@@ -12,13 +12,14 @@
 │  │ (Vue)        │  │  React app)  │  │  (frappe_whatsapp) │ │
 │  └──────┬───────┘  └──────┬───────┘  └─────────┬──────────┘ │
 └─────────┼─────────────────┼──────────────────── ┼────────────┘
-          │ api/chat.py     │ api/portal.py       │ engine/whatsapp_handler.py
+          │ api/chat.py     │ api/portal.py       │ channels/whatsapp.py
           │ api/workflows.py│                     │
           ▼                 ▼                      ▼
 ┌──────────────────────────────────────────────────────────────┐
 │  agent/          loop · tools · runs (background, streaming) │
 │  workflows/      steps · scope · answers · turn · records    │
-│  engine/         orchestrator (document pipeline) · WhatsApp │
+│  documents/      reading, extraction, the document pipeline  │
+│  writer/         Write with AI                               │
 └──────────────────────────────────────────────────────────────┘
           │
           ▼
@@ -36,14 +37,17 @@
 | `api/` | Whitelisted endpoints, one module per concern; see [API_REFERENCE.md](API_REFERENCE.md) |
 | `agent/` | Agent loop, prompts and tools for desk chat; see [agent/README.md](agent/README.md) |
 | `workflows/` | Guided workflows on every channel; see [workflows/README.md](workflows/README.md) |
-| `engine/orchestrator.py` | Document pipeline controller; RQ background entry-point |
-| `engine/whatsapp_handler.py` | WhatsApp doc_event bridge → enqueue → route by content type |
+| `documents/pipeline.py` | Document pipeline for the portal, WhatsApp and integrations (`AIEngine`); RQ background entry-point |
+| `channels/whatsapp.py` | WhatsApp doc_event bridge → enqueue → route by content type |
+| `writer/` | Write with AI; see [writer/README.md](writer/README.md) |
+| `utils/background.py` | Short background jobs one browser waits for (Write with AI, voice) |
+| `utils/optional.py` | The optional OCR and voice packages |
 | `providers/__init__.py` | `get_provider()`: the provider chosen in AI Settings, with optional Ollama fallback |
 | `providers/{openai,claude,gemini,ollama}.py` | One class per AI service behind a shared interface |
 | `documents/extractor.py` | AI field extraction (4 strategies) over any provider |
 | `documents/heuristic.py` | Regex extractor (no AI call) |
-| `documents/reader.py` | EasyOCR (images) + pypdf (digital PDFs) |
-| `documents/transcriber.py` | Faster-Whisper voice-to-text |
+| `documents/reader.py` | Embedded PDF text (PyMuPDF or pypdf); EasyOCR for photos and scanned pages when installed |
+| `documents/transcriber.py`, `documents/voice.py` | Faster-Whisper voice-to-text when installed; the panel's recordings |
 | `utils/file_utils.py` | File URL validation + path-traversal prevention |
 | `utils/seed_manager.py` | JSON bundle → AI Document Template seeder |
 | `tasks.py` | Scheduled tasks (daily: expire stale sessions) |
@@ -53,7 +57,6 @@
 ```
 AI Settings (Single)
   ├── AI Response Language  (child — allowed chat reply languages)
-  ├── AI Route Map          (child — document_type_key → Frappe route)
   └── AI Widget Role        (child — roles permitted to see the widget)
 
 AI Workflow
@@ -103,7 +106,7 @@ Fallback: poll get_log_status() every 5 s
 ```
 api.chat.send_message(message, conversation, context)   ← returns {conversation, run_id}
   → utils.access.ensure_assistant_access()
-  → background job agent.runs.execute → agent.loop.run_turn()     (handle_widget_input runs it synchronously)
+  → background job agent.runs.execute → agent.loop.run_turn()
       → provider.complete(history, system prompt, Ask-mode tools)
       → agent.tools.execute(call) … repeat until a plain-text answer (max 8 steps)
       → AI Conversation rows saved
@@ -141,7 +144,7 @@ AIPortalClient.chat(text)
 
 ```
 WhatsApp Message.after_insert
-  → whatsapp_handler.on_whatsapp_message()
+  → channels.whatsapp.on_whatsapp_message()
       → feature gate: _is_whatsapp_enabled()
       → dedup: Redis fi_wa_proc:{message_id} (5-min TTL)
       → frappe.enqueue("process_whatsapp_message_job", queue="default")
@@ -171,7 +174,7 @@ Workflows only: see [workflows/turn.md](workflows/turn.md#the-topic-gate).
 2. `AI Settings.confidence_threshold` — global setting
 3. `0.6` — hard default
 
-Below threshold → `needs_review=True` → widget shows editable review panel → post-processors held until user accepts.
+Below threshold → `needs_review=True` → the client shows the values for review (the panel: [documents/review.md](documents/review.md)) → post-processors held until user accepts.
 
 ## Redis Keys
 

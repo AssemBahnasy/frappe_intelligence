@@ -10,13 +10,16 @@ dynamic = ["version"]
 dependencies = [
     # "frappe~=16.0.0" # Installed and managed by bench.
     "pypdf>=4.0.0",
-    "easyocr>=1.7.0",
-    "faster-whisper>=1.0.0",
     "requests>=2.31.0",
     "openai>=2.0.0",        # OpenAI and OpenAI-compatible providers, including Ollama
     "anthropic>=0.125.0",   # Claude (server-side refusal fallback)
     "google-genai>=2.0.0",  # Gemini (raw JSON-schema tool parameters)
 ]
+
+# Large, and only some sites need them: bench pip install -e apps/frappe_intelligence[ocr,voice]
+[project.optional-dependencies]
+ocr = ["easyocr>=1.7.0"]            # photos and scanned PDF pages (brings torch)
+voice = ["faster-whisper>=1.0.0"]   # voice input in the assistant panel
 
 [build-system]
 requires = ["flit_core >=3.4,<4"]
@@ -29,9 +32,9 @@ build-backend = "flit_core.buildapi"
 # These apt dependencies will be installed from Ubuntu repositories when you host your app on Frappe Cloud
 [deploy.dependencies.apt]
 packages = [
-    "libgl1",           # OpenCV / EasyOCR
-    "libglib2.0-0",     # OpenCV / EasyOCR
-    "ffmpeg",           # Faster-Whisper audio decoding
+    "libgl1",           # OpenCV / EasyOCR (the ocr extra)
+    "libglib2.0-0",     # OpenCV / EasyOCR (the ocr extra)
+    "ffmpeg",           # Faster-Whisper audio decoding (the voice extra)
 ]
 
 [tool.ruff]

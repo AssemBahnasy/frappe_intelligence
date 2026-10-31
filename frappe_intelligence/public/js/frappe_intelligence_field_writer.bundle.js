@@ -2,11 +2,10 @@
 // field should say, the AI writes it in place, and Undo puts the old text back. Nothing is saved: the
 // user saves the form. Server side: api/writer.py; see docs/writer/.
 
+import { job_result } from "./shared/background";
+
 const API = "frappe_intelligence.api.writer";
-const EVENT = "fi_field_writer";
 const BUTTON = "fi-write-button";
-const CHECK_SECONDS = 10;
-const GIVE_UP_SECONDS = 600;
 const UNDO_SECONDS = 10;
 const HIGHLIGHT_MS = 2500;
 const CONTEXT_CHARS = 300;
@@ -66,14 +65,15 @@ function add_button(frm, control) {
 function description_form(frm, control, popover) {
 	const key = `${frm.doctype}:${control.df.fieldname}`;
 	const id = `fi-write-${frappe.utils.get_random(6)}`;
-	const modifier = frappe.utils.is_mac() ? "⌘" : "Ctrl";
+	const keys = `<kbd>${frappe.utils.is_mac() ? "⌘" : "Ctrl"}</kbd> <kbd>Enter</kbd>`;
+	const hint = __("{0} to write", [keys]);
 	const $form = $(`
 		<form class="fi-write-form">
 			<label class="fi-write-label" for="${id}">${__("What should this field say?")}</label>
 			<textarea id="${id}" rows="3" dir="auto"></textarea>
 			<div class="fi-write-actions">
 				<span class="fi-write-hint">
-					${__("{0} to write", [`<kbd>${modifier}</kbd> <kbd>Enter</kbd>`])}
+					${hint}
 				</span>
 				<button type="submit" class="btn btn-primary btn-xs">${__("Write")}</button>
 			</div>
@@ -125,7 +125,7 @@ async function write(frm, control, description) {
 		return;
 	}
 	try {
-		const text = await written(job);
+		const text = await job_result(job);
 		if (frm.docname !== docname) throw new Error(__("The form changed before the text was ready."));
 		if ((frm.doc[fieldname] || "") !== (previous || "")) {
 			throw new Error(__("You changed the field while the text was written, so it was left as it is."));
@@ -155,28 +155,6 @@ async function write(frm, control, description) {
 			duration: UNDO_SECONDS * 1000,
 		});
 	}
-}
-
-// The text arrives on a realtime event; one missed while the socket reconnects is picked up by asking.
-function written(job) {
-	return new Promise((resolve, reject) => {
-		const started = Date.now();
-		const finish = (result) => {
-			if (!result || result.pending) return;
-			frappe.realtime.off(EVENT, on_event);
-			clearInterval(timer);
-			result.error ? reject(new Error(result.error)) : resolve(result.text);
-		};
-		const on_event = (e) => e.job === job && finish(e);
-		const timer = setInterval(async () => {
-			if (Date.now() - started > GIVE_UP_SECONDS * 1000) {
-				finish({ error: __("Writing took too long. Please try again.") });
-				return;
-			}
-			finish(await frappe.xcall(`${API}.get_written`, { job }).catch(() => null));
-		}, CHECK_SECONDS * 1000);
-		frappe.realtime.on(EVENT, on_event);
-	});
 }
 
 function context(frm, skip) {

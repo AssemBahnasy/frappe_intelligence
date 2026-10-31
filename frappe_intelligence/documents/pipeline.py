@@ -1,7 +1,6 @@
 """
-orchestrator.py
----------------
-The AIEngine class is the single entry-point for document intelligence.
+The document pipeline for the portal, WhatsApp and integrations (`api.documents`); the assistant
+panel reads files through documents/review.py instead.
 
 Flow
 ----
@@ -12,7 +11,7 @@ Flow
 4.  Extract with regex rules, the configured AI provider, or both.
 5.  Persist an AI Processing Log and return the extracted payload.
 
-Readers, template matching and extraction live in ``frappe_intelligence/documents/``.
+Readers, template matching and extraction are the modules beside this one.
 
 Async processing
 ----------------

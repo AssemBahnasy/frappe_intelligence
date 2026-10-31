@@ -1,23 +1,24 @@
 # Frappe Intelligence
 
-A scoped AI workflow agent for Frappe. Not a general chatbot — it guides users through ordered business workflows, enforces topic scope before spending any LLM tokens, and works identically on desk, portal, and WhatsApp.
+An AI assistant for the Frappe and ERPNext desk, in English and Arabic. It is docked beside every page (Ctrl+.) and works with the site's own data and permissions.
 
-**Three modes in one widget:**
-- **Ask** — free-form chat with RAG, tool use, and streaming
-- **Agent** — multi-step guided workflows with scope enforcement
-- **Document** — async OCR + LLM extraction pipeline with confidence review
+- **Ask**: questions about your records and reports, answered live with tables and charts
+- **Agent**: changes the assistant prepares and you confirm one by one
+- **Documents**: attach a PDF or photo; check the values read from it, then fill the form
+- **Guided workflows**: step-by-step data collection that stays on topic, also on the portal and WhatsApp
+- **Write with AI**: long text fields written in place, with Undo
+- **Voice input**: questions spoken in the panel, transcribed on your own server
 
 ## Quick Install
 
 ```bash
 bench get-app frappe_intelligence
 bench --site <site> install-app frappe_intelligence
-sudo apt install -y libgl1 libglib2.0-0 ffmpeg   # self-hosted only
 bench --site <site> migrate
 bench build --app frappe_intelligence
 ```
 
-Then open **Frappe desk → Intelligence → AI Settings** to configure the AI provider.
+Then open **Frappe desk → Intelligence → AI Settings** to configure the AI provider. Reading photos and voice input need optional packages: see [DEPLOYMENT.md](frappe_intelligence/docs/DEPLOYMENT.md#optional-packages).
 
 ## Bench Commands
 
@@ -40,12 +41,11 @@ Then open **Frappe desk → Intelligence → AI Settings** to configure the AI p
 | [workflows/](frappe_intelligence/docs/workflows/README.md) | Guided workflows: panel, turns, steps, the filled record |
 | [documents/](frappe_intelligence/docs/documents/README.md) | Files the assistant reads, and reviewing what it read |
 | [writer/](frappe_intelligence/docs/writer/README.md) | Write with AI: long text fields written in place |
-| [CONFIGURATION.md](frappe_intelligence/docs/CONFIGURATION.md) | AI Settings: providers, chat, WhatsApp, widget |
+| [CONFIGURATION.md](frappe_intelligence/docs/CONFIGURATION.md) | AI Settings: providers, chat, WhatsApp, assistant |
 | [WORKFLOWS.md](frappe_intelligence/docs/WORKFLOWS.md) | Building workflows: steps, scope, knowledge packs, post-processors |
 | [DOCUMENT_PIPELINE.md](frappe_intelligence/docs/DOCUMENT_PIPELINE.md) | Document templates, extraction rules, training |
 | [INTEGRATION.md](frappe_intelligence/docs/INTEGRATION.md) | Adding the app to another Frappe app |
 | [API_REFERENCE.md](frappe_intelligence/docs/API_REFERENCE.md) | All whitelisted endpoints |
-| [WIDGET_GUIDE.md](frappe_intelligence/docs/WIDGET_GUIDE.md) | Widget user guide |
 | [DEPLOYMENT.md](frappe_intelligence/docs/DEPLOYMENT.md) | Self-hosted and Frappe Cloud setup |
 
 ## Requirements

@@ -76,4 +76,4 @@ Readings without a template create no log.
 | Values injected from the browser | Only the card's own field keys are used, each cut to 1000 characters |
 | Filling a form with unknown fields | `fill_form` leaves out field names the DocType does not have and tells the model; the browser skips them too |
 
-Post-processors (AI Post Processor) are not run from the panel; they belong to the workflow and WhatsApp channels. The old widget's `confirm_extraction` now passes them the values the user corrected.
+Post-processors (AI Post Processor) are not run from the panel; they belong to the workflow and WhatsApp channels. `api.documents.confirm_extraction` passes them the values the user corrected.

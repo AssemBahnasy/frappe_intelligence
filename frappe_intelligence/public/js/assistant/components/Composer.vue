@@ -7,7 +7,7 @@
 				<button
 					type="button"
 					class="fi-chip-remove"
-					:aria-label="__('Don\'t use this page as context')"
+					:aria-label="__('Leave this page out')"
 					@click="store.context_dismissed = true"
 				>
 					<Icon name="x" size="xs" />
@@ -59,6 +59,20 @@
 					<Icon name="paperclip" />
 				</button>
 				<input ref="file_input" type="file" hidden multiple :accept="ACCEPTED_FILES" @change="add_files" />
+				<button
+					v-if="voice"
+					type="button"
+					class="fi-icon-button"
+					:class="{ recording: listening === 'recording' }"
+					:disabled="listening === 'transcribing'"
+					:title="voice_label"
+					:aria-label="voice_label"
+					:aria-pressed="listening === 'recording'"
+					@click="toggle_voice"
+				>
+					<span v-if="listening === 'transcribing'" class="es-spinner" aria-hidden="true"></span>
+					<Icon v-else :name="listening === 'recording' ? 'square' : 'mic'" />
+				</button>
 				<span class="fi-spacer"></span>
 				<button v-if="store.run" type="button" class="fi-stop" @click="store.stop()">
 					<Icon name="square" size="xs" />
@@ -84,6 +98,7 @@ import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from "v
 import { context_label } from "../page_context";
 import { useAssistant } from "../store";
 import { ACCEPTED_FILES, MAX_FILES, upload_file } from "../uploads";
+import { Recorder, transcribe } from "../voice";
 import FileChip from "./FileChip.vue";
 import Icon from "./Icon.vue";
 
@@ -152,6 +167,52 @@ function grow() {
 	el.style.height = "auto";
 	el.style.height = `${Math.min(el.scrollHeight, MAX_INPUT_HEIGHT)}px`;
 }
+
+// Voice input: the text goes into the box to be checked before sending.
+const voice = frappe.boot.fi_assistant.voice;
+const listening = ref(""); // "", "recording" or "transcribing"
+let recorder = null;
+const voice_label = computed(() => {
+	if (listening.value === "recording") return __("Stop recording");
+	if (listening.value === "transcribing") return __("Turning your recording into text…");
+	return voice.language ? __("Voice input ({0})", [voice.language]) : __("Voice input");
+});
+
+async function toggle_voice() {
+	if (listening.value === "recording") return finish_recording();
+	recorder = new Recorder();
+	try {
+		await recorder.start();
+		listening.value = "recording";
+	} catch (e) {
+		voice_failed(e);
+	}
+}
+
+async function finish_recording() {
+	listening.value = "transcribing";
+	try {
+		const text = await transcribe(await recorder.stop());
+		if (!text) throw new Error(__("No speech was heard. Please try again."));
+		draft.value = [draft.value.trim(), text].filter(Boolean).join(" ");
+		await nextTick();
+		grow();
+		input.value.focus();
+	} catch (e) {
+		voice_failed(e);
+	} finally {
+		listening.value = "";
+	}
+}
+
+function voice_failed(e) {
+	recorder?.release();
+	frappe.show_alert({
+		message: e.message || __("The recording could not be turned into text."),
+		indicator: "red",
+	});
+}
+onBeforeUnmount(() => recorder?.release());
 
 // Mode menu: Frappe's own menu, rebuilt on every open so the choice shows as selected.
 const mode_button = ref(null);
@@ -311,6 +372,11 @@ textarea::placeholder {
 }
 .fi-icon-button:disabled {
 	opacity: 0.5;
+}
+.fi-icon-button.recording,
+.fi-icon-button.recording:hover:not(:disabled) {
+	background: var(--surface-red-2);
+	color: var(--ink-red-6);
 }
 .fi-mode {
 	display: inline-flex;

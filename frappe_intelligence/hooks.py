@@ -35,7 +35,6 @@ app_include_css = [
 app_include_js = [
     "frappe_intelligence_launcher.bundle.js",
     "frappe_intelligence_field_writer.bundle.js",
-    "fi.pages.bundle.js",
 ]
 
 boot_session = "frappe_intelligence.boot.boot_session"
@@ -99,7 +98,6 @@ boot_session = "frappe_intelligence.boot.boot_session"
 
 # before_install = "frappe_intelligence.install.before_install"
 after_install = "frappe_intelligence.install.after_install"
-after_migrate = ["frappe_intelligence.utils.whatsapp_setup.add_whatsapp_roles"]
 
 # Uninstallation
 # ------------
@@ -155,7 +153,7 @@ after_migrate = ["frappe_intelligence.utils.whatsapp_setup.add_whatsapp_roles"]
 # Frappe only fires the hook if the DocType actually exists on this site.
 doc_events = {
     "WhatsApp Message": {
-        "after_insert": "frappe_intelligence.engine.whatsapp_handler.on_whatsapp_message"
+        "after_insert": "frappe_intelligence.channels.whatsapp.on_whatsapp_message"
     }
 }
 

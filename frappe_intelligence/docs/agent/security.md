@@ -8,7 +8,7 @@ Checked on the server by every endpoint that reaches a model (`ensure_assistant_
 - has the **Desk User** role (website and portal users use `api/portal.py` instead);
 - has one of **AI Settings → Allowed Roles**, when that table is not empty.
 
-`get_widget_settings` returns `can_use` so the widget can hide itself, but hiding is cosmetic; the server check is what protects.
+The dock, sidebar and form buttons are hidden for users who are not allowed (`boot.py`), but hiding is cosmetic; the server check is what protects.
 
 ## What the assistant may read or do
 
@@ -25,9 +25,10 @@ The agent acts as the signed-in user:
 
 | Endpoint | Check |
 |---|---|
-| `confirm_extraction`, widget file upload | Write permission on the record the result is linked to, before post-processors run |
+| `confirm_extraction` | Write permission on the record the result is linked to, before post-processors run |
 | `start_workflow`, every workflow turn (desk, portal, WhatsApp) | The workflow is Active and allowed on that channel (`allow_desk`, `allow_portal`, `allow_whatsapp`) |
 | `exit_workflow` | Write permission on the conversation |
+| `transcribe` | The voice package is installed; only the user's own private recording, deleted afterwards |
 | `write_field` | Write with AI turned on; the field's type, read-only flag and permission level; create or write permission; only readable fields go to the model ([../writer/server.md](../writer/server.md)) |
 | Workflow completion check | Only a function inside an installed app (`utils/callables.is_app_method`) |
 | Workflow record | Create permission on the Target DocType before its form opens; nothing is saved for the user |
@@ -35,7 +36,7 @@ The agent acts as the signed-in user:
 
 ## Rate limits
 
-Frappe's `rate_limit` decorator (`utils/access.limit_requests`): 20 requests per minute per user and endpoint, counted atomically in Redis. Applied to `send_message`, `handle_widget_input`, `process_document`, `portal_chat` and `portal_upload_document`.
+Frappe's `rate_limit` decorator (`utils/access.limit_requests`): 20 requests per minute per user and endpoint, counted atomically in Redis. Applied to `send_message`, `start_workflow`, `write_field`, `transcribe`, `process_document`, `portal_chat` and `portal_upload_document`.
 
 ## Removed in step 2
 

@@ -7,6 +7,7 @@ import frappe
 from frappe import _
 from frappe.utils import strip_html
 
+from frappe_intelligence.utils import background
 from frappe_intelligence.utils.access import ensure_assistant_access, field_writer_allowed, limit_requests
 from frappe_intelligence.writer import text
 
@@ -27,9 +28,9 @@ def write_field(
 	context: dict | str | None = None,
 	docname: str | None = None,
 ) -> dict:
-	"""Write the field in the background: `{"job": id}`; the text arrives on the `fi_field_writer`
-	event (`get_written` if it was missed). `context` is the form's other values, by field name;
-	`docname` is omitted on a new form."""
+	"""Write the field in the background: `{"job": id}`; the text is the job's value
+	(utils/background.py). `context` is the form's other values, by field name; `docname` is
+	omitted on a new form."""
 	ensure_assistant_access()
 	if not field_writer_allowed():
 		frappe.throw(_("Write with AI is turned off in AI Settings."), frappe.PermissionError)
@@ -39,7 +40,8 @@ def write_field(
 		frappe.throw(_("Describe what the field should say."))
 	if len(instruction) > MAX_INSTRUCTION:
 		frappe.throw(_("Keep the description under {0} characters.").format(MAX_INSTRUCTION))
-	job = text.start(
+	job = background.start(
+		"frappe_intelligence.writer.text.write",
 		doctype=_(doctype),
 		label=_(df.label or df.fieldname),
 		fieldtype=df.fieldtype,
@@ -48,13 +50,6 @@ def write_field(
 		context=_context(doctype, context),
 	)
 	return {"job": job}
-
-
-@frappe.whitelist()
-def get_written(job: str) -> dict:
-	"""The result of the user's own job: `{text}`, `{error}` or `{pending: true}`."""
-	ensure_assistant_access()
-	return text.result(job)
 
 
 def _writable_field(doctype: str, fieldname: str, docname: str | None):

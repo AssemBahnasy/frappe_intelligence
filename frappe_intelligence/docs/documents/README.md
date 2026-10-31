@@ -5,7 +5,7 @@ Files the assistant reads: PDFs, photos and text files. A file that matches an *
 | Concern | Doc |
 |---|---|
 | Attaching a file in the panel and reviewing what was read (board 3a) | [review.md](review.md) |
-| Templates, extraction rules, confidence, seeding, the old widget's pipeline | [../DOCUMENT_PIPELINE.md](../DOCUMENT_PIPELINE.md) |
+| Templates, extraction rules, confidence, seeding, the portal and WhatsApp pipeline | [../DOCUMENT_PIPELINE.md](../DOCUMENT_PIPELINE.md) |
 | How field values are pulled out with the AI provider | [../providers/settings.md](../providers/settings.md) (`extraction_mode`) |
 
 ## Code
@@ -17,4 +17,5 @@ Files the assistant reads: PDFs, photos and text files. A file that matches an *
 | `documents/heuristic.py`, `extractor.py` | Regex rules; AI-provider extraction |
 | `documents/review.py` | The panel's reading: review card, confirmed values, training pairs, log links |
 | `agent/tools/documents.py` | The `read_document` tool |
-| `engine/orchestrator.py` | The old widget, portal and WhatsApp pipeline (`AIEngine`), using `templates.py` |
+| `documents/pipeline.py` | The portal, WhatsApp and integrations pipeline (`AIEngine`), using `templates.py` |
+| `documents/voice.py`, `transcriber.py` | Voice input: a recording from the panel to text ([../panel/voice.md](../panel/voice.md)) |

@@ -1,5 +1,4 @@
-"""Write with AI: which fields may be written, what the model reads, and the background job, over
-fakes; no site needed."""
+"""Write with AI: which fields may be written and what the model reads, over fakes; no site needed."""
 
 from __future__ import annotations
 
@@ -10,7 +9,7 @@ from unittest.mock import MagicMock, patch
 import frappe
 
 from frappe_intelligence.api import writer as api
-from frappe_intelligence.providers import ProviderError, Reply
+from frappe_intelligence.providers import Reply
 from frappe_intelligence.writer import text
 
 FIELDS = {
@@ -126,26 +125,3 @@ class TestText(TestCase):
 			plain = provider.complete.call_args.kwargs["system"]
 		self.assertIn(text.RICH, rich)
 		self.assertIn(text.PLAIN, plain)
-
-	def test_the_job_keeps_the_result_for_the_user_and_tells_the_browser(self):
-		request = dict(
-			doctype="Customer", label="Details", fieldtype="Text", instruction="x", current="", context=[]
-		)
-		for outcome, expected in (
-			({"return_value": "Written."}, {"text": "Written."}),
-			({"side_effect": ProviderError("offline")}, {"error": "offline"}),
-		):
-			cache = MagicMock()
-			with (
-				patch.object(text, "write", **outcome),
-				patch("frappe_intelligence.writer.text.frappe.cache", new=cache),
-				patch.object(text.frappe, "publish_realtime") as publish,
-				patch("frappe_intelligence.writer.text.frappe.session", new=NS(user="a@example.com")),
-			):
-				text.run("JOB1", **request)
-			cache.set_value.assert_called_once_with(
-				"fi_field_writer:a@example.com:JOB1", expected, expires_in_sec=600
-			)
-			publish.assert_called_once_with(
-				"fi_field_writer", {"job": "JOB1", **expected}, user="a@example.com"
-			)

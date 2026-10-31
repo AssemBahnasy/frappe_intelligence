@@ -11,7 +11,7 @@ bench --site <site> migrate
 bench build --app frappe_intelligence
 ```
 
-The widget appears automatically on every Frappe Desk page after the build. No template changes needed.
+The assistant appears in the dock and sidebar of every Frappe Desk page after the build (open it with Ctrl+.). No template changes needed.
 
 ## 2. Configure the AI Provider
 
@@ -92,24 +92,7 @@ frappe.call(
 
 See [WORKFLOWS.md](WORKFLOWS.md) for timing and security details.
 
-## 6. Seed Route Map (optional)
-
-Offers a "Go to …" button after classifying a document in global mode:
-
-```python
-def seed_route_map():
-    settings = frappe.get_doc("AI Settings")
-    existing = {r.document_type_key for r in settings.route_map}
-    if "supplier_invoice" not in existing:
-        settings.append("route_map", {
-            "document_type_key": "supplier_invoice",
-            "label": "Purchase Invoice",
-            "route": "/app/purchase-invoice/new",
-        })
-        settings.save(ignore_permissions=True)
-```
-
-## 7. Seed a Knowledge Pack (optional)
+## 6. Seed a Knowledge Pack (optional)
 
 Inject domain knowledge into chat and agent prompts:
 
@@ -128,7 +111,7 @@ def seed_knowledge():
     }).insert(ignore_permissions=True)
 ```
 
-## 8. Build Workflows (optional)
+## 7. Build Workflows (optional)
 
 For guided multi-step agent sessions, use **AI Workflow Builder** (desk → Workflow Builder). See [WORKFLOWS.md](WORKFLOWS.md).
 
@@ -136,7 +119,7 @@ For guided multi-step agent sessions, use **AI Workflow Builder** (desk → Work
 
 | Symptom | Fix |
 |---------|-----|
-| Widget not appearing | `bench build --app frappe_intelligence` |
+| Assistant not in the dock | `bench build --app frappe_intelligence`, then reload; the user must be allowed by AI Settings → Allowed Roles |
 | "Cannot connect to Ollama" | `ollama serve` or switch to Claude in AI Settings |
 | OCR returns empty | `bench pip install easyocr` |
 | Voice transcription fails | `bench pip install faster-whisper` |
@@ -145,4 +128,4 @@ For guided multi-step agent sessions, use **AI Workflow Builder** (desk → Work
 | "Too many requests" | User exceeded 20 calls / 60 s on an endpoint — wait, or change `REQUESTS_PER_MINUTE` in `utils/access.py` |
 | Route map button does nothing | Route must start with `/app/` |
 | Wrong language replies | Add Response Language rows in AI Settings → Chat tab |
-| Widget visible to all users | Add rows to AI Settings → Widget tab → Allowed Roles |
+| Assistant available to all users | Add rows to AI Settings → Assistant tab → Allowed Roles |

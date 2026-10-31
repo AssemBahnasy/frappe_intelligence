@@ -8,6 +8,7 @@ from frappe import _, _lt
 from frappe_intelligence.agent.tools import AgentTool, ToolError
 from frappe_intelligence.documents import review
 from frappe_intelligence.utils.file_utils import validate_file_access
+from frappe_intelligence.utils.optional import MissingPackage
 
 
 def read_document(arguments: dict) -> dict:
@@ -15,6 +16,8 @@ def read_document(arguments: dict) -> dict:
 	validate_file_access(file_url)
 	try:
 		return review.read(file_url)
+	except MissingPackage as exc:
+		raise ToolError(str(exc)) from exc
 	except (OSError, ValueError, ImportError) as exc:
 		# Missing file, unreadable content or no OCR library: the details are for the Error Log.
 		frappe.log_error(f"Assistant could not read {file_url}")

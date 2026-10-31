@@ -59,6 +59,7 @@
 <script setup>
 import { computed, nextTick, ref, watch } from "vue";
 import { open_route } from "../actions";
+import { isolate_ltr } from "../bidi";
 import { useAssistant } from "../store";
 import { enhance_tables } from "../tables";
 import ChangeResult from "./ChangeResult.vue";
@@ -89,13 +90,15 @@ const feedback_options = [
 	{ value: "Bad", icon: "thumbs-down", label: __("Bad answer") },
 ];
 
-// Tables become sortable and paged once the answer is complete.
+// Once the answer is complete: numbers and codes isolated inside right-to-left text, tables sortable and paged.
 watch(
 	() => [props.turn.pending, html.value, report_html.value],
 	async ([pending]) => {
 		if (pending) return;
 		await nextTick();
-		root.value && enhance_tables(root.value);
+		if (!root.value) return;
+		root.value.querySelectorAll(".fi-markdown").forEach(isolate_ltr);
+		enhance_tables(root.value);
 	},
 	{ immediate: true }
 );
@@ -224,6 +227,10 @@ function copy() {
 	background: none;
 	color: inherit;
 	font: inherit;
+}
+.fi-markdown :deep(.fi-num) {
+	text-align: end;
+	font-variant-numeric: tabular-nums;
 }
 .fi-markdown :deep(.fi-table-pager) {
 	display: flex;

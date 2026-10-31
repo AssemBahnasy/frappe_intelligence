@@ -6,11 +6,10 @@ import frappe
 from frappe import _
 
 from frappe_intelligence.agent import runs, transcript
-from frappe_intelligence.agent.loop import Hooks, run_turn
 from frappe_intelligence.documents import review
 from frappe_intelligence.utils.access import agent_mode_allowed, ensure_assistant_access, limit_requests
 from frappe_intelligence.utils.file_utils import validate_file_access
-from frappe_intelligence.workflows import desk, sessions
+from frappe_intelligence.workflows import desk
 
 MAX_MESSAGE_LENGTH = 4000
 MAX_ATTACHMENTS = 3
@@ -121,45 +120,6 @@ def list_conversations(limit: int = CONVERSATION_LIST_LIMIT) -> list[dict]:
 	)
 
 
-@frappe.whitelist()
-@limit_requests
-def handle_widget_input(
-	input_type: str,
-	file_url: str | None = None,
-	text_input: str | None = None,
-	doctype: str | None = None,
-	docname: str | None = None,
-	audio_pending: int = 0,
-	widget_mode: str = "global",
-	chat_mode: str = "ask",
-	workflow_key: str | None = None,
-) -> dict:
-	"""Entry point of the current widget; the new panel calls send_message instead."""
-	if audio_pending:
-		return {"status": "pending", "reply": _("Upload in progress…")}
-	ensure_assistant_access()
-
-	if input_type == "file":
-		from frappe_intelligence.api.documents import process_widget_file
-
-		return process_widget_file(file_url, doctype, docname, workflow_key)
-
-	if input_type == "voice":
-		from frappe_intelligence.documents.transcriber import transcribe
-		from frappe_intelligence.utils.file_utils import resolve_file_path, validate_file_access
-
-		validate_file_access(file_url)
-		language = frappe.get_cached_doc("AI Settings").voice_language or None
-		transcript = transcribe(resolve_file_path(file_url), language=language)
-		reply = _widget_reply(transcript, chat_mode, workflow_key, doctype, docname) if transcript else {}
-		return {"transcript": transcript, **_legacy_reply(reply.get("reply", ""))}
-
-	if input_type == "text":
-		return _widget_reply(_validated(text_input), chat_mode, workflow_key, doctype, docname)
-
-	frappe.throw(_("Unknown input_type '{0}'. Expected: file, voice, text.").format(input_type))
-
-
 def _validated_mode(mode: str) -> str:
 	if mode not in DESK_MODES:
 		frappe.throw(_("Unknown mode: {0}").format(mode))
@@ -207,33 +167,3 @@ def _desk_conversation(name: str | None, for_update: bool = False):
 	if doc.channel != "Desk":
 		frappe.throw(_("This conversation cannot be continued here."))
 	return doc
-
-
-def _widget_reply(text, chat_mode, workflow_key, doctype, docname) -> dict:
-	if chat_mode == "agent" and workflow_key:
-		return sessions.reply(text, "Desk", frappe.session.user, workflow_key)
-
-	latest = frappe.get_all(
-		"AI Conversation",
-		filters={"owner": frappe.session.user, "channel": "Desk", "mode": "Ask"},
-		order_by="modified desc",
-		pluck="name",
-		limit=1,
-	)
-	doc = _desk_conversation(latest[0] if latest else None)
-	runs.ensure_idle(doc)
-	doc.add_user_message(text, {"doctype": doctype, "docname": docname} if doctype else None)
-	try:
-		result = run_turn(doc, Hooks(on_text=_stream_chunk))
-	finally:
-		_stream_chunk("", done=True)
-	doc.save()
-	return _legacy_reply(result.reply or result.error or "")
-
-
-def _legacy_reply(reply: str) -> dict:
-	return {"reply": reply, "action": None, "action_data": None}
-
-
-def _stream_chunk(text: str, done: bool = False) -> None:
-	frappe.publish_realtime("ai_stream_chunk", {"chunk": text, "done": done}, user=frappe.session.user)

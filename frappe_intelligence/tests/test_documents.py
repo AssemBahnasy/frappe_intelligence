@@ -161,3 +161,15 @@ class TestReadTool(TestCase):
 				documents.read_document({"file_url": "/private/files/a.pdf"})
 		self.assertNotIn("/home", str(raised.exception))
 		log.assert_called_once()
+
+	def test_a_missing_ocr_package_is_named_so_the_user_knows(self):
+		from frappe_intelligence.agent.tools import ToolError, documents
+		from frappe_intelligence.utils.optional import MissingPackage
+
+		with (
+			patch.object(documents, "validate_file_access"),
+			patch.object(documents.review, "read", side_effect=MissingPackage("needs the OCR package")),
+		):
+			with self.assertRaises(ToolError) as raised:
+				documents.read_document({"file_url": "/private/files/photo.jpg"})
+		self.assertEqual(str(raised.exception), "needs the OCR package")

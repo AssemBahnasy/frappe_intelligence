@@ -61,27 +61,22 @@ ISO 639-1 code for Faster-Whisper (e.g. `ar`, `en`). Leave empty to auto-detect 
 | `confidence_threshold` | `0.6` | Global threshold; overridden per-workflow in AI Workflow.confidence_threshold |
 | `scope_similarity_threshold` | `0.05` | TF-IDF cosine threshold for scope enforcement |
 
-## Widget Tab
-
-### Appearance
+## Assistant Tab
 
 | Field | Default | Effect |
 |-------|---------|--------|
-| `widget_color` | `#6c63ff` | FAB, header, buttons, spinner (`--fi-primary` CSS var) |
-| `text_color` | *(empty)* | Widget header text colour override |
-| `widget_icon` | *(empty)* | Replaces default emoji with a custom image URL |
-| `assistant_name` | *(empty)* | Display name shown in the widget header |
+| `assistant_name` | *(empty)* | The assistant's name in the panel header, dock and sidebar ("Assistant" when empty) |
 
 ### Access Control
 
-**Allowed Roles** child table — list Frappe roles that can see the widget.
+**Allowed Roles** child table: the Frappe roles that may use the assistant (panel, workflows, Write with AI).
 
 | Configuration | Result |
 |--------------|--------|
-| Empty | All logged-in users see the widget |
-| One or more rows | Only users holding at least one listed role see it |
+| Empty | Every desk user |
+| One or more rows | Only users holding at least one listed role |
 
-Enforced on the server for every endpoint that reaches a model; the widget also hides itself for users who are not allowed.
+Enforced on the server for every endpoint that reaches a model; the dock, sidebar and form buttons are also hidden for users who are not allowed.
 
 ### Agent Mode and Writing Help
 
@@ -90,18 +85,6 @@ Enforced on the server for every endpoint that reaches a model; the widget also 
 | `allow_agent_mode` | Off | The assistant may propose changes the user confirms ([agent/approvals.md](agent/approvals.md)) |
 | `agent_excluded_doctypes` | *(empty)* | DocTypes Agent mode never changes |
 | `allow_field_writer` | On | **Write with AI** beside long text fields in forms ([writer/README.md](writer/README.md)) |
-
-## Navigation Tab
-
-**Route Map** child table — controls the "Go to …" button after document classification in global mode.
-
-| Column | Example |
-|--------|---------|
-| Document Type Key | `supplier_invoice` |
-| Button Label | `Purchase Invoice` |
-| Route | `/app/purchase-invoice/new` |
-
-Routes must start with `/app/`.
 
 ## WhatsApp Tab
 

@@ -30,9 +30,10 @@ from __future__ import annotations
 
 import os
 import threading
-from typing import Optional
 
 import frappe
+
+from frappe_intelligence.utils import optional
 
 # ---------------------------------------------------------------------------
 # Thread-safe singleton for the WhisperModel
@@ -53,7 +54,7 @@ def _get_model():
 	RuntimeError
 	    If the model cannot be loaded (bad model name, out of memory, etc.).
 	"""
-	global _whisper_model  # noqa: PLW0603
+	global _whisper_model
 
 	if _whisper_model is not None:
 		return _whisper_model
@@ -63,20 +64,13 @@ def _get_model():
 		if _whisper_model is not None:
 			return _whisper_model
 
-		try:
-			from faster_whisper import WhisperModel  # type: ignore[import]
-		except ImportError as exc:
-			frappe.log_error(
-				title="FasterWhisper not installed",
-				message="Run: bench pip install faster-whisper",
-			)
-			raise ImportError(
-				"faster-whisper is not installed. Add it to pyproject.toml and run `bench pip install`."
-			) from exc
+		optional.require(optional.VOICE)
+		from faster_whisper import WhisperModel  # type: ignore[import]
 
-		model_size: str = getattr(frappe.conf, "whisper_model_size", "medium")
-		device: str = getattr(frappe.conf, "whisper_device", "cpu")
-		compute_type: str = getattr(frappe.conf, "whisper_compute_type", "int8")
+		# frappe.conf gives None for a missing key, so getattr's default would never apply.
+		model_size: str = frappe.conf.get("whisper_model_size") or "medium"
+		device: str = frappe.conf.get("whisper_device") or "cpu"
+		compute_type: str = frappe.conf.get("whisper_compute_type") or "int8"
 
 		frappe.logger().info(
 			f"[Transcriber] Loading Whisper model '{model_size}' "

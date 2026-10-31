@@ -38,9 +38,6 @@
   "column_break_lncl",
   "extraction_mode",
   "keep_model_loaded",
-  "navigation_tab",
-  "navigation_section",
-  "route_map",
   "whatsapp_tab",
   "whatsapp_section",
   "enable_ai_on_whatsapp",
@@ -53,10 +50,6 @@
   "widget_tab",
   "widget_section",
   "assistant_name",
-  "widget_icon",
-  "column_break_ahbo",
-  "widget_color",
-  "text_color",
   "agent_section",
   "allow_agent_mode",
   "agent_excluded_doctypes",
@@ -325,54 +318,19 @@
    "label": "WhatsApp System Prompt"
   },
   {
-   "fieldname": "navigation_tab",
-   "fieldtype": "Tab Break",
-   "label": "Navigation"
-  },
-  {
-   "fieldname": "navigation_section",
-   "fieldtype": "Section Break"
-  },
-  {
-   "description": "Map document type keys to Frappe routes. The widget offers a 'Go to...' button after classifying a document in global mode.",
-   "fieldname": "route_map",
-   "fieldtype": "Table",
-   "label": "Route Map",
-   "options": "AI Route Map"
-  },
-  {
    "fieldname": "widget_tab",
    "fieldtype": "Tab Break",
-   "label": "Widget"
+   "label": "Assistant"
   },
   {
    "fieldname": "widget_section",
    "fieldtype": "Section Break",
-   "label": "Widget Appearance"
+   "label": "Assistant"
   },
   {
    "fieldname": "assistant_name",
    "fieldtype": "Data",
    "label": "Assistant Name"
-  },
-  {
-   "fieldname": "widget_icon",
-   "fieldtype": "Attach Image",
-   "label": "Widget Icon"
-  },
-  {
-   "fieldname": "column_break_ahbo",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "widget_color",
-   "fieldtype": "Color",
-   "label": "Widget Color"
-  },
-  {
-   "fieldname": "text_color",
-   "fieldtype": "Color",
-   "label": "Text Color"
   },
   {
    "fieldname": "agent_section",
@@ -431,7 +389,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-11-01 01:15:00.000000",
+ "modified": "2026-11-01 01:40:00.000000",
  "modified_by": "Administrator",
  "module": "Intelligence",
  "name": "AI Settings",

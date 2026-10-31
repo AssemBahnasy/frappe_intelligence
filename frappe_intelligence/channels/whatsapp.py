@@ -56,7 +56,7 @@ def on_whatsapp_message(doc, method=None):
         return
 
     frappe.enqueue(
-        "frappe_intelligence.engine.whatsapp_handler.process_whatsapp_message_job",
+        "frappe_intelligence.channels.whatsapp.process_whatsapp_message_job",
         queue="default",
         timeout=300,
         message_name=doc.name,
@@ -204,8 +204,8 @@ def handle_flow_response(session, incoming_msg) -> None:
 def _handle_audio(session, doc, phone: str, whatsapp_account: str) -> None:
     """Transcribe audio and route as text."""
     try:
-        from frappe_intelligence.documents.transcriber import transcribe  # noqa: PLC0415
-        from frappe_intelligence.utils.file_utils import resolve_file_path  # noqa: PLC0415
+        from frappe_intelligence.documents.transcriber import transcribe
+        from frappe_intelligence.utils.file_utils import resolve_file_path
     except ImportError:
         return
 
@@ -226,7 +226,7 @@ def _handle_audio(session, doc, phone: str, whatsapp_account: str) -> None:
 def _handle_media(doc) -> None:
     """Fire async document extraction on an image or document attachment."""
     try:
-        from frappe_intelligence.engine.orchestrator import AIEngine  # noqa: PLC0415
+        from frappe_intelligence.documents.pipeline import AIEngine
     except ImportError:
         return
     if doc.attach:

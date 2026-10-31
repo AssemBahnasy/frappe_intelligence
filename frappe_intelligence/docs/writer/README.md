@@ -15,6 +15,6 @@ Turned on or off in **AI Settings → Widget → Writing Help → Write with AI 
 |---|---|
 | `public/js/frappe_intelligence_field_writer.bundle.js` | Buttons on every form (`frappe.ui.form.on("*", "refresh")`), popover, waiting for the text, Undo |
 | `public/css/frappe_intelligence_field_writer.bundle.css` | Button, popover, the ring around a field just written |
-| `api/writer.py` | `write_field`, `get_written`: which field may be written, which form values the model reads |
-| `writer/text.py` | The prompt, the model call in a background job, the result |
+| `api/writer.py` | `write_field`: which field may be written, which form values the model reads |
+| `writer/text.py` | The prompt and the model call, run as a background job (`utils/background.py`) |
 | `boot.py` | `fi_assistant.field_writer`: the field types that get the button, empty when turned off |

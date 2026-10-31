@@ -4,18 +4,33 @@
 
 | What | How |
 |------|-----|
-| Python packages (`pypdf`, `easyocr`, `faster-whisper`, `anthropic`, `requests`) | `pyproject.toml` — bench installs on `install-app` |
-| APT packages (`libgl1`, `libglib2.0-0`, `ffmpeg`) | `pyproject.toml [deploy.dependencies.apt]` — Frappe Cloud installs automatically |
-| Widget JS injection | `app_include_js` in hooks.py — no template changes needed |
-| WhatsApp roles | `after_migrate` hook — idempotent, runs on every migrate |
-| Daily session expiry | `scheduler_events` — requires bench worker (see below) |
+| Python packages (`pypdf`, `requests`, `openai`, `anthropic`, `google-genai`) | `pyproject.toml`: bench installs them on `get-app` |
+| APT packages (`libgl1`, `libglib2.0-0`, `ffmpeg`) | `pyproject.toml [deploy.dependencies.apt]`: Frappe Cloud installs them; only the optional packages below use them |
+| Assistant in the dock and Write with AI on forms | `app_include_js` in hooks.py: no template changes needed |
+| Daily session expiry | `scheduler_events`: requires bench worker (see below) |
+
+## Optional Packages
+
+Two features need large packages, so they are not installed by default:
+
+| Extra | Package | Feature without it |
+|---|---|---|
+| `ocr` | `easyocr` (brings torch, several GB) | Photos and scanned PDF pages cannot be read; PDFs with embedded text still are. The assistant says the package is missing. |
+| `voice` | `faster-whisper` | No microphone in the assistant panel |
+
+```bash
+bench pip install -e apps/frappe_intelligence[ocr,voice]   # or only one of them
+sudo apt install -y libgl1 libglib2.0-0 ffmpeg            # their system libraries
+bench restart
+```
+
+`bench fi-check-deps` shows which are installed. On Frappe Cloud, only the base packages are installed.
 
 ## Self-Hosted
 
 ```bash
 bench get-app frappe_intelligence
 bench --site <site> install-app frappe_intelligence
-sudo apt install -y libgl1 libglib2.0-0 ffmpeg
 bench --site <site> migrate
 bench build --app frappe_intelligence
 ```
@@ -39,14 +54,16 @@ bench fi-check-deps
 Sample output:
 ```
 Python packages:
-  ✓  pypdf                PDF text extraction
-  ✓  easyocr              Image OCR
-  ✓  faster_whisper       Voice transcription
-  ✓  anthropic            Claude provider
-  ✓  requests             HTTP client
+  ✓ pypdf                PDF text extraction
+  ✗ easyocr              Photos and scanned PDFs (optional: the ocr extra)  ← missing
+  ✓ faster_whisper       Voice input (optional: the voice extra)
+  ✓ openai               OpenAI and Ollama providers
+  ✓ anthropic            Claude provider
+  ✓ google.genai         Gemini provider
+  ✓ requests             HTTP client (Ollama model checks)
 
 System tools:
-  ✓  ffmpeg               Audio decoding
+  ✓ ffmpeg               Audio decoding for voice input (optional)
 
 Ollama:
   ✓  Ollama running — models: qwen2.5:7b
@@ -54,10 +71,10 @@ Ollama:
 
 ### Background Workers
 
-The document pipeline, WhatsApp handler, and post-processors all run in RQ workers. Ensure workers are running:
+Assistant answers, Write with AI, voice input, the document pipeline, WhatsApp and post-processors all run in RQ workers. Ensure workers are running:
 
 ```bash
-bench worker --queue long &   # document extraction (timeout 600 s)
+bench worker --queue long &   # assistant answers, Write with AI, voice, document extraction
 bench worker --queue default  # WhatsApp + post-processors
 ```
 
@@ -70,7 +87,7 @@ Ollama **cannot** be installed on Frappe Cloud (requires root + persistent daemo
 1. Get an API key at console.anthropic.com
 2. **AI Settings → Provider = Claude → paste key → Save → Test Connection**
 
-All Python and APT packages are installed automatically during Frappe Cloud deployment.
+The base Python and APT packages are installed automatically during Frappe Cloud deployment; the optional OCR and voice packages are not.
 
 ### Ollama on External VPS + Frappe Cloud
 
@@ -83,7 +100,7 @@ All Python and APT packages are installed automatically during Frappe Cloud depl
 
 | | Self-Hosted | Frappe Cloud |
 |--|-------------|--------------|
-| Python packages | Automatic | Automatic |
+| Python packages | Automatic (OCR and voice: optional extras) | Automatic (without OCR and voice) |
 | APT packages | `sudo apt install` | Automatic |
 | Ollama | `bench fi-setup-ollama` | Not supported (external VPS option available) |
 | OpenAI / Claude / Gemini | API key only | API key only |
@@ -98,4 +115,4 @@ bench --site <site> migrate
 bench build --app frappe_intelligence
 ```
 
-`after_migrate` hooks run automatically on migrate (WhatsApp role setup, etc.).
+Patches in `patches.txt` run once each on migrate.

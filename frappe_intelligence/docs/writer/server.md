@@ -6,13 +6,14 @@ browser: api.writer.write_field(doctype, fieldname, instruction, current, contex
   → the field: a long text type, not read-only, at a permission level the user can write;
     create permission on the DocType (new form) or write permission on the record
   → context: the form's other values, only fields the user can read, by label, 40 at most, 300 characters each
-  → writer.text.start → background job (queue long, 10 minutes) → {"job": id}
+  → utils.background.start("writer.text.write", …) → background job (queue long, 10 minutes) → {"job": id}
 
-job: writer.text.run
+job: utils.background.run → writer.text.write
   → the model writes the text (AI Settings provider, system prompt and response language)
-  → result kept 10 minutes under the user's own key → realtime fi_field_writer {job, text | error}
+  → result kept 10 minutes under the user's own key → realtime fi_job {job, value | error}
 
-browser: waits for the event; every 10 seconds asks get_written(job) in case it was missed; gives up after 10 minutes
+browser (shared/background.js): waits for the event; every 10 seconds asks api.jobs.job_result(job) in case it
+was missed; gives up after 10 minutes
 ```
 
 ## What the model reads

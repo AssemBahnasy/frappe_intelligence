@@ -1,8 +1,19 @@
-// Sortable, paged tables inside rendered answers (approved board 1: "1–5 of 7").
+// Sortable, paged tables inside rendered answers (approved board 1: "1–5 of 7"); number columns line
+// up at the end.
 
 const PAGE_SIZE = 5;
+const NUMBER = /^[-+]?[\d,]*\.?\d+%?$/;
 const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
 const icon = (name) => frappe.utils.icon(name, "xs", "", "", "", true);
+
+function mark_number_columns(table, rows) {
+	const header = [...(table.tHead?.rows[0]?.cells || [])];
+	header.forEach((th, index) => {
+		const cells = rows.map((row) => row.cells[index]).filter((cell) => cell?.textContent.trim());
+		if (!cells.length || !cells.every((cell) => NUMBER.test(cell.textContent.trim()))) return;
+		[th, ...cells].forEach((cell) => cell.classList.add("fi-num"));
+	});
+}
 
 export function enhance_tables(root) {
 	root.querySelectorAll("table:not([data-fi-enhanced])").forEach(enhance);
@@ -18,6 +29,7 @@ function enhance(table) {
 	wrapper.append(table);
 
 	const rows = [...body.rows];
+	mark_number_columns(table, rows);
 	const state = { page: 0, column: -1, ascending: true };
 	const pager = rows.length > PAGE_SIZE ? make_pager(wrapper, state, () => render()) : null;
 
