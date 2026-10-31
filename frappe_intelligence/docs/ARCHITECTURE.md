@@ -8,20 +8,17 @@
 ┌──────────────────────────────────────────────────────────────┐
 │  Channels                                                    │
 │  ┌──────────────┐  ┌──────────────┐  ┌────────────────────┐ │
-│  │  Desk widget │  │ Portal (Vue/ │  │  WhatsApp incoming │ │
-│  │  (JS + Vue)  │  │  React app)  │  │  (frappe_whatsapp) │ │
+│  │ Desk panel   │  │ Portal (Vue/ │  │  WhatsApp incoming │ │
+│  │ (Vue)        │  │  React app)  │  │  (frappe_whatsapp) │ │
 │  └──────┬───────┘  └──────┬───────┘  └─────────┬──────────┘ │
 └─────────┼─────────────────┼──────────────────── ┼────────────┘
           │ api/chat.py     │ api/portal.py       │ engine/whatsapp_handler.py
+          │ api/workflows.py│                     │
           ▼                 ▼                      ▼
 ┌──────────────────────────────────────────────────────────────┐
-│  engine/                                                     │
-│  ┌────────────┐ ┌──────────────┐ ┌──────────┐ ┌──────────┐  │
-│  │  chat.py   │ │ workflow.py  │ │ scope.py │ │orchestr. │  │
-│  │ (intent +  │ │ (session +   │ │ (pre-LLM │ │(document │  │
-│  │  RAG +     │ │  step state  │ │  gate)   │ │ pipeline)│  │
-│  │  tools)    │ │  machine)    │ └──────────┘ └──────────┘  │
-│  └────────────┘ └──────────────┘                            │
+│  agent/          loop · tools · runs (background, streaming) │
+│  workflows/      steps · scope · answers · turn · records    │
+│  engine/         orchestrator (document pipeline) · WhatsApp │
 └──────────────────────────────────────────────────────────────┘
           │
           ▼
@@ -38,9 +35,7 @@
 |------|---------------|
 | `api/` | Whitelisted endpoints, one module per concern; see [API_REFERENCE.md](API_REFERENCE.md) |
 | `agent/` | Agent loop, prompts and tools for desk chat; see [agent/README.md](agent/README.md) |
-| `engine/chat.py` | `workflow_reply()`: guided workflows on every channel |
-| `engine/workflow.py` | Session CRUD, step state machine, turn persistence |
-| `engine/scope.py` | Pre-LLM gate: keyword regex + TF-IDF cosine similarity |
+| `workflows/` | Guided workflows on every channel; see [workflows/README.md](workflows/README.md) |
 | `engine/orchestrator.py` | Document pipeline controller; RQ background entry-point |
 | `engine/whatsapp_handler.py` | WhatsApp doc_event bridge → enqueue → route by content type |
 | `providers/__init__.py` | `get_provider()`: the provider chosen in AI Settings, with optional Ollama fallback |
@@ -117,18 +112,19 @@ api.chat.send_message(message, conversation, context)   ← returns {conversatio
 
 See [agent/loop.md](agent/loop.md) and [agent/live-replies.md](agent/live-replies.md).
 
-### Workflow (Agent mode)
+### Workflow
 
 ```
-engine/chat.py: workflow_reply(text, channel, channel_id, workflow_key)
-  → workflow must be Active and allowed on the channel
-  → scope gate → check_scope(text, workflow_doc)
-  → if no active step: completion_message or LLM summary
-  → build_step_prompt(session, step)
-      → injects required_fields, collected_data, knowledge_packs context
-  → LLM reply → collect_step_data() → advance_step() if complete
-  → append_turn() persists to AI Conversation Message rows
+desk: api.workflows.start_workflow → first question (no AI); answers → api.chat.send_message
+      → agent.runs.execute → workflows.turn.run_turn
+portal / WhatsApp: workflows.sessions.reply → workflows.turn.run_turn
+  → workflow Active and allowed on the channel
+  → topic gate (no AI) → read the answer into the step's missing fields (AI)
+  → step complete → completion check → next step; desk: filled form for the Target DocType
+  → reply: the model (thanks + next question); after the last step, the Completion Message or a summary, without AI
 ```
+
+See [workflows/turn.md](workflows/turn.md).
 
 ### Portal Channel
 
@@ -137,7 +133,7 @@ AIPortalClient.chat(text)
   → api.portal.portal_chat(text, customer, workflow_key)
       → _assert_portal_user(customer)           # Portal User table check
       → _enforce_portal_rate_limit(customer)    # key: fi_rl_portal:{customer}
-      → classify_text_intent(channel="portal")  # same engine, no FRAPPE_TOOLS
+      → workflows.sessions.reply(text, "Portal", user, workflow_key)
   ← {reply, action, action_data}
 ```
 
@@ -151,11 +147,11 @@ WhatsApp Message.after_insert
       → frappe.enqueue("process_whatsapp_message_job", queue="default")
 
 RQ worker → process_whatsapp_message_job
-  → get_or_create_session(channel="whatsapp", channel_id=phone)
+  → workflows.sessions.session("WhatsApp", phone, workflow_key)
   → _enforce_wa_rate_limit()   # key: fi_rl_wa:{phone}, 10/60s
   → route by content_type: text | flow | audio | image | document | button
-  → text: _within_24h_window check → classify_text_intent()
-  → flow: parse JSON → collect_step_data() → advance_step()
+  → text: _within_24h_window check → workflows.sessions.reply()
+  → flow: parse JSON → steps.collect() → steps.advance() → next question
   → reply via _send_whatsapp_reply() with char-limit splitting
 ```
 
@@ -165,13 +161,7 @@ Every model call goes through `providers/`; see [providers/README.md](providers/
 
 ## Scope Enforcement
 
-`engine/scope.py` runs before every LLM call in workflow mode:
-
-1. **Excluded keywords bypass** — terms in `AI Workflow.excluded_keywords` skip the keyword gate (domain-specific terms that look off-topic)
-2. **Keyword gate** — regex patterns block obvious off-topic requests (jokes, weather, arithmetic)
-3. **Cosine similarity** — TF-IDF cosine score of user text vs `scope_description`; below threshold → reject with `out_of_scope_reply`
-
-Threshold: `AI Settings.scope_similarity_threshold` (default `0.05`). Per-workflow `excluded_keywords` (one per line) bypass step 2.
+Workflows only: see [workflows/turn.md](workflows/turn.md#the-topic-gate).
 
 ## Confidence & Review
 

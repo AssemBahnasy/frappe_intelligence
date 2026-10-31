@@ -11,7 +11,7 @@ send_message(message, conversation, context)
   ← {conversation, run_id}                         # returns immediately
 
 worker: runs.execute(conversation, run_id)
-  → loop.run_turn(conversation, Hooks(...))
+  → loop.run_turn(conversation, Hooks(...))      (workflows.turn.run_turn for a guided workflow)
       text deltas → "text" events (batched)
       each tool   → "step" running, then done / failed / stopped
       after every model turn and tool batch → conversation saved and committed

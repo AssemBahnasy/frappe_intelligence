@@ -25,6 +25,8 @@
 			</span>
 		</header>
 
+		<WorkflowBar v-if="store.workflow" />
+
 		<EmptyState v-if="!store.turns.length && !store.loading" @send="store.send" />
 		<MessageList v-else />
 
@@ -39,6 +41,7 @@ import Composer from "./Composer.vue";
 import EmptyState from "./EmptyState.vue";
 import Icon from "./Icon.vue";
 import MessageList from "./MessageList.vue";
+import WorkflowBar from "./WorkflowBar.vue";
 
 const props = defineProps({ host: { type: Object, required: true } });
 const store = useAssistant();

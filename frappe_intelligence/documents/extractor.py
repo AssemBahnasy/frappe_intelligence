@@ -34,8 +34,12 @@ STRATEGIES = {
 }
 
 
-def extract(raw_text: str, rules) -> tuple[dict[str, Any], float]:
-	"""Return `({field_key: value or None}, share of AI fields that got a value)`."""
+def extract(raw_text: str, rules, strict: bool = False) -> tuple[dict[str, Any], float]:
+	"""Return `({field_key: value or None}, share of AI fields that got a value)`.
+
+	`strict`: raise the ProviderError when the AI could not be reached and nothing was found, instead
+	of returning empty values that look like "not in the text".
+	"""
 	eligible = [
 		rule
 		for rule in rules
@@ -49,6 +53,8 @@ def extract(raw_text: str, rules) -> tuple[dict[str, Any], float]:
 	result = getattr(extractor, STRATEGIES.get(mode, STRATEGIES[DEFAULT_MODE]))(eligible)
 	if extractor.errors:
 		frappe.log_error("AI field extraction", "\n".join(extractor.errors))
+	if strict and extractor.unreachable and not any(result.values()):
+		raise extractor.unreachable
 	return result, sum(1 for value in result.values() if value) / len(eligible)
 
 
@@ -57,6 +63,7 @@ class _Extractor:
 		self.text = text
 		self.provider = get_provider()
 		self.errors: list[str] = []
+		self.unreachable: ProviderError | None = None
 
 	def per_field(self, rules) -> dict:
 		return {rule.field_key: self.field(rule) for rule in rules}
@@ -104,6 +111,7 @@ class _Extractor:
 			)
 		except ProviderError as exc:
 			self.errors.append(str(exc))
+			self.unreachable = exc
 			return {}
 		data = _parse_json(reply.text)
 		if data is None:

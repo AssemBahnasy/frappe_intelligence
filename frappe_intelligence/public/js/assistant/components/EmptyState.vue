@@ -21,14 +21,34 @@
 				{{ prompt }}
 			</button>
 		</section>
+
+		<section v-if="workflows.length" class="fi-group">
+			<div class="fi-group-label">{{ __("Guided workflows") }}</div>
+			<button
+				v-for="workflow in workflows"
+				:key="workflow.name"
+				class="fi-suggestion"
+				dir="auto"
+				@click="store.start_workflow(workflow.name)"
+			>
+				<Icon name="route" />
+				<span class="fi-suggestion-label">{{ workflow.title }}</span>
+				<span class="fi-suggestion-meta">{{ __("{0} steps", [workflow.steps]) }}</span>
+			</button>
+		</section>
 	</div>
 </template>
 
 <script setup>
+import { useAssistant } from "../store";
 import Icon from "./Icon.vue";
 
+const WORKFLOW_LIMIT = 3; // the rest are in the mode menu
+
 const emit = defineEmits(["send"]);
+const store = useAssistant();
 const groups = frappe.boot.fi_assistant.suggestions;
+const workflows = (frappe.boot.fi_assistant.workflows || []).slice(0, WORKFLOW_LIMIT);
 const first_name = (frappe.session.user_fullname || "").split(" ")[0];
 const greeting = first_name ? __("How can I help, {0}?", [first_name]) : __("How can I help?");
 </script>
@@ -101,6 +121,15 @@ const greeting = first_name ? __("How can I help, {0}?", [first_name]) : __("How
 	background: var(--surface-gray-2);
 }
 .fi-suggestion .fi-icon {
+	color: var(--ink-gray-6);
+}
+.fi-suggestion-label {
+	flex: 1;
+	min-width: 0;
+}
+.fi-suggestion-meta {
+	flex: none;
+	font-size: var(--text-xs);
 	color: var(--ink-gray-6);
 }
 </style>

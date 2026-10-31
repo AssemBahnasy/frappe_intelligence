@@ -284,16 +284,14 @@ def preview_step_prompt(step_data: dict | str) -> dict:
 	if isinstance(step_data, str):
 		step_data = _json.loads(step_data)
 
-	from frappe_intelligence.engine.workflow import build_step_prompt
+	from types import SimpleNamespace
 
-	# Build a lightweight mock step object that build_step_prompt can consume.
-	class _MockStep:
-		def __init__(self, data: dict):
-			self.step_key = data.get("step_key", "")
-			self.prompt_to_user = data.get("prompt_to_user", "")
-			self.required_fields = data.get("required_fields")
-			self.target_doctype = data.get("target_doctype")
+	from frappe_intelligence.workflows.turn import step_instructions
 
-	mock_step = _MockStep(step_data)
-	prompt = build_step_prompt(mock_step, collected_so_far={}, workflow_doc=None)
+	step = SimpleNamespace(
+		step_key=step_data.get("step_key", ""),
+		prompt_to_user=step_data.get("prompt_to_user", ""),
+		required_fields=step_data.get("required_fields"),
+	)
+	prompt = step_instructions(step, given={})
 	return {"prompt": prompt}

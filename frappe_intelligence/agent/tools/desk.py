@@ -7,6 +7,7 @@ import frappe
 from frappe import _, _lt
 
 from frappe_intelligence.agent.tools import AgentTool, ToolError
+from frappe_intelligence.utils.fields import writable_fieldname
 
 CHART_TYPES = ("bar", "line", "pie", "percentage", "donut")
 CHART_LABEL_LIMIT = 100
@@ -49,7 +50,7 @@ def fill_form(arguments: dict) -> dict:
 	doctype, values = arguments["doctype"], arguments.get("values") or {}
 	frappe.has_permission(doctype, "create", throw=True)
 	meta = frappe.get_meta(doctype)
-	fieldnames = {key: _fieldname(meta, key) for key in values}
+	fieldnames = {key: writable_fieldname(meta, key) for key in values}
 	known = {fieldnames[key]: value for key, value in values.items() if fieldnames[key]}
 	if not known:
 		raise ToolError(_("{0} has none of these fields. Read its fields first.").format(doctype))
@@ -62,15 +63,6 @@ def fill_form(arguments: dict) -> dict:
 			f"Left out {', '.join(skipped)}: not fields of {doctype}, or read-only (calculated by the form)."
 		)
 	return result
-
-
-def _fieldname(meta, key: str) -> str | None:
-	"""A writable field by name, or by label: models often use the labels they were shown."""
-	label = key.strip().lower()
-	df = meta.get_field(key) or next(
-		(df for df in meta.fields if (df.label or "").strip().lower() == label), None
-	)
-	return df.fieldname if df and not df.read_only else None
 
 
 def show_chart(arguments: dict) -> dict:

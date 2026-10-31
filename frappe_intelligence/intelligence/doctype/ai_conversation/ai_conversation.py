@@ -124,6 +124,10 @@ class AIConversation(Document):
 		"""Shown to the user, never sent back to the model."""
 		self.append("messages", {"role": "assistant", "content": text, "is_error": 1})
 
+	def add_fixed_reply(self, text: str, off_topic: bool = False) -> None:
+		"""A reply written without AI (a workflow's questions and redirects); the model reads it as its own."""
+		self.append("messages", {"role": "assistant", "content": text, "off_topic": int(off_topic)})
+
 	def current_question(self) -> tuple[str, dict | None]:
 		"""Text and page context of the latest user message."""
 		row = next(row for row in reversed(self.messages) if row.role == "user")

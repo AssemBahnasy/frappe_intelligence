@@ -14,6 +14,7 @@ from frappe import _
 from frappe.utils.background_jobs import is_job_enqueued
 
 from frappe_intelligence.agent.loop import Hooks, Step, TurnResult, run_turn
+from frappe_intelligence.workflows import turn as workflow_turn
 
 EVENT = "fi_assistant"
 QUEUE = "long"
@@ -57,7 +58,8 @@ def stop(conversation, run_id: str) -> None:
 
 
 def execute(conversation: str, run_id: str) -> None:
-	"""Background job: run the turn, saving after every step so a reload shows progress."""
+	"""Background job: run the turn (a guided workflow's, or the agent's), saving after every step so a
+	reload shows progress."""
 	doc = frappe.get_doc("AI Conversation", conversation)
 	if doc.active_run != run_id:
 		return
@@ -68,8 +70,9 @@ def execute(conversation: str, run_id: str) -> None:
 		should_stop=StopFlag(run_id),
 		checkpoint=lambda: _save(doc),
 	)
+	answer = workflow_turn.run_turn if doc.mode == "Workflow" else run_turn
 	try:
-		result = run_turn(doc, hooks)
+		result = answer(doc, hooks)
 	except Exception:
 		frappe.db.rollback()
 		frappe.log_error(f"Assistant run {run_id} failed")

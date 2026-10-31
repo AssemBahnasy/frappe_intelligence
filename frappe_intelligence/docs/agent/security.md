@@ -26,7 +26,10 @@ The agent acts as the signed-in user:
 | Endpoint | Check |
 |---|---|
 | `confirm_extraction`, widget file upload | Write permission on the record the result is linked to, before post-processors run |
-| `workflow_reply` (desk, portal, WhatsApp) | The workflow is Active and allowed on that channel (`allow_desk`, `allow_portal`, `allow_whatsapp`) |
+| `start_workflow`, every workflow turn (desk, portal, WhatsApp) | The workflow is Active and allowed on that channel (`allow_desk`, `allow_portal`, `allow_whatsapp`) |
+| `exit_workflow` | Write permission on the conversation |
+| Workflow completion check | Only a function inside an installed app (`utils/callables.is_app_method`) |
+| Workflow record | Create permission on the Target DocType before its form opens; nothing is saved for the user |
 | `test_connection` | System Manager |
 
 ## Rate limits

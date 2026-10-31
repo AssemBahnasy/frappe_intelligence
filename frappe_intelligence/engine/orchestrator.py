@@ -30,6 +30,7 @@ from typing import Any
 import frappe
 
 from frappe_intelligence.documents import review, templates
+from frappe_intelligence.utils.callables import is_app_method
 
 
 class AIEngine:
@@ -192,23 +193,6 @@ def process_document_background(
 # ===========================================================================
 
 
-def _is_safe_callback(method: str) -> bool:
-	"""
-	Return True only when *method* is a dotted path whose top-level
-	package is an installed Frappe app.
-
-	This prevents a System Manager from registering arbitrary Python
-	callables (e.g. ``os.system``, ``subprocess.check_output``) as
-	post-processor callbacks.
-	"""
-	if not method or not isinstance(method, str):
-		return False
-	parts = method.split(".")
-	if len(parts) < 2 or any(p == "" for p in parts):
-		return False
-	return parts[0] in frappe.get_installed_apps()
-
-
 def fire_post_processors(
 	document_type_key: str | None,
 	extraction_result: dict,
@@ -228,7 +212,7 @@ def fire_post_processors(
 		filters={"document_type_key": document_type_key, "is_active": 1},
 		pluck="callback_method",
 	):
-		if not _is_safe_callback(method):
+		if not is_app_method(method):
 			frappe.log_error(
 				title=f"AI Post-Processor blocked: unsafe callback '{method}'",
 				message=(

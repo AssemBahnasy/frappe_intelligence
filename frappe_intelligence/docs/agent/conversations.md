@@ -4,7 +4,7 @@ One DocType holds every conversation: desk chats and guided workflows on the des
 
 | Field | Notes |
 |---|---|
-| `title` | First user message, set on save |
+| `title` | First user message, set on save; a workflow's title |
 | `mode` | `Ask`, `Agent`, `Workflow` |
 | `status` | `Active`, `Completed`, `Abandoned`, `Paused` (workflows) |
 | `channel`, `channel_id` | `Desk`, `Portal`, `WhatsApp`; portal user or phone number |
@@ -22,6 +22,7 @@ One DocType holds every conversation: desk chats and guided workflows on the des
 | `tool_calls` | Assistant turns: `[{id, name, arguments}]` |
 | `tool_name`, `tool_call_id` | Tool turns |
 | `is_error` | Error notices (never sent to the model) and failed tool results (sent, so the model can recover) |
+| `off_topic` | A workflow redirect, written without AI ([../workflows/turn.md](../workflows/turn.md)) |
 | `context` | Page the user was on |
 | `attachments` | Files sent with a user message: `[{file_url, file_name}]` ([../documents/review.md](../documents/review.md)) |
 | `raw`, `raw_provider` | The provider's own form of an assistant turn, replayed only to the same provider |
@@ -42,3 +43,5 @@ JSON values are stored as text because Frappe's JSON field rejects lists.
 - **Desk User**: create, read, write, delete **own** conversations only. **System Manager**: all.
 - Old conversations are deleted after 90 days through **Log Settings** (`default_log_clearing_doctypes` hook, `clear_old_logs`); change the period there.
 - Idle workflow conversations become Abandoned after 7 days (`tasks.expire_old_sessions`).
+
+Replies written without AI (a workflow's questions and redirects) are stored with `add_fixed_reply`; the model reads them as its own turns. A workflow's first row is its opening question, before any user message; the panel shows it as a turn without a question.

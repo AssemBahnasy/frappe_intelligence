@@ -11,12 +11,13 @@ MIN_WORD_LENGTH = 4
 RESULT_LIMIT = 3
 
 
-def search_knowledge(query: str, limit: int = RESULT_LIMIT) -> list[dict]:
-	"""Entries of active packs ranked by how many query words they contain."""
+def search_knowledge(query: str, limit: int = RESULT_LIMIT, packs: list[str] | None = None) -> list[dict]:
+	"""Entries of active packs (only `packs`, when given) ranked by how many query words they contain."""
 	words = [word for word in query.lower().split() if len(word) >= MIN_WORD_LENGTH]
-	if not words:
+	if not words or packs == []:
 		return []
-	packs = frappe.get_all("AI Knowledge Pack", filters={"is_active": 1}, pluck="name")
+	filters = {"is_active": 1, **({"name": ("in", packs)} if packs is not None else {})}
+	packs = frappe.get_all("AI Knowledge Pack", filters=filters, pluck="name")
 	if not packs:
 		return []
 	entries = frappe.get_all(
@@ -29,9 +30,9 @@ def search_knowledge(query: str, limit: int = RESULT_LIMIT) -> list[dict]:
 	return [{"topic": entry.topic, "content": entry.content} for _, entry in ranked[:limit]]
 
 
-def knowledge_block(query: str) -> str:
+def knowledge_block(query: str, packs: list[str] | None = None) -> str:
 	"""Matching entries as a prompt section, for flows that do not call tools."""
-	entries = search_knowledge(query)
+	entries = search_knowledge(query, packs=packs)
 	if not entries:
 		return ""
 	sections = "\n\n".join(f"**{entry['topic']}**\n{entry['content']}" for entry in entries)

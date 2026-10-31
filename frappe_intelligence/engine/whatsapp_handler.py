@@ -77,14 +77,14 @@ def process_whatsapp_message_job(
     message_id: str,
 ) -> None:
     """RQ background job.  Routes incoming WhatsApp Message by content_type."""
-    from frappe_intelligence.engine import workflow as _wf  # noqa: PLC0415
+    from frappe_intelligence.workflows import sessions
 
     try:
         doc = frappe.get_doc("WhatsApp Message", message_name)
 
         # Touch session so last_user_message_at is always current
         workflow_key = _get_whatsapp_workflow_key()
-        session = _wf.get_or_create_session("WhatsApp", phone, workflow_key)
+        session = sessions.session("WhatsApp", phone, workflow_key)
         session.last_user_message_at = now_datetime()
         session.save(ignore_permissions=True)
 
@@ -138,7 +138,7 @@ def process_whatsapp_message_job(
 def process_whatsapp_text(session, text: str, incoming_msg) -> None:
     """Run text through the workflow engine and send the AI reply.
 
-    Delegates to workflow_reply, which handles:
+    Delegates to workflows.sessions.reply, which handles:
     scope enforcement, step-driven prompt building, LLM call, turn persistence.
     """
     if not _within_24h_window(session):
@@ -146,10 +146,10 @@ def process_whatsapp_text(session, text: str, incoming_msg) -> None:
         # Silently skip rather than attempting a message Meta will reject.
         return
 
-    from frappe_intelligence.engine.chat import workflow_reply
+    from frappe_intelligence.workflows import sessions
 
     workflow_key = session.workflow or _get_whatsapp_workflow_key()
-    result = workflow_reply(text, "WhatsApp", session.channel_id, workflow_key)
+    result = sessions.reply(text, "WhatsApp", session.channel_id, workflow_key)
 
     reply = result.get("reply") or ""
     if reply:
@@ -166,67 +166,35 @@ def process_whatsapp_text(session, text: str, incoming_msg) -> None:
 # ---------------------------------------------------------------------------
 
 def handle_flow_response(session, incoming_msg) -> None:
-    """Parse a completed WhatsApp Flow response and advance the step.
+    """Store a completed WhatsApp Flow's values on the current step and send the next question.
 
-    flow_response is a JSON string with the field values the user submitted.
-    We map them to the current step's required_fields and call collect_step_data.
-    If the step is now complete, advance to the next step and send its prompt.
+    The flow's field names must match the step's Required Fields keys.
     """
-    from frappe_intelligence.engine import workflow as _wf  # noqa: PLC0415
-    import json as _json
+    from frappe_intelligence.workflows import steps, turn
 
-    raw = incoming_msg.get("flow_response") or "{}"
-    try:
-        flow_data: dict = _json.loads(raw) if isinstance(raw, str) else raw
-    except Exception:
-        flow_data = {}
-
-    step = _wf.get_current_step(session)
-    if not step:
+    flow_data = frappe.parse_json(incoming_msg.get("flow_response") or "{}")
+    workflow = frappe.get_doc("AI Workflow", session.workflow) if session.workflow else None
+    step = steps.current(session, workflow) if workflow else None
+    if not step or not isinstance(flow_data, dict):
         return
 
-    # Map whatever keys the flow sent to our collected_data for this step.
-    # The flow form fields should be named to match the step's required_fields.
-    extracted = {k: v for k, v in flow_data.items() if v is not None}
-    collected, is_complete = _wf.collect_step_data(session, step, extracted)
-
-    if is_complete:
-        next_step = _wf.advance_step(session)
-        if next_step:
-            # Send the next step's opening prompt
-            prompt_text = next_step.prompt_to_user or next_step.step_key
-            _send_whatsapp_reply(
-                to=session.channel_id,
-                message=prompt_text,
-                whatsapp_account=incoming_msg.whatsapp_account,
-                reply_to_id=incoming_msg.name,
-            )
-        else:
-            # Workflow complete
-            wf_doc = _wf.get_workflow(session)
-            completion_msg = (
-                wf_doc.out_of_scope_reply
-                if wf_doc and wf_doc.out_of_scope_reply
-                else "Thank you! Your request has been submitted successfully."
-            )
-            _send_whatsapp_reply(
-                to=session.channel_id,
-                message=completion_msg,
-                whatsapp_account=incoming_msg.whatsapp_account,
-                reply_to_id=incoming_msg.name,
-            )
+    steps.collect(session, step, flow_data)
+    complete = not steps.missing(session, step)
+    refusal = steps.refused(session, step) if complete else None
+    if complete and not refusal:
+        step = steps.advance(session, workflow)
+    if step:
+        message = " ".join(filter(None, [refusal, turn.question(session, step)]))
     else:
-        # Step not yet complete — prompt for the missing fields
-        from frappe_intelligence.engine.workflow import build_step_prompt  # noqa: PLC0415
-        wf_doc = _wf.get_workflow(session)
-        step_collected = collected.get(step.step_key, {})
-        prompt_text = build_step_prompt(step, step_collected, wf_doc)
-        _send_whatsapp_reply(
-            to=session.channel_id,
-            message=prompt_text,
-            whatsapp_account=incoming_msg.whatsapp_account,
-            reply_to_id=incoming_msg.name,
-        )
+        message = workflow.completion_message or frappe._("Thank you! Your request has been submitted.")
+    session.add_fixed_reply(message)
+    session.save(ignore_permissions=True)
+    _send_whatsapp_reply(
+        to=session.channel_id,
+        message=message,
+        whatsapp_account=incoming_msg.whatsapp_account,
+        reply_to_id=incoming_msg.name,
+    )
 
 
 # ---------------------------------------------------------------------------

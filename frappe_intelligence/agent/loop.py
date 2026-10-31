@@ -72,8 +72,9 @@ def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
 		for _step in range(MAX_STEPS):
 			if result.proposals:
 				break
-			_stop_if_asked(hooks)
-			reply = _complete(provider, conversation, text, context, system, specs, hooks)
+			stop_if_asked(hooks)
+			messages = _with_context(conversation.provider_messages(), text, context)
+			reply = complete(provider, conversation, messages, system, specs, hooks)
 			conversation.add_reply(reply)
 			hooks.checkpoint()
 			if not reply.tool_calls:
@@ -98,7 +99,7 @@ def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
 	return result
 
 
-def _complete(provider, conversation, text, context, system, specs, hooks: Hooks) -> Reply:
+def complete(provider, conversation, messages: list, system: str, specs, hooks: Hooks) -> Reply:
 	"""One model turn. On Stop mid-answer, the text streamed so far is kept as the reply."""
 	streamed: list[str] = []
 
@@ -106,11 +107,11 @@ def _complete(provider, conversation, text, context, system, specs, hooks: Hooks
 		streamed.append(delta)
 		if hooks.on_text:
 			hooks.on_text(delta)
-		_stop_if_asked(hooks)
+		stop_if_asked(hooks)
 
 	try:
 		return provider.complete(
-			_with_context(conversation.provider_messages(), text, context),
+			messages,
 			system=system,
 			tools=specs,
 			on_text=relay,
@@ -178,7 +179,7 @@ def _read_attachments(conversation, hooks: Hooks, result: TurnResult) -> None:
 	calls = conversation.unread_attachments()
 	if not calls:
 		return
-	_stop_if_asked(hooks)
+	stop_if_asked(hooks)
 	conversation.add_reply(Reply(tool_calls=calls, stop_reason="tool_calls"))
 	for call in calls:
 		_execute(conversation, call, step_label(call.name, call.arguments), hooks, result)
@@ -192,16 +193,21 @@ def _record(result: TurnResult, hooks: Hooks, step: Step, announce_only: bool = 
 		hooks.on_step(step)
 
 
-def _stop_if_asked(hooks: Hooks) -> None:
+def stop_if_asked(hooks: Hooks) -> None:
 	if hooks.should_stop():
 		raise Stopped
 
 
 def _with_context(messages: list, text: str, context: dict | None) -> list:
 	"""Attach the page and language notes to the current user message only."""
+	return with_current_message(messages, prompts.with_context(text, context))
+
+
+def with_current_message(messages: list, content: str) -> list:
+	"""The latest user message as the model reads it now; the stored message stays as the user wrote it."""
 	index = max(i for i, message in enumerate(messages) if message.role == "user")
 	current = messages[index]
-	messages[index] = type(current)(**{**vars(current), "content": prompts.with_context(text, context)})
+	messages[index] = type(current)(**{**vars(current), "content": content})
 	return messages
 
 

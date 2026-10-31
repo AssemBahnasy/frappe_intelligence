@@ -5,7 +5,7 @@ const SETTLE_MS = 300;
 const HANDLERS = {
 	set_route: ({ route }) => open_route(route),
 	open_form: ({ doctype, name }) => frappe.set_route("Form", doctype, name),
-	new_doc: ({ doctype, defaults }) => frappe.new_doc(doctype, defaults || {}),
+	new_doc: ({ doctype, defaults }) => open_new_form(doctype, defaults),
 	fill_form,
 	chart: () => {}, // drawn under the answer
 };
@@ -13,7 +13,7 @@ const HANDLERS = {
 // Into the new form the user has open; if they have left it, a new form gets the values instead.
 async function fill_form({ doctype, values }) {
 	const frm = window.cur_frm;
-	if (frm?.doctype !== doctype || !frm.is_new()) return frappe.new_doc(doctype, values);
+	if (frm?.doctype !== doctype || !frm.is_new()) return open_new_form(doctype, values);
 	const known = Object.fromEntries(Object.entries(values).filter(([field]) => frm.fields_dict[field]));
 	await frm.set_value(known);
 	// A link (e.g. the supplier) makes the form fetch its defaults, which can overwrite values the
@@ -21,6 +21,26 @@ async function fill_form({ doctype, values }) {
 	await settled();
 	const changed = Object.entries(known).filter(([field, value]) => !Array.isArray(value) && frm.doc[field] != value);
 	if (changed.length) frm.set_value(Object.fromEntries(changed));
+}
+
+// The full form, filled: frappe.new_doc would open Quick Entry where a DocType has one, and hands it the
+// values through frappe.route_options, which a list page takes as its filters first.
+async function open_new_form(doctype, values = {}) {
+	await frappe.model.with_doctype(doctype);
+	const doc = frappe.model.get_new_doc(doctype, null, null, true);
+	for (const [field, value] of Object.entries(values)) {
+		const df = frappe.meta.get_docfield(doctype, field);
+		if (!df) continue;
+		if (frappe.model.table_fields.includes(df.fieldtype)) {
+			doc[field] = []; // drops the empty row a mandatory table starts with
+			(Array.isArray(value) ? value : []).forEach((row) =>
+				Object.assign(frappe.model.add_child(doc, df.options, field), row)
+			);
+		} else {
+			doc[field] = value;
+		}
+	}
+	frappe.set_route("Form", doctype, doc.name);
 }
 
 // Form scripts chain server calls from callbacks, so wait until none has been running for a moment.

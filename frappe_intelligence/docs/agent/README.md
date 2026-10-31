@@ -26,7 +26,7 @@ api/chat.send_message                                              ← returns {
 |---|---|---|
 | Ask | Read data, run reports, search knowledge, open pages and new forms | Built |
 | Agent | Ask tools plus changes the user approves ([approvals.md](approvals.md)) | Built |
-| Workflow | Guided workflows (`engine/chat.workflow_reply`) | Moves to `workflows/` in step 7 |
+| Workflow | No tools: answers are read into the workflow's steps ([../workflows/README.md](../workflows/README.md)) | Built |
 
 ## Endpoints (`api/chat.py`)
 

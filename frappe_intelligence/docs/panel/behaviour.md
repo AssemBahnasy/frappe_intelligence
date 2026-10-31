@@ -6,14 +6,14 @@ The assistant's name, then **New chat**, **History** and **Close**. History is F
 
 ## New chat
 
-A greeting with the user's first name and up to two groups of starter questions picked by role (`agent/suggestions.py`); clicking one sends it.
+A greeting with the user's first name and up to two groups of starter questions picked by role (`agent/suggestions.py`); clicking one sends it. Below them, **Guided workflows** lists up to three workflows to start ([../workflows/desk.md](../workflows/desk.md)).
 
 ## Sending
 
 - **Enter** sends, **Shift+Enter** adds a line; the box grows up to about seven lines.
 - The chip above the box names the page the user is on ("Customer list", "Sales Invoice · ACC-…", "New Purchase Invoice") and is sent as context. **×** leaves it out for this page; it comes back on the next page.
 - The **paperclip** attaches up to three PDFs, photos or text files. Each uploads at once as a private file and shows as a chip in the box (spinner while uploading, **×** to remove); a message can be just the files. Sent files show above the question.
-- The mode menu offers **Ask** and **Agent** (disabled with "Turned off in AI Settings" unless Agent mode is allowed). The chip turns violet in Agent mode.
+- The mode menu offers **Ask** and **Agent** (disabled with "Turned off in AI Settings" unless Agent mode is allowed), and **Start a guided workflow** with every workflow as a submenu. The chip turns violet in Agent mode.
 
 ## While the answer is written
 
@@ -35,7 +35,7 @@ A greeting with the user's first name and up to two groups of starter questions 
 - Errors show in a red notice.
 - Under the answer: **Copy as Markdown**, **thumbs up / down** (stored on the message, `rate_reply`), and when it was asked.
 
-Browser actions from the agent (open a page, open a form, start a new document) run when the answer finishes.
+Browser actions from the agent (open a page, open a form, start a new document) run when the answer finishes. A new document always opens as the full form with its values (child-table values as rows), never as Quick Entry: Quick Entry does not take values handed to it from a list page.
 
 ## Changes in Agent mode (board 2c)
 
@@ -46,6 +46,10 @@ After a decision the card becomes one line: a spinner while it runs, then a chec
 ## Document review (board 3a)
 
 A file that matches a document template shows as a card: the template's name, "5 of 6 fields found", "Review needed" when confidence is low, every field editable (a missing one in amber), **Discard** and **Use these values**. Afterwards it becomes one line: "You checked the values" or "You discarded the values", and the assistant continues under it. On a new form it fills that form in. See [../documents/review.md](../documents/review.md).
+
+## Guided workflows (board 3b)
+
+A bar under the header shows the workflow, its step, progress, the answers so far and what is still needed, with **Exit**. Quick replies follow the last question; a redirect is marked "Off-topic · answered without AI". The mode button and page chip are hidden, and the line under the box reads "Saved after every answer. You can leave and come back." See [../workflows/desk.md](../workflows/desk.md).
 
 ## Width and theme
 

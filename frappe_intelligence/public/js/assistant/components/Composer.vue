@@ -38,7 +38,13 @@
 				@keydown.enter.exact="on_enter"
 			></textarea>
 			<div class="fi-input-actions">
-				<button ref="mode_button" type="button" class="fi-mode" :class="{ agent: store.mode === 'Agent' }">
+				<button
+					v-show="!store.workflow"
+					ref="mode_button"
+					type="button"
+					class="fi-mode"
+					:class="{ agent: store.mode === 'Agent' }"
+				>
 					{{ store.mode === "Agent" ? __("Agent") : __("Ask") }}
 					<Icon name="chevron-down" size="xs" />
 				</button>
@@ -63,7 +69,13 @@
 				</button>
 			</div>
 		</div>
-		<div class="fi-disclaimer">{{ __("AI can make mistakes. Check important figures.") }}</div>
+		<div class="fi-disclaimer">
+			{{
+				store.workflow
+					? __("Saved after every answer. You can leave and come back.")
+					: __("AI can make mistakes. Check important figures.")
+			}}
+		</div>
 	</form>
 </template>
 
@@ -81,12 +93,16 @@ const input = ref(null);
 const input_id = `fi-message-${frappe.utils.get_random(6)}`;
 const MAX_INPUT_HEIGHT = 168;
 
-const chip = computed(() => (store.context_dismissed ? "" : context_label(store.context)));
-const placeholder = computed(() =>
-	store.has_pending_proposals
-		? __("Reply, or ask for a change to the proposal…")
-		: __("Ask about your data, or describe a task…")
+// A workflow does not use the page it is answered on.
+const chip = computed(() =>
+	store.context_dismissed || store.workflow ? "" : context_label(store.context)
 );
+const placeholder = computed(() => {
+	if (store.workflow) return __("Type your answer…");
+	return store.has_pending_proposals
+		? __("Reply, or ask for a change to the proposal…")
+		: __("Ask about your data, or describe a task…");
+});
 
 function on_enter(e) {
 	if (e.isComposing) return;
@@ -142,30 +158,58 @@ const mode_button = ref(null);
 let mode_menu = null;
 onMounted(() => {
 	const agent_allowed = frappe.boot.fi_assistant.agent_mode;
+	const workflows = frappe.boot.fi_assistant.workflows || [];
 	mode_menu = new frappe.ui.Dropdown({
 		trigger: mode_button.value,
 		side: "top",
 		align: "start",
 		options: () => [
 			{
-				label: __("Ask"),
-				description: __("Reads and explains. Never changes data."),
-				selected: store.mode === "Ask",
-				onclick: () => (store.mode = "Ask"),
+				group: "",
+				hide_label: true,
+				options: modes(agent_allowed),
 			},
 			{
-				label: __("Agent"),
-				description: agent_allowed
-					? __("Prepares changes. You approve each one first.")
-					: __("Turned off in AI Settings."),
-				selected: store.mode === "Agent",
-				disabled: !agent_allowed,
-				onclick: () => (store.mode = "Agent"),
+				group: "",
+				hide_label: true,
+				options: workflows.length
+					? [
+							{
+								label: __("Start a guided workflow"),
+								icon: "route",
+								submenu: workflows.map((w) => ({
+									label: w.title,
+									description: __("{0} steps", [w.steps]),
+									onclick: () => store.start_workflow(w.name),
+								})),
+							},
+					  ]
+					: [],
 			},
 		],
 	});
 });
 onBeforeUnmount(() => mode_menu?.destroy());
+
+function modes(agent_allowed) {
+	return [
+		{
+			label: __("Ask"),
+			description: __("Reads and explains. Never changes data."),
+			selected: store.mode === "Ask",
+			onclick: () => (store.mode = "Ask"),
+		},
+		{
+			label: __("Agent"),
+			description: agent_allowed
+				? __("Prepares changes. You approve each one first.")
+				: __("Turned off in AI Settings."),
+			selected: store.mode === "Agent",
+			disabled: !agent_allowed,
+			onclick: () => (store.mode = "Agent"),
+		},
+	];
+}
 </script>
 
 <style scoped>

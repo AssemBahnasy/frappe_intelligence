@@ -1,6 +1,6 @@
 # Workflows
 
-An AI Workflow is a named, ordered sequence of steps that guides a user through a business process. The engine enforces scope (no off-topic messages), collects required data step-by-step, and advances automatically when each step is complete.
+An AI Workflow is a named, ordered sequence of steps that guides a user through a business process. The engine enforces scope (no off-topic messages), collects required data step-by-step, and advances automatically when each step is complete. How a turn runs and how the panel shows it: [workflows/README.md](workflows/README.md).
 
 ## Workflow Builder
 
@@ -17,13 +17,13 @@ The builder saves to three DocTypes atomically:
 |-------|---------|
 | `workflow_key` | Slug identifier used in code (unique, e.g. `service_request`) |
 | `title` | Human-readable name |
-| `is_active` | Inactive workflows are not shown in the widget selector |
+| `is_active` | Inactive workflows cannot be started or continued |
 | `allow_desk` / `allow_portal` / `allow_whatsapp` | Enable per channel |
 | `scope_description` | Plain-language mandate — injected into LLM system prompt; used for cosine similarity scope check |
 | `out_of_scope_reply` | Reply returned when the user's message is out of scope (no LLM call) |
 | `excluded_keywords` | One term per line — bypasses the keyword gate for domain-specific terms |
 | `confidence_threshold` | Per-workflow override (0 = use global AI Settings value) |
-| `completion_message` | Shown when all steps complete (no LLM call if set) |
+| `completion_message` | Shown when all steps complete, without AI; empty means a list of the answers |
 
 ## Steps
 
@@ -33,10 +33,10 @@ Each **AI Workflow Step** child row defines one collection step:
 |-------|---------|
 | `step_order` | Execution order (integer) |
 | `step_key` | Short code identifier (unique within workflow) |
-| `prompt_to_user` | Message sent to the user at this step |
-| `target_doctype` | Document type to create/link when step completes |
-| `required_fields` | JSON array of field keys the user must supply |
-| `completion_check` | Optional Python expression evaluated to decide if step is done |
+| `prompt_to_user` | The step's question, asked without AI when the step starts |
+| `target_doctype` | The record its answers fill; on the desk a filled new form opens when its steps are done |
+| `required_fields` | `{field key: label}` the user must supply; keys are the Target DocType's field names |
+| `completion_check` | Optional dotted path to `check(values, collected)` in an installed app ([workflows/steps.md](workflows/steps.md#completion-check)) |
 | `next_step_key` | Explicit next step; auto-advances sequentially if empty |
 | `whatsapp_flow` | Link to WhatsApp Flow (interactive form sent over WhatsApp) |
 
@@ -44,13 +44,7 @@ Step keys must be unique within the workflow. Duplicate keys are rejected at sav
 
 ## Scope Enforcement
 
-Three-layer gate runs before every LLM call in Agent mode:
-
-1. **Excluded keywords** — if any term in `excluded_keywords` appears in the user's message, skip the keyword gate
-2. **Keyword gate** — regex patterns block obviously off-topic messages (jokes, weather, arithmetic)
-3. **Cosine similarity** — TF-IDF vector comparison of user text vs `scope_description`; below threshold → return `out_of_scope_reply` immediately
-
-Zero LLM tokens spent on rejected messages.
+Off-topic messages get the workflow's `out_of_scope_reply` and the current question, without a model call: a phrase check first, then, for a message that answered nothing, word overlap with `scope_description`. `excluded_keywords` let a message through. Details: [workflows/turn.md](workflows/turn.md#the-topic-gate).
 
 ## Knowledge Packs
 
@@ -147,9 +141,9 @@ The `callback_method` must be in a top-level package that matches an installed F
 | Active | In progress |
 | Completed | All steps done |
 | Abandoned | Idle > 7 days (set by daily scheduler task) |
-| Paused | Manually paused |
+| Paused | The user pressed **Exit** in the panel; answering again continues |
 
-Sessions are keyed by `(channel, channel_id, workflow)`. The same user resuming a workflow in the same channel picks up the existing session.
+On the desk, a workflow is a conversation of its own, reopened from History. Portal and WhatsApp conversations are keyed by `(channel, channel_id, workflow)`: the same user picks up their Active or Paused one.
 
 ## WhatsApp Flows
 

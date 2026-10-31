@@ -16,20 +16,22 @@ frappe_intelligence_launcher.bundle.js     always loaded (app_include_js)
 | `public/css/frappe_intelligence_launcher.bundle.css` | Docks the `<aside>` in the desk's flex row; active launcher; phone layout |
 | `public/js/frappe_intelligence_assistant.bundle.js` | Exposes `frappe_intelligence.ui.AssistantPanel` |
 | `assistant/panel.js` | Host class: open, close, toggle, destroy |
-| `assistant/store.js` | Pinia store: conversation, turns, the running answer, `fi_assistant` events, history, feedback |
+| `assistant/store.js` | Pinia store: conversation, turns, the running answer, `fi_assistant` events, history, feedback, workflow progress |
 | `assistant/page_context.js` | The page sent as context and the chip label |
-| `assistant/actions.js` | Browser actions (`set_route`, `open_form`, `new_doc`) |
+| `assistant/actions.js` | Browser actions (`set_route`, `open_form`, `new_doc`, `fill_form`) |
 | `assistant/tables.js` | Sortable, paged tables in answers |
-| `assistant/components/` | `Panel`, `MessageList`, `Turn`, `Steps`, `ChartBlock`, `EmptyState`, `Composer`, `Icon` |
+| `assistant/components/` | `Panel`, `MessageList`, `Turn`, `Steps`, `ChartBlock`, `EmptyState`, `Composer`, `Icon`, `Card`, `ProposalCard`, `ReviewCard`, `ChangeResult`, `FileChip`, `WorkflowBar` |
 
 ## Server side
 
 | Piece | Responsibility |
 |---|---|
-| `boot.py` | `frappe.boot.fi_assistant` for allowed users |
+| `boot.py` | `frappe.boot.fi_assistant` for allowed users, with the workflows they can start |
 | `agent/suggestions.py` | Starter questions by role |
 | `agent/transcript.py` | Stored rows → turns with steps, answer, actions, feedback, stopped |
-| `api/chat.py` | `send_message`, `stop_message`, `get_conversation`, `list_conversations`, `rate_reply` |
+| `api/chat.py` | `send_message`, `decide_proposal`, `stop_message`, `get_conversation`, `list_conversations`, `rate_reply` |
+| `api/workflows.py` | `start_workflow`, `exit_workflow` |
+| `workflows/desk.py` | Startable workflows; the workflow bar's progress and quick replies |
 
 ## Notes
 

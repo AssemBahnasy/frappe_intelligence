@@ -7,6 +7,7 @@ import { perform_action } from "./actions";
 import { page_context } from "./page_context";
 
 const API = "frappe_intelligence.api.chat";
+const WORKFLOW_API = "frappe_intelligence.api.workflows";
 const EVENT = "fi_assistant";
 const CONVERSATION_KEY = "fi_assistant_conversation";
 const WATCH_SECONDS = 15;
@@ -15,6 +16,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 	const conversation = ref(null);
 	const mode = ref("Ask"); // Ask or Agent
 	const turns = ref([]);
+	const workflow = ref(null); // a guided workflow's progress (workflows/desk.py), else null
 	const run = ref(null); // { id, turn } while an answer is being written
 	const loading = ref(false);
 	const context = ref(page_context());
@@ -29,6 +31,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		if ((!text && !files.length) || run.value || sending) return;
 		const turn = reactive(new_turn(text, files));
 		turns.value.push(turn);
+		if (workflow.value) workflow.value.choices = []; // the next ones come with the reply
 		sending = true;
 		try {
 			const r = await frappe.xcall(`${API}.send_message`, {
@@ -94,6 +97,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 			set_conversation(r.name);
 			mode.value = r.mode === "Agent" && frappe.boot.fi_assistant.agent_mode ? "Agent" : "Ask";
 			turns.value = r.turns;
+			workflow.value = r.workflow;
 			const last = turns.value.at(-1);
 			run.value = r.active_run && last ? { id: r.active_run, turn: last } : null;
 			if (run.value) last.pending = true;
@@ -108,6 +112,20 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		if (!conversation.value || run.value) return;
 		const r = await frappe.xcall(`${API}.get_conversation`, { name: conversation.value });
 		turns.value = r.turns;
+		workflow.value = r.workflow;
+	}
+
+	// A guided workflow opens as a new conversation with its first question asked.
+	async function start_workflow(name) {
+		if (run.value) return;
+		const r = await frappe.xcall(`${WORKFLOW_API}.start_workflow`, { workflow: name });
+		await open_conversation(r.conversation);
+	}
+
+	// Leaving pauses it: it stays in History and continues from the same step.
+	async function exit_workflow() {
+		await frappe.xcall(`${WORKFLOW_API}.exit_workflow`, { conversation: conversation.value });
+		new_chat();
 	}
 
 	// Confirm or reject a proposed change, or a document reading with the values as the user left
@@ -136,6 +154,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 	function new_chat() {
 		set_conversation(null);
 		turns.value = [];
+		workflow.value = null;
 		run.value = null;
 	}
 
@@ -178,6 +197,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		if (r && run.value?.id === id && r.active_run !== id) {
 			run.value = null;
 			turns.value = r.turns;
+			workflow.value = r.workflow;
 		}
 	}
 	const watcher = setInterval(watch_run, WATCH_SECONDS * 1000);
@@ -194,6 +214,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		conversation,
 		mode,
 		turns,
+		workflow,
 		has_pending_proposals,
 		run,
 		loading,
@@ -207,6 +228,8 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		list_conversations,
 		rate,
 		decide,
+		start_workflow,
+		exit_workflow,
 	};
 });
 

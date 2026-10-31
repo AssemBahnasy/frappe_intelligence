@@ -8,9 +8,9 @@ from frappe import _
 from frappe_intelligence.agent import runs, transcript
 from frappe_intelligence.agent.loop import Hooks, run_turn
 from frappe_intelligence.documents import review
-from frappe_intelligence.engine.chat import workflow_reply
 from frappe_intelligence.utils.access import agent_mode_allowed, ensure_assistant_access, limit_requests
 from frappe_intelligence.utils.file_utils import validate_file_access
+from frappe_intelligence.workflows import desk, sessions
 
 MAX_MESSAGE_LENGTH = 4000
 MAX_ATTACHMENTS = 3
@@ -37,7 +37,8 @@ def send_message(
 	text = _validated(message, allow_empty=bool(files))
 	doc = _desk_conversation(conversation)
 	runs.ensure_idle(doc)
-	doc.mode = _validated_mode(mode)
+	if doc.mode != "Workflow":
+		doc.mode = _validated_mode(mode)
 	doc.reject_pending()
 	doc.add_user_message(text, frappe.parse_json(context) if context else None, files)
 	run_id = runs.start(doc)
@@ -88,6 +89,7 @@ def get_conversation(name: str) -> dict:
 		"mode": doc.mode,
 		"active_run": doc.active_run if runs.is_running(doc) else None,
 		"turns": transcript.turns(doc),
+		"workflow": desk.progress(doc) if doc.mode == "Workflow" else None,
 	}
 
 
@@ -112,7 +114,7 @@ def list_conversations(limit: int = CONVERSATION_LIST_LIMIT) -> list[dict]:
 	ensure_assistant_access()
 	return frappe.get_list(
 		"AI Conversation",
-		filters={"owner": frappe.session.user, "channel": "Desk", "mode": ("!=", "Workflow")},
+		filters={"owner": frappe.session.user, "channel": "Desk"},
 		fields=["name", "title", "mode", "modified"],
 		order_by="modified desc",
 		limit=min(int(limit), CONVERSATION_LIST_LIMIT),
@@ -202,14 +204,14 @@ def _desk_conversation(name: str | None, for_update: bool = False):
 		return frappe.get_doc({"doctype": "AI Conversation", "mode": "Ask", "channel": "Desk"})
 	doc = frappe.get_doc("AI Conversation", name, for_update=for_update)
 	doc.check_permission("write")
-	if doc.channel != "Desk" or doc.mode == "Workflow":
+	if doc.channel != "Desk":
 		frappe.throw(_("This conversation cannot be continued here."))
 	return doc
 
 
 def _widget_reply(text, chat_mode, workflow_key, doctype, docname) -> dict:
 	if chat_mode == "agent" and workflow_key:
-		return workflow_reply(text, "Desk", frappe.session.user, workflow_key)
+		return sessions.reply(text, "Desk", frappe.session.user, workflow_key)
 
 	latest = frappe.get_all(
 		"AI Conversation",

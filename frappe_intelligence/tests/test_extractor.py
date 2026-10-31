@@ -64,5 +64,14 @@ class TestExtractor(TestCase):
 		self.assertEqual((result, confidence), ({"invoice_no": None, "total": None}, 0.0))
 		log_error.assert_called_once()
 
+	def test_strict_raises_when_the_ai_cannot_be_reached(self):
+		with (
+			patch.object(extractor, "get_provider", return_value=FakeProvider(fail=True)),
+			patch.object(extractor.frappe, "get_cached_doc", return_value=NS(extraction_mode="Batch")),
+			patch.object(extractor.frappe, "log_error"),
+		):
+			with self.assertRaises(ProviderError):
+				extractor.extract("Invoice INV-7", RULES, strict=True)
+
 	def test_rules_without_ai_hints_are_skipped(self):
 		self.assertEqual(extractor.extract("text", [RULES[2], RULES[3]]), ({}, 0.0))

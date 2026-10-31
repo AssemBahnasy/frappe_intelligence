@@ -35,8 +35,8 @@ The app moves into this structure step by step; each step deletes the code it re
 | 4 | Assistant panel (boards 1, 2a, 2b): docked panel, dock and sidebar entries, Ctrl+., live steps, Stop, history, tables, charts, feedback; old floating widget no longer loaded | Done |
 | 5 | Agent mode: change tools, approval cards, decide endpoint with row lock, savepoints, excluded DocTypes, Allow Agent Mode setting | Done |
 | 6 | Document review (board 3a): paperclip in the panel, files read before the model, review card, confirmed values used, training pairs and log links, `fill_form` for the open new form; `documents/templates.py` shared with the old pipeline | Done |
-| 7 | `workflows/` on the desk | Pending |
+| 7 | `workflows/` (board 3b): workflows in the panel (start, progress bar, quick replies, Exit), steps that move forward on every channel (answers read with the AI, completion check, topic gate fixed for short answers), filled form per Target DocType; `engine/chat.py`, `workflow.py`, `scope.py` removed | Done |
 | 8 | Field writer | Pending |
 | 9 | Arabic / RTL pass, `channels/`, cleanup | Pending |
 
-Desk chat runs through `agent/`. Guided workflows still run in `engine/chat.py` (`workflow_reply`) until step 7 moves them to `workflows/`.
+Desk chat runs through `agent/`, guided workflows through `workflows/`; both use the same background runs on the desk.

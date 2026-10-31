@@ -1,6 +1,6 @@
 <template>
 	<div ref="root" class="fi-turn">
-		<div class="fi-asked">
+		<div v-if="asked" class="fi-asked">
 			<FileChip v-for="file in turn.attachments || []" :key="file.file_url" :file="file" />
 			<div v-if="turn.question" class="fi-question" dir="auto">{{ turn.question }}</div>
 		</div>
@@ -13,6 +13,10 @@
 		</div>
 
 		<div v-if="turn.answer" class="fi-markdown" dir="auto" v-html="html" @click="follow_link"></div>
+		<div v-if="turn.off_topic" class="fi-meta fi-off-topic">
+			<Icon name="ban" size="xs" />
+			{{ __("Off-topic · answered without AI") }}
+		</div>
 
 		<template v-for="proposal in turn.proposals || []" :key="proposal.call_id">
 			<template v-if="proposal.status === 'pending'">
@@ -29,7 +33,7 @@
 		<div v-if="turn.error" class="fi-error" role="alert">{{ turn.error }}</div>
 		<div v-else-if="turn.stopped && !turn.pending" class="fi-meta">{{ __("Stopped.") }}</div>
 
-		<div v-if="!turn.pending && full_text" class="fi-footer">
+		<div v-if="!turn.pending && full_text && asked" class="fi-footer">
 			<button class="fi-small-button" :title="__('Copy as Markdown')" :aria-label="__('Copy as Markdown')" @click="copy">
 				<Icon name="copy" size="xs" />
 			</button>
@@ -71,6 +75,8 @@ const root = ref(null);
 
 const html = computed(() => frappe.markdown(props.turn.answer || ""));
 const report_html = computed(() => frappe.markdown(props.turn.report || ""));
+// A workflow's opening question was not asked by the user.
+const asked = computed(() => !!(props.turn.question || props.turn.attachments?.length));
 const full_text = computed(() => [props.turn.answer, props.turn.report].filter(Boolean).join("\n\n"));
 const charts = computed(() => (props.turn.actions || []).filter((a) => a.type === "chart"));
 const thinking = computed(() => {
@@ -261,6 +267,12 @@ function copy() {
 .fi-meta {
 	font-size: var(--text-xs);
 	color: var(--ink-gray-6);
+}
+.fi-off-topic {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	margin-top: -6px;
 }
 .fi-footer {
 	display: flex;

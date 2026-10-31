@@ -1,5 +1,5 @@
 """A conversation as the panel shows it: one entry per question, with its files, steps, changes,
-document reviews and answer."""
+document reviews and answer. A guided workflow's opening question is an entry without a question."""
 
 from __future__ import annotations
 
@@ -17,6 +17,9 @@ def turns(conversation) -> list[dict]:
 		if row.role == "user":
 			steps = {}
 			result.append(_turn(row))
+		elif not result and row.role == "assistant":
+			result.append(_turn(row, asked=False))
+			_add_reply(row, steps, result[-1])
 		elif not result:
 			continue
 		elif row.role == "tool" and row.approval:
@@ -34,11 +37,11 @@ def turns(conversation) -> list[dict]:
 	return result
 
 
-def _turn(row) -> dict:
+def _turn(row, asked: bool = True) -> dict:
 	return {
 		"id": row.name,
-		"question": row.content,
-		"attachments": frappe.parse_json(row.attachments) if row.attachments else [],
+		"question": row.content if asked else "",
+		"attachments": frappe.parse_json(row.attachments) if asked and row.attachments else [],
 		"created": row.creation,
 		"steps": [],
 		"proposals": [],
@@ -59,7 +62,7 @@ def _add_reply(row, steps: dict, turn: dict) -> None:
 		# Text written after a change was proposed reports on it, so it shows under the change.
 		part = "report" if turn["proposals"] else "answer"
 		turn[part] = "\n\n".join(filter(None, [turn[part], row.content]))
-		turn.update(answer_id=row.name, feedback=row.feedback or None)
+		turn.update(answer_id=row.name, feedback=row.feedback or None, off_topic=bool(row.off_topic))
 
 
 def _proposal(row) -> dict:

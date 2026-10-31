@@ -88,9 +88,9 @@ def portal_chat(
 	"""
 	_assert_portal_user(customer)
 
-	from frappe_intelligence.engine.chat import workflow_reply
+	from frappe_intelligence.workflows import sessions
 
-	return workflow_reply(text, "Portal", frappe.session.user, workflow_key)
+	return sessions.reply(text, "Portal", frappe.session.user, workflow_key)
 
 
 @frappe.whitelist()
@@ -169,14 +169,14 @@ def portal_get_session_state(
 	"""
 	_assert_portal_user(customer)
 
-	from frappe_intelligence.engine import workflow as _wf
+	from frappe_intelligence.workflows import sessions, steps, turn
 
-	session = _wf.get_or_create_session("Portal", frappe.session.user, workflow_key)
-	step = _wf.get_current_step(session)
+	session = sessions.session("Portal", frappe.session.user, workflow_key)
+	step = steps.current(session, frappe.get_doc("AI Workflow", session.workflow)) if session.workflow else None
 
 	return {
 		"status": session.status,
 		"current_step": session.current_step,
-		"step_prompt": step.prompt_to_user if step else None,
-		"collected_data": frappe.parse_json(session.collected_data or "{}"),
+		"step_prompt": turn.question(session, step) if step else None,
+		"collected_data": steps.collected(session),
 	}
