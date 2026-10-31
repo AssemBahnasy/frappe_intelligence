@@ -60,6 +60,8 @@
   "agent_section",
   "allow_agent_mode",
   "agent_excluded_doctypes",
+  "writer_section",
+  "allow_field_writer",
   "access_section",
   "widget_roles",
   "column_break_zned"
@@ -393,6 +395,18 @@
    "options": "AI Excluded DocType"
   },
   {
+   "fieldname": "writer_section",
+   "fieldtype": "Section Break",
+   "label": "Writing Help"
+  },
+  {
+   "default": "1",
+   "description": "A sparkles button beside long text fields in forms: the user describes what the field should say and the AI writes it in place. Nothing is saved until the user saves the form.",
+   "fieldname": "allow_field_writer",
+   "fieldtype": "Check",
+   "label": "Write with AI in Forms"
+  },
+  {
    "fieldname": "access_section",
    "fieldtype": "Section Break",
    "label": "Access Control"
@@ -417,7 +431,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-10-31 22:00:00.000000",
+ "modified": "2026-11-01 01:15:00.000000",
  "modified_by": "Administrator",
  "module": "Intelligence",
  "name": "AI Settings",

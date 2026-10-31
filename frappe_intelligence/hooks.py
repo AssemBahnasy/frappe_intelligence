@@ -28,9 +28,13 @@ bench_commands = ["frappe_intelligence.commands"]
 # ------------------
 
 # include js, css files in header of desk.html
-app_include_css = "frappe_intelligence_launcher.bundle.css"
+app_include_css = [
+    "frappe_intelligence_launcher.bundle.css",
+    "frappe_intelligence_field_writer.bundle.css",
+]
 app_include_js = [
     "frappe_intelligence_launcher.bundle.js",
+    "frappe_intelligence_field_writer.bundle.js",
     "fi.pages.bundle.js",
 ]
 

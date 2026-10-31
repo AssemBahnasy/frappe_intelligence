@@ -1,0 +1,104 @@
+/* Write with AI (board 3d): the sparkles button beside a long text field, its popover, and the
+   ring around a field just written. Frappe v16 tokens only, so dark mode and RTL need nothing else. */
+.fi-write-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	padding: 0;
+	border: 0;
+	border-radius: var(--radius-sm);
+	background: transparent;
+	color: var(--ink-violet-6);
+	vertical-align: middle;
+}
+
+.fi-write-button svg {
+	width: 14px;
+	height: 14px;
+	--icon-stroke: currentColor;
+}
+
+.fi-write-button:hover,
+.fi-write-button[aria-expanded="true"] {
+	background: var(--surface-violet-2);
+}
+
+.fi-write-button:focus-visible {
+	box-shadow: var(--focus-default);
+	outline: none;
+}
+
+/* Frappe hides the input of a field the user cannot edit. */
+.frappe-control:has(.control-input.hide) .fi-write-button {
+	display: none;
+}
+
+.fi-write-popover {
+	width: 340px;
+	padding: 10px;
+}
+
+.fi-write-form {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 0;
+}
+
+.fi-write-label,
+.fi-write-hint {
+	margin: 0;
+	font-size: var(--text-xs);
+	color: var(--ink-gray-6);
+}
+
+.fi-write-form textarea {
+	width: 100%;
+	padding: 8px;
+	border: 0;
+	border-radius: var(--radius);
+	background: var(--surface-gray-2);
+	color: var(--ink-gray-8);
+	font: inherit;
+	font-size: var(--text-sm);
+	resize: none;
+	outline: none;
+}
+
+.fi-write-form textarea:focus {
+	box-shadow: var(--focus-default);
+}
+
+.fi-write-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.fi-write-hint {
+	flex: 1;
+}
+
+.fi-write-hint kbd {
+	padding: 0 4px;
+	border-radius: 4px;
+	background: transparent;
+	box-shadow: inset 0 0 0 1px var(--outline-gray-2);
+	color: var(--ink-gray-6);
+	font: inherit;
+	font-size: 11px;
+}
+
+.fi-written .control-input {
+	border-radius: var(--radius);
+	box-shadow: 0 0 0 2px var(--ink-violet-6);
+	transition: box-shadow 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fi-written .control-input {
+		transition: none;
+	}
+}

@@ -83,6 +83,14 @@ ISO 639-1 code for Faster-Whisper (e.g. `ar`, `en`). Leave empty to auto-detect 
 
 Enforced on the server for every endpoint that reaches a model; the widget also hides itself for users who are not allowed.
 
+### Agent Mode and Writing Help
+
+| Field | Default | Effect |
+|-------|---------|--------|
+| `allow_agent_mode` | Off | The assistant may propose changes the user confirms ([agent/approvals.md](agent/approvals.md)) |
+| `agent_excluded_doctypes` | *(empty)* | DocTypes Agent mode never changes |
+| `allow_field_writer` | On | **Write with AI** beside long text fields in forms ([writer/README.md](writer/README.md)) |
+
 ## Navigation Tab
 
 **Route Map** child table — controls the "Go to …" button after document classification in global mode.

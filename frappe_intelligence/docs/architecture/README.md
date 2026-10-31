@@ -15,6 +15,7 @@ frappe_intelligence/
 ├── agent/          agent loop, prompts, tool registry             → docs/agent/
 ├── workflows/      guided workflows and the scope gate
 ├── documents/      file reading, transcription, extraction
+├── writer/         Write with AI: one field's text                → docs/writer/
 ├── channels/       WhatsApp bridge
 ├── utils/          small shared helpers
 ├── intelligence/   the Frappe module: DocTypes, report, page, sidebar
@@ -36,7 +37,7 @@ The app moves into this structure step by step; each step deletes the code it re
 | 5 | Agent mode: change tools, approval cards, decide endpoint with row lock, savepoints, excluded DocTypes, Allow Agent Mode setting | Done |
 | 6 | Document review (board 3a): paperclip in the panel, files read before the model, review card, confirmed values used, training pairs and log links, `fill_form` for the open new form; `documents/templates.py` shared with the old pipeline | Done |
 | 7 | `workflows/` (board 3b): workflows in the panel (start, progress bar, quick replies, Exit), steps that move forward on every channel (answers read with the AI, completion check, topic gate fixed for short answers), filled form per Target DocType; `engine/chat.py`, `workflow.py`, `scope.py` removed | Done |
-| 8 | Field writer | Pending |
+| 8 | Write with AI (board 3d): sparkles button beside long text fields in every form, popover, text written in a background job, Undo; `writer/`, `api/writer.py`, AI Settings → Write with AI in Forms | Done |
 | 9 | Arabic / RTL pass, `channels/`, cleanup | Pending |
 
 Desk chat runs through `agent/`, guided workflows through `workflows/`; both use the same background runs on the desk.

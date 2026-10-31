@@ -8,12 +8,13 @@ All endpoints are called via `frappe.call` from the browser or `frappe.call` / d
 | `api.documents` | `process_document`, `get_log_status`, `confirm_extraction`, `submit_correction`, `list_templates`, `get_required_documents`, `register_post_processor` |
 | `api.settings` | `get_widget_settings`, `get_route_map`, `test_connection`, `is_whatsapp_installed`, `is_whatsapp_enabled` |
 | `api.workflows` | `start_workflow`, `exit_workflow` |
+| `api.writer` | `write_field`, `get_written` |
 | `api.builder` | `list_workflows`, `get_workflow_for_builder`, `save_workflow_builder`, `preview_step_prompt` |
 | `api.portal` | `portal_chat`, `portal_upload_document`, `portal_get_session_state` |
 
 ## Access and rate limiting
 
-Endpoints that reach a model require a desk user allowed by **AI Settings → Allowed Roles**. `send_message`, `start_workflow`, `handle_widget_input`, `process_document`, `portal_chat` and `portal_upload_document` are limited to **20 calls / user / 60 s** by Frappe's `rate_limit`. Details: [agent/security.md](agent/security.md).
+Endpoints that reach a model require a desk user allowed by **AI Settings → Allowed Roles**. `send_message`, `start_workflow`, `write_field`, `handle_widget_input`, `process_document`, `portal_chat` and `portal_upload_document` are limited to **20 calls / user / 60 s** by Frappe's `rate_limit`. Details: [agent/security.md](agent/security.md).
 
 ---
 
@@ -87,6 +88,27 @@ POST only. `workflow`: an AI Workflow that is Active with Allow Desk. Creates th
 ### `exit_workflow`
 
 POST only. `conversation`: the user's workflow conversation. Sets it Paused (only from Active); answering again continues from the same step. Refused while a reply is being written.
+
+---
+
+## Write with AI (`api.writer`)
+
+### `write_field`
+
+POST only. Writes one long text field in the background and returns `{"job": id}`; the text arrives on the `fi_field_writer` realtime event as `{job, text}` or `{job, error}`. See [writer/server.md](writer/server.md).
+
+| Param | Type | Required | Notes |
+|-------|------|----------|-------|
+| `doctype` | str | ✓ | |
+| `fieldname` | str | ✓ | Small Text, Text, Long Text, Text Editor or Markdown Editor, editable by the user |
+| `instruction` | str | ✓ | What the field should say; up to 2000 characters |
+| `current` | str | ✗ | The field's current text |
+| `context` | object | ✗ | The form's other values by field name; only readable fields are used |
+| `docname` | str | ✗ | Omit on a new form |
+
+### `get_written`
+
+`job`: the user's own job. Returns `{text}`, `{error}` or `{pending: true}`; for when the realtime event was missed.
 
 ---
 
