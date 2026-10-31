@@ -6,6 +6,7 @@ import json as _json
 
 import frappe
 
+from frappe_intelligence.documents import review
 from frappe_intelligence.engine.orchestrator import fire_post_processors, link_log_to_record
 from frappe_intelligence.utils.access import ensure_assistant_access, limit_requests
 from frappe_intelligence.utils.file_utils import validate_file_access
@@ -32,7 +33,7 @@ def process_widget_file(
 
 	result["needs_review"] = result.get("status") == "success" and result.get(
 		"confidence_score", 0.0
-	) < _get_confidence_threshold(workflow_key)
+	) < review.confidence_threshold(workflow_key)
 	if not result["needs_review"]:
 		fire_post_processors(result.get("document_type_key"), result, doctype, docname)
 
@@ -40,26 +41,6 @@ def process_widget_file(
 		"ai_processing_update", {"message": "Extraction complete!"}, user=frappe.session.user
 	)
 	return result
-
-
-def _get_confidence_threshold(workflow_key: str | None = None) -> float:
-	"""Return the confidence threshold to use for this request.
-
-	Checks the per-workflow override first (AI Workflow.confidence_threshold > 0),
-	then falls back to the global AI Settings value, then to the hard default 0.6.
-	"""
-	if workflow_key:
-		try:
-			wf_threshold = frappe.db.get_value("AI Workflow", workflow_key, "confidence_threshold")
-			if wf_threshold and float(wf_threshold) > 0:
-				return float(wf_threshold)
-		except Exception:
-			pass
-	try:
-		global_threshold = frappe.db.get_single_value("AI Settings", "confidence_threshold")
-		return float(global_threshold) if global_threshold else 0.6
-	except Exception:
-		return 0.6
 
 
 def _assert_log_access(log_name: str) -> None:
@@ -153,7 +134,7 @@ def get_log_status(log_name: str) -> dict:
 
 	log_session = frappe.db.get_value("AI Processing Log", log_name, "session")
 	wf_key = frappe.db.get_value("AI Conversation", log_session, "workflow") if log_session else None
-	threshold = _get_confidence_threshold(wf_key)
+	threshold = review.confidence_threshold(wf_key)
 	confidence = float(log.confidence_score or 0.0)
 	needs_review = log.processing_status == "Completed" and confidence < threshold
 
@@ -287,16 +268,16 @@ def confirm_extraction(
 	Accept a low-confidence extraction result and fire its post-processors.
 
 	Called after the user reviews and accepts a result held below the
-	confidence threshold configured in AI Settings.  Only the log owner
-	or a System Manager may confirm.
+	confidence threshold configured in AI Settings.  Post-processors get the
+	values the user corrected (submit_correction), not the first reading.
+	Only the log owner or a System Manager may confirm.
 	"""
 	_assert_log_access(log_name)
 	ensure_record_access(doctype, docname)
 
-	log = frappe.get_doc("AI Processing Log", log_name)
 	fire_post_processors(
-		log.document_type_key,
-		{"extracted_data": frappe.parse_json(log.extracted_data or "{}"), "log_name": log_name},
+		frappe.db.get_value("AI Processing Log", log_name, "document_type_key"),
+		{"extracted_data": review.confirmed_values(log_name), "log_name": log_name},
 		doctype,
 		docname,
 	)

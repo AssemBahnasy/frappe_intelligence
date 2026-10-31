@@ -38,16 +38,24 @@ def system_prompt(mode: str) -> str:
 	return "\n\n".join(part for part in parts if part)
 
 
+FILE_ONLY = "(The user sent only the attached file: use it for what the page they are on is for.)"
+
+
 def with_context(text: str, context: dict | None) -> str:
 	"""The user's message as the model sees it: page context and language rule first."""
 	notes = [note for note in (page_note(context), language_rule(text)) if note]
-	return "\n".join(f"<note>{note}</note>" for note in notes) + f"\n\n{text}"
+	return "\n".join(f"<note>{note}</note>" for note in notes) + f"\n\n{text or FILE_ONLY}"
 
 
 def page_note(context: dict | None) -> str:
 	if not context:
 		return ""
 	doctype, name = context.get("doctype"), context.get("docname")
+	if doctype and context.get("new"):
+		return (
+			f"The user has a new, unsaved {doctype} form open. Put the values for it straight into that "
+			"form with fill_form (do not just list them); they review and save it."
+		)
 	if doctype and name:
 		tab = f", on the {context['tab']} tab" if context.get("tab") else ""
 		return f"The user has {doctype} {name} open{tab}."

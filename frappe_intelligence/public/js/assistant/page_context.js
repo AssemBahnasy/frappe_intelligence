@@ -4,7 +4,10 @@ export function page_context({ with_tab = false } = {}) {
 	// null at desk start-up, before the router has run
 	const route = frappe.get_route() || [];
 	const [view, doctype, name] = route;
-	if (view === "Form" && doctype && name && !name.startsWith("new-")) {
+	if (view === "Form" && doctype && name?.startsWith("new-")) {
+		return { doctype, new: true };
+	}
+	if (view === "Form" && doctype && name) {
 		const tab = with_tab && cur_frm?.docname === name ? cur_frm.get_active_tab?.()?.label : null;
 		return { doctype, docname: name, ...(tab ? { tab } : {}) };
 	}
@@ -16,6 +19,7 @@ export function page_context({ with_tab = false } = {}) {
 }
 
 export function context_label(context) {
+	if (context?.new) return __("New {0}", [__(context.doctype)]);
 	if (context?.docname) return `${__(context.doctype)} · ${context.docname}`;
 	if (context?.doctype) return __("{0} list", [__(context.doctype)]);
 	return "";

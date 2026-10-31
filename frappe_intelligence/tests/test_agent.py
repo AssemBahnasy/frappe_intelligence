@@ -10,7 +10,8 @@ from unittest.mock import MagicMock, patch
 import frappe
 
 from frappe_intelligence.agent import loop, prompts
-from frappe_intelligence.agent.tools import AgentTool, ToolError, changes, desk, execute
+from frappe_intelligence.agent.tools import AgentTool, Outcome, ToolError, changes, desk, execute
+from frappe_intelligence.documents import review
 from frappe_intelligence.intelligence.doctype.ai_conversation.ai_conversation import (
 	MOVED_ON_RESULT,
 	REJECTED_RESULT,
@@ -22,15 +23,24 @@ from frappe_intelligence.providers import Message, ProviderError, Reply, ToolCal
 class FakeConversation:
 	mode = "Ask"
 
-	def __init__(self, text="How many customers?", context=None, approved=None):
+	def __init__(self, text="How many customers?", context=None, approved=None, attachments=None):
 		self.messages: list[Message] = [Message(role="user", content=text)]
 		self.context = context
 		self.errors: list[str] = []
 		self.proposals: list = []
 		self.approved = approved or []
+		self.attachments = attachments or []
 
-	def add_proposal(self, call, preview):
-		self.proposals.append((call.id, preview))
+	def add_proposal(self, call, preview, content=None):
+		self.proposals.append((call.id, preview, content))
+
+	def unread_attachments(self):
+		calls = [
+			ToolCall(id=f"read_{i}", name="read_document", arguments=file)
+			for i, file in enumerate(self.attachments)
+		]
+		self.attachments = []
+		return calls
 
 	def approved_to_run(self):
 		return self.approved
@@ -75,7 +85,7 @@ class ScriptedProvider:
 
 def run(provider, outcome=None, hooks=None, proposal=None, **conversation):
 	conversation = FakeConversation(**conversation)
-	outcome = outcome or NS(content='{"result": 3}', is_error=False, action=None)
+	outcome = outcome or Outcome(content='{"result": 3}')
 	with (
 		patch.object(loop, "needs_approval", side_effect=lambda name: name == "create_document"),
 		patch.object(loop, "propose", return_value=proposal) as propose,
@@ -126,7 +136,7 @@ class TestLoop(TestCase):
 
 	def test_browser_actions_are_collected(self):
 		action = {"type": "open_form", "doctype": "Customer", "name": "CUST-1"}
-		outcome = NS(content="{}", is_error=False, action=action)
+		outcome = Outcome(content="{}", action=action)
 		call = tool_call(name="open_document")
 		provider = ScriptedProvider(Reply(tool_calls=[call], stop_reason="tool_calls"), Reply(text="Opened."))
 		result, _, _ = run(provider, outcome)
@@ -155,7 +165,7 @@ class TestApprovals(TestCase):
 		result, conversation, execute_tool = run(provider, proposal=NS(is_error=False, preview=preview))
 		self.assertEqual(result.proposals, [{"call_id": "c1", "preview": preview}])
 		self.assertEqual(result.reply, "Here is the payment.")
-		self.assertEqual(conversation.proposals, [("c1", preview)])
+		self.assertEqual(conversation.proposals, [("c1", preview, None)])
 		self.assertEqual(len(provider.calls), 1)
 		execute_tool.assert_not_called()
 
@@ -174,7 +184,7 @@ class TestApprovals(TestCase):
 	def test_approved_changes_run_before_the_model_is_asked(self):
 		row = NS(content="", is_error=0)
 		approved = [(row, tool_call(name="create_document"))]
-		outcome = NS(content='{"created": "ACC-PAY-1"}', is_error=False, action=None)
+		outcome = Outcome(content='{"created": "ACC-PAY-1"}')
 		steps = []
 		result, _, execute_tool = run(
 			ScriptedProvider(Reply(text="Created ACC-PAY-1.")),
@@ -186,6 +196,29 @@ class TestApprovals(TestCase):
 		self.assertEqual(row.content, '{"created": "ACC-PAY-1"}')
 		self.assertEqual([s.status for s in steps], ["running", "done"])
 		self.assertEqual(result.reply, "Created ACC-PAY-1.")
+
+
+FILE = {"file_url": "/private/files/bill.pdf", "file_name": "bill.pdf"}
+
+
+class TestAttachments(TestCase):
+	def test_files_are_read_before_the_model_is_asked(self):
+		provider = ScriptedProvider(Reply(text="It is a bill from Gulf Pack."))
+		result, conversation, execute_tool = run(provider, attachments=[FILE])
+		execute_tool.assert_called_once_with("read_document", FILE, "Ask")
+		self.assertEqual([m.role for m in conversation.messages], ["user", "assistant", "tool", "assistant"])
+		self.assertEqual(conversation.messages[1].tool_calls[0].name, "read_document")
+		self.assertEqual(len(provider.calls[0][0]), 3)  # the model sees the reading
+		self.assertEqual(result.reply, "It is a bill from Gulf Pack.")
+
+	def test_a_reading_to_review_pauses_before_the_model(self):
+		card = {"kind": "review", "fields": []}
+		outcome = Outcome(content='{"text": "GP-8841"}', review=card)
+		provider = ScriptedProvider()
+		result, conversation, _ = run(provider, outcome, attachments=[FILE])
+		self.assertEqual(provider.calls, [])
+		self.assertEqual(result.proposals, [{"call_id": "read_0", "preview": card}])
+		self.assertEqual(conversation.proposals, [("read_0", card, '{"text": "GP-8841"}')])
 
 
 class TestStop(TestCase):
@@ -278,6 +311,16 @@ class TestExecute(TestCase):
 		self.assertNotIn("secret", outcome.content)
 		log.assert_called_once()
 
+	def test_a_review_card_is_kept_out_of_the_result(self):
+		with self.with_tool(lambda args: {"text": "x", "review": {"kind": "review"}}, review=True):
+			outcome = execute("probe", {}, "Ask")
+		self.assertEqual((outcome.content, outcome.review), ('{"text": "x"}', {"kind": "review"}))
+
+	def test_step_labels_use_any_argument(self):
+		tool = AgentTool(name="p", description="", parameters={}, run=None, label="Reading {file_name}")
+		self.assertEqual(tool.step_label({"file_name": "bill.pdf"}), "Reading bill.pdf")
+		self.assertEqual(tool.step_label({}), "Reading ")
+
 	def test_tools_outside_the_mode_are_refused(self):
 		with self.with_tool(lambda args: {}, modes=frozenset({"Agent"})):
 			self.assertTrue(execute("probe", {}, "Ask").is_error)
@@ -296,6 +339,26 @@ class TestDeskTools(TestCase):
 		for route in ("https://evil.example", "/app//x", "javascript:alert(1)", "/login"):
 			with self.assertRaises(ToolError):
 				desk.navigate({"route": route})
+
+	def test_fill_form_leaves_out_fields_the_doctype_lacks(self):
+		fields = [
+			NS(fieldname="supplier", label="Supplier", read_only=0),
+			NS(fieldname="bill_no", label="Bill No", read_only=0),
+			NS(fieldname="grand_total", label="Grand Total", read_only=1),
+		]
+		meta = NS(
+			fields=fields, get_field=lambda name: next((f for f in fields if f.fieldname == name), None)
+		)
+		with (
+			patch.object(desk.frappe, "has_permission"),
+			patch.object(desk.frappe, "get_meta", return_value=meta),
+		):
+			values = {"supplier": "Gulf Pack", "Bill No": "GP-8841", "vendor_vat": "300", "grand_total": 9}
+			result = desk.fill_form({"doctype": "Purchase Invoice", "values": values})
+			self.assertEqual(result["action"]["values"], {"supplier": "Gulf Pack", "bill_no": "GP-8841"})
+			self.assertIn("vendor_vat, grand_total", result["skipped"])
+			with self.assertRaises(ToolError):
+				desk.fill_form({"doctype": "Purchase Invoice", "values": {"vendor": "Gulf Pack"}})
 
 	def test_chart_needs_one_number_per_label(self):
 		chart = desk.show_chart({"labels": ["Q3", "Q4"], "datasets": [{"name": "Sales", "values": [10, 12]}]})
@@ -340,6 +403,14 @@ class TestPrompts(TestCase):
 			prompts.page_note({"doctype": "Task", "docname": "T-1", "tab": "Details"}),
 			"The user has Task T-1 open, on the Details tab.",
 		)
+		self.assertIn(
+			"new, unsaved Purchase Invoice form",
+			prompts.page_note({"doctype": "Purchase Invoice", "new": True}),
+		)
+
+	def test_a_file_without_text_still_reads_as_a_message(self):
+		with patch.object(prompts, "language_rule", return_value=""):
+			self.assertTrue(prompts.with_context("", None).endswith(prompts.FILE_ONLY))
 
 
 class TestConversationHistory(TestCase):
@@ -421,6 +492,45 @@ class TestProposalRecords(TestCase):
 		AIConversation.decide(doc, "c1", True)
 		with self.assertRaises(frappe.ValidationError):
 			AIConversation.decide(doc, "c1", True)
+
+	def test_a_question_sent_as_a_file_is_named_after_it(self):
+		file = {"file_url": "/files/a.pdf", "file_name": "invoice.pdf"}
+		doc = NS(title=None, messages=[frappe._dict(role="user", content="", attachments=json.dumps([file]))])
+		AIConversation.validate(doc)
+		self.assertEqual(doc.title, "invoice.pdf")
+
+	def test_files_are_read_once_per_question(self):
+		file = {"file_url": "/files/a.pdf", "file_name": "a.pdf"}
+		question = frappe._dict(role="user", attachments=json.dumps([file]))
+		[call] = AIConversation.unread_attachments(NS(messages=[question]))
+		self.assertEqual((call.name, call.arguments), ("read_document", file))
+		answered = NS(messages=[question, frappe._dict(role="assistant")])
+		self.assertEqual(AIConversation.unread_attachments(answered), [])
+
+	def test_a_discarded_reading_tells_the_model(self):
+		doc = NS(messages=self.review_rows())
+		AIConversation.decide(doc, "r1", False)
+		self.assertEqual(doc.messages[1].content, review.DISCARDED_RESULT)
+
+	def test_moving_on_keeps_the_reading_marked_unchecked(self):
+		doc = NS(messages=self.review_rows())
+		doc.pending_proposals = lambda: AIConversation.pending_proposals(doc)
+		AIConversation.reject_pending(doc)
+		result = json.loads(doc.messages[1].content)
+		self.assertEqual((result["text"], result["note"]), ("GP-8841", review.UNCONFIRMED_NOTE))
+
+	@staticmethod
+	def review_rows():
+		return [
+			frappe._dict(role="user", content="", approval=None, tool_call_id=None),
+			frappe._dict(
+				role="tool",
+				tool_call_id="r1",
+				content='{"text": "GP-8841"}',
+				approval="Pending",
+				preview='{"kind": "review"}',
+			),
+		]
 
 	def test_a_new_message_rejects_what_is_still_waiting(self):
 		doc = NS(messages=self.rows())

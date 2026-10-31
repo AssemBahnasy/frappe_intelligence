@@ -17,7 +17,13 @@ const STICK_DISTANCE = 80;
 // Follow the answer as it grows, unless the user has scrolled up to read.
 let stick = true;
 watch(
-	() => store.turns.map((t) => `${t.id}:${(t.answer || "").length}:${t.steps.length}:${t.pending}`).join(),
+	() =>
+		store.turns
+			.map((t) => {
+				const proposals = (t.proposals || []).map((p) => p.status).join("|");
+				return `${t.id}:${(t.answer || "").length}:${t.steps.length}:${proposals}:${(t.report || "").length}:${t.pending}`;
+			})
+			.join(),
 	async (now, before) => {
 		const el = list.value;
 		if (!el) return;

@@ -1,4 +1,5 @@
-"""Actions the browser performs for the user: open a page, a form or a new document, or draw a chart."""
+"""Actions the browser performs for the user: open a page, a form or a new document, fill the form
+the user has open, or draw a chart."""
 
 from __future__ import annotations
 
@@ -42,6 +43,34 @@ def new_document(arguments: dict) -> dict:
 		{"type": "new_doc", "doctype": doctype, "defaults": arguments.get("defaults") or {}},
 		"A new form is opening for the user to review and save.",
 	)
+
+
+def fill_form(arguments: dict) -> dict:
+	doctype, values = arguments["doctype"], arguments.get("values") or {}
+	frappe.has_permission(doctype, "create", throw=True)
+	meta = frappe.get_meta(doctype)
+	fieldnames = {key: _fieldname(meta, key) for key in values}
+	known = {fieldnames[key]: value for key, value in values.items() if fieldnames[key]}
+	if not known:
+		raise ToolError(_("{0} has none of these fields. Read its fields first.").format(doctype))
+	result = _action(
+		{"type": "fill_form", "doctype": doctype, "values": known},
+		"The values are filled into the form the user has open. They review and save it.",
+	)
+	if skipped := [key for key, fieldname in fieldnames.items() if not fieldname]:
+		result["skipped"] = (
+			f"Left out {', '.join(skipped)}: not fields of {doctype}, or read-only (calculated by the form)."
+		)
+	return result
+
+
+def _fieldname(meta, key: str) -> str | None:
+	"""A writable field by name, or by label: models often use the labels they were shown."""
+	label = key.strip().lower()
+	df = meta.get_field(key) or next(
+		(df for df in meta.fields if (df.label or "").strip().lower() == label), None
+	)
+	return df.fieldname if df and not df.read_only else None
 
 
 def show_chart(arguments: dict) -> dict:
@@ -100,6 +129,21 @@ TOOLS = [
 		},
 		run=new_document,
 		label=_lt("Opening a new {doctype}"),
+		browser_action=True,
+	),
+	AgentTool(
+		name="fill_form",
+		description=(
+			"Fill field values into the new, unsaved form the user has open (use field names, and a "
+			"list of row objects for a table field). The user reviews and saves it; nothing is saved."
+		),
+		parameters={
+			"type": "object",
+			"properties": {"doctype": {"type": "string"}, "values": {"type": "object"}},
+			"required": ["doctype", "values"],
+		},
+		run=fill_form,
+		label=_lt("Filling in the {doctype} form"),
 		browser_action=True,
 	),
 	AgentTool(

@@ -7,10 +7,13 @@ from frappe import _
 
 from frappe_intelligence.agent import runs, transcript
 from frappe_intelligence.agent.loop import Hooks, run_turn
+from frappe_intelligence.documents import review
 from frappe_intelligence.engine.chat import workflow_reply
 from frappe_intelligence.utils.access import agent_mode_allowed, ensure_assistant_access, limit_requests
+from frappe_intelligence.utils.file_utils import validate_file_access
 
 MAX_MESSAGE_LENGTH = 4000
+MAX_ATTACHMENTS = 3
 CONVERSATION_LIST_LIMIT = 20
 DESK_MODES = ("Ask", "Agent")
 
@@ -22,32 +25,41 @@ def send_message(
 	conversation: str | None = None,
 	context: dict | str | None = None,
 	mode: str = "Ask",
+	attachments: list | str | None = None,
 ) -> dict:
 	"""Store `message` and answer it in the background. Follow the run on the `fi_assistant` realtime event.
 
-	A change still waiting for approval is rejected: the user moved on without confirming it.
+	`attachments` are file URLs the user uploaded; they are read before the model answers. A change
+	or reading still waiting for the user is set aside: they moved on without confirming it.
 	"""
 	ensure_assistant_access()
-	text = _validated(message)
+	files = _validated_attachments(attachments)
+	text = _validated(message, allow_empty=bool(files))
 	doc = _desk_conversation(conversation)
 	runs.ensure_idle(doc)
 	doc.mode = _validated_mode(mode)
 	doc.reject_pending()
-	doc.add_user_message(text, frappe.parse_json(context) if context else None)
+	doc.add_user_message(text, frappe.parse_json(context) if context else None, files)
 	run_id = runs.start(doc)
 	return {"conversation": doc.name, "run_id": run_id}
 
 
 @frappe.whitelist(methods=["POST"])
 @limit_requests
-def decide_proposal(conversation: str, call_id: str, approve: bool) -> dict:
-	"""Confirm or reject a proposed change. Once none is left waiting, the answer continues in the
-	background: approved changes run first, then the model reports back."""
+def decide_proposal(conversation: str, call_id: str, approve: bool, values: dict | str | None = None) -> dict:
+	"""Confirm or reject a proposed change, or confirm or discard a document reading (`values`: the
+	fields as the user left them). Once none is left waiting, the answer continues in the background:
+	approved changes run first, then the model reports back."""
 	ensure_assistant_access()
 	# Row lock: a double click cannot approve, and run, the same change twice.
 	doc = _desk_conversation(conversation, for_update=True)
 	runs.ensure_idle(doc)
-	doc.decide(call_id, frappe.utils.sbool(approve))
+	row = doc.decide(call_id, frappe.utils.sbool(approve))
+	card = frappe.parse_json(row.preview or "{}")
+	if row.approval == "Approved" and review.is_review(card):
+		row.content = review.confirm(
+			row.content, card, _validated_values(values), doc.name, doc.current_question()[1]
+		)
 	if doc.pending_proposals():
 		doc.save()
 		return {"run_id": None}
@@ -154,13 +166,34 @@ def _validated_mode(mode: str) -> str:
 	return mode
 
 
-def _validated(message: str | None) -> str:
+def _validated(message: str | None, allow_empty: bool = False) -> str:
 	text = (message or "").strip()
-	if not text:
+	if not text and not allow_empty:
 		frappe.throw(_("Message is empty."))
 	if len(text) > MAX_MESSAGE_LENGTH:
 		frappe.throw(_("Messages are limited to {0} characters.").format(MAX_MESSAGE_LENGTH))
 	return text
+
+
+def _validated_attachments(attachments: list | str | None) -> list[dict]:
+	file_urls = frappe.parse_json(attachments) if attachments else []
+	if not isinstance(file_urls, list) or not all(isinstance(url, str) for url in file_urls):
+		frappe.throw(_("Attachments must be a list of file URLs."))
+	if len(file_urls) > MAX_ATTACHMENTS:
+		frappe.throw(_("Send at most {0} files with a message.").format(MAX_ATTACHMENTS))
+	for file_url in file_urls:
+		validate_file_access(file_url)
+	return [
+		{"file_url": url, "file_name": frappe.db.get_value("File", {"file_url": url}, "file_name") or url}
+		for url in file_urls
+	]
+
+
+def _validated_values(values: dict | str | None) -> dict:
+	values = frappe.parse_json(values) if values else {}
+	if not isinstance(values, dict):
+		frappe.throw(_("Values must be an object of field keys and values."))
+	return values
 
 
 def _desk_conversation(name: str | None, for_update: bool = False):

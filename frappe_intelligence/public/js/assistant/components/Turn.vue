@@ -1,6 +1,9 @@
 <template>
 	<div ref="root" class="fi-turn">
-		<div class="fi-question" dir="auto">{{ turn.question }}</div>
+		<div class="fi-asked">
+			<FileChip v-for="file in turn.attachments || []" :key="file.file_url" :file="file" />
+			<div v-if="turn.question" class="fi-question" dir="auto">{{ turn.question }}</div>
+		</div>
 
 		<Steps :steps="turn.steps" :pending="turn.pending" />
 
@@ -12,7 +15,10 @@
 		<div v-if="turn.answer" class="fi-markdown" dir="auto" v-html="html" @click="follow_link"></div>
 
 		<template v-for="proposal in turn.proposals || []" :key="proposal.call_id">
-			<ProposalCard v-if="proposal.status === 'pending'" :turn="turn" :proposal="proposal" />
+			<template v-if="proposal.status === 'pending'">
+				<ReviewCard v-if="proposal.preview?.kind === 'review'" :turn="turn" :proposal="proposal" />
+				<ProposalCard v-else :turn="turn" :proposal="proposal" />
+			</template>
 			<ChangeResult v-else :proposal="proposal" />
 		</template>
 
@@ -53,8 +59,10 @@ import { useAssistant } from "../store";
 import { enhance_tables } from "../tables";
 import ChangeResult from "./ChangeResult.vue";
 import ChartBlock from "./ChartBlock.vue";
+import FileChip from "./FileChip.vue";
 import Icon from "./Icon.vue";
 import ProposalCard from "./ProposalCard.vue";
+import ReviewCard from "./ReviewCard.vue";
 import Steps from "./Steps.vue";
 
 const props = defineProps({ turn: { type: Object, required: true } });
@@ -105,9 +113,16 @@ function copy() {
 	flex-direction: column;
 	gap: 10px;
 }
-.fi-question {
+.fi-asked {
 	align-self: flex-end;
 	max-width: 85%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 6px;
+}
+.fi-question {
+	max-width: 100%;
 	background: var(--surface-gray-2);
 	border-radius: var(--radius-lg);
 	padding: 8px 12px;

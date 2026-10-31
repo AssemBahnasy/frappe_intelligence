@@ -21,7 +21,15 @@ const STATES = {
 	failed: { icon: "x", meta: () => __("Confirmed, but it did not work") },
 	rejected: { icon: "ban", meta: () => __("You rejected") },
 };
-const state = computed(() => STATES[props.proposal.status] || STATES.rejected);
+// A document reading: the user checked the values or set them aside.
+const REVIEW_STATES = {
+	done: { icon: "check", meta: () => __("You checked the values") },
+	rejected: { icon: "ban", meta: () => __("You discarded the values") },
+};
+const state = computed(() => {
+	const states = props.proposal.preview?.kind === "review" ? REVIEW_STATES : STATES;
+	return states[props.proposal.status] || states.rejected;
+});
 const icon = computed(() => state.value.icon);
 const meta = computed(() => state.value.meta());
 const running = computed(() => props.proposal.status === "approved");

@@ -16,6 +16,16 @@
 		</div>
 
 		<div class="fi-input">
+			<div v-if="files.length" class="fi-files">
+				<FileChip
+					v-for="file in files"
+					:key="file.key"
+					:file="file"
+					:uploading="file.uploading"
+					removable
+					@remove="remove_file(file)"
+				/>
+			</div>
 			<label :for="input_id" class="sr-only">{{ __("Message") }}</label>
 			<textarea
 				:id="input_id"
@@ -32,12 +42,23 @@
 					{{ store.mode === "Agent" ? __("Agent") : __("Ask") }}
 					<Icon name="chevron-down" size="xs" />
 				</button>
+				<button
+					type="button"
+					class="fi-icon-button"
+					:disabled="files.length >= MAX_FILES"
+					:title="__('Attach a file')"
+					:aria-label="__('Attach a file')"
+					@click="file_input.click()"
+				>
+					<Icon name="paperclip" />
+				</button>
+				<input ref="file_input" type="file" hidden multiple :accept="ACCEPTED_FILES" @change="add_files" />
 				<span class="fi-spacer"></span>
 				<button v-if="store.run" type="button" class="fi-stop" @click="store.stop()">
 					<Icon name="square" size="xs" />
 					{{ __("Stop") }}
 				</button>
-				<button v-else type="submit" class="fi-send" :disabled="!draft.trim()" :aria-label="__('Send')">
+				<button v-else type="submit" class="fi-send" :disabled="!can_send" :aria-label="__('Send')">
 					<Icon name="arrow-up" />
 				</button>
 			</div>
@@ -47,9 +68,11 @@
 </template>
 
 <script setup>
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { context_label } from "../page_context";
 import { useAssistant } from "../store";
+import { ACCEPTED_FILES, MAX_FILES, upload_file } from "../uploads";
+import FileChip from "./FileChip.vue";
 import Icon from "./Icon.vue";
 
 const store = useAssistant();
@@ -72,10 +95,40 @@ function on_enter(e) {
 }
 
 function submit() {
-	if (store.run || !draft.value.trim()) return;
-	store.send(draft.value);
+	if (store.run || !can_send.value) return;
+	store.send(
+		draft.value,
+		files.value.map(({ file_url, file_name }) => ({ file_url, file_name }))
+	);
 	draft.value = "";
+	files.value = [];
 	nextTick(grow);
+}
+
+// Files upload as soon as they are chosen, so sending does not wait for them.
+const files = ref([]);
+const file_input = ref(null);
+const can_send = computed(
+	() => !files.value.some((f) => f.uploading) && (draft.value.trim() || files.value.length)
+);
+
+function add_files(e) {
+	const chosen = [...e.target.files].slice(0, MAX_FILES - files.value.length);
+	e.target.value = "";
+	for (const file of chosen) {
+		const entry = reactive({ key: frappe.utils.get_random(6), file_name: file.name, uploading: true });
+		files.value.push(entry);
+		upload_file(file)
+			.then((uploaded) => Object.assign(entry, uploaded, { uploading: false }))
+			.catch((error) => {
+				remove_file(entry);
+				frappe.show_alert({ message: error.message, indicator: "red" });
+			});
+	}
+}
+
+function remove_file(entry) {
+	files.value = files.value.filter((f) => f !== entry);
 }
 
 function grow() {
@@ -191,6 +244,29 @@ textarea::placeholder {
 }
 .fi-spacer {
 	flex: 1;
+}
+.fi-files {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+.fi-icon-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	padding: 0;
+	border: 0;
+	border-radius: var(--radius);
+	background: transparent;
+	color: var(--ink-gray-6);
+}
+.fi-icon-button:hover:not(:disabled) {
+	background: var(--surface-gray-2);
+}
+.fi-icon-button:disabled {
+	opacity: 0.5;
 }
 .fi-mode {
 	display: inline-flex;

@@ -12,8 +12,7 @@ Flow
 4.  Extract with regex rules, the configured AI provider, or both.
 5.  Persist an AI Processing Log and return the extracted payload.
 
-Readers and extractors live in ``frappe_intelligence/documents/``; both
-extractors return ``({field_key: value}, confidence)``.
+Readers, template matching and extraction live in ``frappe_intelligence/documents/``.
 
 Async processing
 ----------------
@@ -29,6 +28,8 @@ import traceback
 from typing import Any
 
 import frappe
+
+from frappe_intelligence.documents import review, templates
 
 
 class AIEngine:
@@ -88,14 +89,14 @@ class AIEngine:
 			log.processing_status = "Processing"
 			log.save(ignore_permissions=True)
 
-			template = self._classify(raw_text, target_doctype)
+			template = templates.match(raw_text, target_doctype)
 			if not template:
 				raise ValueError(
 					f"No AI Document Template matched the document. (target_doctype={target_doctype!r})"
 				)
 
 			log.document_template = template.name
-			extracted, confidence = self._extract(raw_text, template)
+			extracted, confidence = templates.extract(raw_text, template)
 
 			log.extracted_data = frappe.as_json(extracted)
 			log.confidence_score = confidence
@@ -141,73 +142,6 @@ class AIEngine:
 
 		return read_file_text(file_url)
 
-	def _classify(self, raw_text: str, target_doctype: str | None) -> Any | None:
-		"""
-		Return the best-matching AI Document Template doc or None.
-
-		When *target_doctype* is given it is tried first; the keyword
-		scorer is used as a fallback / confirmation.
-		"""
-		if target_doctype:
-			doc = frappe.db.get_value(
-				"AI Document Template",
-				{"document_type_key": target_doctype, "is_active": 1},
-				"*",
-				as_dict=True,
-			)
-			if doc:
-				return frappe.get_doc("AI Document Template", doc.name)
-
-		templates = frappe.get_all(
-			"AI Document Template",
-			filters={"is_active": 1},
-			fields=["name", "document_type_key", "detection_keywords"],
-		)
-
-		text_lower = raw_text.lower()
-		best_match = None
-		best_score = 0
-
-		for t in templates:
-			if not t.detection_keywords:
-				continue
-			keywords = [kw.strip().lower() for kw in t.detection_keywords.split(",") if kw.strip()]
-			score = sum(1 for kw in keywords if kw in text_lower)
-			if score > best_score:
-				best_score = score
-				best_match = t
-
-		if best_match:
-			return frappe.get_doc("AI Document Template", best_match.name)
-		return None
-
-	def _extract(self, raw_text: str, template) -> tuple[dict, float]:
-		"""Dispatch to the correct adapter based on template.model_preference."""
-		preference = (template.model_preference or "Heuristic").strip()
-
-		if preference == "Heuristic":
-			return self._run_heuristic(raw_text, template)
-		if preference == "VLM":
-			return self._run_vlm(raw_text, template)
-		# "Both" — run heuristic first, fill gaps with VLM
-		h_result, h_conf = self._run_heuristic(raw_text, template)
-		missing_rules = [r for r in template.extraction_rules if not h_result.get(r.field_key)]
-		if missing_rules:
-			v_result, v_conf = self._run_vlm(raw_text, template, rules=missing_rules)
-			h_result.update(v_result)
-			return h_result, (h_conf + v_conf) / 2
-		return h_result, h_conf
-
-	def _run_heuristic(self, raw_text: str, template, rules=None) -> tuple[dict, float]:
-		from frappe_intelligence.documents.heuristic import HeuristicExtractor
-
-		return HeuristicExtractor().extract(raw_text, rules or template.extraction_rules)
-
-	def _run_vlm(self, raw_text: str, template, rules=None) -> tuple[dict, float]:
-		from frappe_intelligence.documents.extractor import extract
-
-		return extract(raw_text, rules or template.extraction_rules)
-
 
 # ===========================================================================
 # Background job entry-point
@@ -232,7 +166,7 @@ def process_document_background(
 	try:
 		result = AIEngine().process_from_log(log_name, file_url, target_doctype)
 
-		threshold = float(frappe.db.get_single_value("AI Settings", "confidence_threshold") or 0.6)
+		threshold = review.confidence_threshold()
 		needs_review = result.get("status") == "success" and result.get("confidence_score", 0.0) < threshold
 		result["needs_review"] = needs_review
 
@@ -313,7 +247,7 @@ def fire_post_processors(
 				doctype=doctype,
 				docname=docname,
 			)
-		except Exception:  # noqa: BLE001
+		except Exception:
 			frappe.log_error(
 				title=f"AI Post-Processor enqueue failed: {method}",
 				message=frappe.get_traceback(),
@@ -342,7 +276,7 @@ def link_log_to_record(
 			},
 			update_modified=False,
 		)
-	except Exception:  # noqa: BLE001
+	except Exception:
 		frappe.log_error(
 			title="AI Log link failed",
 			message=frappe.get_traceback(),

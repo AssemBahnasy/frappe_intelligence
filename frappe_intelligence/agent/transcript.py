@@ -1,4 +1,5 @@
-"""A conversation as the panel shows it: one entry per question, with its steps, changes and answer."""
+"""A conversation as the panel shows it: one entry per question, with its files, steps, changes,
+document reviews and answer."""
 
 from __future__ import annotations
 
@@ -19,6 +20,8 @@ def turns(conversation) -> list[dict]:
 		elif not result:
 			continue
 		elif row.role == "tool" and row.approval:
+			# A document reading is a step too; a change is shown only as its card.
+			_finish_step(steps.get(row.tool_call_id), row, result[-1])
 			result[-1]["proposals"].append(_proposal(row))
 		elif row.role == "tool":
 			_finish_step(steps.get(row.tool_call_id), row, result[-1])
@@ -35,6 +38,7 @@ def _turn(row) -> dict:
 	return {
 		"id": row.name,
 		"question": row.content,
+		"attachments": frappe.parse_json(row.attachments) if row.attachments else [],
 		"created": row.creation,
 		"steps": [],
 		"proposals": [],
@@ -59,7 +63,8 @@ def _add_reply(row, steps: dict, turn: dict) -> None:
 
 
 def _proposal(row) -> dict:
-	"""status: pending, rejected, done (approved and made) or failed (approved, but it did not work)."""
+	"""status: pending, rejected, done (approved and made, or values confirmed) or failed (approved,
+	but it did not work)."""
 	status = row.approval.lower()
 	if row.approval == "Approved":
 		status = "failed" if row.is_error else ("done" if row.content else "approved")

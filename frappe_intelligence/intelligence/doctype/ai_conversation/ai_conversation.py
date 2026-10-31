@@ -7,6 +7,7 @@ from frappe.query_builder import Interval
 from frappe.query_builder.functions import Now
 from frappe.utils import now_datetime
 
+from frappe_intelligence.documents import review
 from frappe_intelligence.providers import Message, Reply, ToolCall
 
 TITLE_LENGTH = 80
@@ -20,13 +21,30 @@ MOVED_ON_RESULT = "The user did not confirm this change and sent a new message i
 
 class AIConversation(Document):
 	def validate(self):
-		if not self.title:
-			first = next((row.content for row in self.messages if row.role == "user"), "")
-			self.title = first[:TITLE_LENGTH]
+		first = next((row for row in self.messages if row.role == "user"), None)
+		if not self.title and first:
+			# A question sent as just a file is named after the file.
+			files = ", ".join(file["file_name"] for file in frappe.parse_json(first.attachments or "[]"))
+			self.title = (first.content or files)[:TITLE_LENGTH]
 
-	def add_user_message(self, text: str, context: dict | None = None) -> None:
-		self.append("messages", {"role": "user", "content": text, "context": _json(context)})
+	def add_user_message(
+		self, text: str, context: dict | None = None, attachments: list | None = None
+	) -> None:
+		self.append(
+			"messages",
+			{"role": "user", "content": text, "context": _json(context), "attachments": _json(attachments)},
+		)
 		self.last_user_message_at = now_datetime()
+
+	def unread_attachments(self) -> list[ToolCall]:
+		"""read_document calls for the files sent with the latest question, until they have been made."""
+		row = self.messages[-1] if self.messages else None
+		if not row or row.role != "user" or not row.attachments:
+			return []
+		return [
+			ToolCall(id=f"read_{frappe.generate_hash(length=10)}", name="read_document", arguments=file)
+			for file in frappe.parse_json(row.attachments)
+		]
 
 	def add_reply(self, reply: Reply) -> None:
 		self.append(
@@ -52,8 +70,9 @@ class AIConversation(Document):
 			},
 		)
 
-	def add_proposal(self, call: ToolCall, preview: dict) -> None:
-		"""A change waiting for the user; its result is filled in once they decide."""
+	def add_proposal(self, call: ToolCall, preview: dict, content: str | None = None) -> None:
+		"""Waits for the user: a change (its result comes once they decide) or a document reading to
+		review (`content` holds the reading until they confirm it)."""
 		self.append(
 			"messages",
 			{
@@ -62,23 +81,26 @@ class AIConversation(Document):
 				"tool_call_id": call.id,
 				"approval": "Pending",
 				"preview": _json(preview),
+				"content": content,
 			},
 		)
 
-	def decide(self, call_id: str, approve: bool) -> None:
+	def decide(self, call_id: str, approve: bool):
 		row = next((row for row in self.messages if row.tool_call_id == call_id and row.role == "tool"), None)
 		if not row or row.approval != "Pending":
 			frappe.throw(frappe._("This change is no longer waiting for a decision."))
 		row.approval = "Approved" if approve else "Rejected"
 		if not approve:
-			row.content = REJECTED_RESULT
+			row.content = review.DISCARDED_RESULT if _is_review(row) else REJECTED_RESULT
+		return row
 
 	def pending_proposals(self) -> list:
 		return [row for row in self.messages if row.approval == "Pending"]
 
 	def reject_pending(self) -> None:
 		for row in self.pending_proposals():
-			row.approval, row.content = "Rejected", MOVED_ON_RESULT
+			row.approval = "Rejected"
+			row.content = review.unconfirmed(row.content) if _is_review(row) else MOVED_ON_RESULT
 
 	def approved_to_run(self) -> list[tuple]:
 		"""Approved changes not run yet, with the tool call each answers."""
@@ -135,6 +157,10 @@ class AIConversation(Document):
 def _json(value) -> str | None:
 	"""JSON fields reject lists, so store everything as text."""
 	return frappe.as_json(value, indent=None) if value else None
+
+
+def _is_review(row) -> bool:
+	return review.is_review(frappe.parse_json(row.preview) if row.preview else None)
 
 
 def _from_user_turn(rows: list) -> list:

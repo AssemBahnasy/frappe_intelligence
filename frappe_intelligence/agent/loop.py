@@ -1,7 +1,8 @@
 """The agent loop: model → tools → results → model, until the model answers in plain text.
 
-In Agent mode a change the model asks for becomes a proposal: the turn pauses, and the next run
-(after the user confirms or rejects) applies the decision before calling the model again."""
+Files sent with the question are read first. In Agent mode a change the model asks for becomes a
+proposal, and a document that matches a template becomes a review: the turn pauses, and the next
+run (after the user decides) applies the decision before calling the model again."""
 
 from __future__ import annotations
 
@@ -50,7 +51,7 @@ class TurnResult:
 	steps: list[Step] = field(default_factory=list)
 	error: str | None = None
 	stopped: bool = False
-	proposals: list[dict] = field(default_factory=list)  # changes waiting for the user
+	proposals: list[dict] = field(default_factory=list)  # changes and readings waiting for the user
 
 
 def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
@@ -67,7 +68,10 @@ def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
 
 	try:
 		_run_approved(conversation, hooks, result)
+		_read_attachments(conversation, hooks, result)
 		for _step in range(MAX_STEPS):
+			if result.proposals:
+				break
 			_stop_if_asked(hooks)
 			reply = _complete(provider, conversation, text, context, system, specs, hooks)
 			conversation.add_reply(reply)
@@ -139,10 +143,13 @@ def _execute(conversation, call, label: str, hooks: Hooks, result: TurnResult, r
 	"""Run a tool call and store its result; `row` is an approved proposal waiting for it."""
 	_record(result, hooks, Step(call.id, call.name, label, "running"), announce_only=True)
 	outcome = execute(call.name, call.arguments, conversation.mode)
-	if row is None:
-		conversation.add_tool_result(call, outcome.content, outcome.is_error)
-	else:
+	if row is not None:
 		row.content, row.is_error = outcome.content, int(outcome.is_error)
+	elif outcome.review:
+		conversation.add_proposal(call, outcome.review, outcome.content)
+		result.proposals.append({"call_id": call.id, "preview": outcome.review})
+	else:
+		conversation.add_tool_result(call, outcome.content, outcome.is_error)
 	_record(result, hooks, Step(call.id, call.name, label, "failed" if outcome.is_error else "done"))
 	if outcome.action:
 		result.actions.append(outcome.action)
@@ -164,6 +171,18 @@ def _run_approved(conversation, hooks: Hooks, result: TurnResult) -> None:
 		_execute(conversation, call, step_label(call.name, call.arguments), hooks, result, row)
 	if approved:
 		hooks.checkpoint()
+
+
+def _read_attachments(conversation, hooks: Hooks, result: TurnResult) -> None:
+	"""Files sent with the question are read before the model is called, so it always sees them."""
+	calls = conversation.unread_attachments()
+	if not calls:
+		return
+	_stop_if_asked(hooks)
+	conversation.add_reply(Reply(tool_calls=calls, stop_reason="tool_calls"))
+	for call in calls:
+		_execute(conversation, call, step_label(call.name, call.arguments), hooks, result)
+	hooks.checkpoint()
 
 
 def _record(result: TurnResult, hooks: Hooks, step: Step, announce_only: bool = False) -> None:

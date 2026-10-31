@@ -11,7 +11,8 @@ A greeting with the user's first name and up to two groups of starter questions 
 ## Sending
 
 - **Enter** sends, **Shift+Enter** adds a line; the box grows up to about seven lines.
-- The chip above the box names the page the user is on ("Customer list", "Sales Invoice · ACC-…") and is sent as context. **×** leaves it out for this page; it comes back on the next page.
+- The chip above the box names the page the user is on ("Customer list", "Sales Invoice · ACC-…", "New Purchase Invoice") and is sent as context. **×** leaves it out for this page; it comes back on the next page.
+- The **paperclip** attaches up to three PDFs, photos or text files. Each uploads at once as a private file and shows as a chip in the box (spinner while uploading, **×** to remove); a message can be just the files. Sent files show above the question.
 - The mode menu offers **Ask** and **Agent** (disabled with "Turned off in AI Settings" unless Agent mode is allowed). The chip turns violet in Agent mode.
 
 ## While the answer is written
@@ -41,6 +42,10 @@ Browser actions from the agent (open a page, open a form, start a new document) 
 A proposed change shows as a card: what will happen, the values with field labels, a note ("Saved as Draft. You submit it." or "Nothing is saved until you confirm."), **Reject** and **Confirm**. While a card waits, the box reads "Reply, or ask for a change to the proposal…"; sending a message instead rejects the card.
 
 After a decision the card becomes one line: a spinner while it runs, then a check with a link to the created document ("You confirmed"), × with the error, or "You rejected". The assistant's report continues under it.
+
+## Document review (board 3a)
+
+A file that matches a document template shows as a card: the template's name, "5 of 6 fields found", "Review needed" when confidence is low, every field editable (a missing one in amber), **Discard** and **Use these values**. Afterwards it becomes one line: "You checked the values" or "You discarded the values", and the assistant continues under it. On a new form it fills that form in. See [../documents/review.md](../documents/review.md).
 
 ## Width and theme
 

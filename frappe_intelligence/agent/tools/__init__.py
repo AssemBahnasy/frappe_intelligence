@@ -29,12 +29,14 @@ class AgentTool:
 	description: str
 	parameters: dict
 	run: Callable[[dict], Any]
-	label: Any  # a lazy translation (frappe._lt) with {doctype}, {name} or {report_name}
+	label: Any  # a lazy translation (frappe._lt) with argument names, e.g. {doctype} or {file_name}
 	modes: frozenset[str] = READ_MODES
 	# The result carries an `action` the browser performs (open a form, draw a chart).
 	browser_action: bool = False
 	# Changes data: `preview` builds the approval card; `run` happens only after the user confirms.
 	preview: Callable[[dict], dict] | None = None
+	# The result may carry a `review` card: the turn then waits for the user to check it.
+	review: bool = False
 
 	@property
 	def needs_approval(self) -> bool:
@@ -44,9 +46,14 @@ class AgentTool:
 		return {"name": self.name, "description": self.description, "parameters": self.parameters}
 
 	def step_label(self, arguments: dict) -> str:
-		return str(self.label).format(
-			**{key: arguments.get(key, "") for key in ("doctype", "name", "report_name")}
-		)
+		return str(self.label).format_map(_Blank(arguments))
+
+
+class _Blank(dict):
+	"""Arguments for a step label; one the model left out shows as empty."""
+
+	def __missing__(self, key: str) -> str:
+		return ""
 
 
 @dataclass
@@ -55,12 +62,13 @@ class Outcome:
 	is_error: bool = False
 	action: dict | None = None
 	preview: dict | None = None
+	review: dict | None = None
 
 
 def registry() -> dict[str, AgentTool]:
-	from frappe_intelligence.agent.tools import changes, desk, frappe_data, knowledge, reports
+	from frappe_intelligence.agent.tools import changes, desk, documents, frappe_data, knowledge, reports
 
-	modules = (frappe_data, reports, knowledge, desk, changes)
+	modules = (frappe_data, reports, knowledge, documents, desk, changes)
 	return {tool.name: tool for module in modules for tool in module.TOOLS}
 
 
@@ -89,6 +97,8 @@ def execute(name: str, arguments: dict, mode: str) -> Outcome:
 	if outcome.is_error:
 		frappe.db.rollback(save_point=SAVEPOINT)
 	else:
+		if tool.review:
+			outcome.review = result.pop("review", None)
 		outcome.content = result if isinstance(result, str) else json.dumps(result, default=json_handler)
 		if tool.browser_action:
 			outcome.action = result["action"]

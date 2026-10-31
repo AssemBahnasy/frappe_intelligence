@@ -34,7 +34,7 @@ The app moves into this structure step by step; each step deletes the code it re
 | 3 | Live replies: background job per run, `fi_assistant` events with run id, Stop, progress saved per step | Done |
 | 4 | Assistant panel (boards 1, 2a, 2b): docked panel, dock and sidebar entries, Ctrl+., live steps, Stop, history, tables, charts, feedback; old floating widget no longer loaded | Done |
 | 5 | Agent mode: change tools, approval cards, decide endpoint with row lock, savepoints, excluded DocTypes, Allow Agent Mode setting | Done |
-| 6 | Document review | Pending |
+| 6 | Document review (board 3a): paperclip in the panel, files read before the model, review card, confirmed values used, training pairs and log links, `fill_form` for the open new form; `documents/templates.py` shared with the old pipeline | Done |
 | 7 | `workflows/` on the desk | Pending |
 | 8 | Field writer | Pending |
 | 9 | Arabic / RTL pass, `channels/`, cleanup | Pending |

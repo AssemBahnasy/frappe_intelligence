@@ -161,7 +161,7 @@ RQ worker → process_whatsapp_message_job
 
 ## AI Providers
 
-Every model call goes through `providers/`; see [providers/README.md](providers/README.md). Document extraction strategies are in `documents/extractor.py`; see [DOCUMENT_PIPELINE.md](DOCUMENT_PIPELINE.md).
+Every model call goes through `providers/`; see [providers/README.md](providers/README.md). Document extraction strategies are in `documents/extractor.py`; see [DOCUMENT_PIPELINE.md](DOCUMENT_PIPELINE.md) and [documents/README.md](documents/README.md).
 
 ## Scope Enforcement
 

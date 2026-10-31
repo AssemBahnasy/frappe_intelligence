@@ -42,7 +42,7 @@ Use `Both` as the default — fast when regex matches, accurate fallback when it
 
 `confidence_score = matched_fields / total_fields`.
 
-Below `confidence_threshold` (global or per-workflow) → widget shows review panel instead of accepting automatically.
+Below `confidence_threshold` (global or per-workflow, `documents/review.confidence_threshold`) → the reading is marked for review. Template matching and extraction live in `documents/templates.py`; the panel's review is in [documents/review.md](documents/review.md).
 
 ## Seeding Templates from a Bundle
 

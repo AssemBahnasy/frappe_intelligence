@@ -1,0 +1,20 @@
+# Documents
+
+Files the assistant reads: PDFs, photos and text files. A file that matches an **AI Document Template** comes back as fields the user checks first; the values they confirm are what gets used.
+
+| Concern | Doc |
+|---|---|
+| Attaching a file in the panel and reviewing what was read (board 3a) | [review.md](review.md) |
+| Templates, extraction rules, confidence, seeding, the old widget's pipeline | [../DOCUMENT_PIPELINE.md](../DOCUMENT_PIPELINE.md) |
+| How field values are pulled out with the AI provider | [../providers/settings.md](../providers/settings.md) (`extraction_mode`) |
+
+## Code
+
+| Piece | Responsibility |
+|---|---|
+| `documents/reader.py` | Text from a PDF (embedded text or OCR), an image (OCR) or a text file |
+| `documents/templates.py` | Which template a text matches; field values by its Model Preference |
+| `documents/heuristic.py`, `extractor.py` | Regex rules; AI-provider extraction |
+| `documents/review.py` | The panel's reading: review card, confirmed values, training pairs, log links |
+| `agent/tools/documents.py` | The `read_document` tool |
+| `engine/orchestrator.py` | The old widget, portal and WhatsApp pipeline (`AIEngine`), using `templates.py` |

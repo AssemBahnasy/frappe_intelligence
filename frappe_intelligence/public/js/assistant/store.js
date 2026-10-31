@@ -23,10 +23,11 @@ export const useAssistant = defineStore("fi_assistant", () => {
 	let sending = false;
 	let early_events = [];
 
-	async function send(text) {
+	// `files`: uploaded files ({ file_url, file_name }), read before the model answers.
+	async function send(text, files = []) {
 		text = text.trim();
-		if (!text || run.value || sending) return;
-		const turn = reactive(new_turn(text));
+		if ((!text && !files.length) || run.value || sending) return;
+		const turn = reactive(new_turn(text, files));
 		turns.value.push(turn);
 		sending = true;
 		try {
@@ -35,6 +36,7 @@ export const useAssistant = defineStore("fi_assistant", () => {
 				conversation: conversation.value,
 				context: context_dismissed.value ? null : page_context({ with_tab: true }),
 				mode: mode.value,
+				attachments: files.map((f) => f.file_url),
 			});
 			set_conversation(r.conversation);
 			run.value = { id: r.run_id, turn };
@@ -108,14 +110,18 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		turns.value = r.turns;
 	}
 
-	// Confirm or reject a proposed change; the answer continues once none is left waiting.
-	async function decide(turn, proposal, approve) {
+	// Confirm or reject a proposed change, or a document reading with the values as the user left
+	// them; the answer continues once none is left waiting.
+	async function decide(turn, proposal, approve, values = null) {
 		const r = await frappe.xcall(`${API}.decide_proposal`, {
 			conversation: conversation.value,
 			call_id: proposal.call_id,
 			approve,
+			values,
 		});
-		proposal.status = approve ? "approved" : "rejected";
+		// A change runs next; checked document values are settled at once.
+		const review = proposal.preview?.kind === "review";
+		proposal.status = !approve ? "rejected" : review ? "done" : "approved";
 		if (r.run_id) {
 			turn.reporting = true; // what the model writes now reports on the change
 			turn.pending = true;
@@ -204,10 +210,11 @@ export const useAssistant = defineStore("fi_assistant", () => {
 	};
 });
 
-function new_turn(question) {
+function new_turn(question, attachments) {
 	return {
 		id: frappe.utils.get_random(8),
 		question,
+		attachments,
 		created: frappe.datetime.now_datetime(),
 		steps: [],
 		proposals: [],

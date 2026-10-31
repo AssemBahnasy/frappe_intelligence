@@ -1,11 +1,35 @@
 // Browser actions returned by the agent's desk tools (agent/tools/desk.py).
 
+const SETTLE_MS = 300;
+
 const HANDLERS = {
 	set_route: ({ route }) => open_route(route),
 	open_form: ({ doctype, name }) => frappe.set_route("Form", doctype, name),
 	new_doc: ({ doctype, defaults }) => frappe.new_doc(doctype, defaults || {}),
+	fill_form,
 	chart: () => {}, // drawn under the answer
 };
+
+// Into the new form the user has open; if they have left it, a new form gets the values instead.
+async function fill_form({ doctype, values }) {
+	const frm = window.cur_frm;
+	if (frm?.doctype !== doctype || !frm.is_new()) return frappe.new_doc(doctype, values);
+	const known = Object.fromEntries(Object.entries(values).filter(([field]) => frm.fields_dict[field]));
+	await frm.set_value(known);
+	// A link (e.g. the supplier) makes the form fetch its defaults, which can overwrite values the
+	// user confirmed (e.g. the due date); put those back once the form has finished.
+	await settled();
+	const changed = Object.entries(known).filter(([field, value]) => !Array.isArray(value) && frm.doc[field] != value);
+	if (changed.length) frm.set_value(Object.fromEntries(changed));
+}
+
+// Form scripts chain server calls from callbacks, so wait until none has been running for a moment.
+async function settled() {
+	do {
+		await frappe.after_ajax();
+		await new Promise((resolve) => setTimeout(resolve, SETTLE_MS));
+	} while (frappe.request.ajax_count);
+}
 
 export function perform_action(action) {
 	HANDLERS[action?.type]?.(action);

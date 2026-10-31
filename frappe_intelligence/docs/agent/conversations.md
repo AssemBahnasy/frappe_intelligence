@@ -23,8 +23,9 @@ One DocType holds every conversation: desk chats and guided workflows on the des
 | `tool_name`, `tool_call_id` | Tool turns |
 | `is_error` | Error notices (never sent to the model) and failed tool results (sent, so the model can recover) |
 | `context` | Page the user was on |
+| `attachments` | Files sent with a user message: `[{file_url, file_name}]` ([../documents/review.md](../documents/review.md)) |
 | `raw`, `raw_provider` | The provider's own form of an assistant turn, replayed only to the same provider |
-| `approval`, `preview` | Proposed changes: `Pending`, `Approved`, `Rejected`, and the card the user saw ([approvals.md](approvals.md)) |
+| `approval`, `preview` | Rows waiting for the user: `Pending`, `Approved`, `Rejected`, and the card they saw. A proposed change ([approvals.md](approvals.md)), or a document reading (`preview.kind = "review"`; `content` holds the reading until they confirm it) |
 
 JSON values are stored as text because Frappe's JSON field rejects lists.
 
