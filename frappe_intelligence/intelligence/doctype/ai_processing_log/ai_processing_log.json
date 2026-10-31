@@ -73,8 +73,8 @@
   {
    "fieldname": "session",
    "fieldtype": "Link",
-   "label": "AI Agent Session",
-   "options": "AI Agent Session",
+   "label": "AI Conversation",
+   "options": "AI Conversation",
    "description": "Session that triggered this document processing job."
   },
   {

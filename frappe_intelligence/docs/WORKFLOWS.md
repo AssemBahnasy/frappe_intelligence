@@ -115,7 +115,7 @@ The `**kwargs` signature is required — the engine passes extra context keys th
 
 ```python
 frappe.call(
-    "frappe_intelligence.api.register_post_processor",
+    "frappe_intelligence.api.documents.register_post_processor",
     document_type_key="supplier_invoice",
     callback_method="your_app.handlers.fill_purchase_invoice",
     description="Auto-fill Purchase Invoice fields",

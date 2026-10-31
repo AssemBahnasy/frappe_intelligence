@@ -72,7 +72,7 @@ export default {
       this.loading = true;
       try {
         const res = await frappe.call({
-          method: "frappe_intelligence.api.preview_step_prompt",
+          method: "frappe_intelligence.api.builder.preview_step_prompt",
           args: { step_data: this.selectedStep },
         });
         this.prompt = res.message?.prompt || "";

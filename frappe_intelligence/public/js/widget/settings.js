@@ -8,7 +8,7 @@ export const settingsMethods = {
     _applySettings() {
         const self = this;
         frappe.call({
-            method: "frappe_intelligence.api.get_widget_settings",
+            method: "frappe_intelligence.api.settings.get_widget_settings",
             callback(r) {
                 const s = (r && r.message) || {};
                 const root = document.getElementById("fi-widget-root");
@@ -67,7 +67,7 @@ export const settingsMethods = {
         self._currentDocname = route[2];
 
         frappe.call({
-            method: "frappe_intelligence.api.get_required_documents",
+            method: "frappe_intelligence.api.documents.get_required_documents",
             args: { doctype: self._currentDoctype, docname: self._currentDocname },
             callback(r) {
                 const docs = (r.message && r.message.missing) || [];

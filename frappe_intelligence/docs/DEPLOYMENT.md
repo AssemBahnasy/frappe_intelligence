@@ -86,9 +86,9 @@ All Python and APT packages are installed automatically during Frappe Cloud depl
 | Python packages | Automatic | Automatic |
 | APT packages | `sudo apt install` | Automatic |
 | Ollama | `bench fi-setup-ollama` | Not supported (external VPS option available) |
-| Claude | API key only | API key only |
-| Recommended | Ollama (local) or Claude | Claude |
-| Automatic fallback | ✓ Claude → Ollama | ✓ if external Ollama configured |
+| OpenAI / Claude / Gemini | API key only | API key only |
+| Recommended | Ollama (local) or a cloud provider | A cloud provider |
+| Automatic fallback | ✓ cloud provider → Ollama | ✓ if external Ollama configured |
 
 ## Upgrading
 

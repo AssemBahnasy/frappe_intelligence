@@ -5,15 +5,16 @@ from frappe.utils import now_datetime, add_days
 
 
 def expire_old_sessions():
-    """Mark AI Agent Sessions that have been idle for > 7 days as Abandoned.
+    """Mark workflow conversations that have been idle for > 7 days as Abandoned.
 
     Runs daily via scheduler_events in hooks.py.
     """
     cutoff = add_days(now_datetime(), -7)
 
     stale = frappe.db.get_all(
-        "AI Agent Session",
+        "AI Conversation",
         filters={
+            "mode": "Workflow",
             "status": "Active",
             "modified": ("<", cutoff),
         },
@@ -24,7 +25,7 @@ def expire_old_sessions():
         return
 
     for name in stale:
-        frappe.db.set_value("AI Agent Session", name, "status", "Abandoned")
+        frappe.db.set_value("AI Conversation", name, "status", "Abandoned")
 
     frappe.db.commit()
     frappe.logger("frappe_intelligence").info(

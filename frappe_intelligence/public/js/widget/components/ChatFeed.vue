@@ -21,7 +21,6 @@
       :turn="turn"
       @suggest-workflow="$emit('suggest-workflow')"
       @navigate="handleNavigate"
-      @create="handleCreate"
     />
 
     <!-- Loading dots — hidden once streaming starts -->
@@ -88,17 +87,6 @@ export default {
     },
     handleNavigate(route) {
       frappe.set_route(...route.replace(/^\//, "").split("/").filter(Boolean));
-    },
-    handleCreate({ doctype, defaults }) {
-      frappe.call({
-        method: "frappe_intelligence.api.create_document",
-        args: { doctype, defaults },
-        callback(r) {
-          if (r.message?.route) {
-            frappe.set_route(...r.message.route.replace(/^\//, "").split("/").filter(Boolean));
-          }
-        },
-      });
     },
   },
 };

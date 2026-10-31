@@ -37,7 +37,7 @@
             "fieldname": "session",
             "fieldtype": "Link",
             "label": "Agent Session",
-            "options": "AI Agent Session",
+            "options": "AI Conversation",
             "description": "Workflow session during which this correction was submitted."
         },
         {

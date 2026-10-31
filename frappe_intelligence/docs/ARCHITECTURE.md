@@ -1,5 +1,7 @@
 # Architecture
 
+> The app is being restructured; see [architecture/README.md](architecture/README.md) for the target layout and migration status.
+
 ## System Layers
 
 ```
@@ -10,7 +12,7 @@
 │  │  (JS + Vue)  │  │  React app)  │  │  (frappe_whatsapp) │ │
 │  └──────┬───────┘  └──────┬───────┘  └─────────┬──────────┘ │
 └─────────┼─────────────────┼──────────────────── ┼────────────┘
-          │ api.py          │ api_portal.py        │ engine/whatsapp_handler.py
+          │ api/chat.py     │ api/portal.py       │ engine/whatsapp_handler.py
           ▼                 ▼                      ▼
 ┌──────────────────────────────────────────────────────────────┐
 │  engine/                                                     │
@@ -24,8 +26,8 @@
           │
           ▼
 ┌──────────────────────────────────────────────────────────────┐
-│  models/                                                     │
-│  llm_factory → ClaudeAdapter | VLMAdapter | HeuristicAdapter │
+│  providers/  get_provider → OpenAI | Claude | Gemini | Ollama│
+│  documents/  reader · transcriber · heuristic · extractor    │
 │  reader.py (OCR + PDF)   transcriber.py (Whisper)           │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -34,19 +36,19 @@
 
 | Path | Responsibility |
 |------|---------------|
-| `api.py` | Desk channel endpoints — rate limiting, auth, enqueue |
-| `api_portal.py` | Portal channel endpoints — portal user auth guard |
-| `engine/chat.py` | Intent classification, RAG retrieval, tool dispatch, history |
+| `api/` | Whitelisted endpoints, one module per concern; see [API_REFERENCE.md](API_REFERENCE.md) |
+| `agent/` | Agent loop, prompts and tools for desk chat; see [agent/README.md](agent/README.md) |
+| `engine/chat.py` | `workflow_reply()`: guided workflows on every channel |
 | `engine/workflow.py` | Session CRUD, step state machine, turn persistence |
 | `engine/scope.py` | Pre-LLM gate: keyword regex + TF-IDF cosine similarity |
 | `engine/orchestrator.py` | Document pipeline controller; RQ background entry-point |
 | `engine/whatsapp_handler.py` | WhatsApp doc_event bridge → enqueue → route by content type |
-| `models/llm_factory.py` | Select adapter + optional fallback wrapper |
-| `models/claude_adapter.py` | Anthropic Claude API (prompt caching, tool use) |
-| `models/vlm_adapter.py` | Ollama VLM (4 extraction strategies, keep-alive) |
-| `models/heuristic_adapter.py` | Regex extractor (no LLM call) |
-| `models/reader.py` | EasyOCR (images) + pypdf (digital PDFs) |
-| `models/transcriber.py` | Faster-Whisper voice-to-text |
+| `providers/__init__.py` | `get_provider()`: the provider chosen in AI Settings, with optional Ollama fallback |
+| `providers/{openai,claude,gemini,ollama}.py` | One class per AI service behind a shared interface |
+| `documents/extractor.py` | AI field extraction (4 strategies) over any provider |
+| `documents/heuristic.py` | Regex extractor (no AI call) |
+| `documents/reader.py` | EasyOCR (images) + pypdf (digital PDFs) |
+| `documents/transcriber.py` | Faster-Whisper voice-to-text |
 | `utils/file_utils.py` | File URL validation + path-traversal prevention |
 | `utils/seed_manager.py` | JSON bundle → AI Document Template seeder |
 | `tasks.py` | Scheduled tasks (daily: expire stale sessions) |
@@ -70,8 +72,8 @@ AI Document Template
 AI Knowledge Pack
   └── AI Knowledge Entry  (child — topic + content snippets)
 
-AI Agent Session
-  └── AI Agent Turn       (child — role + content per message)
+AI Conversation           (desk chats and workflow sessions, every channel)
+  └── AI Conversation Message (child — user, assistant, tool turns)
 
 AI Processing Log  ←── AI Training Pair (links log + session)
 AI Document Requirement   (target DocType → required document_type_key)
@@ -92,7 +94,7 @@ Widget → api.process_document
 RQ worker → process_document_background
   → reader.py: OCR / PDF text
   → classify by keyword scoring (or direct template key)
-  → adapter.extract(raw_text, rules)
+  → documents.extractor.extract(raw_text, rules)
   → update log (status: Completed, extracted_data, confidence_score)
   → if confidence >= threshold: fire_post_processors()
   → frappe.publish_realtime("ai_processing_complete", result)
@@ -101,40 +103,38 @@ Browser: realtime event → _handleProcessingResult()
 Fallback: poll get_log_status() every 5 s
 ```
 
-### Chat / Agent (synchronous)
+### Desk chat
 
 ```
-Widget → api.handle_widget_input(input_type="text", chat_mode, workflow_key)
-  → _language_rule()  ← AI Response Language rows
-  → classify_text_intent()
-      → engine/scope.py: check_scope()  ← keyword gate + cosine similarity
-        out-of-scope → return redirect_reply immediately (zero LLM tokens)
-      → _retrieve_knowledge()           ← keyword score over AI Knowledge Entries
-      → _doctype_schema_context()       ← field list, cached 300 s in Redis
-      → _get_chat_history()             ← Redis, TTL 2 h, capped 20 turns
-      → adapter.chat(prompt, tools=FRAPPE_TOOLS)
-          → streaming: publish_realtime("ai_stream_chunk")
-          → tool call: execute_tool() → action + action_data
-  ← {reply, action, action_data}
+api.chat.send_message(message, conversation, context)   ← returns {conversation, run_id}
+  → utils.access.ensure_assistant_access()
+  → background job agent.runs.execute → agent.loop.run_turn()     (handle_widget_input runs it synchronously)
+      → provider.complete(history, system prompt, Ask-mode tools)
+      → agent.tools.execute(call) … repeat until a plain-text answer (max 8 steps)
+      → AI Conversation rows saved
+  → fi_assistant realtime events: text, step, done
 ```
+
+See [agent/loop.md](agent/loop.md) and [agent/live-replies.md](agent/live-replies.md).
 
 ### Workflow (Agent mode)
 
 ```
-engine/chat.py: _classify_workflow_mode(session, text)
+engine/chat.py: workflow_reply(text, channel, channel_id, workflow_key)
+  → workflow must be Active and allowed on the channel
   → scope gate → check_scope(text, workflow_doc)
   → if no active step: completion_message or LLM summary
   → build_step_prompt(session, step)
       → injects required_fields, collected_data, knowledge_packs context
   → LLM reply → collect_step_data() → advance_step() if complete
-  → append_turn() persists to AI Agent Turn child table
+  → append_turn() persists to AI Conversation Message rows
 ```
 
 ### Portal Channel
 
 ```
 AIPortalClient.chat(text)
-  → api_portal.portal_chat(text, customer, workflow_key)
+  → api.portal.portal_chat(text, customer, workflow_key)
       → _assert_portal_user(customer)           # Portal User table check
       → _enforce_portal_rate_limit(customer)    # key: fi_rl_portal:{customer}
       → classify_text_intent(channel="portal")  # same engine, no FRAPPE_TOOLS
@@ -159,23 +159,9 @@ RQ worker → process_whatsapp_message_job
   → reply via _send_whatsapp_reply() with char-limit splitting
 ```
 
-## LLM Adapter Interface
+## AI Providers
 
-Both adapters expose the same two methods:
-
-| Method | Used by | Returns |
-|--------|---------|---------|
-| `extract(raw_text, rules)` | orchestrator | `(dict, float)` — extracted fields + confidence |
-| `chat(prompt, history, tools)` | chat.py | `(reply, error)` |
-
-Ollama extraction modes (AI Settings → Extraction Mode):
-
-| Mode | LLM calls | Best for |
-|------|-----------|---------|
-| Per Field | 1 per field | Weak hardware |
-| Batch | 1 total | Fast hardware + strong models |
-| Batch with Fallback *(default)* | 1 batch + retry on None | Recommended |
-| Parallel | 1 per field, concurrent | Mid-range hardware |
+Every model call goes through `providers/`; see [providers/README.md](providers/README.md). Document extraction strategies are in `documents/extractor.py`; see [DOCUMENT_PIPELINE.md](DOCUMENT_PIPELINE.md).
 
 ## Scope Enforcement
 
@@ -189,7 +175,7 @@ Threshold: `AI Settings.scope_similarity_threshold` (default `0.05`). Per-workfl
 
 ## Confidence & Review
 
-`confidence_score` comes from the extraction adapter. The threshold is resolved as:
+`confidence_score` comes from the extractor. The threshold is resolved as:
 
 1. `AI Workflow.confidence_threshold` (if > 0) — per-workflow override
 2. `AI Settings.confidence_threshold` — global setting
@@ -201,10 +187,8 @@ Below threshold → `needs_review=True` → widget shows editable review panel �
 
 | Key pattern | Purpose | TTL |
 |-------------|---------|-----|
-| `fi_rl:{user}` | Desk rate limit counter | 60 s |
-| `fi_rl_portal:{customer}` | Portal rate limit counter | 60 s |
+| `rl:<endpoint>:<user>` | Frappe `rate_limit` counters (desk and portal endpoints) | 60 s |
 | `fi_rl_wa:{phone}` | WhatsApp rate limit counter | 60 s |
 | `fi_wa_proc:{message_id}` | WhatsApp dedup lock | 5 min |
-| `fi_schema:{doctype}` | DocType field schema cache | 300 s |
-| `fi_route_map` | Route map cache | 1 h |
-| `fi_chat:{session_id}` | Chat history | 2 h |
+
+AI Settings (route map, allowed roles, response languages) is read through `frappe.get_cached_doc`, which Frappe clears on save. Conversations are stored in AI Conversation, not Redis.

@@ -1,0 +1,38 @@
+/* Docks the assistant beside the desk: <body> is a flex row (frappe desk/main.scss), so the
+   panel takes its width from the page instead of covering it. */
+.fi-assistant {
+	flex: 0 0 var(--fi-assistant-width, 420px);
+	width: var(--fi-assistant-width, 420px);
+	min-width: 0;
+	height: 100dvh;
+	position: sticky;
+	top: 0;
+	z-index: 1012;
+	border-inline-start: 1px solid var(--outline-gray-1);
+	background: var(--surface-base);
+}
+
+.fi-assistant[hidden] {
+	display: none;
+}
+
+body.fi-assistant-resizing {
+	cursor: col-resize;
+	user-select: none;
+}
+
+.dock .dock-item.fi-assistant-launcher.active,
+.fi-assistant-launcher.active {
+	background: var(--surface-violet-2);
+	color: var(--ink-violet-6);
+}
+
+/* Phones: the panel takes the screen while open. */
+@media (max-width: 767px) {
+	.fi-assistant {
+		position: fixed;
+		inset: 0;
+		width: 100%;
+		z-index: 1015;
+	}
+}

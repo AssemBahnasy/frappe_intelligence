@@ -33,7 +33,7 @@ Each **AI Extraction Rule** child row defines one field to extract:
 | Strategy | How |
 |----------|-----|
 | `Regex` | Match `regex_pattern` against raw text — no LLM call |
-| `VLM` | Pass `llm_hint` to the LLM adapter |
+| `VLM` | Pass `llm_hint` to the configured AI provider (`documents/extractor.py`) |
 | `Both` | Run regex first; fall back to LLM if regex returns `None` |
 
 Use `Both` as the default — fast when regex matches, accurate fallback when it doesn't.

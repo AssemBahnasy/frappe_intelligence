@@ -61,7 +61,7 @@ class AIPortalClient {
     async chat(text, contextHint = null) {
         try {
             const r = await frappe.call({
-                method: "frappe_intelligence.api_portal.portal_chat",
+                method: "frappe_intelligence.api.portal.portal_chat",
                 args: {
                     text,
                     customer: this._customer,
@@ -92,7 +92,7 @@ class AIPortalClient {
     async uploadDocument(fileUrl, targetDoctype = null) {
         try {
             const r = await frappe.call({
-                method: "frappe_intelligence.api_portal.portal_upload_document",
+                method: "frappe_intelligence.api.portal.portal_upload_document",
                 args: {
                     file_url: fileUrl,
                     customer: this._customer,
@@ -108,14 +108,14 @@ class AIPortalClient {
     }
 
     /**
-     * Fetch the current AI Agent Session state for this user + workflow.
+     * Fetch the current workflow conversation state for this user + workflow.
      *
      * @returns {Promise<{status, current_step, step_prompt, collected_data}>}
      */
     async getSessionState() {
         try {
             const r = await frappe.call({
-                method: "frappe_intelligence.api_portal.portal_get_session_state",
+                method: "frappe_intelligence.api.portal.portal_get_session_state",
                 args: {
                     customer: this._customer,
                     workflow_key: this._workflow,

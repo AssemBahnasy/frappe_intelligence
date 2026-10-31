@@ -28,11 +28,13 @@ bench_commands = ["frappe_intelligence.commands"]
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/frappe_intelligence/css/frappe_intelligence.css"
+app_include_css = "frappe_intelligence_launcher.bundle.css"
 app_include_js = [
-    "fi.bundle.js",
+    "frappe_intelligence_launcher.bundle.js",
     "fi.pages.bundle.js",
 ]
+
+boot_session = "frappe_intelligence.boot.boot_session"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/frappe_intelligence/css/frappe_intelligence.css"
@@ -260,9 +262,9 @@ scheduler_events = {
 # Automatically update python controller files with type annotations for this app.
 # export_python_type_annotations = True
 
-# default_log_clearing_doctypes = {
-# 	"Logging DocType Name": 30  # days to retain logs
-# }
+default_log_clearing_doctypes = {
+	"AI Conversation": 90,  # days; adjustable in Log Settings
+}
 
 # Translation
 # ------------

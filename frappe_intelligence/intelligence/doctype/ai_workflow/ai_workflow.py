@@ -19,7 +19,7 @@ class AIWorkflow(Document):
     def _warn_active_sessions(self):
         if not self.is_new():
             count = frappe.db.count(
-                "AI Agent Session",
+                "AI Conversation",
                 {"workflow": self.workflow_key, "status": "Active"},
             )
             if count:

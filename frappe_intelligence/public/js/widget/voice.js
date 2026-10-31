@@ -75,7 +75,7 @@ export const voiceMethods = {
                 if (!fileUrl) throw new Error("Upload failed");
 
                 return frappe.call({
-                    method: "frappe_intelligence.api.handle_widget_input",
+                    method: "frappe_intelligence.api.chat.handle_widget_input",
                     args: {
                         input_type: "voice",
                         file_url: fileUrl,

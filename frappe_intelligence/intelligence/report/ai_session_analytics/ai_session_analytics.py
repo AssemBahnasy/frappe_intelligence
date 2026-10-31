@@ -89,14 +89,14 @@ def _get_data(filters):
             SUM(CASE WHEN s.status = 'Completed' THEN 1 ELSE 0 END) AS completed,
             SUM(CASE WHEN s.status = 'Abandoned' THEN 1 ELSE 0 END) AS abandoned,
             ROUND(AVG(tc.turn_count), 1) AS avg_turns
-        FROM `tabAI Agent Session` s
+        FROM `tabAI Conversation` s
         LEFT JOIN (
             SELECT parent, COUNT(*) AS turn_count
-            FROM `tabAI Agent Turn`
-            WHERE parenttype = 'AI Agent Session'
+            FROM `tabAI Conversation Message`
+            WHERE parenttype = 'AI Conversation' AND role IN ('user', 'assistant')
             GROUP BY parent
         ) tc ON tc.parent = s.name
-        WHERE 1=1 {conditions}
+        WHERE s.mode = 'Workflow' {conditions}
         GROUP BY s.workflow
         ORDER BY total_sessions DESC
         """,

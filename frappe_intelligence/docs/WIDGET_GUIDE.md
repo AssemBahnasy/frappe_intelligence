@@ -1,3 +1,5 @@
+> **Replaced.** The desk now uses the docked assistant panel; see [panel/README.md](panel/README.md). This guide describes the previous floating widget, which no longer loads on the desk and is removed in step 9.
+
 # Widget Guide
 
 The Intelligence Concierge widget is injected automatically into every Frappe Desk page via `app_include_js`. No setup needed for end-users.
@@ -55,7 +57,7 @@ AI replies stream token-by-token via Socket.io (`ai_stream_chunk`):
 
 ## Multi-turn Memory
 
-Chat history is stored in Redis per Frappe session (TTL 2 h, capped at 20 messages). The AI sees full conversation context on every message. Click **↺** in the chat header to start a new conversation.
+Conversations are stored in **AI Conversation**, one per user, and the AI sees the recent history on every message. See [agent/conversations.md](agent/conversations.md).
 
 ## Agentic Actions
 
@@ -65,7 +67,6 @@ When the AI calls a built-in Frappe tool:
 |------|---------------|---------|
 | `navigate` | Labelled button | `frappe.set_route()` |
 | `open_record` | Record name button | `frappe.set_route()` to form view |
-| `create_record` | DocType name button | Calls `create_document` → navigates to saved record |
 | `search_results` | Inline list of record links | Each link navigates to form view |
 
 URL slugs use hyphens (`/app/sales-invoice/si-00001`). `frappe.scrub()` is intentionally not used for URL building (it produces underscores that cause 404 errors).
@@ -89,7 +90,7 @@ frappe.publish_realtime("ai_processing_update", {"message": "Step done"}, user=f
 
 ## Access Control
 
-**AI Settings → Widget tab → Allowed Roles** — list Frappe roles that can see the widget. Empty = all users. Widget removes itself from the DOM silently for unauthorized users. Cached 1 h in Redis.
+**AI Settings → Widget tab → Allowed Roles** — list Frappe roles that can see the widget. Empty = all users. The server refuses other users; the widget also hides itself for them.
 
 ## Appearance
 

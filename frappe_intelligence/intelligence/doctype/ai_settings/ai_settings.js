@@ -9,7 +9,7 @@ frappe.ui.form.on("AI Settings", {
 		frm.add_custom_button(__("Test Connection"), () => {
 			frappe.show_alert({ message: __("Testing connection…"), indicator: "blue" });
 			frappe.call({
-				method: "frappe_intelligence.api.test_connection",
+				method: "frappe_intelligence.api.settings.test_connection",
 				callback(r) {
 					if (r.message && r.message.ok) {
 						frappe.show_alert({
@@ -29,7 +29,7 @@ frappe.ui.form.on("AI Settings", {
 
 		// Show/hide WhatsApp tab based on whether frappe_whatsapp is installed
 		frappe.call({
-			method: "frappe_intelligence.api.is_whatsapp_installed",
+			method: "frappe_intelligence.api.settings.is_whatsapp_installed",
 			callback(r) {
 				const installed = r.message === true;
 				frm.set_df_property("whatsapp_tab", "hidden", installed ? 0 : 1);

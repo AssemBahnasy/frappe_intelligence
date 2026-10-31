@@ -1,0 +1,178 @@
+{
+ "actions": [],
+ "creation": "2026-05-17 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "mode",
+  "status",
+  "column_break_main",
+  "channel",
+  "channel_id",
+  "last_user_message_at",
+  "active_run",
+  "workflow_section",
+  "workflow",
+  "current_step",
+  "column_break_workflow",
+  "collected_data",
+  "linked_section",
+  "linked_doctype",
+  "linked_docname",
+  "messages_section",
+  "messages"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "read_only": 1
+  },
+  {
+   "default": "Ask",
+   "fieldname": "mode",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Mode",
+   "options": "Ask\nAgent\nWorkflow",
+   "reqd": 1
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Active\nCompleted\nAbandoned\nPaused"
+  },
+  {
+   "fieldname": "column_break_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Desk",
+   "fieldname": "channel",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Channel",
+   "options": "Desk\nPortal\nWhatsApp",
+   "reqd": 1
+  },
+  {
+   "description": "Portal user or WhatsApp number the conversation belongs to. Empty for desk conversations.",
+   "fieldname": "channel_id",
+   "fieldtype": "Data",
+   "label": "Channel ID"
+  },
+  {
+   "fieldname": "last_user_message_at",
+   "fieldtype": "Datetime",
+   "label": "Last User Message At",
+   "read_only": 1
+  },
+  {
+   "description": "Background job answering right now; empty when idle.",
+   "fieldname": "active_run",
+   "fieldtype": "Data",
+   "label": "Active Run",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:doc.mode=='Workflow'",
+   "fieldname": "workflow_section",
+   "fieldtype": "Section Break",
+   "label": "Workflow"
+  },
+  {
+   "fieldname": "workflow",
+   "fieldtype": "Link",
+   "label": "Workflow",
+   "options": "AI Workflow"
+  },
+  {
+   "fieldname": "current_step",
+   "fieldtype": "Data",
+   "label": "Current Step Key"
+  },
+  {
+   "fieldname": "column_break_workflow",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "collected_data",
+   "fieldtype": "JSON",
+   "label": "Collected Data"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "linked_section",
+   "fieldtype": "Section Break",
+   "label": "Linked Record"
+  },
+  {
+   "fieldname": "linked_doctype",
+   "fieldtype": "Link",
+   "label": "Linked DocType",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "linked_docname",
+   "fieldtype": "Dynamic Link",
+   "label": "Linked Document",
+   "options": "linked_doctype"
+  },
+  {
+   "fieldname": "messages_section",
+   "fieldtype": "Section Break",
+   "label": "Messages"
+  },
+  {
+   "fieldname": "messages",
+   "fieldtype": "Table",
+   "label": "Messages",
+   "options": "AI Conversation Message",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-10-31 20:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Intelligence",
+ "name": "AI Conversation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "if_owner": 1,
+   "read": 1,
+   "role": "Desk User",
+   "write": 1
+  }
+ ],
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "title",
+ "track_changes": 0
+}

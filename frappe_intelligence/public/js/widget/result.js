@@ -107,7 +107,7 @@ export const resultMethods = {
 
         const doConfirm = () => {
             frappe.call({
-                method: "frappe_intelligence.api.confirm_extraction",
+                method: "frappe_intelligence.api.documents.confirm_extraction",
                 args: { log_name, doctype, docname },
                 callback() {
                     frappe.show_alert({ message: __("Extraction confirmed!"), indicator: "green" }, 4);
@@ -119,7 +119,7 @@ export const resultMethods = {
         if (hasEdits) {
             // Save the user's corrections as a training pair, then confirm
             frappe.call({
-                method: "frappe_intelligence.api.submit_correction",
+                method: "frappe_intelligence.api.documents.submit_correction",
                 args: { log_name, corrected_extraction: edited },
                 callback: doConfirm,
             });
@@ -172,7 +172,7 @@ export const resultMethods = {
             });
 
             frappe.call({
-                method: "frappe_intelligence.api.submit_correction",
+                method: "frappe_intelligence.api.documents.submit_correction",
                 args: {
                     log_name: self._lastResult.log_name,
                     corrected_extraction: corrected,

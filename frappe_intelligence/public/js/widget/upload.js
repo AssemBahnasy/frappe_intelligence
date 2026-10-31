@@ -39,7 +39,7 @@ export const uploadMethods = {
             }
 
             frappe.call({
-                method: "frappe_intelligence.api.list_templates",
+                method: "frappe_intelligence.api.documents.list_templates",
                 callback(r) {
                     if (!r.message) return;
                     const requiredKeys = self._requiredDocs.map((d) => d.document_type_key);
@@ -107,7 +107,7 @@ export const uploadMethods = {
             self._setProgress(__("Queuing document for processing…"));
 
             frappe.call({
-                method: "frappe_intelligence.api.process_document",
+                method: "frappe_intelligence.api.documents.process_document",
                 args: {
                     file_url: fileUrl,
                     target_doctype: self._pendingFileDoctype || null,
@@ -153,7 +153,7 @@ export const uploadMethods = {
         self._logPollName = logName;
         self._logPollTimer = setInterval(() => {
             frappe.call({
-                method: "frappe_intelligence.api.get_log_status",
+                method: "frappe_intelligence.api.documents.get_log_status",
                 args: { log_name: logName },
                 callback(r) {
                     const msg = r.message;

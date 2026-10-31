@@ -44,12 +44,6 @@
         ↗ {{ turn.actionData.label || turn.actionData.doctype || turn.actionData.route }}
       </button>
 
-      <button v-else-if="turn.action === 'create_record'"
-              class="fi-action-pill fi-action-pill-green"
-              @click="$emit('create', { doctype: turn.actionData.doctype, defaults: turn.actionData.defaults || {} })">
-        + {{ turn.actionData.label || turn.actionData.doctype }}
-      </button>
-
       <a v-else-if="turn.action === 'map'"
          :href="turn.actionData.map_url" target="_blank" rel="noopener noreferrer"
          class="fi-action-pill fi-action-pill-blue">
@@ -76,7 +70,7 @@
 export default {
   name: "MessageBubble",
   props: { turn: { type: Object, required: true } },
-  emits: ["suggest-workflow", "navigate", "create"],
+  emits: ["suggest-workflow", "navigate"],
 
   computed: {
     isUser()   { return this.turn.role === "user"; },
@@ -230,8 +224,6 @@ export default {
   transition: background 0.15s;
 }
 .fi-action-pill:hover { background: var(--bg-blue, rgba(44,154,241,0.08)); }
-.fi-action-pill-green { border-color: var(--green-500, #22c55e); color: var(--green-600, #16a34a); }
-.fi-action-pill-green:hover { background: var(--bg-green, rgba(34,197,94,0.08)); }
 .fi-action-pill-blue { border-color: var(--blue-400, #60a5fa); color: var(--blue-600, #2563eb); }
 .fi-action-pill-blue:hover { background: var(--bg-light-blue, rgba(96,165,250,0.08)); }
 

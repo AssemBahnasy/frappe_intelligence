@@ -192,7 +192,7 @@ export default {
 
     async _loadWorkflows() {
       try {
-        const res = await frappe.call({ method: "frappe_intelligence.api.list_workflows" });
+        const res = await frappe.call({ method: "frappe_intelligence.api.builder.list_workflows" });
         this.workflows = res.message || [];
       } catch (_) {
         this.workflows = [];
@@ -240,7 +240,7 @@ export default {
 
       try {
         const res = await frappe.call({
-          method: "frappe_intelligence.api.handle_widget_input",
+          method: "frappe_intelligence.api.chat.handle_widget_input",
           args: {
             input_type:    "text",
             text_input:    text,
@@ -324,7 +324,7 @@ export default {
         if (!fileUrl) throw new Error("Upload failed");
 
         const r = await frappe.call({
-          method: "frappe_intelligence.api.handle_widget_input",
+          method: "frappe_intelligence.api.chat.handle_widget_input",
           args: {
             input_type:  "voice",
             file_url:    fileUrl,

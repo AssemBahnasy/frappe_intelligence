@@ -8,7 +8,7 @@ This module is the single source of truth for workflow state. It owns:
   - Prompt building for the LLM (build_step_prompt)
   - Turn append (append_turn)
 
-All session state is persisted to the AI Agent Session DocType so that it
+All session state is persisted to the AI Conversation DocType so that it
 survives server restarts, channel switches (desk → WhatsApp), and the 2-hour
 Redis TTL that the old fi_chat:{sid} approach had.
 """
@@ -17,7 +17,6 @@ import json
 from datetime import datetime
 
 import frappe
-from frappe.utils import now_datetime
 
 
 # ---------------------------------------------------------------------------
@@ -25,33 +24,34 @@ from frappe.utils import now_datetime
 # ---------------------------------------------------------------------------
 
 def get_or_create_session(channel: str, channel_id: str, workflow_key: str | None = None):
-    """Return the active AI Agent Session for this channel + channel_id.
+    """Return the active workflow AI Conversation for this channel + channel_id.
 
     Creates a new session if none exists or the existing one is completed/abandoned.
 
-    :param channel: "desk" | "portal" | "whatsapp"
+    :param channel: "Desk" | "Portal" | "WhatsApp"
     :param channel_id: session SID, portal username, or formatted phone number
     :param workflow_key: AI Workflow.workflow_key to associate. If None, returned
                          session may have no workflow (free-chat mode).
     """
     existing = frappe.db.get_value(
-        "AI Agent Session",
-        {"channel": channel, "channel_id": channel_id, "status": "active"},
+        "AI Conversation",
+        {"mode": "Workflow", "channel": channel, "channel_id": channel_id, "status": "Active"},
         "name",
         order_by="modified desc",
     )
 
     if existing:
-        session = frappe.get_doc("AI Agent Session", existing)
+        session = frappe.get_doc("AI Conversation", existing)
         # If caller specifies a workflow and session has none, bind it now.
         if workflow_key and not session.workflow:
             _bind_workflow(session, workflow_key)
         return session
 
-    session = frappe.new_doc("AI Agent Session")
+    session = frappe.new_doc("AI Conversation")
+    session.mode = "Workflow"
     session.channel = channel
     session.channel_id = channel_id
-    session.status = "active"
+    session.status = "Active"
     session.collected_data = json.dumps({})
 
     if workflow_key:
@@ -98,7 +98,7 @@ def get_current_step(session):
         f"workflow '{session.workflow}' — session abandoned (workflow was edited).",
         "workflow.py",
     )
-    session.status = "abandoned"
+    session.status = "Abandoned"
     session.save(ignore_permissions=True)
     return None
 
@@ -117,7 +117,7 @@ def get_workflow(session):
 def collect_step_data(session, step, extracted: dict) -> tuple[dict, bool]:
     """Merge extracted data into session.collected_data for the current step.
 
-    :param session: AI Agent Session document.
+    :param session: AI Conversation document.
     :param step: AI Workflow Step child row.
     :param extracted: Dict of {fieldname: value} parsed from user input.
     :returns: (all_collected_so_far, step_is_complete)
@@ -193,7 +193,7 @@ def advance_step(session):
 
 
 def _mark_completed(session):
-    session.status = "completed"
+    session.status = "Completed"
     session.current_step = ""
     session.save(ignore_permissions=True)
 
@@ -249,20 +249,15 @@ def build_step_prompt(step, collected_so_far: dict, workflow_doc=None) -> str:
 # ---------------------------------------------------------------------------
 
 def append_turn(session, role: str, content: str):
-    """Append a conversation turn to the session's Turns child table."""
-    session.append("turns", {
-        "role": role,
-        "content": content,
-        "timestamp": now_datetime(),
-    })
+    """Append a message to the conversation and save it."""
+    session.append("messages", {"role": role, "content": content})
     session.save(ignore_permissions=True)
 
 
 def get_turn_history(session, max_turns: int = 20) -> list[dict]:
-    """Return the last N turns as a list of {role, content} dicts for LLM context."""
-    turns = session.turns or []
-    recent = turns[-max_turns:] if len(turns) > max_turns else turns
-    return [{"role": t.role, "content": t.content} for t in recent]
+    """Return the last N user/assistant messages as {role, content} dicts for LLM context."""
+    turns = [m for m in session.messages if m.role in ("user", "assistant") and not m.is_error]
+    return [{"role": t.role, "content": t.content} for t in turns[-max_turns:]]
 
 
 # ---------------------------------------------------------------------------

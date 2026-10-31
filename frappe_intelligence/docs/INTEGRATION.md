@@ -84,7 +84,7 @@ Register it:
 
 ```python
 frappe.call(
-    "frappe_intelligence.api.register_post_processor",
+    "frappe_intelligence.api.documents.register_post_processor",
     document_type_key="supplier_invoice",
     callback_method="your_app.handlers.fill_purchase_invoice",
 )
@@ -142,7 +142,7 @@ For guided multi-step agent sessions, use **AI Workflow Builder** (desk → Work
 | Voice transcription fails | `bench pip install faster-whisper` |
 | Proactive bubble not showing | Create an AI Document Requirement for this DocType |
 | Post-processor not running | Check `bench worker` is running; check Error Log for "unsafe callback" |
-| "Too many requests" | User exceeded 20 LLM calls / 60 s — wait or raise `_RATE_LIMIT_MAX` in api.py |
+| "Too many requests" | User exceeded 20 calls / 60 s on an endpoint — wait, or change `REQUESTS_PER_MINUTE` in `utils/access.py` |
 | Route map button does nothing | Route must start with `/app/` |
 | Wrong language replies | Add Response Language rows in AI Settings → Chat tab |
 | Widget visible to all users | Add rows to AI Settings → Widget tab → Allowed Roles |

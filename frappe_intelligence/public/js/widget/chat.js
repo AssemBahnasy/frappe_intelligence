@@ -17,7 +17,7 @@ export const chatMethods = {
         self._appendChatMessage("assistant", "…");
 
         frappe.call({
-            method: "frappe_intelligence.api.handle_widget_input",
+            method: "frappe_intelligence.api.chat.handle_widget_input",
             args: {
                 input_type: "text",
                 text_input: text,

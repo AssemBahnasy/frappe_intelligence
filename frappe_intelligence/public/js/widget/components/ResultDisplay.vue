@@ -108,7 +108,7 @@ export default {
       );
       const doConfirm = () => {
         frappe.call({
-          method: "frappe_intelligence.api.confirm_extraction",
+          method: "frappe_intelligence.api.documents.confirm_extraction",
           args: {
             log_name: this.result.log_name,
             doctype: this.currentDoctype,
@@ -122,7 +122,7 @@ export default {
       };
       if (hasEdits) {
         frappe.call({
-          method: "frappe_intelligence.api.submit_correction",
+          method: "frappe_intelligence.api.documents.submit_correction",
           args: { log_name: this.result.log_name, corrected_extraction: this.editedData },
           callback: doConfirm,
         });
@@ -132,7 +132,7 @@ export default {
     },
     submitCorrection() {
       frappe.call({
-        method: "frappe_intelligence.api.submit_correction",
+        method: "frappe_intelligence.api.documents.submit_correction",
         args: { log_name: this.result.log_name, corrected_extraction: this.editedData },
         callback: () => {
           frappe.show_alert({ message: __("Correction saved!"), indicator: "green" }, 5);

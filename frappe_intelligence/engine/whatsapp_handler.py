@@ -84,7 +84,7 @@ def process_whatsapp_message_job(
 
         # Touch session so last_user_message_at is always current
         workflow_key = _get_whatsapp_workflow_key()
-        session = _wf.get_or_create_session("whatsapp", phone, workflow_key)
+        session = _wf.get_or_create_session("WhatsApp", phone, workflow_key)
         session.last_user_message_at = now_datetime()
         session.save(ignore_permissions=True)
 
@@ -138,7 +138,7 @@ def process_whatsapp_message_job(
 def process_whatsapp_text(session, text: str, incoming_msg) -> None:
     """Run text through the workflow engine and send the AI reply.
 
-    Delegates to classify_text_intent (workflow mode) which handles:
+    Delegates to workflow_reply, which handles:
     scope enforcement, step-driven prompt building, LLM call, turn persistence.
     """
     if not _within_24h_window(session):
@@ -146,18 +146,10 @@ def process_whatsapp_text(session, text: str, incoming_msg) -> None:
         # Silently skip rather than attempting a message Meta will reject.
         return
 
-    from frappe_intelligence.engine.chat import classify_text_intent  # noqa: PLC0415
+    from frappe_intelligence.engine.chat import workflow_reply
 
     workflow_key = session.workflow or _get_whatsapp_workflow_key()
-    result = classify_text_intent(
-        text=text,
-        doctype=None,
-        docname=None,
-        widget_mode="global",
-        channel="whatsapp",
-        channel_id=session.channel_id,
-        workflow_key=workflow_key,
-    )
+    result = workflow_reply(text, "WhatsApp", session.channel_id, workflow_key)
 
     reply = result.get("reply") or ""
     if reply:
@@ -244,7 +236,7 @@ def handle_flow_response(session, incoming_msg) -> None:
 def _handle_audio(session, doc, phone: str, whatsapp_account: str) -> None:
     """Transcribe audio and route as text."""
     try:
-        from frappe_intelligence.models.transcriber import transcribe  # noqa: PLC0415
+        from frappe_intelligence.documents.transcriber import transcribe  # noqa: PLC0415
         from frappe_intelligence.utils.file_utils import resolve_file_path  # noqa: PLC0415
     except ImportError:
         return

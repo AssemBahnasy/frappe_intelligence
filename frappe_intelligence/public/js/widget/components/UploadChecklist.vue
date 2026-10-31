@@ -94,7 +94,7 @@ export default {
   methods: {
     async _loadTemplates() {
       try {
-        const res = await frappe.call({ method: "frappe_intelligence.api.list_templates" });
+        const res = await frappe.call({ method: "frappe_intelligence.api.documents.list_templates" });
         this.templates = res.message || [];
       } catch (_) {
         this.templates = [];
@@ -160,7 +160,7 @@ export default {
         }
         this.progressText = __("Queuing document for processing…");
         frappe.call({
-          method: "frappe_intelligence.api.process_document",
+          method: "frappe_intelligence.api.documents.process_document",
           args: { file_url: fileUrl, target_doctype: this.pendingDoctype || null },
           callback: (r) => {
             if (r.message?.status === "queued") {
@@ -190,7 +190,7 @@ export default {
       this._stopPoller();
       this.logPollTimer = setInterval(() => {
         frappe.call({
-          method: "frappe_intelligence.api.get_log_status",
+          method: "frappe_intelligence.api.documents.get_log_status",
           args: { log_name: logName },
           callback: (r) => {
             const msg = r.message;

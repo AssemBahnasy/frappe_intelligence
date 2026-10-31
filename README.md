@@ -32,7 +32,11 @@ Then open **Frappe desk → Intelligence → AI Settings** to configure the AI p
 
 | Document | What it covers |
 |----------|---------------|
+| [architecture/](frappe_intelligence/docs/architecture/README.md) | Target structure, conventions, restructuring status |
 | [ARCHITECTURE.md](frappe_intelligence/docs/ARCHITECTURE.md) | System layers, data flows, DocType map |
+| [providers/](frappe_intelligence/docs/providers/README.md) | AI providers: interface, settings, adding one |
+| [agent/](frappe_intelligence/docs/agent/README.md) | Desk chat agent: loop, tools, conversations, security |
+| [panel/](frappe_intelligence/docs/panel/README.md) | The docked assistant panel on the desk |
 | [CONFIGURATION.md](frappe_intelligence/docs/CONFIGURATION.md) | AI Settings: providers, chat, WhatsApp, widget |
 | [WORKFLOWS.md](frappe_intelligence/docs/WORKFLOWS.md) | Building workflows: steps, scope, knowledge packs, post-processors |
 | [DOCUMENT_PIPELINE.md](frappe_intelligence/docs/DOCUMENT_PIPELINE.md) | Document templates, extraction rules, training |
@@ -44,7 +48,7 @@ Then open **Frappe desk → Intelligence → AI Settings** to configure the AI p
 ## Requirements
 
 - Frappe v15 / v16, Python 3.10+
-- One of: Ollama server (local), or Anthropic API key (cloud)
+- One of: Ollama server (local), or an OpenAI, Anthropic or Gemini API key (cloud)
 
 ## License
 

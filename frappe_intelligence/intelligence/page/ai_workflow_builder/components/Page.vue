@@ -186,7 +186,7 @@ export default {
       this.loading = true;
       this.error = null;
       try {
-        const res = await frappe.call({ method: "frappe_intelligence.api.list_workflows" });
+        const res = await frappe.call({ method: "frappe_intelligence.api.builder.list_workflows" });
         this.availableWorkflows = res.message || [];
       } catch (err) {
         this.error = err?.message || __("Failed to load workflows.");
@@ -200,7 +200,7 @@ export default {
       this.error = null;
       try {
         const res = await frappe.call({
-          method: "frappe_intelligence.api.get_workflow_for_builder",
+          method: "frappe_intelligence.api.builder.get_workflow_for_builder",
           args: { workflow_key: key },
         });
         const data = res.message;
@@ -298,7 +298,7 @@ export default {
       this.saving = true;
       try {
         await frappe.call({
-          method: "frappe_intelligence.api.save_workflow_builder",
+          method: "frappe_intelligence.api.builder.save_workflow_builder",
           args: {
             workflow_key: this.workflowKey,
             payload: {

@@ -1,16 +1,68 @@
 # API Reference
 
-All endpoints are called via `frappe.call` from the browser or `frappe.call` / direct import from Python.
+All endpoints are called via `frappe.call` from the browser or `frappe.call` / direct import from Python. Each lives in the `api/` module named in its section: `frappe_intelligence.api.<module>.<endpoint>`.
 
-## Rate Limiting
+| Module | Endpoints |
+|---|---|
+| `api.chat` | `send_message`, `stop_message`, `get_conversation`, `list_conversations`, `rate_reply`, `handle_widget_input` |
+| `api.documents` | `process_document`, `get_log_status`, `confirm_extraction`, `submit_correction`, `list_templates`, `get_required_documents`, `register_post_processor` |
+| `api.settings` | `get_widget_settings`, `get_route_map`, `test_connection`, `is_whatsapp_installed`, `is_whatsapp_enabled` |
+| `api.builder` | `list_workflows`, `get_workflow_for_builder`, `save_workflow_builder`, `preview_step_prompt` |
+| `api.portal` | `portal_chat`, `portal_upload_document`, `portal_get_session_state` |
 
-Rate-limited endpoints: `process_document`, `handle_widget_input`, `test_connection`
-Limit: **20 calls / user / 60 s** using a Redis counter (`fi_rl:{user}`).
-Exceeding the limit raises `RateLimitExceededError`.
+## Access and rate limiting
+
+Endpoints that reach a model require a desk user allowed by **AI Settings → Allowed Roles**. `send_message`, `handle_widget_input`, `process_document`, `portal_chat` and `portal_upload_document` are limited to **20 calls / user / 60 s** by Frappe's `rate_limit`. Details: [agent/security.md](agent/security.md).
 
 ---
 
-## Document Processing
+## Chat (`api.chat`)
+
+### `send_message`
+
+Stores the message and answers it in a background job (Ask mode). POST only. The answer streams as `fi_assistant` realtime events; see [agent/live-replies.md](agent/live-replies.md).
+
+| Param | Type | Required | Notes |
+|-------|------|----------|-------|
+| `message` | str | ✓ | Max 4000 chars |
+| `conversation` | str | ✗ | Omit to start a new conversation |
+| `context` | object | ✗ | `{doctype, docname, tab, list_filters, route}` of the page the user is on |
+
+```json
+{"conversation": "a1b2c3d4e5", "run_id": "1bda4f3701d16586"}
+```
+
+### `stop_message`
+
+Stops the running answer. POST only.
+
+| Param | Type | Required |
+|-------|------|----------|
+| `conversation` | str | ✓ |
+| `run_id` | str | ✓ |
+
+### `get_conversation` / `list_conversations`
+
+The user's own conversation as turns, and the user's recent desk conversations (`name`, `title`, `mode`, `modified`).
+
+```json
+{
+  "name": "a1b2c3d4e5", "title": "How many Customer records are there?", "mode": "Ask", "active_run": null,
+  "turns": [{
+    "id": "row-name", "question": "How many Customer records are there?", "created": "2026-10-31 18:23:11",
+    "steps": [{"label": "Counting Customer", "status": "done"}], "actions": [],
+    "answer": "There are 3,423 Customer records.", "answer_id": "row-name", "feedback": null
+  }]
+}
+```
+
+### `rate_reply`
+
+POST only. `conversation`, `message` (the turn's `answer_id`), `feedback`: `Good`, `Bad` or empty to clear.
+
+---
+
+## Document Processing (`api.documents`)
 
 ### `process_document`
 
@@ -81,11 +133,11 @@ Save a user correction as an AI Training Pair. Access: log owner or System Manag
 
 ---
 
-## Widget Input
+## Widget Input (`api.chat`)
 
 ### `handle_widget_input`
 
-Unified entry-point for all three widget input modes. Rate-limited.
+Entry point of the current widget for its three input modes; text and voice go through the agent loop, or through the workflow when `chat_mode="agent"`. The new panel uses `send_message`.
 
 | Param | Type | Required | Notes |
 |-------|------|----------|-------|
@@ -100,7 +152,7 @@ Unified entry-point for all three widget input modes. Rate-limited.
 
 ```json
 // text response
-{"reply": "Here are 3 matching customers…", "action": "search_results", "action_data": {...}}
+{"reply": "There are 2 Item records in the system.", "action": null, "action_data": null}
 
 // voice response
 {"transcript": "Show me all invoices", "reply": "…", "action": null}
@@ -110,7 +162,7 @@ Unified entry-point for all three widget input modes. Rate-limited.
 
 ---
 
-## Templates & Documents
+## Templates & Documents (`api.documents`)
 
 ### `list_templates`
 
@@ -120,26 +172,13 @@ All active AI Document Templates.
 [{"name": "supplier_invoice", "document_name": "Supplier Invoice", "model_preference": "Both"}]
 ```
 
-### `create_document`
-
-Create a Frappe document and return its name and route. Child tables auto-detected via `frappe.get_meta()`.
-
-| Param | Type | Required |
-|-------|------|----------|
-| `doctype` | str | ✓ |
-| `values` | str (JSON) | ✓ |
-
-```json
-{"name": "SI-00001", "route": "/app/sales-invoice/si-00001"}
-```
-
 ---
 
-## Widget Settings
+## Widget Settings (`api.settings`)
 
 ### `get_widget_settings`
 
-Appearance, route map, and allowed roles. Called on every page load.
+Appearance, route map, allowed roles and whether the current user may use the assistant. Called on every page load.
 
 ```json
 {
@@ -147,7 +186,8 @@ Appearance, route map, and allowed roles. Called on every page load.
   "widget_icon": "",
   "assistant_name": "AI Assistant",
   "route_map": {"supplier_invoice": {"label": "Purchase Invoice", "route": "/app/purchase-invoice/new"}},
-  "allowed_roles": []
+  "allowed_roles": [],
+  "can_use": true
 }
 ```
 
@@ -167,17 +207,9 @@ Present/missing required documents for a record.
 }
 ```
 
-### `clear_chat_history`
-
-Clear Redis chat history for the current session.
-
-```json
-{"ok": true}
-```
-
 ---
 
-## Workflows
+## Workflows (`api.builder`)
 
 ### `list_workflows`
 
@@ -272,12 +304,12 @@ Ping the active AI provider. System Manager only. Rate-limited.
 
 ---
 
-## Portal Endpoints (`api_portal.py`)
+## Portal Endpoints (`api.portal`)
 
 | Endpoint | Auth | Notes |
 |----------|------|-------|
-| `portal_chat` | Portal User table check | Always agent mode; no FRAPPE_TOOLS |
+| `portal_chat` | Portal User table check | Workflow mode only; the workflow must be Active with Allow Portal |
 | `portal_upload_document` | Portal User table check | Enqueues async job |
 | `portal_get_session_state` | Portal User table check | Returns current step + collected data |
 
-Rate limit: `fi_rl_portal:{customer}`, 20 / 60 s.
+Rate limit: 20 / user / 60 s on `portal_chat` and `portal_upload_document`.

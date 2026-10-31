@@ -1,0 +1,104 @@
+{
+ "actions": [],
+ "creation": "2026-05-17 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "role",
+  "content",
+  "column_break_tool",
+  "tool_name",
+  "tool_call_id",
+  "is_error",
+  "feedback",
+  "details_section",
+  "tool_calls",
+  "context",
+  "raw",
+  "raw_provider"
+ ],
+ "fields": [
+  {
+   "fieldname": "role",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Role",
+   "options": "user\nassistant\ntool\nsystem",
+   "reqd": 1
+  },
+  {
+   "fieldname": "content",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Content"
+  },
+  {
+   "fieldname": "column_break_tool",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tool_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Tool"
+  },
+  {
+   "fieldname": "tool_call_id",
+   "fieldtype": "Data",
+   "label": "Tool Call ID"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_error",
+   "fieldtype": "Check",
+   "label": "Is Error"
+  },
+  {
+   "description": "The user's rating of this answer.",
+   "fieldname": "feedback",
+   "fieldtype": "Select",
+   "label": "Feedback",
+   "options": "\nGood\nBad"
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "description": "Tool calls requested by the assistant: [{id, name, arguments}].",
+   "fieldname": "tool_calls",
+   "fieldtype": "JSON",
+   "label": "Tool Calls"
+  },
+  {
+   "description": "Desk page the user was on when sending the message.",
+   "fieldname": "context",
+   "fieldtype": "JSON",
+   "label": "Context"
+  },
+  {
+   "description": "The provider's own form of the turn, replayed unchanged to the same provider.",
+   "fieldname": "raw",
+   "fieldtype": "JSON",
+   "label": "Provider Payload"
+  },
+  {
+   "fieldname": "raw_provider",
+   "fieldtype": "Data",
+   "label": "Provider"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-10-31 21:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Intelligence",
+ "name": "AI Conversation Message",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
