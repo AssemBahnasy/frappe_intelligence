@@ -1,5 +1,7 @@
 """Who may use the assistant. Checked on the server by every endpoint that reaches a model."""
 
+from inspect import signature
+
 import frappe
 from frappe import _
 from frappe.rate_limiter import rate_limit
@@ -7,8 +9,17 @@ from frappe.rate_limiter import rate_limit
 DESK_ROLE = "Desk User"
 REQUESTS_PER_MINUTE = 20
 
-# Applied to every endpoint that reaches a model; counted per user and endpoint.
-limit_requests = rate_limit(limit=REQUESTS_PER_MINUTE, seconds=60, user_based=True, ip_based=False)
+
+def requests_limit():
+	"""Frappe's rate limit, counted per user and endpoint. Frappe releases from before `user_based`
+	only count per IP address, so there the limit is per address."""
+	if "user_based" in signature(rate_limit).parameters:
+		return rate_limit(limit=REQUESTS_PER_MINUTE, seconds=60, user_based=True, ip_based=False)
+	return rate_limit(limit=REQUESTS_PER_MINUTE, seconds=60)
+
+
+# Applied to every endpoint that reaches a model.
+limit_requests = requests_limit()
 
 
 def allowed_roles() -> list[str]:

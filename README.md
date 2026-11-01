@@ -51,7 +51,7 @@ Then open **Frappe desk → Intelligence → AI Settings** to configure the AI p
 
 ## Requirements
 
-- Frappe v15 / v16, Python 3.10+
+- Frappe v16, built and tested on v16.54: the dock, sidebars, desk components and MCP tools it uses are recent v16 features. Python 3.14 (`requires-python` in `pyproject.toml`)
 - One of: Ollama server (local), or an OpenAI, Anthropic or Gemini API key (cloud)
 
 ## License

@@ -183,3 +183,21 @@ class TestOptional(TestCase):
 				optional.require(optional.OCR)
 		self.assertIn("OCR", str(raised.exception))
 		self.assertIsInstance(raised.exception, ImportError)
+
+
+class TestRequestsLimit(TestCase):
+	def test_per_user_where_frappe_supports_it_and_per_address_before(self):
+		from frappe_intelligence.utils import access
+
+		def current(
+			key=None, limit=5, seconds=86400, methods="ALL", ip_based=True, endpoint=None, user_based=False
+		):
+			return ("current", limit, seconds, ip_based, user_based)
+
+		def older(key=None, limit=5, seconds=86400, methods="ALL", ip_based=True):
+			return ("older", limit, seconds, ip_based)
+
+		with patch.object(access, "rate_limit", current):
+			self.assertEqual(access.requests_limit(), ("current", 20, 60, False, True))
+		with patch.object(access, "rate_limit", older):
+			self.assertEqual(access.requests_limit(), ("older", 20, 60, True))
