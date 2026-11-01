@@ -1,5 +1,7 @@
 app_name = "frappe_intelligence"
 app_title = "Frappe Intelligence"
+app_logo_url = "/assets/frappe_intelligence/images/frappe-intelligence-logo.svg"
+app_home = "/desk/intelligence"
 app_publisher = "AssemBahnasy"
 app_description = "An AI agent integrated with any frappe custom app"
 app_email = "bahnasyassem@gmail.com"
@@ -13,16 +15,16 @@ bench_commands = ["frappe_intelligence.commands"]
 
 # required_apps = []
 
-# Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "frappe_intelligence",
-# 		"logo": "/assets/frappe_intelligence/logo.png",
-# 		"title": "Frappe Intelligence",
-# 		"route": "/frappe_intelligence",
-# 		"has_permission": "frappe_intelligence.api.permission.has_app_permission"
-# 	}
-# ]
+add_to_apps_screen = [
+    {
+        "name": app_name,
+        "logo": app_logo_url,
+        "title": app_title,
+        "route": app_home,
+        # Only for users AI Settings → Allowed Roles lets use the assistant.
+        "has_permission": "frappe_intelligence.utils.access.can_use_assistant",
+    }
+]
 
 # Includes in <head>
 # ------------------
@@ -36,6 +38,8 @@ app_include_js = [
     "frappe_intelligence_launcher.bundle.js",
     "frappe_intelligence_field_writer.bundle.js",
 ]
+# The dock, sidebar and workspace icons (docs/navigation/).
+app_include_icons = ["/assets/frappe_intelligence/icons/module-icons.svg"]
 
 boot_session = "frappe_intelligence.boot.boot_session"
 

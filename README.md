@@ -41,6 +41,7 @@ Then open **Frappe desk → Intelligence → AI Settings** to configure the AI p
 | [workflows/](frappe_intelligence/docs/workflows/README.md) | Guided workflows: panel, turns, steps, the filled record |
 | [documents/](frappe_intelligence/docs/documents/README.md) | Files the assistant reads, and reviewing what it read |
 | [writer/](frappe_intelligence/docs/writer/README.md) | Write with AI: long text fields written in place |
+| [navigation/](frappe_intelligence/docs/navigation/README.md) | Apps screen tile, dock, sidebars and icons |
 | [CONFIGURATION.md](frappe_intelligence/docs/CONFIGURATION.md) | AI Settings: providers, chat, WhatsApp, assistant |
 | [WORKFLOWS.md](frappe_intelligence/docs/WORKFLOWS.md) | Building workflows: steps, scope, knowledge packs, post-processors |
 | [DOCUMENT_PIPELINE.md](frappe_intelligence/docs/DOCUMENT_PIPELINE.md) | Document templates, extraction rules, training |

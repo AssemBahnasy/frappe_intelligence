@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frappe Intelligence VERSION\n"
 "Report-Msgid-Bugs-To: bahnasyassem@gmail.com\n"
-"POT-Creation-Date: 2026-11-01 02:24+0307\n"
+"POT-Creation-Date: 2026-11-01 03:17+0307\n"
 "PO-Revision-Date: 2026-11-01 01:46+0307\n"
 "Last-Translator: bahnasyassem@gmail.com\n"
 "Language: ar\n"
@@ -51,6 +51,11 @@ msgstr ""
 "الحقول.<br><b>دفعة مع بديل</b> — يجرّب الدفعة أولًا، ثم يعيد تلقائيًا محاولة أي حقل فشل بشكل منفرد. يجمع مزايا "
 "الطريقتين.<br><b>متوازٍ</b> — يُطلق جميع استدعاءات الحقول في وقت واحد. سريع دون مخاطر JSON في وضع الدفعة، لكنه يسبب "
 "ارتفاعًا أكبر في استهلاك CPU/RAM."
+
+#. Header text in the Intelligence Workspace
+#: frappe_intelligence/intelligence/workspace/intelligence/intelligence.json:4
+msgid "<span class=\"h4\"><b>Conversations</b></span>"
+msgstr "<span class=\"h4\"><b>المحادثات</b></span>"
 
 #: frappe_intelligence/agent/tools/desk.py:77
 #, python-brace-format
@@ -146,9 +151,11 @@ msgid "AI Session Analytics"
 msgstr "تحليلات جلسات الذكاء الاصطناعي"
 
 #. Name of a DocType
-#. Label of a Workspace Sidebar Item
+#. Label of a Sidebar Item
+#. Label of a shortcut in the Intelligence Workspace
 #: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:395
-#: frappe_intelligence/workspace_sidebar/intelligence.json:97
+#: frappe_intelligence/intelligence/sidebar/intelligence_setup/intelligence_setup.json:22
+#: frappe_intelligence/intelligence/workspace/intelligence/intelligence.json:54
 msgid "AI Settings"
 msgstr "إعدادات الذكاء الاصطناعي"
 
@@ -603,6 +610,13 @@ msgstr "المحتوى"
 msgid "Context"
 msgstr "السياق"
 
+#. Label of a Sidebar Item
+#. Label of a shortcut in the Intelligence Workspace
+#: frappe_intelligence/intelligence/sidebar/intelligence/intelligence.json:38
+#: frappe_intelligence/intelligence/workspace/intelligence/intelligence.json:33
+msgid "Conversations"
+msgstr "المحادثات"
+
 #: frappe_intelligence/public/js/assistant/components/Turn.vue:37
 msgid "Copy as Markdown"
 msgstr "نسخ بتنسيق Markdown"
@@ -662,11 +676,6 @@ msgstr "مفتاح الخطوة الحالية"
 #: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:205
 msgid "Custom AI persona for chat and voice replies. Leave empty to use the default assistant prompt."
 msgstr "شخصية مخصصة للذكاء الاصطناعي في ردود المحادثة والصوت. اتركه فارغًا لاستخدام موجّه المساعد الافتراضي."
-
-#. Label of a Workspace Sidebar Item
-#: frappe_intelligence/workspace_sidebar/intelligence.json:15
-msgid "Dashboard"
-msgstr "لوحة القيادة"
 
 #. Description of the 'WhatsApp Account' (Link) field in DocType 'AI Settings'
 #: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:281
@@ -759,19 +768,22 @@ msgstr "أنواع المستندات التي يجب ألا يغيّرها ال
 msgid "Document Name"
 msgstr "اسم المستند"
 
-#. Label of a Workspace Sidebar Item
-#: frappe_intelligence/workspace_sidebar/intelligence.json:37
-msgid "Document Requirement"
-msgstr "متطلبات المستند"
+#. Label of a Sidebar Item
+#: frappe_intelligence/intelligence/sidebar/intelligence_documents/intelligence_documents.json:38
+msgid "Document Requirements"
+msgstr "متطلبات المستندات"
 
 #. Label of the document_template (Link) field in DocType 'AI Processing Log'
 #. Label of the document_template (Link) field in DocType 'AI Training Pair'
-#. Label of a Workspace Sidebar Item
 #: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:37
 #: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:25
-#: frappe_intelligence/workspace_sidebar/intelligence.json:49
 msgid "Document Template"
 msgstr "قالب المستند"
+
+#. Label of a Sidebar Item
+#: frappe_intelligence/intelligence/sidebar/intelligence_documents/intelligence_documents.json:22
+msgid "Document Templates"
+msgstr "قوالب المستندات"
 
 #. Label of the document_type_key (Data) field in DocType 'AI Document
 #. Requirement'
@@ -1059,6 +1071,11 @@ msgstr "إخفاء النص الخام"
 msgid "History"
 msgstr "السجل"
 
+#. Label of a Sidebar Item
+#: frappe_intelligence/intelligence/sidebar/intelligence/intelligence.json:22
+msgid "Home"
+msgstr "الرئيسية"
+
 #: frappe_intelligence/public/js/assistant/components/EmptyState.vue:53
 #, python-brace-format
 msgid "How can I help, {0}?"
@@ -1142,11 +1159,27 @@ msgstr "غير نشط"
 msgid "Injected into the agent's system prompt. Also used for scope enforcement."
 msgstr "يُضاف إلى موجّه النظام للوكيل. ويُستخدم أيضًا لفرض النطاق."
 
-#. Label of a Desktop Icon
-#. Title of a Workspace Sidebar
-#: frappe_intelligence/desktop_icon/intelligence.json:10 frappe_intelligence/workspace_sidebar/intelligence.json:110
+#. Title of a Sidebar
+#. Name of a Workspace
+#: frappe_intelligence/intelligence/sidebar/intelligence/intelligence.json:64
+#: frappe_intelligence/intelligence/workspace/intelligence/intelligence.json:19
 msgid "Intelligence"
 msgstr "الذكاء الاصطناعي"
+
+#. Title of a Sidebar
+#: frappe_intelligence/intelligence/sidebar/intelligence_documents/intelligence_documents.json:80
+msgid "Intelligence Documents"
+msgstr "مستندات الذكاء الاصطناعي"
+
+#. Title of a Sidebar
+#: frappe_intelligence/intelligence/sidebar/intelligence_setup/intelligence_setup.json:64
+msgid "Intelligence Setup"
+msgstr "إعداد الذكاء الاصطناعي"
+
+#. Title of a Sidebar
+#: frappe_intelligence/intelligence/sidebar/intelligence_workflows/intelligence_workflows.json:48
+msgid "Intelligence Workflows"
+msgstr "سير عمل الذكاء الاصطناعي"
 
 #: frappe_intelligence/utils/file_utils.py:38 frappe_intelligence/utils/file_utils.py:87
 msgid "Invalid file URL. Only /files/ and /private/files/ URLs are accepted."
@@ -1218,17 +1251,19 @@ msgid "Knowledge Entries"
 msgstr "إدخالات المعرفة"
 
 #. Label of the pack (Link) field in DocType 'AI Workflow Knowledge Pack'
-#. Label of a Workspace Sidebar Item
 #: frappe_intelligence/intelligence/doctype/ai_workflow_knowledge_pack/ai_workflow_knowledge_pack.json:15
-#: frappe_intelligence/workspace_sidebar/intelligence.json:61
 msgid "Knowledge Pack"
 msgstr "حزمة المعرفة"
 
 #. Label of the section_break_knowledge (Section Break) field in DocType 'AI
 #. Workflow'
 #. Label of the knowledge_packs (Table) field in DocType 'AI Workflow'
+#. Label of a Sidebar Item
+#. Label of a shortcut in the Intelligence Workspace
 #: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:111
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:103
+#: frappe_intelligence/intelligence/sidebar/intelligence_setup/intelligence_setup.json:38
+#: frappe_intelligence/intelligence/workspace/intelligence/intelligence.json:47
 msgid "Knowledge Packs"
 msgstr "حزم المعرفة"
 
@@ -1573,6 +1608,11 @@ msgstr "لا يمكن فتح إلا مسارات المكتب التي تبدأ 
 msgid "Open the Assistant"
 msgstr "فتح المساعد"
 
+#. Paragraph text in the Intelligence Workspace
+#: frappe_intelligence/intelligence/workspace/intelligence/intelligence.json:4
+msgid "Open the assistant from the dock's sparkles button or with Ctrl + . on any page."
+msgstr "افتح المساعد من زره في الشريط الجانبي أو بالضغط على Ctrl + . في أي صفحة."
+
 #. Option for the 'Provider' (Select) field in DocType 'AI Settings'
 #: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:80
 msgid "OpenAI"
@@ -1708,6 +1748,11 @@ msgstr "مستخدم البوابة أو رقم واتساب الذي تتبع �
 msgid "Post Processor"
 msgstr "المعالج اللاحق"
 
+#. Label of a Sidebar Item
+#: frappe_intelligence/intelligence/sidebar/intelligence_setup/intelligence_setup.json:54
+msgid "Post Processors"
+msgstr "المعالجات اللاحقة"
+
 #. Label of the post_processors (Table) field in DocType 'AI Workflow'
 #: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:127
 msgid "Post-Processors"
@@ -1736,9 +1781,9 @@ msgid "Processing"
 msgstr "قيد المعالجة"
 
 #. Label of the processing_log (Link) field in DocType 'AI Training Pair'
-#. Label of a Workspace Sidebar Item
+#. Label of a Sidebar Item
 #: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:33
-#: frappe_intelligence/workspace_sidebar/intelligence.json:73
+#: frappe_intelligence/intelligence/sidebar/intelligence_documents/intelligence_documents.json:54
 msgid "Processing Log"
 msgstr "سجل المعالجة"
 
@@ -2024,6 +2069,13 @@ msgstr "إرسال"
 #, python-brace-format
 msgid "Send at most {0} files with a message."
 msgstr "أرسل {0} ملفات كحد أقصى مع الرسالة."
+
+#. Label of a Sidebar Item
+#. Label of a shortcut in the Intelligence Workspace
+#: frappe_intelligence/intelligence/sidebar/intelligence/intelligence.json:54
+#: frappe_intelligence/intelligence/workspace/intelligence/intelligence.json:40
+msgid "Session Analytics"
+msgstr "تحليلات الجلسات"
 
 #. Description of the 'AI Conversation' (Link) field in DocType 'AI Processing
 #. Log'
@@ -2361,10 +2413,10 @@ msgstr "الأداة {0} غير متاحة في وضع {1}."
 msgid "Topic"
 msgstr "الموضوع"
 
-#. Label of a Workspace Sidebar Item
-#: frappe_intelligence/workspace_sidebar/intelligence.json:85
-msgid "Training Pair"
-msgstr "زوج تدريب"
+#. Label of a Sidebar Item
+#: frappe_intelligence/intelligence/sidebar/intelligence_documents/intelligence_documents.json:70
+msgid "Training Pairs"
+msgstr "أزواج التدريب"
 
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:267
 msgid "Turned off in AI Settings."
@@ -2610,8 +2662,8 @@ msgstr ""
 msgid "Workflow"
 msgstr "سير العمل"
 
-#. Label of a Workspace Sidebar Item
-#: frappe_intelligence/workspace_sidebar/intelligence.json:25
+#. Label of a Sidebar Item
+#: frappe_intelligence/intelligence/sidebar/intelligence_workflows/intelligence_workflows.json:22
 msgid "Workflow Builder"
 msgstr "منشئ سير العمل"
 
@@ -2659,6 +2711,11 @@ msgstr "سير العمل الذي يحكم جلسات الذكاء الاصطن
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:11
 msgid "Workflow title"
 msgstr "عنوان سير العمل"
+
+#. Label of a Sidebar Item
+#: frappe_intelligence/intelligence/sidebar/intelligence_workflows/intelligence_workflows.json:38
+msgid "Workflows"
+msgstr "مسارات العمل"
 
 #: frappe_intelligence/public/js/frappe_intelligence_field_writer.bundle.js:78
 msgid "Write"

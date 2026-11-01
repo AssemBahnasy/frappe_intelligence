@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Frappe Intelligence">
+  <rect width="100" height="100" rx="23" fill="#1E1B4B"/>
+  <rect x="24" y="24" width="22" height="22" rx="6" fill="#FFFFFF"/>
+  <rect x="54" y="24" width="22" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.55"/>
+  <rect x="24" y="54" width="22" height="22" rx="6" fill="#FFFFFF" fill-opacity="0.55"/>
+  <path d="M65 52Q67.34 62.66 78 65Q67.34 67.34 65 78Q62.66 67.34 52 65Q62.66 62.66 65 52Z" fill="#A993FF"/>
+</svg>
