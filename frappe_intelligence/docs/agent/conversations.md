@@ -35,8 +35,19 @@ JSON values are stored as text because Frappe's JSON field rejects lists.
 `AIConversation.provider_messages()`:
 
 - skips error notices and `system` rows;
-- sends the last `HISTORY_LIMIT` (40) messages, extended back to the current user message on long multi-tool turns;
-- always starts at a user message, so a tool result is never sent without its call.
+- sends the current user message and up to `HISTORY_LIMIT` (40) messages before it, plus the turn's own tool rows, however many; the window is counted up to the current question, so it holds still while the turn runs;
+- always starts at a user message, so a tool result is never sent without its call;
+- renders each user message with the caller's `user_content(text, context)`, so it goes back exactly as first sent.
+
+The history must not change between turns. Claude binds its thinking blocks to everything sent before them, and rejects a replayed block if an earlier message differs. So:
+
+| Case | What is sent |
+|---|---|
+| Whole history fits | Every assistant turn with its `raw`, thinking included |
+| History trimmed | `raw` only for the current turn's replies; earlier ones are rebuilt from `content` and `tool_calls`, because their reasoning was made over messages no longer sent |
+| `thinking=False` (workflows, whose instructions change every turn) | No `raw` at all |
+
+If the history still changed (an edited **AI Settings → System Prompt** mid-conversation, a different set of tools), Claude answers again without the earlier reasoning; see [providers/interface.md](../providers/interface.md#replaying-provider-state).
 
 ## Permissions and retention
 

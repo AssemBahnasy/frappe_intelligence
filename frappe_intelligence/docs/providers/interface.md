@@ -28,6 +28,8 @@ reply = get_provider().complete(
 
 Claude and Gemini return state that must be sent back unchanged on the next turn (Claude thinking blocks and signatures, Gemini thought signatures). Each provider stores its own form in `Reply.raw` with `raw_provider` set to its name, and replays it only when the same provider handles the next turn. Any other provider rebuilds the turn from `content` and `tool_calls`.
 
+Claude accepts a thinking block only if the system prompt, the tools and every message before it are unchanged since it was made; the conversation keeps its history that way ([agent/conversations.md](../agent/conversations.md#history-sent-to-the-model)). If something before the block did change, the API answers 400 "bound to a different conversation"; the provider then sends the turn again once with every `thinking` and `redacted_thinking` block removed (`_without_thinking`), so the model answers without that earlier reasoning instead of failing.
+
 ## Safety rules every provider follows
 
 `Provider.checked()` is applied to every reply:

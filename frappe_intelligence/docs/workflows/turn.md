@@ -34,6 +34,7 @@ The redirect is the workflow's **Out Of Scope Reply** (default "That's outside t
 |---|---|
 | System | AI Settings system prompt; the workflow rules (one step at a time, never invent values, never say anything was saved); the mandate; the current step (`turn.instructions`); matching entries of the workflow's own knowledge packs |
 | User message | The language rule as a note, then the message |
+| History | Earlier messages as first sent, without the model's earlier reasoning (`provider_messages(thinking=False)`), since the system part changes every turn |
 
 `turn.step_instructions` is also what **Workflow Builder → Preview** shows for a step.
 

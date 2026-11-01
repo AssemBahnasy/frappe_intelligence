@@ -1,6 +1,8 @@
 # Copyright (c) 2026, AssemBahnasy and contributors
 # For license information, please see license.txt
 
+from collections.abc import Callable
+
 import frappe
 from frappe.model.document import Document
 from frappe.query_builder import Interval
@@ -133,7 +135,10 @@ class AIConversation(Document):
 		row = next(row for row in reversed(self.messages) if row.role == "user")
 		return row.content, frappe.parse_json(row.context) if row.context else None
 
-	def provider_messages(self) -> list[Message]:
+	def provider_messages(self, user_content: Callable | None = None, thinking: bool = True) -> list[Message]:
+		"""The history as the model reads it, each message exactly as it was first sent: Claude replays
+		its earlier reasoning only over an unchanged history. `user_content(text, context)` renders a
+		user message; `thinking=False` leaves the reasoning out, for a system prompt that changes every turn."""
 		rows = [
 			row
 			for row in self.messages
@@ -142,8 +147,13 @@ class AIConversation(Document):
 			and row.approval != "Pending"
 		]
 		current_turn = max((i for i, row in enumerate(rows) if row.role == "user"), default=0)
-		start = min(current_turn, max(len(rows) - HISTORY_LIMIT, 0))
-		return [_to_message(row) for row in _from_user_turn(rows[start:])]
+		# Counted up to the current question, so the window holds still while the turn runs.
+		trimmed = current_turn + 1 > HISTORY_LIMIT
+		kept = _from_user_turn(rows[current_turn + 1 - HISTORY_LIMIT :]) if trimmed else rows
+		offset = len(rows) - len(kept)
+		# Reasoning made over messages no longer sent cannot be replayed.
+		replay_from = len(rows) if not thinking else current_turn if trimmed else 0
+		return [_to_message(row, user_content, raw=offset + i >= replay_from) for i, row in enumerate(kept)]
 
 	@staticmethod
 	def clear_old_logs(days=90):
@@ -173,13 +183,16 @@ def _from_user_turn(rows: list) -> list:
 	return rows[start:]
 
 
-def _to_message(row) -> Message:
+def _to_message(row, user_content: Callable | None, raw: bool) -> Message:
+	content = row.content or ""
+	if row.role == "user" and user_content:
+		content = user_content(row.content, frappe.parse_json(row.context) if row.context else None)
 	return Message(
 		role=row.role,
-		content=row.content or "",
+		content=content,
 		tool_calls=[ToolCall(**call) for call in frappe.parse_json(row.tool_calls or "[]")],
 		tool_call_id=row.tool_call_id,
 		name=row.tool_name,
-		raw=frappe.parse_json(row.raw) if row.raw else None,
+		raw=frappe.parse_json(row.raw) if raw and row.raw else None,
 		raw_provider=row.raw_provider,
 	)

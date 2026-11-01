@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 from types import SimpleNamespace as NS
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
@@ -60,8 +61,13 @@ class FakeConversation:
 	def add_stopped(self):
 		self.stopped = True
 
-	def provider_messages(self):
-		return list(self.messages)
+	def provider_messages(self, user_content=None, thinking=True):
+		return [
+			replace(message, content=user_content(message.content, self.context))
+			if user_content and message.role == "user"
+			else message
+			for message in self.messages
+		]
 
 
 class ScriptedProvider:
@@ -453,9 +459,39 @@ class TestConversationHistory(TestCase):
 	def test_trimmed_history_starts_at_a_user_message_and_keeps_the_current_turn(self):
 		rows = [self.row("user"), self.row("assistant"), self.row("user", content="now")]
 		rows += [self.row("tool", tool_call_id=str(i)) for i in range(5)]
-		messages = self.history(rows, limit=3)
+		messages = self.history(rows, limit=2)
 		self.assertEqual(messages[0].content, "now")
 		self.assertEqual(len(messages), 6)
+
+	def test_the_window_holds_still_while_the_turn_runs(self):
+		rows = [self.row("user"), self.row("assistant")] * 2 + [self.row("user", content="now")]
+		before = self.history(rows, limit=4)
+		rows += [self.row("tool", tool_call_id=str(i)) for i in range(5)]
+		self.assertEqual(self.history(rows, limit=4)[: len(before)], before)
+		self.assertEqual(len(before), 3)
+
+	def test_earlier_messages_go_back_as_first_sent(self):
+		rows = [
+			self.row("user", content="a", context='{"doctype": "Item"}'),
+			self.row("assistant", raw='[{"type": "thinking"}]', raw_provider="Claude"),
+			self.row("user", content="b"),
+		]
+		messages = AIConversation.provider_messages(
+			NS(messages=rows), lambda text, context: f"{text}|{context and context['doctype']}"
+		)
+		self.assertEqual([m.content for m in messages], ["a|Item", "assistant", "b|None"])
+		self.assertEqual(messages[1].raw, [{"type": "thinking"}])
+
+	def test_reasoning_is_left_out_before_a_trimmed_window_or_when_asked(self):
+		thought = {"raw": '[{"type": "thinking"}]', "raw_provider": "Claude"}
+		rows = [self.row("user"), self.row("assistant", **thought), self.row("user")]
+		rows += [self.row("assistant", **thought), self.row("user"), self.row("assistant", **thought)]
+		self.assertEqual(
+			[m.raw for m in self.history(rows, limit=4) if m.role == "assistant"],
+			[None, [{"type": "thinking"}]],
+		)
+		without = AIConversation.provider_messages(NS(messages=rows), thinking=False)
+		self.assertEqual({m.raw for m in without if m.role == "assistant"}, {None})
 
 
 class TestProposalRecords(TestCase):

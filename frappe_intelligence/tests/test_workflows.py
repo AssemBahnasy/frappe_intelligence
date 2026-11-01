@@ -84,7 +84,7 @@ class FakeConversation:
 	def add_stopped(self):
 		self.stopped = True
 
-	def provider_messages(self):
+	def provider_messages(self, user_content=None, thinking=True):
 		return []
 
 

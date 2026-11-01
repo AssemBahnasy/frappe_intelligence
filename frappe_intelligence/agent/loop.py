@@ -60,7 +60,6 @@ def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
 	The caller stores the user message first and saves the conversation afterwards.
 	"""
 	hooks = hooks or Hooks()
-	text, context = conversation.current_question()
 	provider = get_provider()
 	specs = [tool.spec() for tool in tools_for(conversation.mode)] or None
 	system = prompts.system_prompt(conversation.mode)
@@ -73,7 +72,7 @@ def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
 			if result.proposals:
 				break
 			stop_if_asked(hooks)
-			messages = _with_context(conversation.provider_messages(), text, context)
+			messages = conversation.provider_messages(prompts.with_context)
 			reply = complete(provider, conversation, messages, system, specs, hooks)
 			conversation.add_reply(reply)
 			hooks.checkpoint()
@@ -196,19 +195,6 @@ def _record(result: TurnResult, hooks: Hooks, step: Step, announce_only: bool = 
 def stop_if_asked(hooks: Hooks) -> None:
 	if hooks.should_stop():
 		raise Stopped
-
-
-def _with_context(messages: list, text: str, context: dict | None) -> list:
-	"""Attach the page and language notes to the current user message only."""
-	return with_current_message(messages, prompts.with_context(text, context))
-
-
-def with_current_message(messages: list, content: str) -> list:
-	"""The latest user message as the model reads it now; the stored message stays as the user wrote it."""
-	index = max(i for i, message in enumerate(messages) if message.role == "user")
-	current = messages[index]
-	messages[index] = type(current)(**{**vars(current), "content": content})
-	return messages
 
 
 def _empty_reply_text(stop_reason: str) -> str:

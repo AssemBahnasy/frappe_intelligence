@@ -19,6 +19,9 @@ FALLBACK_MODELS = {
 	"claude-sonnet-5-5",
 }
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
+# The 400 for thinking blocks replayed after the history before them changed.
+STALE_THINKING = "bound to a different conversation"
+THINKING_BLOCKS = {"thinking", "redacted_thinking"}
 
 _STOP_REASONS = {"tool_use": "tool_calls", "max_tokens": "length", "refusal": "refusal"}
 _ERROR_KINDS = (
@@ -58,7 +61,14 @@ class ClaudeProvider(Provider):
 		if self.config.model in FALLBACK_MODELS:
 			api = client.beta.messages
 			params = {**params, "betas": [FALLBACK_BETA], "fallbacks": "default"}
+		try:
+			return self._send(api, params, on_text)
+		except anthropic.BadRequestError:
+			# The history changed after Claude reasoned over it (an edited AI Settings prompt, say):
+			# answer without that earlier reasoning.
+			return self._send(api, {**params, "messages": _without_thinking(params["messages"])}, on_text)
 
+	def _send(self, api, params: dict, on_text):
 		for attempt in range(JSON_RETRIES + 1):
 			try:
 				with api.stream(**params) as stream:
@@ -71,6 +81,8 @@ class ClaudeProvider(Provider):
 				if attempt == JSON_RETRIES:
 					raise self.error("cut_off") from None
 			except anthropic.APIError as exc:
+				if _stale_thinking(exc, params["messages"]):
+					raise
 				raise self.error_from(exc, _ERROR_KINDS) from exc
 
 	def _reply(self, response) -> Reply:
@@ -155,6 +167,36 @@ def _cache_last_turn(converted: list[dict]) -> None:
 		converted[-1]["content"] = [{"type": "text", "text": content, "cache_control": CACHE}]
 	else:
 		content[-1] = {**content[-1], "cache_control": CACHE}
+
+
+def _stale_thinking(exc: anthropic.APIError, messages: list[dict]) -> bool:
+	return (
+		isinstance(exc, anthropic.BadRequestError)
+		and STALE_THINKING in str(exc)
+		and any(
+			block.get("type") in THINKING_BLOCKS
+			for message in messages
+			if message["role"] == "assistant"
+			for block in message["content"]
+		)
+	)
+
+
+def _without_thinking(messages: list[dict]) -> list[dict]:
+	"""Assistant turns keep their text and tool calls; one left empty is dropped."""
+	stripped = []
+	for message in messages:
+		if message["role"] == "assistant":
+			message = {
+				**message,
+				"content": [
+					block for block in message["content"] if block.get("type") not in THINKING_BLOCKS
+				],
+			}
+			if not message["content"]:
+				continue
+		stripped.append(message)
+	return stripped
 
 
 def _replayable(content: list) -> list:

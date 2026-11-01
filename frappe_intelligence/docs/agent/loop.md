@@ -31,12 +31,12 @@ The **system prompt** never changes between turns, so providers can cache it:
 3. The mode rule (Ask cannot change data).
 4. **AI Settings → System Prompt**.
 
-What changes per message is attached to the **current user message only**, as `<note>` lines before the text:
+What changes per message goes on that user message, as `<note>` lines before the text:
 
-- the page note, from `context` (`doctype`, `docname`, `tab`, `list_filters`, `route`);
+- the page note, from the message's `context` (`doctype`, `docname`, `tab`, `list_filters`, `route`);
 - the language rule from **AI Settings → Response Language** (`utils/language.py`).
 
-The stored message keeps only what the user typed.
+The stored message keeps only what the user typed and its `context`. Every turn renders each user message again from those (`prompts.with_context`), so earlier messages go back exactly as they were first sent; see [conversations.md](conversations.md#history-sent-to-the-model).
 
 ## Errors
 

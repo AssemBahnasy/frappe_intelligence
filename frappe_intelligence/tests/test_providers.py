@@ -221,6 +221,43 @@ class TestClaudeProvider(ProviderTestCase):
 		)
 		self.assertEqual(self.params["messages"][1]["content"], raw)
 
+	def test_a_changed_history_is_answered_again_without_earlier_reasoning(self):
+		raw = [{"type": "thinking", "thinking": "", "signature": "sig"}, {"type": "text", "text": "Hi"}]
+		history = [
+			Message(role="user", content="a"),
+			Message(role="assistant", content="Hi", raw=raw, raw_provider="Claude"),
+			Message(role="assistant", raw=raw[:1], raw_provider="Claude"),
+			Message(role="user", content="b"),
+		]
+		response = httpx.Response(400, request=httpx.Request("POST", "https://api.anthropic.com"))
+		stale = anthropic.BadRequestError(
+			"messages.1.content.0: Invalid `signature` in `thinking` block. The block is bound to a "
+			"different conversation.",
+			response=response,
+			body=None,
+		)
+		final = NS(
+			content=[Block(type="text", text="ok")],
+			stop_reason="end_turn",
+			usage=NS(input_tokens=1, output_tokens=1),
+		)
+		sent = []
+
+		@contextmanager
+		def stream(**params):
+			sent.append(params["messages"])
+			if len(sent) == 1:
+				raise stale
+			yield MagicMock(__iter__=lambda _: iter([]), get_final_message=lambda: final)
+
+		client = MagicMock()
+		client.messages.stream.side_effect = stream
+		with patch("frappe_intelligence.providers.claude.anthropic.Anthropic", return_value=client):
+			reply = ClaudeProvider(self.config(model="claude-haiku-5-5")).complete(history)
+		self.assertEqual(reply.text, "ok")
+		self.assertEqual([m["role"] for m in sent[1]], ["user", "assistant", "user"])
+		self.assertEqual(sent[1][1]["content"], [{"type": "text", "text": "Hi"}])
+
 	def test_returns_tool_calls_with_raw_turn(self):
 		content = [
 			Block(type="text", text="Checking"),

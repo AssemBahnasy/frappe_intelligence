@@ -15,7 +15,7 @@ from __future__ import annotations
 import frappe
 from frappe import _
 
-from frappe_intelligence.agent.loop import Hooks, Stopped, TurnResult, complete, with_current_message
+from frappe_intelligence.agent.loop import Hooks, Stopped, TurnResult, complete
 from frappe_intelligence.agent.tools.knowledge import knowledge_block
 from frappe_intelligence.documents.reader import read_file_text
 from frappe_intelligence.providers import ProviderError, Reply, get_provider
@@ -180,9 +180,13 @@ def _write(conversation, workflow, step, text: str, moved: bool, refusal: str | 
 		)
 		if part
 	)
-	content = f"<note>{language_rule(text)}</note>\n\n{text or FILE_ONLY}"
-	messages = with_current_message(conversation.provider_messages(), content)
+	# The instructions change every turn, so earlier reasoning can't be replayed.
+	messages = conversation.provider_messages(_with_language, thinking=False)
 	return complete(get_provider(), conversation, messages, system, None, hooks)
+
+
+def _with_language(text: str, context: dict | None) -> str:
+	return f"<note>{language_rule(text)}</note>\n\n{text or FILE_ONLY}"
 
 
 def _summary(conversation, workflow) -> str:
