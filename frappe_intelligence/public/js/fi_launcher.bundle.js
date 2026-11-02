@@ -1,5 +1,5 @@
 // Puts the assistant in the dock and the sidebar and opens it with Ctrl+.
-// The panel itself loads on first use (frappe_intelligence_assistant.bundle.js).
+// The panel itself loads on first use (fi_assistant.bundle.js).
 
 frappe.provide("frappe_intelligence");
 
@@ -15,7 +15,7 @@ frappe_intelligence.assistant = {
 
 function load() {
 	// One shared promise: two frappe.require calls for the same file would run it twice.
-	loading ??= frappe.require("frappe_intelligence_assistant.bundle.js").then(() => {
+	loading ??= frappe.require("fi_assistant.bundle.js").then(() => {
 		panel = new frappe_intelligence.ui.AssistantPanel({ on_toggle: mark_open });
 	});
 	return loading;

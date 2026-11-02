@@ -31,12 +31,12 @@ add_to_apps_screen = [
 
 # include js, css files in header of desk.html
 app_include_css = [
-    "frappe_intelligence_launcher.bundle.css",
-    "frappe_intelligence_field_writer.bundle.css",
+    "fi_launcher.bundle.css",
+    "fi_field_writer.bundle.css",
 ]
 app_include_js = [
-    "frappe_intelligence_launcher.bundle.js",
-    "frappe_intelligence_field_writer.bundle.js",
+    "fi_launcher.bundle.js",
+    "fi_field_writer.bundle.js",
 ]
 # The dock, sidebar and workspace icons (docs/navigation/).
 app_include_icons = ["/assets/frappe_intelligence/icons/module-icons.svg"]

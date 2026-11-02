@@ -6,7 +6,7 @@
 | Sidebar | A matching row in the standard items band, shown only while the dock does not own the utilities (the same rule Frappe applies to Search and Notifications) |
 | Keyboard | **Ctrl+.** toggles the panel, also while typing. Frappe's key map names the period key `>`, so it is registered as `ctrl+>` and listed that way in Frappe's shortcut help |
 
-The launcher (`frappe_intelligence_launcher.bundle.js`, about 2 KB) loads on every desk page. The panel's own bundle loads on first use.
+The launcher (`fi_launcher.bundle.js`, about 2 KB) loads on every desk page. The panel's own bundle loads on first use.
 
 The panel remembers whether it was open and which conversation it showed, per browser, and restores both after a reload.
 

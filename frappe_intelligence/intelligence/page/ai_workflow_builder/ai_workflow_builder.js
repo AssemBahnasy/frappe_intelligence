@@ -15,7 +15,7 @@ frappe.pages["ai-workflow-builder"].on_page_load = function (wrapper) {
 
 	// /app/ai-workflow-builder/<workflow_key> opens that workflow.
 	const workflow_key = frappe.get_route()[1] || null;
-	frappe.require("frappe_intelligence_workflow_builder.bundle.js").then(() => {
+	frappe.require("fi_workflow_builder.bundle.js").then(() => {
 		wrapper.builder = new frappe_intelligence.ui.WorkflowBuilder({ container, workflow_key });
 	});
 };

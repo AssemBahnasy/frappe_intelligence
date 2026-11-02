@@ -1,4 +1,4 @@
-// Loaded by the launcher on first open (frappe_intelligence_launcher.bundle.js).
+// Loaded by the launcher on first open (fi_launcher.bundle.js).
 import { AssistantPanel } from "./assistant/panel";
 
 frappe.provide("frappe_intelligence.ui");
