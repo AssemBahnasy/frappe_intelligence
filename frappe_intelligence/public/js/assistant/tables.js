@@ -9,7 +9,9 @@ const icon = (name) => frappe.utils.icon(name, "xs", "", "", "", true);
 function mark_number_columns(table, rows) {
 	const header = [...(table.tHead?.rows[0]?.cells || [])];
 	header.forEach((th, index) => {
-		const cells = rows.map((row) => row.cells[index]).filter((cell) => cell?.textContent.trim());
+		const cells = rows
+			.map((row) => row.cells[index])
+			.filter((cell) => cell?.textContent.trim());
 		if (!cells.length || !cells.every((cell) => NUMBER.test(cell.textContent.trim()))) return;
 		[th, ...cells].forEach((cell) => cell.classList.add("fi-num"));
 	});
@@ -49,14 +51,21 @@ function enhance(table) {
 
 	function render() {
 		const sorted = state.column < 0 ? rows : [...rows].sort(compare);
-		body.replaceChildren(...sorted.slice(state.page * PAGE_SIZE, (state.page + 1) * PAGE_SIZE));
+		body.replaceChildren(
+			...sorted.slice(state.page * PAGE_SIZE, (state.page + 1) * PAGE_SIZE)
+		);
 		table.querySelectorAll("th").forEach((th, i) => {
-			th.setAttribute("aria-sort", i === state.column ? (state.ascending ? "ascending" : "descending") : "none");
+			th.setAttribute(
+				"aria-sort",
+				i === state.column ? (state.ascending ? "ascending" : "descending") : "none"
+			);
 			th.querySelector(".fi-sort-icon")?.remove();
 			if (i === state.column) {
 				th.querySelector(".fi-sort")?.insertAdjacentHTML(
 					"beforeend",
-					`<span class="fi-sort-icon">${icon(state.ascending ? "arrow-up" : "arrow-down")}</span>`
+					`<span class="fi-sort-icon">${icon(
+						state.ascending ? "arrow-up" : "arrow-down"
+					)}</span>`
 				);
 			}
 		});
@@ -76,19 +85,28 @@ function enhance(table) {
 }
 
 function make_pager(wrapper, state, render) {
-	const [back, forward] = frappe.utils.is_rtl() ? ["chevron-right", "chevron-left"] : ["chevron-left", "chevron-right"];
+	const [back, forward] = frappe.utils.is_rtl()
+		? ["chevron-right", "chevron-left"]
+		: ["chevron-left", "chevron-right"];
 	const pager = document.createElement("div");
 	pager.className = "fi-table-pager";
 	pager.innerHTML = `
 		<span class="fi-table-range" aria-live="polite"></span>
-		<button type="button" class="fi-table-page" data-step="-1" aria-label="${__("Previous page")}">${icon(back)}</button>
-		<button type="button" class="fi-table-page" data-step="1" aria-label="${__("Next page")}">${icon(forward)}</button>`;
+		<button type="button" class="fi-table-page" data-step="-1" aria-label="${__(
+			"Previous page"
+		)}">${icon(back)}</button>
+		<button type="button" class="fi-table-page" data-step="1" aria-label="${__("Next page")}">${icon(
+		forward
+	)}</button>`;
 	wrapper.append(pager);
 	const pages = (total) => Math.ceil(total / PAGE_SIZE);
 	let total = 0;
 	pager.querySelectorAll("button").forEach((button) =>
 		button.addEventListener("click", () => {
-			state.page = Math.min(Math.max(state.page + Number(button.dataset.step), 0), pages(total) - 1);
+			state.page = Math.min(
+				Math.max(state.page + Number(button.dataset.step), 0),
+				pages(total) - 1
+			);
 			render();
 		})
 	);
@@ -97,7 +115,11 @@ function make_pager(wrapper, state, render) {
 			total = count;
 			const first = state.page * PAGE_SIZE + 1;
 			const last = Math.min(first + PAGE_SIZE - 1, total);
-			pager.querySelector(".fi-table-range").textContent = __("{0}–{1} of {2}", [first, last, total]);
+			pager.querySelector(".fi-table-range").textContent = __("{0}–{1} of {2}", [
+				first,
+				last,
+				total,
+			]);
 			const [previous, next] = pager.querySelectorAll("button");
 			previous.disabled = state.page === 0;
 			next.disabled = state.page >= pages(total) - 1;

@@ -35,7 +35,8 @@ frappe.ui.form.on("*", {
 	refresh(frm) {
 		const types = frappe.boot.fi_assistant?.field_writer || [];
 		for (const control of Object.values(frm.fields_dict)) {
-			if (types.includes(control.df?.fieldtype) && !control.df.read_only) add_button(frm, control);
+			if (types.includes(control.df?.fieldtype) && !control.df.read_only)
+				add_button(frm, control);
 		}
 	},
 });
@@ -126,9 +127,12 @@ async function write(frm, control, description) {
 	}
 	try {
 		const text = await job_result(job);
-		if (frm.docname !== docname) throw new Error(__("The form changed before the text was ready."));
+		if (frm.docname !== docname)
+			throw new Error(__("The form changed before the text was ready."));
 		if ((frm.doc[fieldname] || "") !== (previous || "")) {
-			throw new Error(__("You changed the field while the text was written, so it was left as it is."));
+			throw new Error(
+				__("You changed the field while the text was written, so it was left as it is.")
+			);
 		}
 		await frm.set_value(fieldname, fieldtype === "Text Editor" ? frappe.markdown(text) : text);
 		highlight(control);

@@ -36,7 +36,9 @@ frappe.ui.form.on("AI Settings", {
 				if (!installed) {
 					// Replace the tab with a clear message if the user somehow sees it
 					frm.dashboard.set_headline(
-						__("WhatsApp integration requires the frappe_whatsapp app to be installed.")
+						__(
+							"WhatsApp integration requires the frappe_whatsapp app to be installed."
+						)
 					);
 				}
 			},

@@ -58,7 +58,14 @@
 				>
 					<Icon name="paperclip" />
 				</button>
-				<input ref="file_input" type="file" hidden multiple :accept="ACCEPTED_FILES" @change="add_files" />
+				<input
+					ref="file_input"
+					type="file"
+					hidden
+					multiple
+					:accept="ACCEPTED_FILES"
+					@change="add_files"
+				/>
 				<button
 					v-if="voice"
 					type="button"
@@ -70,7 +77,11 @@
 					:aria-pressed="listening === 'recording'"
 					@click="toggle_voice"
 				>
-					<span v-if="listening === 'transcribing'" class="es-spinner" aria-hidden="true"></span>
+					<span
+						v-if="listening === 'transcribing'"
+						class="es-spinner"
+						aria-hidden="true"
+					></span>
 					<Icon v-else :name="listening === 'recording' ? 'square' : 'mic'" />
 				</button>
 				<span class="fi-spacer"></span>
@@ -78,7 +89,13 @@
 					<Icon name="square" size="xs" />
 					{{ __("Stop") }}
 				</button>
-				<button v-else type="submit" class="fi-send" :disabled="!can_send" :aria-label="__('Send')">
+				<button
+					v-else
+					type="submit"
+					class="fi-send"
+					:disabled="!can_send"
+					:aria-label="__('Send')"
+				>
 					<Icon name="arrow-up" />
 				</button>
 			</div>
@@ -147,7 +164,11 @@ function add_files(e) {
 	const chosen = [...e.target.files].slice(0, MAX_FILES - files.value.length);
 	e.target.value = "";
 	for (const file of chosen) {
-		const entry = reactive({ key: frappe.utils.get_random(6), file_name: file.name, uploading: true });
+		const entry = reactive({
+			key: frappe.utils.get_random(6),
+			file_name: file.name,
+			uploading: true,
+		});
 		files.value.push(entry);
 		upload_file(file)
 			.then((uploaded) => Object.assign(entry, uploaded, { uploading: false }))
@@ -324,9 +345,7 @@ function modes(agent_allowed) {
 	box-shadow: inset 0 0 0 1px var(--outline-gray-2);
 }
 .fi-input:focus-within {
-	box-shadow:
-		inset 0 0 0 1px var(--outline-gray-3),
-		var(--focus-default);
+	box-shadow: inset 0 0 0 1px var(--outline-gray-3), var(--focus-default);
 }
 textarea {
 	width: 100%;

@@ -13,7 +13,8 @@ export async function upload_file(file) {
 		body: form,
 	});
 	const data = await response.json().catch(() => ({}));
-	if (!response.ok) throw new Error(server_message(data) || __("The file could not be uploaded."));
+	if (!response.ok)
+		throw new Error(server_message(data) || __("The file could not be uploaded."));
 	return { file_url: data.message.file_url, file_name: data.message.file_name };
 }
 

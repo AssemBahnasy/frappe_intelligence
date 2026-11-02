@@ -95,7 +95,8 @@ export const useAssistant = defineStore("fi_assistant", () => {
 		try {
 			const r = await frappe.xcall(`${API}.get_conversation`, { name });
 			set_conversation(r.name);
-			mode.value = r.mode === "Agent" && frappe.boot.fi_assistant.agent_mode ? "Agent" : "Ask";
+			mode.value =
+				r.mode === "Agent" && frappe.boot.fi_assistant.agent_mode ? "Agent" : "Ask";
 			turns.value = r.turns;
 			workflow.value = r.workflow;
 			const last = turns.value.at(-1);
@@ -193,7 +194,9 @@ export const useAssistant = defineStore("fi_assistant", () => {
 	async function watch_run() {
 		if (!run.value || !conversation.value) return;
 		const id = run.value.id;
-		const r = await frappe.xcall(`${API}.get_conversation`, { name: conversation.value }).catch(() => null);
+		const r = await frappe
+			.xcall(`${API}.get_conversation`, { name: conversation.value })
+			.catch(() => null);
 		if (r && run.value?.id === id && r.active_run !== id) {
 			run.value = null;
 			turns.value = r.turns;

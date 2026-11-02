@@ -1,6 +1,11 @@
 <template>
 	<ul v-if="pending && steps.length" class="fi-steps" role="status">
-		<li v-for="(step, i) in steps" :key="step.call_id || i" class="fi-step" :class="step.status">
+		<li
+			v-for="(step, i) in steps"
+			:key="step.call_id || i"
+			class="fi-step"
+			:class="step.status"
+		>
 			<span class="fi-step-icon" :class="{ 'fi-spin': step.status === 'running' }">
 				<Icon :name="ICONS[step.status]" />
 			</span>

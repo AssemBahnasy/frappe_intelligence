@@ -6,4 +6,4 @@ from frappe.model.document import Document
 
 
 class AIDocumentRequirement(Document):
-    pass
+	pass

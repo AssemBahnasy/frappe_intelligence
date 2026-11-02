@@ -172,7 +172,9 @@ def portal_get_session_state(
 	from frappe_intelligence.workflows import sessions, steps, turn
 
 	session = sessions.session("Portal", frappe.session.user, workflow_key)
-	step = steps.current(session, frappe.get_doc("AI Workflow", session.workflow)) if session.workflow else None
+	step = (
+		steps.current(session, frappe.get_doc("AI Workflow", session.workflow)) if session.workflow else None
+	)
 
 	return {
 		"status": session.status,

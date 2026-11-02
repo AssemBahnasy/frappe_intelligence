@@ -13,13 +13,28 @@
 			<span class="fi-header-icon"><Icon name="sparkles" /></span>
 			<span class="fi-header-title">{{ name }}</span>
 			<span class="fi-header-actions">
-				<button class="fi-icon-button" :title="__('New chat')" :aria-label="__('New chat')" @click="store.new_chat()">
+				<button
+					class="fi-icon-button"
+					:title="__('New chat')"
+					:aria-label="__('New chat')"
+					@click="store.new_chat()"
+				>
 					<Icon name="square-pen" />
 				</button>
-				<button ref="history_button" class="fi-icon-button" :title="__('History')" :aria-label="__('History')">
+				<button
+					ref="history_button"
+					class="fi-icon-button"
+					:title="__('History')"
+					:aria-label="__('History')"
+				>
 					<Icon name="history" />
 				</button>
-				<button class="fi-icon-button" :title="__('Close')" :aria-label="__('Close')" @click="host.close()">
+				<button
+					class="fi-icon-button"
+					:title="__('Close')"
+					:aria-label="__('Close')"
+					@click="host.close()"
+				>
 					<Icon name="x" />
 				</button>
 			</span>

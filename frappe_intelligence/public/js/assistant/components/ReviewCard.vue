@@ -5,7 +5,9 @@
 	>
 		<template #header>
 			<span class="fi-card-title">{{ card.title }}</span>
-			<span class="fi-card-meta">{{ __("{0} of {1} fields found", [found, card.fields.length]) }}</span>
+			<span class="fi-card-meta">{{
+				__("{0} of {1} fields found", [found, card.fields.length])
+			}}</span>
 			<span v-if="card.needs_review" class="fi-badge">{{ __("Review needed") }}</span>
 		</template>
 		<div class="fi-card-fields">
@@ -22,10 +24,20 @@
 			</div>
 		</div>
 		<template #actions>
-			<button type="button" class="fi-button subtle" :disabled="deciding" @click="decide(false)">
+			<button
+				type="button"
+				class="fi-button subtle"
+				:disabled="deciding"
+				@click="decide(false)"
+			>
 				{{ __("Discard") }}
 			</button>
-			<button type="button" class="fi-button solid" :disabled="deciding" @click="decide(true)">
+			<button
+				type="button"
+				class="fi-button solid"
+				:disabled="deciding"
+				@click="decide(true)"
+			>
 				{{ __("Use these values") }}
 			</button>
 		</template>

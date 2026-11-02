@@ -33,7 +33,7 @@ from frappe_intelligence.utils import optional
 _IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".bmp", ".tiff", ".tif", ".webp"}
 _PDF_EXT = ".pdf"
 
-# EasyOCR reader is expensive to initialise – cache one instance per process.
+# EasyOCR reader is expensive to initialise: cache one instance per process.
 _ocr_lock = threading.Lock()
 _ocr_reader = None
 
@@ -73,7 +73,7 @@ def get_text(file_path: str) -> str:
 
 	# Fallback: plain text
 	try:
-		with open(file_path, "r", encoding="utf-8", errors="replace") as fh:
+		with open(file_path, encoding="utf-8", errors="replace") as fh:
 			return fh.read()
 	except OSError as exc:
 		raise ValueError(f"Cannot read file {file_path}: {exc}") from exc
@@ -188,7 +188,7 @@ def _extract_pdf_fitz(path: str, fitz) -> str:
 			else:
 				import numpy as np
 
-				# Scanned page — render at 2× zoom for better OCR accuracy.
+				# Scanned page — render at 2x zoom for better OCR accuracy.
 				pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))
 				img = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.height, pix.width, pix.n)
 				if pix.n == 4:  # RGBA → RGB

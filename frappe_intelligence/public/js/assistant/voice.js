@@ -16,7 +16,9 @@ export class Recorder {
 			this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 		} catch (e) {
 			throw new Error(
-				e.name === "NotAllowedError" ? __("The browser was not allowed to use the microphone.") : e.message
+				e.name === "NotAllowedError"
+					? __("The browser was not allowed to use the microphone.")
+					: e.message
 			);
 		}
 		const type = TYPES.find((t) => MediaRecorder.isTypeSupported(t));

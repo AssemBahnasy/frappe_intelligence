@@ -16,14 +16,14 @@ bench_commands = ["frappe_intelligence.commands"]
 # required_apps = []
 
 add_to_apps_screen = [
-    {
-        "name": app_name,
-        "logo": app_logo_url,
-        "title": app_title,
-        "route": app_home,
-        # Only for users AI Settings → Allowed Roles lets use the assistant.
-        "has_permission": "frappe_intelligence.utils.access.can_use_assistant",
-    }
+	{
+		"name": app_name,
+		"logo": app_logo_url,
+		"title": app_title,
+		"route": app_home,
+		# Only for users AI Settings → Allowed Roles lets use the assistant.
+		"has_permission": "frappe_intelligence.utils.access.can_use_assistant",
+	}
 ]
 
 # Includes in <head>
@@ -31,12 +31,12 @@ add_to_apps_screen = [
 
 # include js, css files in header of desk.html
 app_include_css = [
-    "fi_launcher.bundle.css",
-    "fi_field_writer.bundle.css",
+	"fi_launcher.bundle.css",
+	"fi_field_writer.bundle.css",
 ]
 app_include_js = [
-    "fi_launcher.bundle.js",
-    "fi_field_writer.bundle.js",
+	"fi_launcher.bundle.js",
+	"fi_field_writer.bundle.js",
 ]
 # The dock, sidebar and workspace icons (docs/navigation/).
 app_include_icons = ["/assets/frappe_intelligence/icons/module-icons.svg"]
@@ -156,18 +156,16 @@ after_install = "frappe_intelligence.install.after_install"
 # Safe to declare even when frappe_whatsapp is not installed —
 # Frappe only fires the hook if the DocType actually exists on this site.
 doc_events = {
-    "WhatsApp Message": {
-        "after_insert": "frappe_intelligence.channels.whatsapp.on_whatsapp_message"
-    }
+	"WhatsApp Message": {"after_insert": "frappe_intelligence.channels.whatsapp.on_whatsapp_message"}
 }
 
 # Scheduled Tasks
 # ---------------
 
 scheduler_events = {
-    "daily": [
-        "frappe_intelligence.tasks.expire_old_sessions",
-    ],
+	"daily": [
+		"frappe_intelligence.tasks.expire_old_sessions",
+	],
 }
 
 # scheduler_events = {

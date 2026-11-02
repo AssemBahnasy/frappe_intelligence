@@ -4,7 +4,11 @@
 			<span class="fi-workflow-icon"><Icon name="route" /></span>
 			<span class="fi-workflow-title" dir="auto">{{ workflow.title }}</span>
 			<span class="fi-workflow-meta">{{ where }}</span>
-			<button class="fi-workflow-exit" :disabled="!!store.run" @click="store.exit_workflow()">
+			<button
+				class="fi-workflow-exit"
+				:disabled="!!store.run"
+				@click="store.exit_workflow()"
+			>
 				{{ __("Exit") }}
 			</button>
 		</div>
@@ -38,7 +42,12 @@
 				<Icon name="check" size="xs" />
 				<span class="fi-workflow-chip-text">{{ answer.value }}</span>
 			</span>
-			<span v-for="label in workflow.missing" :key="label" class="fi-workflow-chip missing" dir="auto">
+			<span
+				v-for="label in workflow.missing"
+				:key="label"
+				class="fi-workflow-chip missing"
+				dir="auto"
+			>
 				{{ label }}
 			</span>
 		</div>

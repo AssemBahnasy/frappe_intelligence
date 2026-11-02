@@ -5,7 +5,9 @@
 		</span>
 		<span class="fi-file-text">
 			<span class="fi-file-name" dir="auto">{{ file.file_name }}</span>
-			<span class="fi-file-kind">{{ uploading ? __("Uploading…") : file_kind(file.file_name) }}</span>
+			<span class="fi-file-kind">{{
+				uploading ? __("Uploading…") : file_kind(file.file_name)
+			}}</span>
 		</span>
 		<button
 			v-if="removable"

@@ -12,10 +12,20 @@
 			</template>
 		</dl>
 		<template #actions>
-			<button type="button" class="fi-button subtle" :disabled="deciding" @click="decide(false)">
+			<button
+				type="button"
+				class="fi-button subtle"
+				:disabled="deciding"
+				@click="decide(false)"
+			>
 				{{ __("Reject") }}
 			</button>
-			<button type="button" class="fi-button solid" :disabled="deciding" @click="decide(true)">
+			<button
+				type="button"
+				class="fi-button solid"
+				:disabled="deciding"
+				@click="decide(true)"
+			>
 				<Icon name="check" size="xs" />
 				{{ __("Confirm") }}
 			</button>
@@ -33,7 +43,13 @@ const props = defineProps({
 	turn: { type: Object, required: true },
 	proposal: { type: Object, required: true },
 });
-const ICONS = { create: "plus", update: "pen", delete: "trash-2", submit: "file-check", cancel: "file-x" };
+const ICONS = {
+	create: "plus",
+	update: "pen",
+	delete: "trash-2",
+	submit: "file-check",
+	cancel: "file-x",
+};
 const store = useAssistant();
 const deciding = ref(false);
 const preview = computed(() => props.proposal.preview || {});

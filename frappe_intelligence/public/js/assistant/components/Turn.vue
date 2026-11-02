@@ -12,7 +12,13 @@
 			{{ turn.stopping ? __("Stopping…") : __("Thinking…") }}
 		</div>
 
-		<div v-if="turn.answer" class="fi-markdown" dir="auto" v-html="html" @click="follow_link"></div>
+		<div
+			v-if="turn.answer"
+			class="fi-markdown"
+			dir="auto"
+			v-html="html"
+			@click="follow_link"
+		></div>
 		<div v-if="turn.off_topic" class="fi-meta fi-off-topic">
 			<Icon name="ban" size="xs" />
 			{{ __("Off-topic · answered without AI") }}
@@ -20,13 +26,23 @@
 
 		<template v-for="proposal in turn.proposals || []" :key="proposal.call_id">
 			<template v-if="proposal.status === 'pending'">
-				<ReviewCard v-if="proposal.preview?.kind === 'review'" :turn="turn" :proposal="proposal" />
+				<ReviewCard
+					v-if="proposal.preview?.kind === 'review'"
+					:turn="turn"
+					:proposal="proposal"
+				/>
 				<ProposalCard v-else :turn="turn" :proposal="proposal" />
 			</template>
 			<ChangeResult v-else :proposal="proposal" />
 		</template>
 
-		<div v-if="turn.report" class="fi-markdown" dir="auto" v-html="report_html" @click="follow_link"></div>
+		<div
+			v-if="turn.report"
+			class="fi-markdown"
+			dir="auto"
+			v-html="report_html"
+			@click="follow_link"
+		></div>
 
 		<ChartBlock v-for="(chart, i) in charts" :key="i" :chart="chart" />
 
@@ -34,7 +50,12 @@
 		<div v-else-if="turn.stopped && !turn.pending" class="fi-meta">{{ __("Stopped.") }}</div>
 
 		<div v-if="!turn.pending && full_text && asked" class="fi-footer">
-			<button class="fi-small-button" :title="__('Copy as Markdown')" :aria-label="__('Copy as Markdown')" @click="copy">
+			<button
+				class="fi-small-button"
+				:title="__('Copy as Markdown')"
+				:aria-label="__('Copy as Markdown')"
+				@click="copy"
+			>
 				<Icon name="copy" size="xs" />
 			</button>
 			<template v-if="turn.answer_id">
@@ -78,7 +99,9 @@ const html = computed(() => frappe.markdown(props.turn.answer || ""));
 const report_html = computed(() => frappe.markdown(props.turn.report || ""));
 // A workflow's opening question was not asked by the user.
 const asked = computed(() => !!(props.turn.question || props.turn.attachments?.length));
-const full_text = computed(() => [props.turn.answer, props.turn.report].filter(Boolean).join("\n\n"));
+const full_text = computed(() =>
+	[props.turn.answer, props.turn.report].filter(Boolean).join("\n\n")
+);
 const charts = computed(() => (props.turn.actions || []).filter((a) => a.type === "chart"));
 const thinking = computed(() => {
 	const t = props.turn;

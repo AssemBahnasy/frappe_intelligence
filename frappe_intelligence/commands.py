@@ -16,7 +16,6 @@ import sys
 
 import click
 
-
 # ---------------------------------------------------------------------------
 # fi-setup-ollama
 # ---------------------------------------------------------------------------
@@ -107,8 +106,8 @@ def setup_ollama(model: str, skip_install: bool) -> None:
 
 	click.echo("")
 	click.echo("All done! Now open AI Settings in Frappe desk and set:")
-	click.echo(f"  Provider         = Ollama")
-	click.echo(f"  Ollama Base URL  = http://localhost:11434")
+	click.echo("  Provider         = Ollama")
+	click.echo("  Ollama Base URL  = http://localhost:11434")
 	click.echo(f"  Ollama Model     = {model}")
 
 

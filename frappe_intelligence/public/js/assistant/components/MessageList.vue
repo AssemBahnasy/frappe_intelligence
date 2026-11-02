@@ -1,9 +1,17 @@
 <template>
 	<div ref="list" class="fi-messages" aria-live="polite">
-		<div v-if="store.loading" class="fi-loading"><span class="es-spinner" role="status"></span></div>
+		<div v-if="store.loading" class="fi-loading">
+			<span class="es-spinner" role="status"></span>
+		</div>
 		<Turn v-for="turn in store.turns" :key="turn.id" :turn="turn" />
 		<div v-if="choices.length" class="fi-choices">
-			<button v-for="choice in choices" :key="choice" class="fi-choice" dir="auto" @click="store.send(choice)">
+			<button
+				v-for="choice in choices"
+				:key="choice"
+				class="fi-choice"
+				dir="auto"
+				@click="store.send(choice)"
+			>
 				{{ choice }}
 			</button>
 		</div>
@@ -29,7 +37,9 @@ watch(
 		store.turns
 			.map((t) => {
 				const proposals = (t.proposals || []).map((p) => p.status).join("|");
-				return `${t.id}:${(t.answer || "").length}:${t.steps.length}:${proposals}:${(t.report || "").length}:${t.pending}`;
+				return `${t.id}:${(t.answer || "").length}:${t.steps.length}:${proposals}:${
+					(t.report || "").length
+				}:${t.pending}`;
 			})
 			.join() + `:${choices.value.length}`,
 	async (now, before) => {

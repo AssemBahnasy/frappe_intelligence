@@ -13,7 +13,6 @@ from __future__ import annotations
 import re
 from typing import Any
 
-
 # Flags applied to every pattern
 _RE_FLAGS = re.IGNORECASE | re.MULTILINE | re.UNICODE
 
@@ -33,7 +32,7 @@ class HeuristicExtractor:
 		tuple of:
 		    result_dict  — ``{field_key: matched_value_or_None, ...}``
 		    confidence   — fraction of non-VLM rules that produced a match
-		                   (0.0 – 1.0).  Only rules that have a pattern
+		                   (0.0 - 1.0).  Only rules that have a pattern
 		                   defined count toward the denominator.
 		"""
 		result: dict[str, Any] = {}
@@ -43,14 +42,14 @@ class HeuristicExtractor:
 		for rule in rules:
 			strategy = (rule.extraction_strategy or "Regex").strip()
 			if strategy == "VLM":
-				# Delegate entirely to VLMAdapter – don't populate key here
+				# Delegate entirely to VLMAdapter: don't populate key here
 				continue
 
 			field_key = rule.field_key
 			pattern = (rule.regex_pattern or "").strip()
 
 			if not pattern:
-				# No pattern defined – record None but don't penalise score
+				# No pattern defined; record None but don't penalise score
 				result[field_key] = None
 				continue
 
@@ -87,7 +86,7 @@ class HeuristicExtractor:
 def frappe_log(message: str, title: str) -> None:
 	"""Log to Frappe error log without crashing if frappe is unavailable."""
 	try:
-		import frappe as _frappe  # noqa: PLC0415
+		import frappe as _frappe
 
 		_frappe.log_error(message, title)
 	except Exception:

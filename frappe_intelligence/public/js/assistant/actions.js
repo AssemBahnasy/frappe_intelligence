@@ -14,12 +14,16 @@ const HANDLERS = {
 async function fill_form({ doctype, values }) {
 	const frm = window.cur_frm;
 	if (frm?.doctype !== doctype || !frm.is_new()) return open_new_form(doctype, values);
-	const known = Object.fromEntries(Object.entries(values).filter(([field]) => frm.fields_dict[field]));
+	const known = Object.fromEntries(
+		Object.entries(values).filter(([field]) => frm.fields_dict[field])
+	);
 	await frm.set_value(known);
 	// A link (e.g. the supplier) makes the form fetch its defaults, which can overwrite values the
 	// user confirmed (e.g. the due date); put those back once the form has finished.
 	await settled();
-	const changed = Object.entries(known).filter(([field, value]) => !Array.isArray(value) && frm.doc[field] != value);
+	const changed = Object.entries(known).filter(
+		([field, value]) => !Array.isArray(value) && frm.doc[field] != value
+	);
 	if (changed.length) frm.set_value(Object.fromEntries(changed));
 }
 

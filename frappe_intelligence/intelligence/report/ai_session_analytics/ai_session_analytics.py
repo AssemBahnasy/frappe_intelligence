@@ -14,74 +14,74 @@ import frappe
 
 
 def execute(filters=None):
-    columns = _get_columns()
-    data = _get_data(filters or {})
-    return columns, data
+	columns = _get_columns()
+	data = _get_data(filters or {})
+	return columns, data
 
 
 def _get_columns():
-    return [
-        {
-            "fieldname": "workflow",
-            "label": "Workflow",
-            "fieldtype": "Link",
-            "options": "AI Workflow",
-            "width": 180,
-        },
-        {
-            "fieldname": "total_sessions",
-            "label": "Total Sessions",
-            "fieldtype": "Int",
-            "width": 130,
-        },
-        {
-            "fieldname": "active",
-            "label": "Active",
-            "fieldtype": "Int",
-            "width": 100,
-        },
-        {
-            "fieldname": "completed",
-            "label": "Completed",
-            "fieldtype": "Int",
-            "width": 110,
-        },
-        {
-            "fieldname": "abandoned",
-            "label": "Abandoned",
-            "fieldtype": "Int",
-            "width": 110,
-        },
-        {
-            "fieldname": "avg_turns",
-            "label": "Avg Turns",
-            "fieldtype": "Float",
-            "precision": 1,
-            "width": 110,
-        },
-    ]
+	return [
+		{
+			"fieldname": "workflow",
+			"label": "Workflow",
+			"fieldtype": "Link",
+			"options": "AI Workflow",
+			"width": 180,
+		},
+		{
+			"fieldname": "total_sessions",
+			"label": "Total Sessions",
+			"fieldtype": "Int",
+			"width": 130,
+		},
+		{
+			"fieldname": "active",
+			"label": "Active",
+			"fieldtype": "Int",
+			"width": 100,
+		},
+		{
+			"fieldname": "completed",
+			"label": "Completed",
+			"fieldtype": "Int",
+			"width": 110,
+		},
+		{
+			"fieldname": "abandoned",
+			"label": "Abandoned",
+			"fieldtype": "Int",
+			"width": 110,
+		},
+		{
+			"fieldname": "avg_turns",
+			"label": "Avg Turns",
+			"fieldtype": "Float",
+			"precision": 1,
+			"width": 110,
+		},
+	]
 
 
 def _get_data(filters):
-    from_date = filters.get("from_date")
-    to_date = filters.get("to_date")
-    workflow_filter = filters.get("workflow")
+	from_date = filters.get("from_date")
+	to_date = filters.get("to_date")
+	workflow_filter = filters.get("workflow")
 
-    conditions = ""
-    values = {}
+	conditions = ""
+	values = {}
 
-    if from_date:
-        conditions += " AND s.creation >= %(from_date)s"
-        values["from_date"] = from_date
-    if to_date:
-        conditions += " AND s.creation <= %(to_date)s"
-        values["to_date"] = to_date
-    if workflow_filter:
-        conditions += " AND s.workflow = %(workflow)s"
-        values["workflow"] = workflow_filter
+	if from_date:
+		conditions += " AND s.creation >= %(from_date)s"
+		values["from_date"] = from_date
+	if to_date:
+		conditions += " AND s.creation <= %(to_date)s"
+		values["to_date"] = to_date
+	if workflow_filter:
+		conditions += " AND s.workflow = %(workflow)s"
+		values["workflow"] = workflow_filter
 
-    rows = frappe.db.sql(
-        f"""
+	rows = frappe.db.sql(
+		f"""
         SELECT
             s.workflow,
             COUNT(*) AS total_sessions,
@@ -100,8 +100,8 @@ def _get_data(filters):
         GROUP BY s.workflow
         ORDER BY total_sessions DESC
         """,
-        values=values,
-        as_dict=True,
-    )
+		values=values,
+		as_dict=True,
+	)
 
-    return rows
+	return rows

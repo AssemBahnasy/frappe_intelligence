@@ -8,7 +8,8 @@ export function page_context({ with_tab = false } = {}) {
 		return { doctype, new: true };
 	}
 	if (view === "Form" && doctype && name) {
-		const tab = with_tab && cur_frm?.docname === name ? cur_frm.get_active_tab?.()?.label : null;
+		const tab =
+			with_tab && cur_frm?.docname === name ? cur_frm.get_active_tab?.()?.label : null;
 		return { doctype, docname: name, ...(tab ? { tab } : {}) };
 	}
 	if (view === "List" && doctype) {

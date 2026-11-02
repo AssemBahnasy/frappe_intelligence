@@ -20,7 +20,11 @@ export function job_result(job) {
 				finish({ error: __("This took too long. Please try again.") });
 				return;
 			}
-			finish(await frappe.xcall("frappe_intelligence.api.jobs.job_result", { job }).catch(() => null));
+			finish(
+				await frappe
+					.xcall("frappe_intelligence.api.jobs.job_result", { job })
+					.catch(() => null)
+			);
 		}, CHECK_SECONDS * 1000);
 		frappe.realtime.on(EVENT, on_event);
 	});
