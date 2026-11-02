@@ -23,8 +23,6 @@ const store = useTutorial();
 	flex-wrap: wrap;
 	align-items: flex-start;
 	background: var(--surface-base);
-	border: 1px solid var(--outline-gray-1);
-	border-radius: var(--radius-lg);
 	min-height: 70vh;
 }
 .fi-tutorial-empty {
