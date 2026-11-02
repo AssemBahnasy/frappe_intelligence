@@ -13,6 +13,7 @@ An AI assistant for the Frappe and ERPNext desk, in English and Arabic, MIT lice
 | Documents | Reads an attached PDF, photo or text file; the user checks the values first | [documents/](documents/README.md) |
 | Guided workflows | Step-by-step data collection on the desk, the portal and WhatsApp | [workflows/](workflows/README.md) |
 | Write with AI | Writes a long text field in place, with Undo | [writer/](writer/README.md) |
+| Tutorial | A desk page teaching every feature, with walkthroughs on the real desk | [tutorial/](tutorial/README.md) |
 | Navigation | Apps screen tile, dock, sidebars, icons | [navigation/](navigation/README.md) |
 
 Every model call goes through one provider the administrator picks (OpenAI, Claude, Gemini or a local Ollama): [providers/](providers/README.md).
@@ -36,6 +37,7 @@ Each folder has a README that is only an index; each file covers one concern.
 | Task | Read first |
 |---|---|
 | Any change | [guidelines/](guidelines/README.md) |
+| A new or changed feature | its topic in [tutorial/content.md](tutorial/content.md) |
 | A new tool for the assistant | [agent/tools.md](agent/tools.md), [agent/security.md](agent/security.md) |
 | A new AI provider | [providers/adding-a-provider.md](providers/adding-a-provider.md) |
 | Something in the panel | [guidelines/ui.md](guidelines/ui.md), [panel/structure.md](panel/structure.md) |

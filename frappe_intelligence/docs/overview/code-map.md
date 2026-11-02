@@ -8,11 +8,12 @@ frappe_intelligence/
 ├── workflows/      guided workflows: steps, topic gate, turns        → ../workflows/
 ├── documents/      reading files, templates, review, pipeline, voice → ../documents/
 ├── writer/         Write with AI                                      → ../writer/
+├── tutorial/       which tutorial topics a user has done              → ../tutorial/
 ├── channels/       WhatsApp bridge                                    → ../workflows/turn.md
 ├── utils/          small shared helpers (below)
 ├── intelligence/   the Frappe module: DocTypes, report, page, sidebars, workspace
 ├── dock/           the app's dock                                     → ../navigation/
-├── public/         panel, Write with AI, Workflow Builder, icons, logo
+├── public/         panel, Write with AI, Workflow Builder, tutorial, icons, logo
 ├── locale/         translations (gettext)                             → ../guidelines/translations.md
 ├── patches/        data patches run once on migrate
 ├── tests/          tests over fakes                                   → ../guidelines/testing.md

@@ -9,5 +9,6 @@ The rules that matter most:
 - **UI needs an approved mockup** before any implementation code.
 - **One step at a time.** Build, verify (tests, migrate, build, browser), document, then stop for review.
 - **Docs ship with the change**, in the feature's folder, one short file per concern.
+- **The tutorial ships with the change**: a new or changed feature adds or updates its topic ([frappe_intelligence/docs/tutorial/content.md](frappe_intelligence/docs/tutorial/content.md)).
 - **Strings are translated** (`_()`, `__()`, `locale/ar.po`); text sent to a model stays in English.
 - **Tests run over fakes** and never import the optional OCR or voice packages.

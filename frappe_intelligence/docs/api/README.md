@@ -8,6 +8,7 @@ Whitelisted endpoints, one file per `api/` module: `frappe_intelligence.api.<mod
 | `api.workflows`, `api.builder` | `start_workflow`, `exit_workflow`; `list_workflows`, `get_workflow_for_builder`, `save_workflow_builder`, `preview_step_prompt` | [workflows.md](workflows.md) |
 | `api.writer`, `api.voice`, `api.jobs` | `write_field`, `transcribe`, `job_result` | [jobs.md](jobs.md) |
 | `api.documents` | `process_document`, `get_log_status`, `confirm_extraction`, `submit_correction`, `list_templates`, `get_required_documents`, `register_post_processor` | [documents.md](documents.md) |
+| `api.tutorial` | `set_done` | [tutorial.md](tutorial.md) |
 | `api.settings` | `test_connection`, `is_whatsapp_installed`, `is_whatsapp_enabled` | [settings.md](settings.md) |
 | `api.portal` | `portal_chat`, `portal_upload_document`, `portal_get_session_state` | [portal.md](portal.md) |
 

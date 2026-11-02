@@ -1,12 +1,12 @@
 {
  "app": "frappe_intelligence",
  "charts": [],
- "content": "[{\"id\": \"0114164603\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Conversations</b></span>\", \"col\": 12}}, {\"id\": \"f0f809edd9\", \"type\": \"paragraph\", \"data\": {\"text\": \"Open the assistant from the dock's sparkles button or with Ctrl + . on any page.\", \"col\": 12}}, {\"id\": \"f60a193007\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Conversations\", \"col\": 3}}, {\"id\": \"31529671c9\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Session Analytics\", \"col\": 3}}, {\"id\": \"755698a62c\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Knowledge Packs\", \"col\": 3}}, {\"id\": \"98ae42912a\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"AI Settings\", \"col\": 3}}]",
+ "content": "[{\"id\": \"0114164603\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Conversations</b></span>\", \"col\": 12}}, {\"id\": \"f0f809edd9\", \"type\": \"paragraph\", \"data\": {\"text\": \"Open the assistant from the dock's sparkles button or with Ctrl + . on any page.\", \"col\": 12}}, {\"id\": \"a7c3e19f02\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Tutorial\", \"col\": 3}}, {\"id\": \"f60a193007\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Conversations\", \"col\": 3}}, {\"id\": \"31529671c9\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Session Analytics\", \"col\": 3}}, {\"id\": \"755698a62c\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Knowledge Packs\", \"col\": 3}}, {\"id\": \"98ae42912a\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"AI Settings\", \"col\": 3}}]",
  "creation": "2026-11-01 03:16:00.000000",
  "docstatus": 0,
  "doctype": "Workspace",
  "idx": 0,
- "modified": "2026-11-01 03:16:00.000000",
+ "modified": "2026-11-02 18:00:00.000000",
  "modified_by": "Administrator",
  "name": "Intelligence",
  "owner": "Administrator",
@@ -54,6 +54,13 @@
    "label": "AI Settings",
    "link_to": "AI Settings",
    "type": "DocType"
+  },
+  {
+   "color": "Purple",
+   "doc_view": "",
+   "label": "Tutorial",
+   "link_to": "intelligence-tutorial",
+   "type": "Page"
   }
  ],
  "standard": 1,
