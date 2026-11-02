@@ -7,7 +7,9 @@ An **AI Workflow** takes the user through its steps one at a time, collecting th
 | Starting, answering and leaving a workflow in the panel (boards 2a, 3b) | [desk.md](desk.md) |
 | One turn: topic gate, reading the answer, moving on, the reply | [turn.md](turn.md) |
 | Steps, required fields, completion check, the record a workflow fills | [steps.md](steps.md) |
-| Building workflows (Workflow Builder), knowledge packs, post-processors | [../WORKFLOWS.md](../WORKFLOWS.md) |
+| Building workflows: Workflow Builder, the AI Workflow fields, statuses | [building.md](building.md) |
+| Knowledge packs | [knowledge-packs.md](knowledge-packs.md) |
+| Post-processors | [post-processors.md](post-processors.md) |
 
 ## Code
 

@@ -416,3 +416,18 @@ class TestTranscript(TestCase):
 			("", "What is the client's name?", False),
 		)
 		self.assertEqual((asked["question"], asked["off_topic"]), ("Tell me a joke", True))
+
+
+class TestCompanyPrompt(TestCase):
+	def prompt(self, channel, **settings):
+		values = {"system_prompt": "Desk rules.", "whatsapp_system_prompt": "", **settings}
+		with patch.object(turn.frappe, "get_cached_doc", return_value=NS(**values)):
+			return turn.company_prompt(channel)
+
+	def test_whatsapp_uses_its_own_prompt_when_set(self):
+		self.assertEqual(self.prompt("WhatsApp", whatsapp_system_prompt="Short messages."), "Short messages.")
+		self.assertEqual(self.prompt("Desk", whatsapp_system_prompt="Short messages."), "Desk rules.")
+
+	def test_falls_back_to_the_general_prompt_then_the_default(self):
+		self.assertEqual(self.prompt("WhatsApp"), "Desk rules.")
+		self.assertEqual(self.prompt("Portal", system_prompt=""), turn.DEFAULT_SYSTEM)

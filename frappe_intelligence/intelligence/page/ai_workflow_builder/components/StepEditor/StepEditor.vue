@@ -28,20 +28,6 @@
         :target-doctype="step.target_doctype"
         @update:value="onStepPatch({ required_fields: $event })"
       />
-      <DocumentRequirements
-        v-else-if="activeTab === 'documents'"
-        :step-key="step.step_key"
-        :requirements="requirements"
-        :available-templates="availableTemplates"
-        @update="$emit('update:requirements', $event)"
-      />
-      <PostProcessors
-        v-else-if="activeTab === 'processors'"
-        :step-key="step.step_key"
-        :assignments="processorAssignments"
-        :available-processors="availableProcessors"
-        @update="$emit('update:processors', $event)"
-      />
       <WhatsAppFlow
         v-else-if="activeTab === 'whatsapp'"
         :value="step.whatsapp_flow"
@@ -56,34 +42,26 @@
 <script>
 import StepBasics           from "./StepBasics.vue";
 import RequiredFields       from "./RequiredFields.vue";
-import DocumentRequirements from "./DocumentRequirements.vue";
-import PostProcessors       from "./PostProcessors.vue";
 import WhatsAppFlow         from "./WhatsAppFlow.vue";
 
 const ALL_TABS = [
   { id: "basics",     label: "Basics" },
   { id: "fields",     label: "Fields" },
-  { id: "documents",  label: "Documents" },
-  { id: "processors", label: "Post-Processors" },
   { id: "whatsapp",   label: "WhatsApp" },
 ];
 
 export default {
   name: "StepEditor",
-  components: { StepBasics, RequiredFields, DocumentRequirements, PostProcessors, WhatsAppFlow },
+  components: { StepBasics, RequiredFields, WhatsAppFlow },
 
   props: {
     step:                 { type: Object, required: true },
     allSteps:             { type: Array,  default: () => [] },
-    requirements:         { type: Array,  default: () => [] },
-    processorAssignments: { type: Array,  default: () => [] },
-    availableTemplates:   { type: Array,  default: () => [] },
-    availableProcessors:  { type: Array,  default: () => [] },
     availableWaFlows:     { type: Array,  default: () => [] },
     allowWhatsapp:        { type: Boolean, default: false },
   },
 
-  emits: ["update:step", "update:requirements", "update:processors"],
+  emits: ["update:step"],
 
   data() {
     return {

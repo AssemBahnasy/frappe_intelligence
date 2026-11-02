@@ -1,4 +1,4 @@
-# Arabic, right to left, translations
+# Arabic and right to left
 
 ## Right to left (board 3c)
 
@@ -11,19 +11,10 @@ The panel's layout uses logical properties (`inset-inline-start`, `padding-inlin
 | Number columns in tables | Aligned to the end with tabular figures (`assistant/tables.js`) |
 | Write with AI, workflow bar | Frappe's popover and toast, and logical properties |
 
-The reply language follows **AI Settings → Response Language** or the user's message (`utils/language.py`).
+## The reply language
+
+The reply language follows **AI Settings → Response Language** or the user's message (`utils/language.py`). Replies written without AI, such as a workflow's redirect and closing summary, use the same language: `language.replying_to(text)` translates them into it instead of the desk language.
 
 ## Translations
 
-Arabic ships in `locale/ar.po` (gettext, like Frappe, ERPNext and HRMS); `locale/main.pot` lists every string. `bench build` compiles them.
-
-After changing user-facing strings:
-
-```bash
-bench generate-pot-file --app frappe_intelligence
-bench update-po-files --app frappe_intelligence --locale ar
-# translate the new empty msgstr entries in locale/ar.po
-bench compile-po-to-mo --app frappe_intelligence
-```
-
-Strings are wrapped in `__()` in JavaScript and Vue, `_()` / `_lt()` in Python; DocType labels and descriptions are picked up from the JSON. Text sent to the model (prompts, rules) stays in English.
+Arabic ships in `locale/ar.po`; how strings are added and translated: [../guidelines/translations.md](../guidelines/translations.md).

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frappe Intelligence VERSION\n"
 "Report-Msgid-Bugs-To: bahnasyassem@gmail.com\n"
-"POT-Creation-Date: 2026-11-01 03:17+0307\n"
-"PO-Revision-Date: 2026-11-01 03:17+0307\n"
+"POT-Creation-Date: 2026-11-02 10:55+0307\n"
+"PO-Revision-Date: 2026-11-02 10:55+0307\n"
 "Last-Translator: bahnasyassem@gmail.com\n"
 "Language-Team: bahnasyassem@gmail.com\n"
 "MIME-Version: 1.0\n"
@@ -79,7 +79,7 @@ msgid "AI Conversation Message"
 msgstr ""
 
 #. Name of a DocType
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:76
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:55
 msgid "AI Document Requirement"
 msgstr ""
 
@@ -153,7 +153,7 @@ msgid "AI Widget Role"
 msgstr ""
 
 #. Name of a DocType
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:163
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:150
 msgid "AI Workflow"
 msgstr ""
 
@@ -165,11 +165,6 @@ msgstr ""
 #. Name of a DocType
 #: frappe_intelligence/intelligence/doctype/ai_workflow_knowledge_pack/ai_workflow_knowledge_pack.json:27
 msgid "AI Workflow Knowledge Pack"
-msgstr ""
-
-#. Name of a DocType
-#: frappe_intelligence/intelligence/doctype/ai_workflow_post_processor/ai_workflow_post_processor.json:35
-msgid "AI Workflow Post Processor"
 msgstr ""
 
 #. Name of a DocType
@@ -230,10 +225,6 @@ msgstr ""
 msgid "Add Pack"
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:5
-msgid "Add Requirement"
-msgstr ""
-
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepSequencer.vue:5
 msgid "Add Step"
 msgstr ""
@@ -250,7 +241,7 @@ msgstr ""
 #. Workflow'
 #. Label of the section_break_advanced (Section Break) field in DocType 'AI
 #. Workflow Step'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:133
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:120
 #: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:76
 msgid "Advanced"
 msgstr ""
@@ -288,17 +279,17 @@ msgid "Allow Agent Mode"
 msgstr ""
 
 #. Label of the allow_desk (Check) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:64
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:62
 msgid "Allow: Frappe Desk"
 msgstr ""
 
 #. Label of the allow_portal (Check) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:70
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:68
 msgid "Allow: Portal"
 msgstr ""
 
 #. Label of the allow_whatsapp (Check) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:76
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:74
 msgid "Allow: WhatsApp"
 msgstr ""
 
@@ -342,10 +333,6 @@ msgstr ""
 
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:119
 msgid "Ask about your data, or describe a task…"
-msgstr ""
-
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:5
-msgid "Assign Processor"
 msgstr ""
 
 #. Label of the widget_tab (Tab Break) field in DocType 'AI Settings'
@@ -544,7 +531,7 @@ msgid "Completion Check (Python callable)"
 msgstr ""
 
 #. Label of the completion_message (Small Text) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:144
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:131
 msgid "Completion Message"
 msgstr ""
 
@@ -559,7 +546,7 @@ msgid "Confidence Threshold"
 msgstr ""
 
 #. Label of the confidence_threshold (Float) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:138
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:125
 msgid "Confidence Threshold (override)"
 msgstr ""
 
@@ -726,7 +713,7 @@ msgid "Discard"
 msgstr ""
 
 #. Label of the label (Data) field in DocType 'AI Document Requirement'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:43
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:40
 msgid "Display Label"
 msgstr ""
 
@@ -769,15 +756,11 @@ msgstr ""
 #. Template'
 #. Label of the document_type_key (Data) field in DocType 'AI Post Processor'
 #. Label of the document_type_key (Data) field in DocType 'AI Processing Log'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:32
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:29
 #: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:33
 #: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:21
 #: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:45
 msgid "Document Type Key"
-msgstr ""
-
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:4
-msgid "Documents the agent must collect at this step"
 msgstr ""
 
 #: frappe_intelligence/agent/tools/desk.py:165
@@ -786,10 +769,6 @@ msgstr ""
 
 #: frappe_intelligence/agent/tools/desk.py:81
 msgid "Each dataset needs one number per label."
-msgstr ""
-
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:18
-msgid "Edit"
 msgstr ""
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:25
@@ -840,7 +819,7 @@ msgid "Excluded DocTypes"
 msgstr ""
 
 #. Label of the excluded_keywords (Long Text) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:154
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:141
 msgid "Excluded Keywords (one per line)"
 msgstr ""
 
@@ -890,15 +869,15 @@ msgstr ""
 msgid "Failed"
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:219
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:205
 msgid "Failed to load workflow."
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:192
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:182
 msgid "Failed to load workflows."
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:316
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:290
 msgid "Failed to save workflow."
 msgstr ""
 
@@ -1080,12 +1059,12 @@ msgstr ""
 
 #. Description of the 'Display Label' (Data) field in DocType 'AI Document
 #. Requirement'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:44
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:41
 msgid "Human-readable label shown in the widget checklist and bubble."
 msgstr ""
 
 #. Description of the 'Title' (Data) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:48
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:46
 msgid "Human-readable name, e.g. Service Request."
 msgstr ""
 
@@ -1098,7 +1077,7 @@ msgstr ""
 msgid "I opened a new {0} with these details. Check it and save it."
 msgstr ""
 
-#: frappe_intelligence/agent/loop.py:89
+#: frappe_intelligence/agent/loop.py:88
 #, python-brace-format
 msgid "I stopped after {0} steps. Ask me to continue if you need more."
 msgstr ""
@@ -1168,11 +1147,11 @@ msgstr ""
 #. Label of the is_active (Check) field in DocType 'AI Knowledge Pack'
 #. Label of the is_active (Check) field in DocType 'AI Post Processor'
 #. Label of the is_active (Check) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:49
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:46
 #: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:53
 #: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:42
 #: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:41
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:53
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:51
 msgid "Is Active"
 msgstr ""
 
@@ -1230,8 +1209,8 @@ msgstr ""
 #. Label of the knowledge_packs (Table) field in DocType 'AI Workflow'
 #. Label of a Sidebar Item
 #. Label of a shortcut in the Intelligence Workspace
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:111
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:103
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:109
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:97
 #: frappe_intelligence/intelligence/sidebar/intelligence_setup/intelligence_setup.json:38
 #: frappe_intelligence/intelligence/workspace/intelligence/intelligence.json:47
 msgid "Knowledge Packs"
@@ -1291,12 +1270,6 @@ msgstr ""
 msgid "Let the assistant prepare changes (create, update, submit, cancel, delete). Every change is shown to the user and runs only after they confirm it."
 msgstr ""
 
-#. Description of the 'Workflow' (Link) field in DocType 'AI Document
-#. Requirement'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:62
-msgid "Link to the AI Workflow this requirement belongs to. Leave blank if not workflow-specific."
-msgstr ""
-
 #. Label of the linked_doctype (Link) field in DocType 'AI Conversation'
 #. Label of the linked_doctype (Link) field in DocType 'AI Processing Log'
 #: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:122
@@ -1334,10 +1307,6 @@ msgstr ""
 msgid "Loading…"
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:21
-msgid "Mandatory"
-msgstr ""
-
 #. Description of the 'Enable AI on WhatsApp' (Check) field in DocType 'AI
 #. Settings'
 #: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:274
@@ -1359,7 +1328,7 @@ msgstr ""
 
 #. Description of the 'Completion Message' (Small Text) field in DocType 'AI
 #. Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:145
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:132
 msgid "Message shown to the user when all workflow steps are complete. Defaults to a generic confirmation if left blank."
 msgstr ""
 
@@ -1462,24 +1431,12 @@ msgstr ""
 msgid "No conversations yet"
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:27
-msgid "No document requirements for this step."
-msgstr ""
-
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:16
 msgid "No knowledge packs assigned."
 msgstr ""
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:43
 msgid "No packs found."
-msgstr ""
-
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:23
-msgid "No post-processors assigned to this step."
-msgstr ""
-
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:51
-msgid "No processors found."
 msgstr ""
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/PromptPreview.vue:18
@@ -1496,10 +1453,6 @@ msgstr ""
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepSequencer.vue:38
 msgid "No steps yet. Click the Add Step button to begin."
-msgstr ""
-
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:55
-msgid "No templates found."
 msgstr ""
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:34
@@ -1633,7 +1586,7 @@ msgid "Original Extraction"
 msgstr ""
 
 #. Label of the out_of_scope_reply (Small Text) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:94
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:92
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:38
 msgid "Out-of-Scope Reply"
 msgstr ""
@@ -1692,23 +1645,9 @@ msgstr ""
 msgid "Portal user or WhatsApp number the conversation belongs to. Empty for desk conversations."
 msgstr ""
 
-#. Label of the processor (Link) field in DocType 'AI Workflow Post Processor'
-#: frappe_intelligence/intelligence/doctype/ai_workflow_post_processor/ai_workflow_post_processor.json:23
-msgid "Post Processor"
-msgstr ""
-
 #. Label of a Sidebar Item
 #: frappe_intelligence/intelligence/sidebar/intelligence_setup/intelligence_setup.json:54
 msgid "Post Processors"
-msgstr ""
-
-#. Label of the post_processors (Table) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:127
-msgid "Post-Processors"
-msgstr ""
-
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:4
-msgid "Post-processors run after the agent completes this step"
 msgstr ""
 
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:266
@@ -1835,8 +1774,6 @@ msgstr ""
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:12
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:17
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:23
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:19
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/RequiredFields.vue:35
 msgid "Remove"
 msgstr ""
@@ -1861,7 +1798,7 @@ msgstr ""
 
 #. Description of the 'Out-of-Scope Reply' (Small Text) field in DocType 'AI
 #. Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:95
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:93
 msgid "Reply returned immediately when the user's message is out of scope. No LLM tokens are consumed. Write it in the language your users expect."
 msgstr ""
 
@@ -1926,18 +1863,18 @@ msgstr ""
 msgid "Saving…"
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:92
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:86
 msgid "Scope"
 msgstr ""
 
 #. Label of the section_break_scope (Section Break) field in DocType 'AI
 #. Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:82
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:80
 msgid "Scope Definition"
 msgstr ""
 
 #. Label of the scope_description (Long Text) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:87
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:85
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/ScopeEditor.vue:4
 msgid "Scope Description"
 msgstr ""
@@ -1950,10 +1887,6 @@ msgstr ""
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:36
 msgid "Search DocType…"
-msgstr ""
-
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:41
-msgid "Search templates…"
 msgstr ""
 
 #: frappe_intelligence/agent/tools/frappe_data.py:13
@@ -1969,7 +1902,6 @@ msgid "Searching the knowledge base"
 msgstr ""
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:29
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:37
 msgid "Search…"
 msgstr ""
 
@@ -1978,19 +1910,11 @@ msgstr ""
 msgid "Seconds to wait for the AI provider before giving up."
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/DocumentRequirements.vue:35
-msgid "Select Document Template"
-msgstr ""
-
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:23
 msgid "Select Knowledge Pack"
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/PostProcessors.vue:31
-msgid "Select Post-Processor"
-msgstr ""
-
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:86
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:80
 msgid "Select a step to edit"
 msgstr ""
 
@@ -2045,7 +1969,7 @@ msgid "Slug identifier of the matched template (e.g. saudi_cr)."
 msgstr ""
 
 #. Description of the 'Workflow Key' (Data) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:40
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:38
 msgid "Slug identifier used in code, e.g. service_request. Must be unique."
 msgstr ""
 
@@ -2056,7 +1980,7 @@ msgstr ""
 
 #. Description of the 'Document Type Key' (Data) field in DocType 'AI Document
 #. Requirement'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:34
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:31
 msgid "Slug matching the AI Document Template (e.g. saudi_national_address)."
 msgstr ""
 
@@ -2077,20 +2001,10 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#. Label of the step_key (Data) field in DocType 'AI Document Requirement'
-#. Label of the step_key (Data) field in DocType 'AI Workflow Post Processor'
 #. Label of the step_key (Data) field in DocType 'AI Workflow Step'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:67
-#: frappe_intelligence/intelligence/doctype/ai_workflow_post_processor/ai_workflow_post_processor.json:16
 #: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:33
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:5
 msgid "Step Key"
-msgstr ""
-
-#. Label of the section_break_processors (Section Break) field in DocType 'AI
-#. Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:122
-msgid "Step Post-Processors"
 msgstr ""
 
 #: frappe_intelligence/public/js/assistant/components/WorkflowBar.vue:62
@@ -2099,7 +2013,7 @@ msgid "Step {0} of {1} · {2}"
 msgstr ""
 
 #. Label of the steps (Table) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:105
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:103
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepSequencer.vue:4
 msgid "Steps"
 msgstr ""
@@ -2136,14 +2050,14 @@ msgstr ""
 
 #. Name of a role
 #: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:159
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:87
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:66
 #: frappe_intelligence/intelligence/doctype/ai_document_template/ai_document_template.json:97
 #: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:92
 #: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:61
 #: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:145
 #: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:401
 #: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:98
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:174
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:161
 msgid "System Manager"
 msgstr ""
 
@@ -2155,7 +2069,7 @@ msgstr ""
 #. Label of the target_doctype (Link) field in DocType 'AI Document
 #. Requirement'
 #. Label of the target_doctype (Link) field in DocType 'AI Workflow Step'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:23
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:20
 #: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:51
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/StepBasics.vue:29
 msgid "Target DocType"
@@ -2173,7 +2087,7 @@ msgstr ""
 msgid "Thank you! Your request has been submitted."
 msgstr ""
 
-#: frappe_intelligence/workflows/turn.py:192
+#: frappe_intelligence/workflows/turn.py:208
 msgid "Thank you, that's everything. Your answers:"
 msgstr ""
 
@@ -2181,11 +2095,11 @@ msgstr ""
 msgid "That's outside this workflow."
 msgstr ""
 
-#: frappe_intelligence/agent/loop.py:216
+#: frappe_intelligence/agent/loop.py:202
 msgid "The AI declined to answer this request."
 msgstr ""
 
-#: frappe_intelligence/agent/loop.py:217
+#: frappe_intelligence/agent/loop.py:203
 msgid "The AI returned an empty answer. Please try rephrasing."
 msgstr ""
 
@@ -2195,7 +2109,7 @@ msgstr ""
 
 #. Description of the 'Target DocType' (Link) field in DocType 'AI Document
 #. Requirement'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:26
+#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:23
 msgid "The Frappe DocType that requires this document (e.g. Facility)."
 msgstr ""
 
@@ -2276,7 +2190,7 @@ msgstr ""
 msgid "Thinking…"
 msgstr ""
 
-#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.py:91
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.py:93
 msgid "This change is no longer waiting for a decision."
 msgstr ""
 
@@ -2306,11 +2220,11 @@ msgstr ""
 
 #: frappe_intelligence/api/workflows.py:20
 #: frappe_intelligence/workflows/sessions.py:40
-#: frappe_intelligence/workflows/turn.py:70
+#: frappe_intelligence/workflows/turn.py:75
 msgid "This workflow is not available here."
 msgstr ""
 
-#: frappe_intelligence/workflows/turn.py:80
+#: frappe_intelligence/workflows/turn.py:85
 msgid "This workflow was changed after this conversation started, so it cannot continue. Please start it again."
 msgstr ""
 
@@ -2322,7 +2236,7 @@ msgstr ""
 #. Label of the title (Data) field in DocType 'AI Conversation'
 #. Label of the title (Data) field in DocType 'AI Workflow'
 #: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:31
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:46
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:44
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:6
 msgid "Title"
 msgstr ""
@@ -2587,7 +2501,7 @@ msgstr ""
 
 #. Description of the 'Excluded Keywords (one per line)' (Long Text) field in
 #. DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:155
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:142
 msgid "Words or phrases specific to this workflow that should never be blocked by the scope keyword gate. Example: terms from your business domain that match generic off-topic patterns."
 msgstr ""
 
@@ -2595,10 +2509,8 @@ msgstr ""
 #. Label of the workflow_section (Section Break) field in DocType 'AI
 #. Conversation'
 #. Label of the workflow (Link) field in DocType 'AI Conversation'
-#. Label of the workflow (Link) field in DocType 'AI Document Requirement'
 #: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:41
 #: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:91
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:60
 msgid "Workflow"
 msgstr ""
 
@@ -2607,20 +2519,14 @@ msgstr ""
 msgid "Workflow Builder"
 msgstr ""
 
-#. Label of the section_break_workflow (Section Break) field in DocType 'AI
-#. Document Requirement'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:55
-msgid "Workflow Context"
-msgstr ""
-
 #. Label of the workflow_key (Data) field in DocType 'AI Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:37
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:35
 msgid "Workflow Key"
 msgstr ""
 
 #. Label of the section_break_steps (Section Break) field in DocType 'AI
 #. Workflow'
-#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:100
+#: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:98
 msgid "Workflow Steps"
 msgstr ""
 
@@ -2632,7 +2538,7 @@ msgstr ""
 msgid "Workflow progress"
 msgstr ""
 
-#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:314
+#: frappe_intelligence/intelligence/page/ai_workflow_builder/components/Page.vue:288
 msgid "Workflow saved."
 msgstr ""
 
@@ -2688,7 +2594,7 @@ msgstr ""
 msgid "Writing {0}…"
 msgstr ""
 
-#: frappe_intelligence/utils/access.py:40
+#: frappe_intelligence/utils/access.py:51
 msgid "You are not allowed to use the assistant."
 msgstr ""
 
@@ -2768,12 +2674,6 @@ msgstr ""
 #. Option for the 'Channel' (Select) field in DocType 'AI Processing Log'
 #: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:69
 msgid "portal"
-msgstr ""
-
-#. Description of the 'Step Key' (Data) field in DocType 'AI Document
-#. Requirement'
-#: frappe_intelligence/intelligence/doctype/ai_document_requirement/ai_document_requirement.json:68
-msgid "step_key of the AI Workflow Step that requires this document. Leave blank if applies to all steps."
 msgstr ""
 
 #. Description of the 'Next Step Key' (Data) field in DocType 'AI Workflow

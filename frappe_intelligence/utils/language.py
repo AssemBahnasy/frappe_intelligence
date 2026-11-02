@@ -1,5 +1,7 @@
 """Which language the assistant replies in (AI Settings → Response Language)."""
 
+from contextlib import contextmanager
+
 import frappe
 
 ARABIC_SHARE = 0.2
@@ -22,17 +24,37 @@ def detect_language(text: str) -> str:
 	return "ar" if arabic / len(stripped) > ARABIC_SHARE else "en"
 
 
+def reply_language(text: str) -> str:
+	"""The language code of the reply to `text`: AI Settings' choice, else Arabic for an Arabic
+	message, else the desk language."""
+	allowed = dict(allowed_languages())
+	detected = detect_language(text)
+	if allowed:
+		return detected if detected in allowed else next(iter(allowed))
+	return "ar" if detected == "ar" else frappe.local.lang
+
+
 def language_rule(text: str) -> str:
 	"""The instruction that pins the reply language for this message."""
-	allowed = allowed_languages()
+	allowed = dict(allowed_languages())
 	if allowed:
-		codes = [code for code, _ in allowed]
-		detected = detect_language(text)
-		code = detected if detected in codes else codes[0]
-		return _only(dict(allowed)[code])
+		return _only(allowed[reply_language(text)])
 	if detect_language(text) == "ar":
 		return _only("Arabic")
 	return "Reply in the same language as the user's message, without adding translations."
+
+
+@contextmanager
+def replying_to(text: str):
+	"""`_()` translates into the reply language: for replies written without AI."""
+	# A background job applies its user's language at the first `_()`; let that happen before ours.
+	frappe._("")
+	desk = frappe.local.lang
+	frappe.local.lang = reply_language(text)
+	try:
+		yield
+	finally:
+		frappe.local.lang = desk
 
 
 def _only(name: str) -> str:

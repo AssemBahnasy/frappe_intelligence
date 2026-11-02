@@ -11,7 +11,7 @@ A microphone between the paperclip and **Send** (approved board 3c). The recordi
 
 | Part | Detail |
 |---|---|
-| When it shows | Only when the `voice` extra (`faster-whisper`) is installed ([../DEPLOYMENT.md](../DEPLOYMENT.md#optional-packages)) |
+| When it shows | Only when the `voice` extra (`faster-whisper`) is installed ([../setup/install.md](../setup/install.md#optional-packages)) |
 | Language | **AI Settings → Chat → Voice Transcription Language** (e.g. `ar`); empty means the language spoken. The button's label names it: "Voice input (ar)" |
 | Formats | Whatever the browser records (WebM/Opus, Ogg, MP4); Whisper reads them all |
 | Model | `whisper_model_size` in site_config.json (default `medium`); the first use downloads and loads it, which takes a while |

@@ -1,4 +1,4 @@
-# Provider settings (AI Settings → Model tab)
+# Provider settings (AI Settings → Model)
 
 | Field | Applies to | Notes |
 |---|---|---|
@@ -11,7 +11,7 @@
 | `gemini_api_key`, `gemini_model` | Gemini | |
 | `ollama_base_url`, `ollama_model` | Ollama | Defaults `http://localhost:11434`, `qwen2.5:7b` |
 | `keep_model_loaded` | Ollama | Preloads the model once with `keep_alive: -1` so it stays in memory |
-| `extraction_mode` | all | Document extraction strategy; see [../DOCUMENT_PIPELINE.md](../DOCUMENT_PIPELINE.md) |
+| `extraction_mode` | all | On the Chat tab: how document fields are extracted with the AI ([../documents/templates.md](../documents/templates.md#extraction-mode)) |
 
 ## How they are read
 
@@ -23,7 +23,7 @@ On `claude-fable-5-1`, `claude-fable-5`, `claude-opus-5-5`, `claude-opus-5` and 
 
 ## Test Connection
 
-The button calls `api.test_connection`, which runs `provider.test_connection()`:
+The button on AI Settings calls `api.settings.test_connection`, which runs `provider.test_connection()`:
 
 - cloud providers send a one-word prompt;
 - Ollama checks that the configured model is pulled and names the `ollama pull` command if not.

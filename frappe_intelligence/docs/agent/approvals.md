@@ -4,7 +4,7 @@ In Agent mode the assistant can create, update, submit, cancel and delete docume
 
 ## Turning it on
 
-**AI Settings → Widget → Agent Mode**
+**AI Settings → Assistant → Allow Agent Mode**
 
 | Field | Notes |
 |---|---|

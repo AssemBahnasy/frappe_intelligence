@@ -9,6 +9,6 @@ The assistant lives in a panel docked to the right of the desk (left in right-to
 | Code structure and how it loads | [structure.md](structure.md) |
 | Guided workflows in the panel | [../workflows/desk.md](../workflows/desk.md) |
 | Voice input | [voice.md](voice.md) |
-| Arabic, right to left, translations | [language.md](language.md) |
+| Arabic, right to left, the reply language | [language.md](language.md) |
 
 Answers come from the agent ([../agent/README.md](../agent/README.md)) and stream through the `fi_assistant` events ([../agent/live-replies.md](../agent/live-replies.md)).

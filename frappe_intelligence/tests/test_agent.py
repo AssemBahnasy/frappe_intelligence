@@ -19,6 +19,7 @@ from frappe_intelligence.intelligence.doctype.ai_conversation.ai_conversation im
 	AIConversation,
 )
 from frappe_intelligence.providers import Message, ProviderError, Reply, ToolCall
+from frappe_intelligence.utils import language
 
 
 class FakeConversation:
@@ -424,6 +425,22 @@ class TestPrompts(TestCase):
 	def test_a_file_without_text_still_reads_as_a_message(self):
 		with patch.object(prompts, "language_rule", return_value=""):
 			self.assertTrue(prompts.with_context("", None).endswith(prompts.FILE_ONLY))
+
+
+class TestReplyLanguage(TestCase):
+	def test_replies_written_without_ai_follow_the_message_language(self):
+		with patch.object(language, "allowed_languages", return_value=[]):
+			self.assertEqual(language.reply_language("مرحبا"), "ar")
+			frappe.local.lang = "en"
+			with language.replying_to("مرحبا"):
+				self.assertEqual(frappe.local.lang, "ar")
+			self.assertEqual(frappe.local.lang, "en")
+			self.assertEqual(language.reply_language("Hello"), "en")
+
+	def test_ai_settings_languages_come_first(self):
+		with patch.object(language, "allowed_languages", return_value=[("en", "English")]):
+			self.assertEqual(language.reply_language("مرحبا"), "en")
+			self.assertIn("English", language.language_rule("مرحبا"))
 
 
 class TestConversationHistory(TestCase):

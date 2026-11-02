@@ -7,7 +7,7 @@ A sparkles button beside long text fields in every form. The user says what the 
 | What the user sees: button, popover, toast, Undo | [behaviour.md](behaviour.md) |
 | The endpoint, the background job, what the model reads, permissions | [server.md](server.md) |
 
-Turned on or off in **AI Settings → Widget → Writing Help → Write with AI in Forms** (on by default; the patch `v1_0.enable_field_writer` turns it on for sites that had AI Settings before). It follows **Allowed Roles** like the rest of the assistant.
+Turned on or off in **AI Settings → Assistant → Write with AI in Forms** (on by default; the patch `v1_0.enable_field_writer` turns it on for sites that had AI Settings before). It follows **Allowed Roles** like the rest of the assistant.
 
 ## Code
 

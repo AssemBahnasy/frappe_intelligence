@@ -5,8 +5,9 @@ Files the assistant reads: PDFs, photos and text files. A file that matches an *
 | Concern | Doc |
 |---|---|
 | Attaching a file in the panel and reviewing what was read (board 3a) | [review.md](review.md) |
-| Templates, extraction rules, confidence, seeding, the portal and WhatsApp pipeline | [../DOCUMENT_PIPELINE.md](../DOCUMENT_PIPELINE.md) |
-| How field values are pulled out with the AI provider | [../providers/settings.md](../providers/settings.md) (`extraction_mode`) |
+| Templates, extraction rules, extraction mode, the files that can be read, seeding | [templates.md](templates.md) |
+| The pipeline for the portal, WhatsApp and other apps; document requirements | [pipeline.md](pipeline.md) |
+| Processing logs and training pairs | [training.md](training.md) |
 
 ## Code
 

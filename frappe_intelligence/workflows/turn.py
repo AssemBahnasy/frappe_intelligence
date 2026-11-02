@@ -19,7 +19,7 @@ from frappe_intelligence.agent.loop import Hooks, Stopped, TurnResult, complete
 from frappe_intelligence.agent.tools.knowledge import knowledge_block
 from frappe_intelligence.documents.reader import read_file_text
 from frappe_intelligence.providers import ProviderError, Reply, get_provider
-from frappe_intelligence.utils.language import language_rule
+from frappe_intelligence.utils.language import language_rule, replying_to
 from frappe_intelligence.workflows import answers, records, scope, steps
 
 CHANNEL_FLAGS = {"Desk": "allow_desk", "Portal": "allow_portal", "WhatsApp": "allow_whatsapp"}
@@ -63,9 +63,14 @@ def question(conversation, step) -> str:
 
 
 def run_turn(conversation, hooks: Hooks | None = None) -> TurnResult:
-	hooks = hooks or Hooks()
-	result = TurnResult()
 	text, _context = conversation.current_question()
+	# The replies written without AI (redirects, the summary) are in the language the user writes in.
+	with replying_to(text):
+		return _run_turn(conversation, text, hooks or Hooks())
+
+
+def _run_turn(conversation, text: str, hooks: Hooks) -> TurnResult:
+	result = TurnResult()
 	if not available(conversation.workflow, conversation.channel):
 		return _fixed(conversation, result, _("This workflow is not available here."))
 	workflow = frappe.get_doc("AI Workflow", conversation.workflow)
@@ -172,7 +177,7 @@ def _write(conversation, workflow, step, text: str, moved: bool, refusal: str | 
 	system = "\n\n".join(
 		part
 		for part in (
-			frappe.get_cached_doc("AI Settings").system_prompt or DEFAULT_SYSTEM,
+			company_prompt(conversation.channel),
 			RULES.format(title=workflow.title),
 			f"## Your mandate\n{workflow.scope_description}" if workflow.scope_description else "",
 			instructions(conversation, workflow, step, moved, refusal),
@@ -183,6 +188,13 @@ def _write(conversation, workflow, step, text: str, moved: bool, refusal: str | 
 	# The instructions change every turn, so earlier reasoning can't be replayed.
 	messages = conversation.provider_messages(_with_language, thinking=False)
 	return complete(get_provider(), conversation, messages, system, None, hooks)
+
+
+def company_prompt(channel: str) -> str:
+	"""AI Settings → System Prompt; on WhatsApp its own prompt when set (short messages, no tables)."""
+	settings = frappe.get_cached_doc("AI Settings")
+	channel_prompt = settings.whatsapp_system_prompt if channel == "WhatsApp" else None
+	return channel_prompt or settings.system_prompt or DEFAULT_SYSTEM
 
 
 def _with_language(text: str, context: dict | None) -> str:

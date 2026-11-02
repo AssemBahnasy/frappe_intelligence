@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 from types import SimpleNamespace as NS
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
@@ -162,11 +163,13 @@ class TestTranscriber(TestCase):
 	def test_missing_settings_fall_back_to_cpu_defaults(self):
 		from frappe_intelligence.documents import transcriber
 
+		model = MagicMock()
 		with (
 			patch("frappe_intelligence.documents.transcriber.frappe.conf", new=frappe._dict()),
 			patch.object(transcriber.optional, "require"),
 			patch.object(transcriber, "_whisper_model", None),
-			patch("faster_whisper.WhisperModel") as model,
+			# The voice package is optional: CI runs without it.
+			patch.dict(sys.modules, {"faster_whisper": NS(WhisperModel=model)}),
 			patch("frappe_intelligence.documents.transcriber.frappe.logger"),
 		):
 			transcriber._get_model()

@@ -18,7 +18,7 @@ bench --site <site> migrate
 bench build --app frappe_intelligence
 ```
 
-Then open **Frappe desk → Intelligence → AI Settings** to configure the AI provider. Reading photos and voice input need optional packages: see [DEPLOYMENT.md](frappe_intelligence/docs/DEPLOYMENT.md#optional-packages).
+Then open **Frappe desk → Intelligence → AI Settings** to configure the AI provider. Reading photos and voice input need optional packages: see [setup/install.md](frappe_intelligence/docs/setup/install.md#optional-packages).
 
 ## Bench Commands
 
@@ -31,23 +31,7 @@ Then open **Frappe desk → Intelligence → AI Settings** to configure the AI p
 
 ## Documentation
 
-| Document | What it covers |
-|----------|---------------|
-| [architecture/](frappe_intelligence/docs/architecture/README.md) | Target structure, conventions, restructuring status |
-| [ARCHITECTURE.md](frappe_intelligence/docs/ARCHITECTURE.md) | System layers, data flows, DocType map |
-| [providers/](frappe_intelligence/docs/providers/README.md) | AI providers: interface, settings, adding one |
-| [agent/](frappe_intelligence/docs/agent/README.md) | Desk chat agent: loop, tools, conversations, security |
-| [panel/](frappe_intelligence/docs/panel/README.md) | The docked assistant panel on the desk |
-| [workflows/](frappe_intelligence/docs/workflows/README.md) | Guided workflows: panel, turns, steps, the filled record |
-| [documents/](frappe_intelligence/docs/documents/README.md) | Files the assistant reads, and reviewing what it read |
-| [writer/](frappe_intelligence/docs/writer/README.md) | Write with AI: long text fields written in place |
-| [navigation/](frappe_intelligence/docs/navigation/README.md) | Apps screen tile, dock, sidebars and icons |
-| [CONFIGURATION.md](frappe_intelligence/docs/CONFIGURATION.md) | AI Settings: providers, chat, WhatsApp, assistant |
-| [WORKFLOWS.md](frappe_intelligence/docs/WORKFLOWS.md) | Building workflows: steps, scope, knowledge packs, post-processors |
-| [DOCUMENT_PIPELINE.md](frappe_intelligence/docs/DOCUMENT_PIPELINE.md) | Document templates, extraction rules, training |
-| [INTEGRATION.md](frappe_intelligence/docs/INTEGRATION.md) | Adding the app to another Frappe app |
-| [API_REFERENCE.md](frappe_intelligence/docs/API_REFERENCE.md) | All whitelisted endpoints |
-| [DEPLOYMENT.md](frappe_intelligence/docs/DEPLOYMENT.md) | Self-hosted and Frappe Cloud setup |
+Start at [docs/README.md](frappe_intelligence/docs/README.md): what the app is, the rules for changing it ([guidelines/](frappe_intelligence/docs/guidelines/README.md)), how it fits together ([overview/](frappe_intelligence/docs/overview/README.md)), setup ([setup/](frappe_intelligence/docs/setup/README.md)), the endpoints ([api/](frappe_intelligence/docs/api/README.md)), and a folder per feature.
 
 ## Requirements
 

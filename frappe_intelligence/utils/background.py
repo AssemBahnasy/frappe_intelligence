@@ -51,7 +51,8 @@ def run(job: str, target: str, arguments: dict) -> None:
 
 def result(job: str) -> dict:
 	"""`{value}`, `{error}` or `{pending: true}`; only the user who started the job finds it."""
-	return frappe.cache.get_value(result_key(job)) or {"pending": True}
+	# Written by the worker: never the miss this request may have cached.
+	return frappe.cache.get_value(result_key(job), use_local_cache=False) or {"pending": True}
 
 
 def result_key(job: str) -> str:

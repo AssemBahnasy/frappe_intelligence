@@ -36,12 +36,8 @@ def get_workflow_for_builder(workflow_key: str) -> dict:
 	``{
 	    "workflow":             {workflow fields},
 	    "steps":                [{step fields}, ...],
-	    "requirements":         [{requirement fields}, ...],
-	    "knowledge_packs":      [],          # reserved — no assignment table yet
-	    "post_processors":      [],          # reserved — no assignment table yet
-	    "available_templates":  [{name, document_type_key, document_name}, ...],
+	    "knowledge_packs":      [{pack}, ...],
 	    "available_packs":      [{name, pack_name, description, is_active}, ...],
-	    "available_processors": [{name, callback_method, description, is_active}, ...],
 	    "available_wa_flows":   [{name}, ...] or [] when frappe_whatsapp absent
 	}``
 	"""
@@ -63,31 +59,10 @@ def get_workflow_for_builder(workflow_key: str) -> dict:
 		for s in (wf.steps or [])
 	]
 
-	requirements = frappe.get_all(
-		"AI Document Requirement",
-		filters={"workflow": workflow_key},
-		fields=["name", "target_doctype", "document_type_key", "label", "step_key", "is_active"],
-		order_by="step_key asc, label asc",
-	)
-
-	available_templates = frappe.get_all(
-		"AI Document Template",
-		filters={"is_active": 1},
-		fields=["name", "document_type_key", "document_name", "model_preference"],
-		order_by="document_name asc",
-	)
-
 	available_packs = frappe.get_all(
 		"AI Knowledge Pack",
 		fields=["name", "pack_name", "description", "is_active"],
 		order_by="pack_name asc",
-	)
-
-	available_processors = frappe.get_all(
-		"AI Post Processor",
-		filters={"is_active": 1},
-		fields=["name", "callback_method", "description", "document_type_key"],
-		order_by="callback_method asc",
 	)
 
 	# WhatsApp Flows — only available when frappe_whatsapp is installed.
@@ -101,10 +76,6 @@ def get_workflow_for_builder(workflow_key: str) -> dict:
 
 	knowledge_packs = [{"pack": row.pack} for row in (wf.knowledge_packs or [])]
 
-	processor_assignments = [
-		{"step_key": row.step_key, "processor": row.processor} for row in (wf.post_processors or [])
-	]
-
 	return {
 		"workflow": {
 			"workflow_key": wf.workflow_key,
@@ -117,12 +88,8 @@ def get_workflow_for_builder(workflow_key: str) -> dict:
 			"out_of_scope_reply": wf.out_of_scope_reply,
 		},
 		"steps": steps,
-		"requirements": requirements,
 		"knowledge_packs": knowledge_packs,
-		"processor_assignments": processor_assignments,
-		"available_templates": available_templates,
 		"available_packs": available_packs,
-		"available_processors": available_processors,
 		"available_wa_flows": available_wa_flows,
 	}
 
@@ -135,17 +102,14 @@ def save_workflow_builder(workflow_key: str, payload: dict | str) -> dict:
 	Persists:
 	  - AI Workflow header fields (title, is_active, channels, scope, out_of_scope_reply)
 	  - AI Workflow Step children (full replace — order, key, prompt, doctype, fields, etc.)
-	  - AI Document Requirement records (sync: create missing, delete removed)
 	  - Knowledge Pack assignments (``knowledge_packs`` child table, full replace)
-	  - Step Post-Processor assignments (``post_processors`` child table, full replace)
 
 	Parameters
 	----------
 	workflow_key:
 	    Identifies the AI Workflow to update. Must already exist.
 	payload:
-	    JSON with keys: ``workflow``, ``steps``, ``requirements``,
-	    ``knowledge_packs``, ``processor_assignments``.
+	    JSON with keys: ``workflow``, ``steps``, ``knowledge_packs``.
 
 	Returns
 	-------
@@ -158,9 +122,7 @@ def save_workflow_builder(workflow_key: str, payload: dict | str) -> dict:
 
 	wf_data: dict = payload.get("workflow", {})
 	steps_data: list[dict] = payload.get("steps", [])
-	req_data: list[dict] = payload.get("requirements", [])
 	packs_data: list[dict] = payload.get("knowledge_packs", [])
-	processors_data: list[dict] = payload.get("processor_assignments", [])
 
 	# --- Update AI Workflow header + steps (atomic via frappe.get_doc + save) ---
 	wf = frappe.get_doc("AI Workflow", workflow_key)
@@ -197,68 +159,10 @@ def save_workflow_builder(workflow_key: str, payload: dict | str) -> dict:
 		if p.get("pack"):
 			wf.append("knowledge_packs", {"pack": p["pack"]})
 
-	# Full replace of post_processors child table.
-	wf.post_processors = []
-	for a in processors_data:
-		if a.get("step_key") and a.get("processor"):
-			wf.append(
-				"post_processors",
-				{
-					"step_key": a["step_key"],
-					"processor": a["processor"],
-				},
-			)
-
 	wf.save(ignore_permissions=True)
-
-	# --- Sync AI Document Requirement records ---
-	_sync_requirements(workflow_key, req_data)
 
 	frappe.db.commit()
 	return {"ok": True}
-
-
-def _sync_requirements(workflow_key: str, req_data: list[dict]) -> None:
-	"""Create / update / delete AI Document Requirement records for a workflow."""
-	existing = {
-		r.name: r
-		for r in frappe.get_all(
-			"AI Document Requirement",
-			filters={"workflow": workflow_key},
-			fields=["name", "document_type_key", "step_key"],
-		)
-	}
-
-	incoming_names: set[str] = set()
-
-	for req in req_data:
-		name = req.get("name")
-		if name and frappe.db.exists("AI Document Requirement", name):
-			# Update existing record
-			doc = frappe.get_doc("AI Document Requirement", name)
-			doc.target_doctype = req.get("target_doctype", doc.target_doctype)
-			doc.document_type_key = req.get("document_type_key", doc.document_type_key)
-			doc.label = req.get("label", doc.label)
-			doc.step_key = req.get("step_key", doc.step_key)
-			doc.is_active = int(req.get("is_active", doc.is_active))
-			doc.save(ignore_permissions=True)
-			incoming_names.add(name)
-		else:
-			# Create new record
-			doc = frappe.new_doc("AI Document Requirement")
-			doc.workflow = workflow_key
-			doc.target_doctype = req.get("target_doctype", "")
-			doc.document_type_key = req.get("document_type_key", "")
-			doc.label = req.get("label", "")
-			doc.step_key = req.get("step_key", "")
-			doc.is_active = int(req.get("is_active", 1))
-			doc.insert(ignore_permissions=True)
-			incoming_names.add(doc.name)
-
-	# Delete requirements no longer in the payload
-	for name in existing:
-		if name not in incoming_names:
-			frappe.delete_doc("AI Document Requirement", name, ignore_permissions=True)
 
 
 @frappe.whitelist()

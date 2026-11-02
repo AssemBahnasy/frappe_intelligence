@@ -21,8 +21,6 @@
         "steps",
         "section_break_knowledge",
         "knowledge_packs",
-        "section_break_processors",
-        "post_processors",
         "section_break_advanced",
         "confidence_threshold",
         "completion_message",
@@ -117,17 +115,6 @@
             "options": "AI Workflow Knowledge Pack"
         },
         {
-            "fieldname": "section_break_processors",
-            "fieldtype": "Section Break",
-            "label": "Step Post-Processors"
-        },
-        {
-            "fieldname": "post_processors",
-            "fieldtype": "Table",
-            "label": "Post-Processors",
-            "options": "AI Workflow Post Processor"
-        },
-        {
             "fieldname": "section_break_advanced",
             "fieldtype": "Section Break",
             "label": "Advanced"
@@ -157,7 +144,7 @@
     ],
     "grid_page_length": 50,
     "links": [],
-    "modified": "2026-05-17 00:00:00.000000",
+    "modified": "2026-11-01 21:00:00.000000",
     "modified_by": "Administrator",
     "module": "Intelligence",
     "name": "AI Workflow",

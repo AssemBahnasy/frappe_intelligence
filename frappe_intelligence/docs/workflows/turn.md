@@ -26,13 +26,13 @@ user message
 
 A line of **Excluded Keywords** in the message lets it through both. No workflow mandate (Scope Description) means no gate. Threshold: **AI Settings → Scope Similarity Threshold** (default 0.05).
 
-The redirect is the workflow's **Out Of Scope Reply** (default "That's outside this workflow."), followed by the current step's question.
+The redirect is the workflow's **Out Of Scope Reply** (default "That's outside this workflow."), followed by the current step's question. Replies written without AI are in the language the user writes in (AI Settings → Response Language, else the message's own language), not the desk language.
 
 ## What the model is told
 
 | Part | Content |
 |---|---|
-| System | AI Settings system prompt; the workflow rules (one step at a time, never invent values, never say anything was saved); the mandate; the current step (`turn.instructions`); matching entries of the workflow's own knowledge packs |
+| System | AI Settings system prompt (on WhatsApp, the WhatsApp System Prompt when set; `turn.company_prompt`); the workflow rules (one step at a time, never invent values, never say anything was saved); the mandate; the current step (`turn.instructions`); matching entries of the workflow's own knowledge packs |
 | User message | The language rule as a note, then the message |
 | History | Earlier messages as first sent, without the model's earlier reasoning (`provider_messages(thinking=False)`), since the system part changes every turn |
 

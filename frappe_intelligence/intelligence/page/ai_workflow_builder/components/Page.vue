@@ -72,15 +72,9 @@
             v-if="selectedStep"
             :step="selectedStep"
             :all-steps="steps"
-            :requirements="requirements"
-            :processor-assignments="processorAssignments"
-            :available-templates="availableTemplates"
-            :available-processors="availableProcessors"
             :available-wa-flows="availableWaFlows"
             :allow-whatsapp="!!workflow.allow_whatsapp"
             @update:step="onStepUpdate"
-            @update:requirements="onRequirementsUpdate"
-            @update:processors="onProcessorsUpdate"
           />
           <div v-else class="fi-builder-no-step">
             {{ __("Select a step to edit") }}
@@ -153,12 +147,8 @@ export default {
       // Builder state
       workflow: BLANK_WORKFLOW(),
       steps: [],
-      requirements: [],
-      processorAssignments: [],
       knowledgePacks: [],
-      availableTemplates: [],
       availablePacks: [],
-      availableProcessors: [],
       availableWaFlows: [],
       selectedStepKey: null,
       isDirty: false,
@@ -206,12 +196,8 @@ export default {
         const data = res.message;
         this.workflow             = { ...BLANK_WORKFLOW(), ...data.workflow };
         this.steps                = (data.steps || []).map((s, i) => ({ ...s, _id: i }));
-        this.requirements         = data.requirements          || [];
-        this.processorAssignments = data.processor_assignments || [];
         this.knowledgePacks       = data.knowledge_packs       || [];
-        this.availableTemplates   = data.available_templates   || [];
         this.availablePacks       = data.available_packs       || [];
-        this.availableProcessors  = data.available_processors  || [];
         this.availableWaFlows     = data.available_wa_flows    || [];
         this._stepCounter = this.steps.length;
         this.isDirty = false;
@@ -244,16 +230,6 @@ export default {
       this.steps = this.steps.map((s) =>
         s.step_key === updatedStep.step_key ? updatedStep : s
       );
-      this.isDirty = true;
-    },
-
-    onRequirementsUpdate(newReqs) {
-      this.requirements = newReqs;
-      this.isDirty = true;
-    },
-
-    onProcessorsUpdate(newAssignments) {
-      this.processorAssignments = newAssignments;
       this.isDirty = true;
     },
 
@@ -304,9 +280,7 @@ export default {
             payload: {
               workflow:              this.workflow,
               steps:                 this.steps.map((s, i) => ({ ...s, step_order: i + 1 })),
-              requirements:          this.requirements,
               knowledge_packs:       this.knowledgePacks,
-              processor_assignments: this.processorAssignments,
             },
           },
         });
