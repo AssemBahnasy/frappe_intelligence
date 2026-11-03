@@ -32,7 +32,7 @@ A chapter is numbered by its place in `CHAPTERS`; one with no visible topic is l
 
 `tour: [{ target, step }]` reuses step `<step>`'s title and text; `[{ target, title, text }]` gives its own. `{ target: "try_it" }` alone points at Try it now with a standard text.
 
-A target names an element in `TARGETS` (`tour.js`): `launcher`, `panel`, `resizer`, `composer`, `mode`, `attach`, `microphone`, `history`, `new_chat`, `try_it`, `dock_workflows`, `dock_documents`, `dock_setup`, `analytics`. A new target goes there, found by class, by `item-name`, or by its `aria-label` through the same `__()` string the element uses, so it works in every language. A target missing from the screen (the dock on a phone) is skipped.
+A target names an element in `TARGETS` (`targets.js`): `launcher`, `panel`, `resizer`, `composer`, `send`, `context`, `mode`, `attach`, `microphone`, `history`, `new_chat`, `try_it`, `dock_workflows`, `dock_documents`, `dock_setup`, `analytics`. A new target goes there, found by class, by `item-name`, or by its `aria-label` through the same `__()` string the element uses, so it works in every language. A target missing from the screen (the dock on a phone) is skipped.
 
 ## Pictures
 

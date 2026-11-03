@@ -7,6 +7,8 @@ Usage (from inside frappe-bench/):
     bench fi-setup-ollama              # install Ollama + pull qwen2.5:7b
     bench fi-setup-ollama --model llama3.2-vision:11b
     bench fi-check-deps                # print dependency status
+    bench --site <site> fi-record-tutorial [--topic ask] [--lang en]
+    bench --site <site> fi-tutorial-sample-data
 """
 
 from __future__ import annotations
@@ -15,6 +17,7 @@ import subprocess
 import sys
 
 import click
+from frappe.commands import get_site, pass_context
 
 # ---------------------------------------------------------------------------
 # fi-setup-ollama
@@ -174,4 +177,44 @@ def _check_binary(binary: str, description: str) -> None:
 		click.echo(f"  ✗ {binary:<20} {description}  ← not found")
 
 
-commands = [setup_ollama, check_deps]
+# ---------------------------------------------------------------------------
+# fi-record-tutorial
+# ---------------------------------------------------------------------------
+
+
+@click.command("fi-record-tutorial")
+@click.option("--topic", "topics", multiple=True, help="A topic key; repeat for more. Default: all.")
+@click.option("--lang", "languages", multiple=True, default=("en", "ar"), show_default=True)
+@click.option("--first-name", default="Sara", show_default=True, help="Name the assistant greets.")
+@pass_context
+def record_tutorial(context, topics, languages, first_name) -> None:
+	"""Record the tutorial's demo videos on a development site (docs/tutorial/videos.md)."""
+	import frappe
+
+	from frappe_intelligence.tutorial import recorder
+
+	frappe.init(get_site(context))
+	frappe.connect()
+	try:
+		recorder.record(list(topics), list(languages), first_name)
+	finally:
+		frappe.destroy()
+
+
+@click.command("fi-tutorial-sample-data")
+@pass_context
+def tutorial_sample_data(context) -> None:
+	"""Create the fictional records the demo videos show, on a development site."""
+	import frappe
+
+	from frappe_intelligence.tutorial import sample_data
+
+	frappe.init(get_site(context))
+	frappe.connect()
+	try:
+		sample_data.create()
+	finally:
+		frappe.destroy()
+
+
+commands = [setup_ollama, check_deps, record_tutorial, tutorial_sample_data]

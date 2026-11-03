@@ -1,0 +1,22 @@
+{
+ "customers": [
+  "Gulf Paper Co.",
+  "Najd Trading",
+  "Red Sea Supplies",
+  "Al Noor Hospitality",
+  "Desert Bloom Florists"
+ ],
+ "items": [
+  {"item_code": "Office Paper A4", "item_group": "Products", "rate": 230},
+  {"item_code": "Printer Toner", "item_group": "Products", "rate": 410},
+  {"item_code": "Desk Chair", "item_group": "Products", "rate": 1150},
+  {"item_code": "Delivery Service", "item_group": "Services", "rate": 150}
+ ],
+ "sales_invoices": [
+  {"customer": "Red Sea Supplies", "posted_days_ago": 64, "due_days_ago": 34, "items": [["Printer Toner", 6], ["Delivery Service", 4]]},
+  {"customer": "Najd Trading", "posted_days_ago": 50, "due_days_ago": 20, "items": [["Desk Chair", 5], ["Delivery Service", 2]]},
+  {"customer": "Gulf Paper Co.", "posted_days_ago": 42, "due_days_ago": 12, "items": [["Office Paper A4", 40]]},
+  {"customer": "Al Noor Hospitality", "posted_days_ago": 9, "due_days_ago": -21, "items": [["Desk Chair", 8]]},
+  {"customer": "Desert Bloom Florists", "posted_days_ago": 3, "due_days_ago": -27, "items": [["Office Paper A4", 6], ["Printer Toner", 2]]}
+ ]
+}

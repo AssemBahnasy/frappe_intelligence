@@ -19,6 +19,7 @@ bench --site <site> run-tests --app frappe_intelligence --module frappe_intellig
 | `tests/test_workflows.py` | Steps, topic gate, answers, turns |
 | `tests/test_writer.py` | Write with AI |
 | `tests/test_background.py` | Short background jobs, voice input, optional packages, rate limit |
+| `tests/test_tutorial.py` | Tutorial progress, the demo video recorder, its sample data |
 
 A change comes with tests for what it changes. A test checks behaviour, not the implementation.
 
