@@ -15,7 +15,7 @@
 | `read_document` | `documents.py` | A file's text; a template match pauses for the user to check the values ([../documents/review.md](../documents/review.md)). Called by the loop for every attached file |
 | `navigate` | `desk.py` | Browser opens a `/app/…` route |
 | `open_document` | `desk.py` | Browser opens a document's form |
-| `new_document` | `desk.py` | Browser opens a new unsaved form with values filled in; the user saves |
+| `new_document` | `desk.py` | Browser opens a new unsaved form with values filled in; the user saves; values the form's own scripts overwrite are put back, as for `fill_form` |
 | `fill_form` | `desk.py` | Browser fills values into the new form the user has open; keys are field names or labels; missing and read-only fields are left out and reported to the model; values the form's own scripts overwrite (e.g. the due date after the supplier) are put back |
 | `show_chart` | `desk.py` | Chart drawn under the answer (bar, line, pie, percentage, donut) |
 

@@ -10,4 +10,8 @@ frappe_intelligence.ui.WorkflowBuilder = class WorkflowBuilder {
 		SetVueGlobals(this.app);
 		this.app.mount(container);
 	}
+
+	destroy() {
+		this.app.unmount();
+	}
 };

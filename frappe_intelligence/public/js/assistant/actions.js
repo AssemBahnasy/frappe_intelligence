@@ -18,11 +18,16 @@ async function fill_form({ doctype, values }) {
 		Object.entries(values).filter(([field]) => frm.fields_dict[field])
 	);
 	await frm.set_value(known);
-	// A link (e.g. the supplier) makes the form fetch its defaults, which can overwrite values the
-	// user confirmed (e.g. the due date); put those back once the form has finished.
+	await keep_values(frm, known);
+}
+
+// A link (e.g. the supplier) makes the form fetch its defaults, which can overwrite values the user
+// confirmed (e.g. the due date); put those back once the form has finished.
+async function keep_values(frm, values) {
 	await settled();
-	const changed = Object.entries(known).filter(
-		([field, value]) => !Array.isArray(value) && frm.doc[field] != value
+	const changed = Object.entries(values).filter(
+		([field, value]) =>
+			frm.fields_dict[field] && !Array.isArray(value) && frm.doc[field] != value
 	);
 	if (changed.length) frm.set_value(Object.fromEntries(changed));
 }
@@ -45,6 +50,18 @@ async function open_new_form(doctype, values = {}) {
 		}
 	}
 	frappe.set_route("Form", doctype, doc.name);
+	const frm = await opened(doctype, doc.name);
+	if (frm) await keep_values(frm, values);
+}
+
+// The form once it shows the new document, or null if the user went elsewhere first.
+async function opened(doctype, name) {
+	for (let i = 0; i < 50; i++) {
+		const frm = window.cur_frm;
+		if (frm?.doctype === doctype && frm.docname === name) return frm;
+		await new Promise((resolve) => setTimeout(resolve, 100));
+	}
+	return null;
 }
 
 // Form scripts chain server calls from callbacks, so wait until none has been running for a moment.

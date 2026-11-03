@@ -13,6 +13,7 @@ import frappe
 
 from frappe_intelligence.agent import transcript
 from frappe_intelligence.agent.loop import Hooks
+from frappe_intelligence.api import builder
 from frappe_intelligence.providers import ProviderError, Reply
 from frappe_intelligence.workflows import answers, desk, records, scope, steps, turn
 
@@ -431,3 +432,13 @@ class TestCompanyPrompt(TestCase):
 	def test_falls_back_to_the_general_prompt_then_the_default(self):
 		self.assertEqual(self.prompt("WhatsApp"), "Desk rules.")
 		self.assertEqual(self.prompt("Portal", system_prompt=""), turn.DEFAULT_SYSTEM)
+
+
+class TestBuilderPicker(TestCase):
+	def test_lists_inactive_workflows_with_their_state(self):
+		rows = [{"workflow_key": "follow_up", "title": "Plan a follow-up", "is_active": 0}]
+		with patch.object(builder.frappe, "get_list", return_value=rows) as get_list:
+			self.assertEqual(builder.list_workflows(), rows)
+		kwargs = get_list.call_args.kwargs
+		self.assertNotIn("filters", kwargs)  # a switched-off workflow can still be opened
+		self.assertIn("is_active", kwargs["fields"])

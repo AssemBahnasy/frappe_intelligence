@@ -2,6 +2,8 @@
 
 An **AI Workflow** is built in **Intelligence → Workflow Builder** (System Manager), which saves the workflow, its steps and its knowledge packs in one go (`api/builder.py`). The records can also be edited directly.
 
+The builder opens on a picker of every workflow, active or not; `/desk/ai-workflow-builder/<workflow_key>` opens one directly. The page follows its route on every show (`on_page_show`), as Frappe keeps a page once built.
+
 ## AI Workflow
 
 | Field | Purpose |

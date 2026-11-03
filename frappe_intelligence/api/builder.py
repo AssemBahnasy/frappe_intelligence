@@ -9,16 +9,16 @@ import frappe
 
 @frappe.whitelist()
 def list_workflows() -> list[dict]:
-	"""Return active AI Workflow records for the Ask/Agent mode selector dropdown.
+	"""Every AI Workflow the user may read, for the Workflow Builder's picker, active or not, so a
+	workflow that was switched off can be opened and switched on again.
 
 	Returns
 	-------
-	``[{"workflow_key": str, "title": str}, ...]``
+	``[{"workflow_key": str, "title": str, "is_active": 0 | 1}, ...]``
 	"""
-	return frappe.get_all(
+	return frappe.get_list(
 		"AI Workflow",
-		filters={"is_active": 1},
-		fields=["workflow_key", "title"],
+		fields=["workflow_key", "title", "is_active"],
 		order_by="title asc",
 	)
 

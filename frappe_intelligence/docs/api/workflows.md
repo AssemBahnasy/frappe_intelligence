@@ -14,10 +14,10 @@ POST only. `conversation`: the user's workflow conversation. Sets it Paused (onl
 
 ### `list_workflows`
 
-Workflows for the Workflow Builder's picker.
+Every workflow for the Workflow Builder's picker, active or not, so one that was switched off can still be opened.
 
 ```json
-[{"workflow_key": "service_request", "title": "Service Request"}]
+[{"workflow_key": "service_request", "title": "Service Request", "is_active": 1}]
 ```
 
 ### `get_workflow_for_builder`
