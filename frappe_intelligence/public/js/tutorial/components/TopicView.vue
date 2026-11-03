@@ -27,6 +27,9 @@
 				<span class="fi-chip">
 					{{ __("{0} steps", [topic.steps.length]) }} · {{ minutes(topic) }}
 				</span>
+				<span v-if="video" class="fi-chip">{{
+					__("Video · {0}", [clock(video.duration)])
+				}}</span>
 				<span v-if="store.done.has(topic.key)" class="fi-chip is-done">{{
 					__("Done")
 				}}</span>
@@ -36,10 +39,37 @@
 			</span>
 		</header>
 
-		<ol class="fi-steps">
-			<li v-for="(step, index) in topic.steps" :key="index" class="fi-step">
-				<StepPicture :name="step.picture" />
-				<span class="fi-step-number">{{ __("Step {0}", [index + 1]) }}</span>
+		<TopicVideo
+			v-if="video"
+			:key="topic.key"
+			ref="player"
+			@step="playing_step = $event"
+			@playing="playing = $event"
+			:video="video"
+			:title="topic.title"
+		/>
+
+		<ol :class="['fi-steps', { 'has-video': video }]">
+			<li
+				v-for="(step, index) in topic.steps"
+				:key="index"
+				:class="['fi-step', { 'is-playing': video && index === playing_step }]"
+			>
+				<!-- With a video, the whole panel plays that step; without one, its picture shows it. -->
+				<button
+					v-if="video"
+					type="button"
+					class="fi-step-seek"
+					:aria-label="__('Play step {0}', [index + 1])"
+					@click="player.seek(index)"
+				></button>
+				<StepPicture v-else :name="step.picture" />
+				<span class="fi-step-number">
+					{{ __("Step {0}", [index + 1]) }}
+					<span v-if="playing && index === playing_step" class="fi-step-playing">
+						{{ __("Playing") }}
+					</span>
+				</span>
 				<span class="fi-step-title">{{ step.title }}</span>
 				<span class="fi-step-text">{{ step.text }}</span>
 			</li>
@@ -81,9 +111,11 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useTutorial } from "../store";
+import { clock, video_of } from "../videos";
 import StepPicture from "./StepPicture.vue";
+import TopicVideo from "./TopicVideo.vue";
 
 const PAGE = "intelligence-tutorial";
 const props = defineProps({ topic: { type: Object, required: true } });
@@ -94,6 +126,17 @@ const go = (topic) => frappe.set_route(PAGE, topic.key);
 const minutes = (topic) => __("{0} min", [topic.minutes]);
 const chapter_of = (topic) => store.all_chapters.find((c) => c.key === topic.chapter);
 const related = computed(() => store.related(props.topic));
+const video = computed(() => video_of(props.topic));
+const player = ref(null);
+const playing_step = ref(null);
+const playing = ref(false);
+watch(
+	() => props.topic.key,
+	() => {
+		playing_step.value = null;
+		playing.value = false;
+	}
+);
 
 // "Chapter 2 · Work faster · Topic 1 of 3"
 const where = computed(() => {
@@ -217,9 +260,47 @@ p {
 }
 .fi-step-number {
 	margin-top: 4px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
 	font-size: var(--text-xs);
 	font-weight: 600;
 	color: var(--ink-violet-6);
+}
+.fi-steps.has-video {
+	max-width: 820px;
+}
+.has-video .fi-step {
+	position: relative;
+	padding: 14px;
+}
+.has-video .fi-step-number {
+	margin-top: 0;
+}
+.has-video .fi-step:hover {
+	background: var(--surface-gray-2);
+}
+.fi-step.is-playing,
+.fi-step.is-playing:hover {
+	background: var(--surface-violet-2);
+	box-shadow: inset 0 0 0 2px var(--ink-violet-4);
+}
+/* Covers the panel, so a click anywhere on it plays that step. */
+.fi-step-seek {
+	position: absolute;
+	inset: 0;
+	border: 0;
+	border-radius: inherit;
+	background: transparent;
+	cursor: pointer;
+}
+.fi-step-playing {
+	padding: 1px 6px;
+	border-radius: var(--radius-full);
+	background: var(--surface-base);
+	color: var(--ink-violet-7);
+	font-size: var(--text-2xs, 10px);
+	font-weight: 500;
 }
 .fi-step-title {
 	font-size: var(--text-base);

@@ -7,7 +7,7 @@ intelligence_tutorial.js        on_page_load: page chrome, mount point, "hide" �
   on_page_show (every route change) → mounted? tutorial.open(topic) : load fi_tutorial.bundle.js
     → new frappe_intelligence.ui.Tutorial({ wrapper, page, topic })
         createApp + SetVueGlobals + Pinia; page head: Show me, Try it now
-        Tutorial.vue → TopicNav.vue | TopicView.vue (+ StepPicture.vue)
+        Tutorial.vue → TopicNav.vue | TopicView.vue (+ TopicVideo.vue or StepPicture.vue)
 ```
 
 - **Switching topics** routes to `/intelligence-tutorial/<key>`; Frappe fires `show` again and the mounted app opens the topic, keeping the search and the list's scroll. Leaving the page unmounts it. An unknown or hidden topic opens the next one up.

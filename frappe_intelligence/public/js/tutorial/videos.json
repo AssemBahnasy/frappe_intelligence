@@ -1,4 +1,60 @@
 {
+ "access": {
+  "ar": {
+   "duration": 23.7,
+   "steps": [
+    6.3,
+    11.3,
+    18.3
+   ],
+   "version": "85d6720f"
+  },
+  "en": {
+   "duration": 24.4,
+   "steps": [
+    6.3,
+    11.3,
+    18.3
+   ],
+   "version": "f539f617"
+  }
+ },
+ "agent-mode": {
+  "ar": {
+   "duration": 25.2,
+   "steps": [
+    3,
+    7,
+    16.5
+   ],
+   "version": "2dde7341"
+  },
+  "en": {
+   "duration": 25.2,
+   "steps": [
+    3,
+    7,
+    16.4
+   ],
+   "version": "837b350e"
+  }
+ },
+ "analytics": {
+  "ar": {
+   "duration": 12.8,
+   "steps": [
+    1.1
+   ],
+   "version": "5f0c4638"
+  },
+  "en": {
+   "duration": 12.8,
+   "steps": [
+    1.1
+   ],
+   "version": "0e3c9f9e"
+  }
+ },
  "ask": {
   "ar": {
    "duration": 20.1,
@@ -6,7 +62,8 @@
     1.1,
     7.1,
     14
-   ]
+   ],
+   "version": "80b717e1"
   },
   "en": {
    "duration": 20,
@@ -14,7 +71,282 @@
     1.1,
     7.1,
     14
-   ]
+   ],
+   "version": "849944c8"
+  }
+ },
+ "build-workflow": {
+  "ar": {
+   "duration": 25.9,
+   "steps": [
+    1.1,
+    7.1,
+    13.3,
+    18.9
+   ],
+   "version": "798064d3"
+  },
+  "en": {
+   "duration": 25.9,
+   "steps": [
+    1.1,
+    7.1,
+    13.3,
+    18.9
+   ],
+   "version": "47507e40"
+  }
+ },
+ "conversations": {
+  "ar": {
+   "duration": 15.9,
+   "steps": [
+    3,
+    8.1,
+    12.8
+   ],
+   "version": "53b63cdb"
+  },
+  "en": {
+   "duration": 15.9,
+   "steps": [
+    3,
+    8.1,
+    12.8
+   ],
+   "version": "9fb3a2a4"
+  }
+ },
+ "document-requirements": {
+  "ar": {
+   "duration": 24.1,
+   "steps": [
+    6.7,
+    15.6
+   ],
+   "version": "7cb7da48"
+  },
+  "en": {
+   "duration": 24.1,
+   "steps": [
+    6.7,
+    15.6
+   ],
+   "version": "c401c341"
+  }
+ },
+ "document-templates": {
+  "ar": {
+   "duration": 29.5,
+   "steps": [
+    3.9,
+    11.3,
+    17.1
+   ],
+   "version": "b46c3c24"
+  },
+  "en": {
+   "duration": 29.4,
+   "steps": [
+    3.9,
+    11.3,
+    17.1
+   ],
+   "version": "5c83f6af"
+  }
+ },
+ "knowledge-packs": {
+  "ar": {
+   "duration": 28.6,
+   "steps": [
+    7.2,
+    15.6
+   ],
+   "version": "993f556d"
+  },
+  "en": {
+   "duration": 28.1,
+   "steps": [
+    6.7,
+    15.1
+   ],
+   "version": "eadde441"
+  }
+ },
+ "language": {
+  "ar": {
+   "duration": 16.1,
+   "steps": [
+    1.1,
+    7.3
+   ],
+   "version": "f06b6b5b"
+  },
+  "en": {
+   "duration": 15.6,
+   "steps": [
+    1.1,
+    6.8
+   ],
+   "version": "577cceee"
+  }
+ },
+ "open-assistant": {
+  "ar": {
+   "duration": 14.4,
+   "steps": [
+    1.1,
+    5.4,
+    10.6
+   ],
+   "version": "a8535c4f"
+  },
+  "en": {
+   "duration": 14.4,
+   "steps": [
+    1.1,
+    5.3,
+    10.6
+   ],
+   "version": "94ed340a"
+  }
+ },
+ "post-processors": {
+  "ar": {
+   "duration": 20.9,
+   "steps": [
+    6.7,
+    14.1
+   ],
+   "version": "38e42c5e"
+  },
+  "en": {
+   "duration": 20.9,
+   "steps": [
+    6.7,
+    14.1
+   ],
+   "version": "96d1d05b"
+  }
+ },
+ "processing-log": {
+  "ar": {
+   "duration": 28.9,
+   "steps": [
+    1.1,
+    18.4
+   ],
+   "version": "74ffb498"
+  },
+  "en": {
+   "duration": 29.8,
+   "steps": [
+    1.1,
+    18.7
+   ],
+   "version": "2a009c27"
+  }
+ },
+ "provider": {
+  "ar": {
+   "duration": 23.4,
+   "steps": [
+    1.1,
+    4.2,
+    14.6
+   ],
+   "version": "e54aea5b"
+  },
+  "en": {
+   "duration": 23.4,
+   "steps": [
+    1.1,
+    4.2,
+    14.6
+   ],
+   "version": "962a7488"
+  }
+ },
+ "read-document": {
+  "ar": {
+   "duration": 25.6,
+   "steps": [
+    1.1,
+    3,
+    14.3,
+    17.4
+   ],
+   "version": "5b90b14c"
+  },
+  "en": {
+   "duration": 27,
+   "steps": [
+    0.9,
+    3,
+    15.2,
+    18.3
+   ],
+   "version": "095837c0"
+  }
+ },
+ "voice": {
+  "ar": {
+   "duration": 20,
+   "steps": [
+    3,
+    7.9,
+    11.8
+   ],
+   "version": "f11ba5c2"
+  },
+  "en": {
+   "duration": 20,
+   "steps": [
+    3,
+    7.9,
+    11.8
+   ],
+   "version": "4b5f0173"
+  }
+ },
+ "workflows": {
+  "ar": {
+   "duration": 28.6,
+   "steps": [
+    3,
+    5.8,
+    22.7
+   ],
+   "version": "309b9f15"
+  },
+  "en": {
+   "duration": 28.6,
+   "steps": [
+    3,
+    5.8,
+    22.6
+   ],
+   "version": "3624cc1b"
+  }
+ },
+ "write-with-ai": {
+  "ar": {
+   "duration": 18.3,
+   "steps": [
+    1.1,
+    4,
+    12.9
+   ],
+   "version": "8ed170fc"
+  },
+  "en": {
+   "duration": 18.3,
+   "steps": [
+    1.1,
+    3.9,
+    12.9
+   ],
+   "version": "c38122e0"
   }
  }
 }

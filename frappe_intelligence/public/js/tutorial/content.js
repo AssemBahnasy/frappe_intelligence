@@ -355,21 +355,21 @@ export const TOPICS = [
 				picture: "history",
 			},
 			{
-				title: __("Start fresh"),
-				text: __("New chat starts an empty conversation."),
-				picture: "panel",
-			},
-			{
 				title: __("Rate an answer"),
 				text: __("Thumbs up for a good answer, thumbs down for a bad one."),
 				picture: "rating",
+			},
+			{
+				title: __("Start fresh"),
+				text: __("New chat starts an empty conversation."),
+				picture: "panel",
 			},
 		],
 		tips: [__("Other users cannot see your conversations; System Managers can.")],
 		related: ["ask"],
 		tour: [
 			{ target: "history", step: 0 },
-			{ target: "new_chat", step: 1 },
+			{ target: "new_chat", step: 2 },
 		],
 	}),
 	setup_topic({

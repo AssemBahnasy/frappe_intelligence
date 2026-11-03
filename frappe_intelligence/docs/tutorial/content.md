@@ -36,7 +36,7 @@ A target names an element in `TARGETS` (`targets.js`): `launcher`, `panel`, `res
 
 ## Pictures
 
-`picture` names a drawing in `components/StepPicture.vue`, built from six frames: `dock`; the panel (`panel`, `resize`, `composer`, `answer`, `context`, `attach`, `microphone`, `review`, `workflows`, `workflow-bar`, `mode`, `proposal`, `history`, `rating`); a form (`settings`, `filled`, `field`, `popover`, `undo`); `list`; `builder`; `chart`. The `is-ring` class marks the element the step is about. Drawings use Frappe's theme variables, so they follow dark mode and right to left.
+A topic with a demo video ([videos.md](videos.md)) shows the video instead of its pictures. `picture` names a drawing in `components/StepPicture.vue`, built from six frames: `dock`; the panel (`panel`, `resize`, `composer`, `answer`, `context`, `attach`, `microphone`, `review`, `workflows`, `workflow-bar`, `mode`, `proposal`, `history`, `rating`); a form (`settings`, `filled`, `field`, `popover`, `undo`); `list`; `builder`; `chart`. The `is-ring` class marks the element the step is about. Drawings use Frappe's theme variables, so they follow dark mode and right to left.
 
 ## Checking a topic
 

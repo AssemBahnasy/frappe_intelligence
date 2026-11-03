@@ -1,5 +1,6 @@
 // Records the tutorial's demo videos. Run by `bench fi-record-tutorial` (recorder.py), which passes
-// a signed-in session and reads the timings printed on the last line. See docs/tutorial/videos.md.
+// a signed-in session and reads each topic's timings, printed as a JSON line once its video is
+// written. See docs/tutorial/videos.md.
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
@@ -10,38 +11,57 @@ const { base_url, sid, lang, topics, videos_dir } = JSON.parse(process.env.FI_DE
 const VIEWPORT = { width: 1280, height: 720 };
 const SIZE = "1600:900";
 const FPS = 30;
-const CHAT_API = "frappe_intelligence.api.chat";
 const RUN_ID = "fi-demo-run";
+const JOB_ID = "fi-demo-job";
 
 (async () => {
 	const browser = await chromium.launch({
 		executablePath: process.env.FI_CHROME || undefined,
 		channel: process.env.FI_CHROME ? undefined : "chrome",
-		args: ["--hide-scrollbars"],
+		// Voice input needs a secure origin and a microphone: the site counts as one, and Chrome's
+		// fake device is it.
+		args: [
+			"--hide-scrollbars",
+			`--unsafely-treat-insecure-origin-as-secure=${new URL(base_url).origin}`,
+			"--use-fake-ui-for-media-stream",
+			"--use-fake-device-for-media-stream",
+		],
 	});
-	const timings = {};
 	try {
-		const context = await browser.newContext({
-			viewport: VIEWPORT,
-			deviceScaleFactor: 1.5,
-			locale: lang,
-		});
-		const { hostname } = new URL(base_url);
-		await context.addCookies([{ name: "sid", value: sid, domain: hostname, path: "/" }]);
-		const keys = topics.length ? topics : await demo_keys(context);
+		const keys = topics.length ? topics : await demo_keys(await desk_context(browser));
 		for (const key of keys) {
+			// A fresh browser per topic: what one scene leaves (an open panel, a draft) is not
+			// where the next one starts.
+			const context = await desk_context(browser);
 			const out = path.join(videos_dir, lang, `${key}.mp4`);
-			timings[key] = await record(context, key, out);
-			console.error(`${lang}/${key}: ${timings[key].duration}s`);
+			const timing = await record(context, key, out);
+			await context.close();
+			console.log(JSON.stringify({ [key]: timing }));
+			console.error(`${lang}/${key}: ${timing.duration}s`);
 		}
 	} finally {
 		await browser.close();
 	}
-	console.log(JSON.stringify(timings));
 })().catch((e) => {
 	console.error(e);
 	process.exit(1);
 });
+
+async function desk_context(browser) {
+	const context = await browser.newContext({
+		viewport: VIEWPORT,
+		deviceScaleFactor: 1.5,
+		locale: lang,
+	});
+	const { hostname } = new URL(base_url);
+	await context.addCookies([{ name: "sid", value: sid, domain: hostname, path: "/" }]);
+	// A developer-mode desk reloads when `bench watch` rebuilds (desk.js setup_build_events),
+	// and shows a toast: neither may happen during a recording.
+	await context.route("**/build_events.bundle.*.js", (route) =>
+		route.fulfill({ contentType: "text/javascript", body: "" })
+	);
+	return context;
+}
 
 async function demo_keys(context) {
 	const page = await open_desk(context, "/desk");
@@ -53,17 +73,33 @@ async function demo_keys(context) {
 async function open_desk(context, route) {
 	const page = await context.newPage();
 	await page.goto(base_url + route, { waitUntil: "networkidle" });
-	await page.evaluate(() => frappe.require("fi_tutorial_demos.bundle.js"));
+	await load_demos(page);
 	return page;
+}
+
+// frappe.require resolves even when the file is missing, as it is while `bench watch` rebuilds:
+// reload until the build has written it.
+async function load_demos(page) {
+	for (let attempt = 0; attempt < 6; attempt++) {
+		const loaded = await page.evaluate(async () => {
+			await frappe.require("fi_tutorial_demos.bundle.js");
+			return Boolean(window.frappe_intelligence?.tutorial?.Stage);
+		});
+		if (loaded) return;
+		await page.waitForTimeout(5000);
+		await page.reload({ waitUntil: "networkidle" });
+	}
+	throw new Error("fi_tutorial_demos.bundle.js did not load; is a build failing?");
 }
 
 async function record(context, key, out) {
 	const scene = await scene_of(context, key);
 	const page = await context.newPage();
-	const chat = await fake_chat(page);
+	const chat = await fake_chat(page, scene);
 	await page.goto(base_url + scene.route, { waitUntil: "networkidle" });
-	await page.evaluate(() => frappe.require("fi_tutorial_demos.bundle.js"));
+	await load_demos(page);
 	await page.evaluate(() => (window.fi_demo_stage = new frappe_intelligence.tutorial.Stage()));
+	if (scene.boot) await page.evaluate((values) => window.fi_demo_stage.boot(values), scene.boot);
 	await page.waitForTimeout(800);
 
 	const frames_dir = fs.mkdtempSync(path.join(os.tmpdir(), "fi-demo-"));
@@ -127,8 +163,15 @@ class Actor {
 	}
 
 	async point(target) {
-		const p = await this.stage("point", target);
-		if (!p) throw new Error(`Demo target not on screen: ${target}`);
+		let p = await this.stage("point", target);
+		if (p?.scrolled) {
+			await this.wait(700);
+			p = await this.stage("point", target);
+		}
+		if (p?.outside)
+			throw new Error(`Demo target outside the zoomed view: ${JSON.stringify(target)}`);
+		if (!p || p.scrolled)
+			throw new Error(`Demo target not on screen: ${JSON.stringify(target)}`);
 		return p;
 	}
 
@@ -148,24 +191,69 @@ class Actor {
 			await this.stage("zoom_to", action.zoom, action.scale || 1.5);
 			await this.wait(1100);
 		} else if (action.type) {
-			this.chat.question = action.type;
 			await this.page.keyboard.type(action.type, { delay: 65 });
 			await this.wait(400);
 		} else if (action.reply) {
 			await this.reply(action.reply);
+		} else if (action.attach) {
+			// The file goes to the browser's file chooser from memory; its upload is answered here.
+			const chooser = this.page.waitForEvent("filechooser");
+			await this.play({ click: "attach" });
+			await (
+				await chooser
+			).setFiles({
+				name: action.attach,
+				mimeType: "application/pdf",
+				buffer: Buffer.from("%PDF-1.4\n"),
+			});
+			await this.wait(900);
+		} else if ("job" in action) {
+			await this.stage("emit", { job: JOB_ID, value: action.job }, "fi_job");
+			await this.wait(900);
+		} else if (action.press) {
+			await this.stage("keys", action.label || action.press);
+			await this.page.keyboard.press(action.press);
+			await this.wait(900);
+		} else if (action.drag) {
+			await this.drag(action.drag, action.by);
+		} else if (action.select) {
+			const p = await this.point(action.select);
+			await this.stage("move", p.x, p.y);
+			await this.wait(850);
+			await this.stage("press", p.x, p.y);
+			await this.stage("select", action.select, action.value);
+			await this.wait(700);
 		} else if (action.wait) {
 			await this.wait(action.wait);
 		}
 	}
 
-	// The scripted answer arrives as the real one does: steps, then the text as it is written.
-	async reply({ steps = [], text = "" }) {
-		const event = (e) => this.stage("emit", { run_id: RUN_ID, conversation: "fi-demo", ...e });
-		const done_steps = steps.map((label, i) => ({
-			call_id: `c${i}`,
-			tool: "demo",
-			label,
-		}));
+	// Drags the target `by` pixels along the line (positive: towards its end, in either direction).
+	async drag(target, by) {
+		const p = await this.point(target);
+		await this.stage("move", p.x, p.y);
+		await this.wait(850);
+		const dx = await this.stage("logical", by);
+		await this.page.mouse.move(p.x, p.y);
+		await this.page.mouse.down();
+		for (let i = 1; i <= 24; i++) {
+			const x = p.x + (dx * i) / 24;
+			await this.page.mouse.move(x, p.y);
+			await this.stage("track", x, p.y);
+			await this.wait(25);
+		}
+		await this.page.mouse.up();
+		await this.stage("release");
+		await this.wait(500);
+	}
+
+	// The scripted answer arrives as the real one does: steps, then the text as it is written. It
+	// may bring changes to approve or a document's values to check (`proposals`), browser actions,
+	// the workflow's next state; `report: true` is the text after a change was confirmed.
+	async reply({ steps = [], text = "", proposals = [], actions = [], workflow, report }) {
+		const event = (e) =>
+			this.stage("emit", { run_id: RUN_ID, conversation: this.chat.conversation, ...e });
+		const done_steps = steps.map((label, i) => ({ call_id: `c${i}`, tool: "demo", label }));
 		await this.wait(700);
 		for (const step of done_steps) {
 			await event({ type: "step", ...step, status: "running" });
@@ -176,62 +264,138 @@ class Actor {
 			await event({ type: "text", text: text.slice(i, i + 14) });
 			await this.wait(45);
 		}
-		this.chat.answer = {
-			text,
-			steps: done_steps.map((s) => ({ ...s, status: "done" })),
-		};
+		const finished = done_steps.map((s) => ({ ...s, status: "done" }));
+		if (report) this.chat.turns.at(-1).report = text;
+		else
+			this.chat.turns.push({
+				question: this.chat.question,
+				answer: text,
+				steps: finished,
+				proposals,
+			});
+		if (workflow) this.chat.workflow = workflow;
 		await event({
 			type: "done",
-			reply: text,
-			actions: [],
+			reply: report ? "" : text,
+			actions,
 			steps: [],
-			proposals: [],
+			proposals: report ? [] : proposals,
 		});
 	}
 }
 
 // The assistant's endpoints answered in the browser: nothing reaches a model or the database.
-async function fake_chat(page) {
-	const chat = { question: "", answer: null };
+// `chat` is the conversation as the server would keep it, so a reload of it shows what the video did.
+async function fake_chat(page, scene) {
+	const chat = { conversation: "fi-demo", mode: "Ask", question: "", turns: [], workflow: null };
+	const decisions = {};
+	const past = scene.conversations || [];
 	const reply = (route, message) =>
-		route.fulfill({
-			contentType: "application/json",
-			body: JSON.stringify({ message }),
-		});
-	await page.route(`**/api/method/${CHAT_API}.*`, (route) => {
+		route.fulfill({ contentType: "application/json", body: JSON.stringify({ message }) });
+	const answers = {
+		send_message: (request) => {
+			chat.question = arg(request, "message") || "";
+			return { conversation: chat.conversation, run_id: RUN_ID };
+		},
+		get_conversation: (request) => {
+			const found = past.find((c) => c.name === arg(request, "name"));
+			return found ? stored(found) : live(chat, decisions);
+		},
+		list_conversations: () =>
+			past.map(({ name, title, modified }) => ({ name, title, modified })),
+		// A change runs once none is left waiting; then the answer reports on it.
+		decide_proposal: (request) => {
+			decisions[arg(request, "call_id")] = truthy(arg(request, "approve"))
+				? "done"
+				: "rejected";
+			const waiting = chat.turns
+				.flatMap((t) => t.proposals || [])
+				.filter((p) => !decisions[p.call_id]);
+			return waiting.length ? {} : { run_id: RUN_ID };
+		},
+		start_workflow: () => {
+			Object.assign(chat, { conversation: "fi-demo-workflow", mode: "Workflow" });
+			chat.workflow = scene.workflow.state;
+			chat.turns = [
+				{ question: "", answer: scene.workflow.question, steps: [], proposals: [] },
+			];
+			return { conversation: chat.conversation };
+		},
+		exit_workflow: () => ({ ok: true }),
+		rate_reply: () => null,
+		stop_message: () => null,
+		transcribe: () => ({ job: JOB_ID }),
+		write_field: () => ({ job: JOB_ID }),
+		job_result: () => ({ pending: true }),
+	};
+	// Only what reaches a model or writes a conversation is answered here; reading the site's own
+	// records (the Workflow Builder's list, settings) goes to the server.
+	await page.route(`**/api/method/frappe_intelligence.api.**`, (route) => {
 		const method = new URL(route.request().url()).pathname.split(".").pop();
-		if (method === "send_message")
-			return reply(route, { conversation: "fi-demo", run_id: RUN_ID });
-		if (method === "get_conversation") return reply(route, conversation(chat));
-		if (method === "list_conversations") return reply(route, []);
-		return reply(route, null);
+		if (!answers[method]) return route.continue();
+		return reply(route, answers[method](route.request()));
+	});
+	await page.route("**/api/method/upload_file", (route) => {
+		const name = (route.request().postData() || "").match(/filename="([^"]+)"/)?.[1] || "file";
+		return reply(route, { file_url: `/private/files/${name}`, file_name: name });
 	});
 	return chat;
 }
 
-function conversation(chat) {
-	const turns = chat.answer
-		? [
-				{
-					id: "fi-demo-turn",
-					question: chat.question,
-					attachments: [],
-					steps: chat.answer.steps,
-					proposals: [],
-					actions: [],
-					answer: chat.answer.text,
-					report: "",
-					pending: false,
-				},
-		  ]
-		: [];
+// An argument of a frappe.call, sent as JSON or as a form.
+function arg(request, key) {
+	const body = request.postData() || "";
+	try {
+		return JSON.parse(body)[key];
+	} catch {
+		return new URLSearchParams(body).get(key);
+	}
+}
+
+const truthy = (value) => [true, 1, "1", "true"].includes(value);
+
+const turn = (id, t, created, decisions = {}) => ({
+	id,
+	question: t.question,
+	attachments: [],
+	steps: t.steps || [],
+	proposals: (t.proposals || []).map((p) => ({
+		...p,
+		status: decisions[p.call_id] || "pending",
+	})),
+	actions: [],
+	answer: t.answer,
+	report: t.report || "",
+	pending: false,
+	answer_id: `${id}-answer`,
+	feedback: null,
+	created,
+});
+
+function live(chat, decisions) {
+	const turns = chat.turns.map((t, i) => turn(`${chat.conversation}-${i}`, t, now(), decisions));
 	return {
-		name: "fi-demo",
-		mode: "Ask",
+		name: chat.conversation,
+		mode: chat.mode,
 		turns,
-		workflow: null,
+		workflow: chat.workflow,
 		active_run: null,
 	};
+}
+
+// A past conversation of the scene: { name, title, modified, turns: [{ question, answer }] }.
+function stored(c) {
+	const turns = c.turns.map((t, i) => turn(`${c.name}-${i}`, t, c.modified));
+	return { name: c.name, mode: "Ask", turns, workflow: null, active_run: null };
+}
+
+// Frappe's datetime format, in local time.
+function now() {
+	const d = new Date();
+	const pad = (n) => String(n).padStart(2, "0");
+	return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(
+		d.getHours()
+	)}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 }
 
 // Frames arrive only when the screen changes: each video frame shows the latest one, on an exact

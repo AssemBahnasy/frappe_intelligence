@@ -1,6 +1,6 @@
 // What the demo videos draw on the desk while they are recorded: a cursor, a ripple on every click,
 // and a zoom that scales the page itself so text stays sharp. Only the recorder loads it.
-import { TARGETS } from "./targets";
+import { find_target } from "./targets";
 
 const EASE = "cubic-bezier(.65,0,.35,1)";
 const STYLE = `
@@ -12,6 +12,11 @@ const STYLE = `
 	border:2px solid #7c5cff;background:rgba(124,92,255,.2);z-index:2147483646;pointer-events:none;
 	animation:fi-demo-ripple .55s ease-out forwards}
 @keyframes fi-demo-ripple{from{transform:scale(.3);opacity:1}to{transform:scale(1.5);opacity:0}}
+.fi-demo-keys{position:fixed;left:50%;bottom:48px;transform:translateX(-50%);z-index:2147483646;
+	padding:8px 14px;border-radius:10px;background:rgba(23,23,23,.88);color:#fff;font:600 18px/1 system-ui;
+	letter-spacing:.02em;direction:ltr;unicode-bidi:isolate;pointer-events:none;
+	animation:fi-demo-keys 1.6s ease forwards}
+@keyframes fi-demo-keys{0%,85%{opacity:1}100%{opacity:0}}
 body.fi-demo-zoom{transform-origin:0 0;transition:transform 1s ${EASE}}`;
 const ARROW = `<svg width="26" height="26" viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.3 2.9 6.6 2.9-1.3-2.9-6.5h6.3z" fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/></svg>`;
 
@@ -26,12 +31,35 @@ export class Stage {
 		this.zoom = { scale: 1, x: 0, y: 0 };
 	}
 
-	// Screen centre of a target as it is drawn now, zoom included.
+	// Screen centre of a target as it is drawn now, zoom included. A target below or above the
+	// screen is scrolled to first (only zoomed out) and comes back as `{ scrolled: true }`; one
+	// outside the zoomed view comes back as `{ outside: true }`.
 	point(target) {
-		const element = TARGETS[target]?.();
+		const element = find_target(target);
 		if (!element) return null;
 		const r = element.getBoundingClientRect();
-		return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+		const off_screen = r.top < 0 || r.bottom > innerHeight;
+		if (off_screen && this.zoom.scale === 1) {
+			element.scrollIntoView({ block: "center", behavior: "smooth" });
+			return { scrolled: true };
+		}
+		const point = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+		const outside =
+			point.x < 0 || point.x > innerWidth || point.y < 0 || point.y > innerHeight;
+		return outside ? { outside: true } : point;
+	}
+
+	// Sets a select field as a user would, without the browser's own list (it is not recorded).
+	select(target, value) {
+		$(find_target(target)).find("select").val(value).trigger("change");
+	}
+
+	// Shows the keys pressed, e.g. "Ctrl + .".
+	keys(label) {
+		const badge = $('<div class="fi-demo-keys">')
+			.text(label)
+			.appendTo(document.documentElement);
+		setTimeout(() => badge.remove(), 1700);
 	}
 
 	show(x, y) {
@@ -42,6 +70,20 @@ export class Stage {
 
 	move(x, y) {
 		this.cursor.css("transform", `translate(${x}px,${y}px)`);
+	}
+
+	// Follows a drag at once, without the glide.
+	track(x, y) {
+		this.cursor.css({ transition: "none", transform: `translate(${x}px,${y}px)` });
+	}
+
+	release() {
+		this.cursor.css("transition", "");
+	}
+
+	// Physical pixels for a logical distance: positive goes towards the end of the line.
+	logical(dx) {
+		return document.documentElement.dir === "rtl" ? -dx : dx;
 	}
 
 	press(x, y) {
@@ -61,7 +103,7 @@ export class Stage {
 			x: (cursor.x - this.zoom.x) / this.zoom.scale,
 			y: (cursor.y - this.zoom.y) / this.zoom.scale,
 		};
-		const element = target && TARGETS[target]?.();
+		const element = target && find_target(target);
 		if (!element) {
 			this.zoom = { scale: 1, x: 0, y: 0 };
 		} else {
@@ -85,10 +127,16 @@ export class Stage {
 		return { x: m.m41, y: m.m42 };
 	}
 
-	// Plays a scripted answer through the assistant's own realtime handler (docs/agent/live-replies.md).
-	emit(event) {
-		const handlers = frappe.realtime.socket?.listeners("fi_assistant") || [];
-		if (!handlers.length) throw new Error("The assistant panel is not listening for answers.");
+	// Delivers a scripted realtime event to the page's own handlers: an answer (`fi_assistant`,
+	// docs/agent/live-replies.md) or a background job's result (`fi_job`, shared/background.js).
+	emit(event, channel = "fi_assistant") {
+		const handlers = frappe.realtime.socket?.listeners(channel) || [];
+		if (!handlers.length) throw new Error(`Nothing on the page is listening for ${channel}.`);
 		handlers.forEach((handler) => handler(event));
+	}
+
+	// Turns on what a scene shows, though this site has it off (frappe.boot.fi_assistant).
+	boot(values) {
+		Object.assign(frappe.boot.fi_assistant, values);
 	}
 }
