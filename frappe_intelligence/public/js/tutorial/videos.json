@@ -1,13 +1,13 @@
 {
  "access": {
   "ar": {
-   "duration": 23.7,
+   "duration": 23.6,
    "steps": [
     6.3,
     11.3,
     18.3
    ],
-   "version": "85d6720f"
+   "version": "0674461d"
   },
   "en": {
    "duration": 24.4,
@@ -21,13 +21,13 @@
  },
  "agent-mode": {
   "ar": {
-   "duration": 25.2,
+   "duration": 24.3,
    "steps": [
     3,
     7,
-    16.5
+    15.5
    ],
-   "version": "2dde7341"
+   "version": "bff9c368"
   },
   "en": {
    "duration": 25.2,
@@ -45,7 +45,7 @@
    "steps": [
     1.1
    ],
-   "version": "5f0c4638"
+   "version": "c9b37d30"
   },
   "en": {
    "duration": 12.8,
@@ -57,13 +57,13 @@
  },
  "ask": {
   "ar": {
-   "duration": 20.1,
+   "duration": 19.5,
    "steps": [
     1.1,
-    7.1,
-    14
+    6.7,
+    13.4
    ],
-   "version": "80b717e1"
+   "version": "f3edc016"
   },
   "en": {
    "duration": 20,
@@ -84,7 +84,7 @@
     13.3,
     18.9
    ],
-   "version": "798064d3"
+   "version": "00b539b3"
   },
   "en": {
    "duration": 25.9,
@@ -105,7 +105,7 @@
     8.1,
     12.8
    ],
-   "version": "53b63cdb"
+   "version": "0dd5ae28"
   },
   "en": {
    "duration": 15.9,
@@ -124,7 +124,7 @@
     6.7,
     15.6
    ],
-   "version": "7cb7da48"
+   "version": "9949c4f5"
   },
   "en": {
    "duration": 24.1,
@@ -137,13 +137,13 @@
  },
  "document-templates": {
   "ar": {
-   "duration": 29.5,
+   "duration": 29.1,
    "steps": [
     3.9,
     11.3,
     17.1
    ],
-   "version": "b46c3c24"
+   "version": "636e678f"
   },
   "en": {
    "duration": 29.4,
@@ -157,12 +157,12 @@
  },
  "knowledge-packs": {
   "ar": {
-   "duration": 28.6,
+   "duration": 28.1,
    "steps": [
-    7.2,
-    15.6
+    6.7,
+    15.1
    ],
-   "version": "993f556d"
+   "version": "88296f79"
   },
   "en": {
    "duration": 28.1,
@@ -180,7 +180,7 @@
     1.1,
     7.3
    ],
-   "version": "f06b6b5b"
+   "version": "47b1272d"
   },
   "en": {
    "duration": 15.6,
@@ -196,10 +196,10 @@
    "duration": 14.4,
    "steps": [
     1.1,
-    5.4,
+    5.3,
     10.6
    ],
-   "version": "a8535c4f"
+   "version": "e9d5a3d8"
   },
   "en": {
    "duration": 14.4,
@@ -218,7 +218,7 @@
     6.7,
     14.1
    ],
-   "version": "38e42c5e"
+   "version": "bc09191d"
   },
   "en": {
    "duration": 20.9,
@@ -231,12 +231,12 @@
  },
  "processing-log": {
   "ar": {
-   "duration": 28.9,
+   "duration": 28.8,
    "steps": [
     1.1,
-    18.4
+    18.3
    ],
-   "version": "74ffb498"
+   "version": "fe054d41"
   },
   "en": {
    "duration": 29.8,
@@ -249,13 +249,13 @@
  },
  "provider": {
   "ar": {
-   "duration": 23.4,
+   "duration": 23.2,
    "steps": [
     1.1,
     4.2,
     14.6
    ],
-   "version": "e54aea5b"
+   "version": "74169b2c"
   },
   "en": {
    "duration": 23.4,
@@ -276,7 +276,7 @@
     14.3,
     17.4
    ],
-   "version": "5b90b14c"
+   "version": "85169826"
   },
   "en": {
    "duration": 27,
@@ -291,13 +291,13 @@
  },
  "voice": {
   "ar": {
-   "duration": 20,
+   "duration": 21.1,
    "steps": [
     3,
-    7.9,
+    8,
     11.8
    ],
-   "version": "f11ba5c2"
+   "version": "4abb8d89"
   },
   "en": {
    "duration": 20,
@@ -311,33 +311,33 @@
  },
  "workflows": {
   "ar": {
-   "duration": 28.6,
+   "duration": 28.8,
    "steps": [
     3,
     5.8,
-    22.7
+    22.8
    ],
-   "version": "309b9f15"
+   "version": "9c9e4b24"
   },
   "en": {
-   "duration": 28.6,
+   "duration": 28.8,
    "steps": [
-    3,
-    5.8,
-    22.6
+    2.9,
+    5.7,
+    22.8
    ],
-   "version": "3624cc1b"
+   "version": "71b151ef"
   }
  },
  "write-with-ai": {
   "ar": {
-   "duration": 18.3,
+   "duration": 18.2,
    "steps": [
-    1.1,
-    4,
-    12.9
+    1,
+    3.9,
+    12.7
    ],
-   "version": "8ed170fc"
+   "version": "95bf52a7"
   },
   "en": {
    "duration": 18.3,

@@ -14,4 +14,4 @@ The app was rebuilt in nine steps in October and November 2026, each step deleti
 | 8 | Write with AI |
 | 9 | Arabic and right to left, voice input, optional OCR and voice packages; the old widget, its endpoints and the Route Map removed |
 
-Then: a new logo, the Apps screen tile, the dock and sidebars for Frappe v16.54 ([../navigation/README.md](../navigation/README.md)); post-processors and document requirements on workflow steps removed, as nothing read them; bundles renamed `fi_*`; the Tutorial page ([../tutorial/README.md](../tutorial/README.md)).
+Then: a new logo, the Apps screen tile, the dock and sidebars for Frappe v16.54 ([../navigation/README.md](../navigation/README.md)); post-processors and document requirements on workflow steps removed, as nothing read them; bundles renamed `fi_*`; the Tutorial page ([../tutorial/README.md](../tutorial/README.md)), with a demo video for every topic in English and Arabic, recorded from scenes on fictional data ([../tutorial/videos.md](../tutorial/videos.md)).

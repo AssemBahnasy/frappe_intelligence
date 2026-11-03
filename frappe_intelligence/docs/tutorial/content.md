@@ -2,7 +2,7 @@
 
 All content is in `public/js/tutorial/content.js`, with every string in `__()` (Arabic in `locale/ar.po`).
 
-**A new feature adds its topic here**, in the chapter where a user would look for it, and updates the topic when the feature changes.
+**A new feature adds its topic here**, in the chapter where a user would look for it, and updates the topic when the feature changes; its demo video scene goes in `demos.js` and is recorded again ([videos.md](videos.md)).
 
 ## Chapters
 

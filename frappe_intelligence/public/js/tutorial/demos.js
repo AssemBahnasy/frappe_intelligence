@@ -197,7 +197,7 @@ export const DEMOS = {
 				{
 					reply: {
 						text: __("And when should it be done?"),
-						workflow: state(3, __("Due date"), prioritised, [__("Due Date")]),
+						workflow: state(3, __("Due Date"), prioritised, [__("Due Date")]),
 					},
 				},
 				{ zoom: null },
