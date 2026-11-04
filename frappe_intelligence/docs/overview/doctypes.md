@@ -5,7 +5,6 @@ All in the **Intelligence** module.
 ```
 AI Settings (Single)                        → ../setup/settings.md
   ├── AI Response Language   (child: languages the assistant replies in)
-  ├── AI Widget Role         (child: Allowed Roles, who may use the assistant)
   └── AI Excluded DocType    (child: DocTypes Agent mode never changes)
 
 AI Conversation              (desk chats and workflow sessions, every channel)   → ../agent/conversations.md

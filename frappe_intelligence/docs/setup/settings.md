@@ -45,10 +45,9 @@ Messages are answered only within Meta's 24-hour window after the user's last me
 | Field | Default | Effect |
 |---|---|---|
 | Assistant Name | empty | The name in the panel header ("Assistant" when empty) |
-| Allow Agent Mode | off | The assistant may propose changes the user confirms ([../agent/approvals.md](../agent/approvals.md)) |
+| Allow Agent Mode | off | The site-wide switch for Agent mode: changes the user confirms ([../agent/approvals.md](../agent/approvals.md)). Only users with the **Intelligence Agent** role can use it ([permissions.md](permissions.md)) |
 | Excluded DocTypes | | DocTypes Agent mode never changes |
 | Write with AI in Forms | on | The sparkles button beside long text fields ([../writer/README.md](../writer/README.md)) |
-| Allowed Roles | empty | Who may use the assistant, workflows and Write with AI; empty means every desk user. Checked on the server for every endpoint that reaches a model |
 
 ## site_config.json
 

@@ -2,11 +2,7 @@
 
 ## Who may use the assistant (`utils/access.py`)
 
-Checked on the server by every endpoint that reaches a model (`ensure_assistant_access()`):
-
-- not Guest;
-- has the **Desk User** role (website and portal users use `api/portal.py` instead);
-- has one of **AI Settings → Allowed Roles**, when that table is not empty.
+Checked on the server by every endpoint that reaches a model (`ensure_assistant_access()`): a desk user with the **Intelligence User** or **Intelligence Agent** role; Agent mode needs Intelligence Agent. Both are in [../setup/permissions.md](../setup/permissions.md).
 
 The dock, sidebar and form buttons are hidden for users who are not allowed (`boot.py`), but hiding is cosmetic; the server check is what protects.
 
@@ -18,7 +14,7 @@ The agent acts as the signed-in user:
 - `run_report` uses `frappe.desk.query_report.run`, which checks the report and its reference DocType.
 - `open_document` checks the DocType permission before saying whether a record exists.
 - `new_document` checks create permission; nothing is saved without the user.
-- Write tools exist only in Agent mode (off unless **AI Settings → Allow Agent Mode**), and `execute()` refuses a tool outside the conversation's mode even if a model asks for it.
+- Write tools exist only in Agent mode (off unless **AI Settings → Allow Agent Mode** and the user has the **Intelligence Agent** role), and `execute()` refuses a tool outside the conversation's mode even if a model asks for it.
 - In Agent mode every change waits for the user's confirmation; see [approvals.md](approvals.md) for excluded DocTypes, the row lock and rollback.
 
 ## Document and workflow endpoints

@@ -142,7 +142,7 @@
   }
  ],
  "links": [],
- "modified": "2026-10-31 20:00:00.000000",
+ "modified": "2026-11-04 18:00:00.000000",
  "modified_by": "Administrator",
  "module": "Intelligence",
  "name": "AI Conversation",
@@ -165,7 +165,15 @@
    "delete": 1,
    "if_owner": 1,
    "read": 1,
-   "role": "Desk User",
+   "role": "Intelligence User",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "if_owner": 1,
+   "read": 1,
+   "role": "Intelligence Agent",
    "write": 1
   }
  ],

@@ -12,7 +12,7 @@ from frappe.utils import strip_html
 from pydantic import ValidationError
 
 from frappe_intelligence.agent.tools import AGENT_ONLY, AgentTool, ToolError
-from frappe_intelligence.utils.access import agent_mode_allowed
+from frappe_intelligence.utils.access import agent_mode_refusal
 
 # Never changed by the assistant, whatever AI Settings says: who can do what, and its own settings.
 ALWAYS_EXCLUDED = frozenset(
@@ -33,8 +33,8 @@ ALWAYS_EXCLUDED = frozenset(
 
 def ensure_changeable(doctype: str) -> None:
 	"""Checked when the card is built and again when the change runs: settings may change in between."""
-	if not agent_mode_allowed():
-		raise ToolError(_("Agent mode is turned off in AI Settings."))
+	if refusal := agent_mode_refusal():
+		raise ToolError(refusal)
 	excluded = {row.excluded_doctype for row in frappe.get_cached_doc("AI Settings").agent_excluded_doctypes}
 	if doctype in ALWAYS_EXCLUDED or doctype in excluded:
 		raise ToolError(_("The assistant is not allowed to change {0}.").format(doctype))

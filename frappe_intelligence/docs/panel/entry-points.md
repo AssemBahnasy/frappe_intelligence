@@ -12,6 +12,6 @@ The panel remembers whether it was open and which conversation it showed, per br
 
 ## Who sees it
 
-`boot_session` (`boot.py`) adds `frappe.boot.fi_assistant` only for users who may use the assistant (`utils/access.can_use_assistant`: a desk user with one of **AI Settings → Allowed Roles**, or any desk user when that table is empty). Without it the launcher adds nothing. The server checks access again on every request ([../agent/security.md](../agent/security.md)).
+`boot_session` (`boot.py`) adds `frappe.boot.fi_assistant` only for users who may use the assistant (`utils/access.can_use_assistant`: a desk user with the **Intelligence User** or **Intelligence Agent** role, [../setup/permissions.md](../setup/permissions.md)); `agent_mode` there is per user. Without it the launcher adds nothing. The server checks access again on every request ([../agent/security.md](../agent/security.md)).
 
 `frappe.boot.fi_assistant` also carries the assistant's name (**AI Settings → Assistant Name**, default "Assistant") and the user's starter questions (`agent/suggestions.py`).

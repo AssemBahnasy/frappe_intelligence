@@ -34,7 +34,7 @@ frappe_intelligence/
 
 | File | Job |
 |---|---|
-| `access.py` | Who may use the assistant; the per-user rate limit on endpoints that reach a model |
+| `access.py` | Who may use the assistant and Agent mode (the two roles); the per-user rate limit on endpoints that reach a model |
 | `background.py` | Short background jobs one browser waits for (Write with AI, voice) |
 | `language.py` | The reply language; replies written without AI translated into it |
 | `optional.py` | The optional OCR and voice packages |

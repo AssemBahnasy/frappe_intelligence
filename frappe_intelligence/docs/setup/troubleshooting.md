@@ -3,7 +3,7 @@
 | Symptom | Fix |
 |---|---|
 | Desk fails to boot after installing (`SessionBootFailed`) | Frappe is older than the app expects; update Frappe to a recent v16 |
-| No app tile, dock buttons or sidebars | `bench --site <site> migrate`, `bench build --app frappe_intelligence`, `bench --site <site> clear-cache`, then reload; on an old v16 release, update Frappe. The user must be allowed by AI Settings → Allowed Roles |
+| No app tile, dock buttons or sidebars | `bench --site <site> migrate`, `bench build --app frappe_intelligence`, `bench --site <site> clear-cache`, then reload; on an old v16 release, update Frappe. The user must have the Intelligence User role ([permissions.md](permissions.md)) |
 | Assistant missing from the dock | Same as above; the dock's sparkles button only shows for allowed users |
 | A change in the code does nothing in the panel | Restart the workers: they keep the old code (`bench restart`) |
 | Answers never arrive | A worker must run the `long` queue (`bench start` or supervisor) |
@@ -15,4 +15,5 @@
 | "Too many requests" | More than 20 calls a minute to one endpoint; wait, or change `REQUESTS_PER_MINUTE` in `utils/access.py` |
 | Replies in the wrong language | Set AI Settings → Response Language ([settings.md](settings.md#chat)) |
 | A post-processor does not run | Check that a worker runs the `default` queue, and the Error Log for an unsafe callback |
-| Everyone can use the assistant | Add rows to AI Settings → Allowed Roles |
+| A user cannot use the assistant | Give them the Intelligence User role; Administrator too, on its own User form |
+| "Agent" is greyed out in the mode menu | Its note says why: turn on Allow Agent Mode in AI Settings, or give the user the Intelligence Agent role |

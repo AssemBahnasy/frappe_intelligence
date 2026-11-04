@@ -8,7 +8,7 @@ In Agent mode the assistant can create, update, submit, cancel and delete docume
 
 | Field | Notes |
 |---|---|
-| Allow Agent Mode | Off by default. Without it the panel shows Agent as disabled and `send_message(mode="Agent")` is refused |
+| Allow Agent Mode | Off by default: the site-wide switch. Without it, or without the **Intelligence Agent** role ([../setup/permissions.md](../setup/permissions.md)), the panel shows Agent as disabled and `send_message(mode="Agent")` is refused |
 | Excluded DocTypes | DocTypes the assistant must never change. Users, roles, permissions, System Settings, AI Settings and AI Conversation are always excluded (`changes.ALWAYS_EXCLUDED`) |
 
 The mode is chosen in the panel's mode menu and stored on the conversation; it can change between messages.

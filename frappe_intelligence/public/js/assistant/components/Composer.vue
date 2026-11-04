@@ -285,7 +285,7 @@ function modes(agent_allowed) {
 			label: __("Agent"),
 			description: agent_allowed
 				? __("Prepares changes. You approve each one first.")
-				: __("Turned off in AI Settings."),
+				: frappe.boot.fi_assistant.agent_mode_refusal,
 			selected: store.mode === "Agent",
 			disabled: !agent_allowed,
 			onclick: () => (store.mode = "Agent"),

@@ -14,7 +14,7 @@ A greeting with the user's first name and up to two groups of starter questions 
 - The chip above the box names the page the user is on ("Customer list", "Sales Invoice · ACC-…", "New Purchase Invoice") and is sent as context. **×** leaves it out for this page; it comes back on the next page.
 - The **paperclip** attaches up to three PDFs, photos or text files. Each uploads at once as a private file and shows as a chip in the box (spinner while uploading, **×** to remove); a message can be just the files. Sent files show above the question.
 - The **microphone** (when the voice package is installed) records a question; it becomes text on the server and goes into the box to check and send ([voice.md](voice.md)).
-- The mode menu offers **Ask** and **Agent** (disabled with "Turned off in AI Settings" unless Agent mode is allowed), and **Start a guided workflow** with every workflow as a submenu. The chip turns violet in Agent mode.
+- The mode menu offers **Ask** and **Agent** (disabled, with the reason, unless Agent mode is open to the user: [../setup/permissions.md](../setup/permissions.md)), and **Start a guided workflow** with every workflow as a submenu. The chip turns violet in Agent mode.
 
 ## While the answer is written
 

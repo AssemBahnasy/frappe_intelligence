@@ -4,7 +4,7 @@ The app's place in the desk: its tile on the Apps screen, four dock buttons, a s
 
 ## Apps screen
 
-`hooks.py` → `add_to_apps_screen`: the logo `public/images/frappe-intelligence-logo.svg`, opening `app_home` = `/desk/intelligence`, shown to users AI Settings → Allowed Roles lets use the assistant (`utils/access.can_use_assistant`). `app_logo_url` puts the same logo in the sidebar header and the app switcher.
+`hooks.py` → `add_to_apps_screen`: the logo `public/images/frappe-intelligence-logo.svg`, opening `app_home` = `/desk/intelligence`, shown to users with the Intelligence User or Intelligence Agent role (`utils/access.can_use_assistant`). `app_logo_url` puts the same logo in the sidebar header and the app switcher.
 
 ## Dock and sidebars
 

@@ -65,7 +65,7 @@ async function desk_context(browser) {
 
 async function demo_keys(context) {
 	const page = await open_desk(context, "/desk");
-	const keys = await page.evaluate(() => Object.keys(frappe_intelligence.tutorial.DEMOS));
+	const keys = await page.evaluate(() => Object.keys(window.frappe_intelligence.tutorial.DEMOS));
 	await page.close();
 	return keys;
 }
@@ -98,7 +98,9 @@ async function record(context, key, out) {
 	const chat = await fake_chat(page, scene);
 	await page.goto(base_url + scene.route, { waitUntil: "networkidle" });
 	await load_demos(page);
-	await page.evaluate(() => (window.fi_demo_stage = new frappe_intelligence.tutorial.Stage()));
+	await page.evaluate(
+		() => (window.fi_demo_stage = new window.frappe_intelligence.tutorial.Stage())
+	);
 	if (scene.boot) await page.evaluate((values) => window.fi_demo_stage.boot(values), scene.boot);
 	await page.waitForTimeout(800);
 
@@ -142,7 +144,10 @@ async function record(context, key, out) {
 // Each scene is built in the page, so its texts come translated into the recording's language.
 async function scene_of(context, key) {
 	const page = await open_desk(context, "/desk");
-	const scene = await page.evaluate((key) => frappe_intelligence.tutorial.DEMOS[key]?.(), key);
+	const scene = await page.evaluate(
+		(key) => window.frappe_intelligence.tutorial.DEMOS[key]?.(),
+		key
+	);
 	await page.close();
 	if (!scene) throw new Error(`No demo scene for the topic "${key}" (demos.js).`);
 	return scene;
@@ -210,6 +215,10 @@ class Actor {
 		} else if ("job" in action) {
 			await this.stage("emit", { job: JOB_ID, value: action.job }, "fi_job");
 			await this.wait(900);
+		} else if (action.go) {
+			await this.page.evaluate((route) => frappe.set_route(route), action.go);
+			await this.page.waitForLoadState("networkidle");
+			await this.wait(1500);
 		} else if (action.press) {
 			await this.stage("keys", action.label || action.press);
 			await this.page.keyboard.press(action.press);

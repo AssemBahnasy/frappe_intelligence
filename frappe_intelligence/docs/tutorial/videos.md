@@ -47,7 +47,8 @@ One entry per topic key: a function (it may be async) returning the `route` to s
 | `boot` | Values put into `frappe.boot.fi_assistant` before the panel opens, to show what this site has off (`agent_mode`, `voice`, `workflows`) |
 | `conversations` | The History menu: `[{ name, title, modified, turns: [{ question, answer }] }]` |
 | `workflow` | What starting a workflow opens: `{ state, question }`, `state` as `workflows/desk.py progress` returns it |
- Scripted answers are built from the site's records with `frappe.db`, so they match the list behind the panel. Texts go through `__()` and the scene is built in the recording's language, so the Arabic video types Arabic.
+
+Scripted answers are built from the site's records with `frappe.db`, so they match the list behind the panel. Texts go through `__()` and the scene is built in the recording's language, so the Arabic video types Arabic.
 
 | Action | Does |
 |---|---|
@@ -59,6 +60,7 @@ One entry per topic key: a function (it may be async) returning the `route` to s
 | `{ reply: { steps, text, proposals, actions, workflow, report } }` | The assistant answers: each step label runs, then the text is written. `proposals`: changes to approve or a document's values to check (`preview` as the cards read it); `actions`: browser actions (`assistant/actions.js`); `workflow`: the workflow's next state; `report: true`: the text after the changes were decided |
 | `{ attach: "<file name>" }` | Attaches a file through Attach a file (its upload is answered by the recorder) |
 | `{ job: value }` | A background job finishes with `value`: the text of a recording, or what Write with AI wrote |
+| `{ go: "<route>" }` | Opens another desk page (`frappe.set_route`), e.g. `permission-manager/AI Conversation` |
 | `{ press: keys, label }` | Presses keys (Playwright names, e.g. `Control+.`) and shows `label` as a key badge |
 | `{ drag: target, by }` | Drags the target `by` pixels along the line: negative towards its start, in either direction |
 | `{ select: target, value }` | Sets a select field without the browser's own list, which is not recorded |

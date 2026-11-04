@@ -7,7 +7,7 @@ from frappe import _
 
 from frappe_intelligence.agent import runs, transcript
 from frappe_intelligence.documents import review
-from frappe_intelligence.utils.access import agent_mode_allowed, ensure_assistant_access, limit_requests
+from frappe_intelligence.utils.access import agent_mode_refusal, ensure_assistant_access, limit_requests
 from frappe_intelligence.utils.file_utils import validate_file_access
 from frappe_intelligence.workflows import desk
 
@@ -123,8 +123,8 @@ def list_conversations(limit: int = CONVERSATION_LIST_LIMIT) -> list[dict]:
 def _validated_mode(mode: str) -> str:
 	if mode not in DESK_MODES:
 		frappe.throw(_("Unknown mode: {0}").format(mode))
-	if mode == "Agent" and not agent_mode_allowed():
-		frappe.throw(_("Agent mode is turned off in AI Settings."), frappe.PermissionError)
+	if mode == "Agent" and (refusal := agent_mode_refusal()):
+		frappe.throw(refusal, frappe.PermissionError)
 	return mode
 
 

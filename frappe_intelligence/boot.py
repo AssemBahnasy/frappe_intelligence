@@ -6,7 +6,7 @@ from frappe import _
 from frappe_intelligence.agent import suggestions
 from frappe_intelligence.documents import voice
 from frappe_intelligence.utils import optional
-from frappe_intelligence.utils.access import agent_mode_allowed, can_use_assistant, field_writer_allowed
+from frappe_intelligence.utils.access import agent_mode_refusal, can_use_assistant, field_writer_allowed
 from frappe_intelligence.workflows import desk
 from frappe_intelligence.writer import text
 
@@ -14,10 +14,13 @@ from frappe_intelligence.writer import text
 def boot_session(bootinfo):
 	if not can_use_assistant():
 		return
+	agent_refusal = agent_mode_refusal()
 	bootinfo.fi_assistant = {
 		"name": frappe.get_cached_doc("AI Settings").assistant_name or _("Assistant"),
 		"suggestions": suggestions.for_user(),
-		"agent_mode": agent_mode_allowed(),
+		"agent_mode": not agent_refusal,
+		# Why Agent mode is closed, shown in the mode menu; None when it is open.
+		"agent_mode_refusal": agent_refusal,
 		"workflows": desk.startable(),
 		# Field types that get Write with AI; empty when it is turned off.
 		"field_writer": list(text.FIELD_TYPES) if field_writer_allowed() else [],

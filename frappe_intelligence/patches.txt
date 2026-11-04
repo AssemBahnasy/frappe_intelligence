@@ -9,3 +9,4 @@ frappe_intelligence.patches.v1_0.enable_field_writer
 frappe_intelligence.patches.v1_0.remove_route_map
 frappe_intelligence.patches.v1_0.remove_step_post_processors
 frappe_intelligence.patches.v1_0.drop_route_map_table
+frappe_intelligence.patches.v1_0.intelligence_user_role

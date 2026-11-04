@@ -26,7 +26,7 @@ Requires Frappe v16, built and tested on v16.54, and Python 3.14.
 |---|---|
 | [guidelines/](guidelines/README.md) | Know the rules every change follows: code, UI, translations, tests, docs |
 | [overview/](overview/README.md) | See how the pieces fit: layers, request flows, code map, DocTypes, history |
-| [setup/](setup/README.md) | Install, configure, integrate with another app, troubleshoot |
+| [setup/](setup/README.md) | Install, configure, permissions, integrate with another app, troubleshoot |
 | [api/](api/README.md) | Call the whitelisted endpoints |
 | Feature folders (table above) | Change or explain one feature |
 
@@ -44,5 +44,6 @@ Each folder has a README that is only an index; each file covers one concern.
 | A workflow behaviour | [workflows/turn.md](workflows/turn.md), [workflows/steps.md](workflows/steps.md) |
 | Reading documents | [documents/review.md](documents/review.md), [documents/templates.md](documents/templates.md) |
 | A new AI Settings field | [setup/settings.md](setup/settings.md) |
+| A new role or permission | [setup/permissions.md](setup/permissions.md) |
 | A user-facing string | [guidelines/translations.md](guidelines/translations.md) |
 | A desk icon | [navigation/README.md](navigation/README.md) |

@@ -2,7 +2,7 @@
 
 ## `set_done`
 
-POST only. Marks one of the user's tutorial topics done, or not yet, and returns the list of topics now done. Requires a desk user allowed by **AI Settings → Allowed Roles**. See [../tutorial/structure.md](../tutorial/structure.md#done).
+POST only. Marks one of the user's tutorial topics done, or not yet, and returns the list of topics now done. Requires the **Intelligence User** or **Intelligence Agent** role ([../setup/permissions.md](../setup/permissions.md)). See [../tutorial/structure.md](../tutorial/structure.md#done).
 
 | Param | Type | Required | Notes |
 |-------|------|----------|-------|

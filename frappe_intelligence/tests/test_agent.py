@@ -396,12 +396,17 @@ class TestChangeTools(TestCase):
 			self.addCleanup(patcher.stop)
 
 	def test_settings_are_checked_again_when_the_change_runs(self):
-		with patch.object(changes, "agent_mode_allowed", return_value=True):
+		with patch.object(changes, "agent_mode_refusal", return_value=None):
 			self.assertEqual(changes.run_create({"doctype": "ToDo", "data": {}})["created"], "T-1")
 			for doctype in ("Item", "User"):
 				with self.assertRaises(ToolError):
 					changes.run_create({"doctype": doctype, "data": {}})
-		with patch.object(changes, "agent_mode_allowed", return_value=False), self.assertRaises(ToolError):
+		with (
+			patch.object(
+				changes, "agent_mode_refusal", return_value="Agent mode is turned off in AI Settings."
+			),
+			self.assertRaises(ToolError),
+		):
 			changes.run_delete({"doctype": "ToDo", "name": "T-1"})
 
 

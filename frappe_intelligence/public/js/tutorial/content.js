@@ -310,6 +310,7 @@ export const TOPICS = [
 		],
 		tips: [
 			__("The assistant can only change what you could change yourself."),
+			__("Your administrator decides who may use Agent mode."),
 			__("Some DocTypes can be kept out of reach in AI Settings."),
 		],
 		related: ["ask", "access"],
@@ -416,19 +417,21 @@ export const TOPICS = [
 		minutes: 2,
 		title: __("Who can use it"),
 		text: __(
-			"Choose who sees the assistant, whether Agent mode is allowed, what it may never touch, and whether forms get Write with AI."
+			"Give people the Intelligence User role to use the assistant, and the Intelligence Agent role for Agent mode as well. Choose what Agent mode may never touch and whether forms get Write with AI."
 		),
 		steps: [
 			{
-				title: __("Allowed Roles"),
+				title: __("Give the role"),
 				text: __(
-					"Leave empty for every desk user, or list the roles that may use the assistant."
+					"Add the Intelligence User role to each person who may use the assistant, on their User form or through a Role Profile."
 				),
 				picture: "settings",
 			},
 			{
 				title: __("Agent mode"),
-				text: __("Allow Agent Mode, and list Excluded DocTypes it may never change."),
+				text: __(
+					"Turn on Allow Agent Mode in AI Settings, and give the Intelligence Agent role to the people who may use it."
+				),
 				picture: "settings",
 			},
 			{
@@ -439,6 +442,7 @@ export const TOPICS = [
 		],
 		tips: [
 			__("Permissions still apply: the assistant never goes beyond what each user may do."),
+			__("Excluded DocTypes in AI Settings are never changed, whoever asks."),
 		],
 		related: ["provider", "agent-mode"],
 		tour: [

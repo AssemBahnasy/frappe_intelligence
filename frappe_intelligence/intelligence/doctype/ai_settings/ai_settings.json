@@ -54,10 +54,7 @@
   "allow_agent_mode",
   "agent_excluded_doctypes",
   "writer_section",
-  "allow_field_writer",
-  "access_section",
-  "widget_roles",
-  "column_break_zned"
+  "allow_field_writer"
  ],
  "fields": [
   {
@@ -231,21 +228,21 @@
   },
   {
    "default": "0.6",
-   "description": "Minimum confidence score (0.0\u20131.0) to auto-accept extraction results. Below this threshold the widget pauses and asks the user to review before post-processors fire.",
+   "description": "Minimum confidence score (0.0–1.0) to auto-accept extraction results. Below this threshold the widget pauses and asks the user to review before post-processors fire.",
    "fieldname": "confidence_threshold",
    "fieldtype": "Float",
    "label": "Confidence Threshold"
   },
   {
    "default": "0.05",
-   "description": "Cosine similarity threshold (0.0\u20131.0) for scope enforcement. Messages scoring below this against the workflow scope_description are rejected as out-of-scope. Lower = more permissive.",
+   "description": "Cosine similarity threshold (0.0–1.0) for scope enforcement. Messages scoring below this against the workflow scope_description are rejected as out-of-scope. Lower = more permissive.",
    "fieldname": "scope_similarity_threshold",
    "fieldtype": "Float",
    "label": "Scope Similarity Threshold"
   },
   {
    "default": "Batch with Fallback",
-   "description": "<b>Per Field</b> \u2014 One model call per field. Slowest but most reliable. Best for small hardware or unstable models.<br><b>Batch</b> \u2014 One call for all fields at once. Fastest, but a single malformed response fails every field.<br><b>Batch with Fallback</b> \u2014 Tries batch first; automatically retries any failed field individually. Best of both worlds.<br><b>Parallel</b> \u2014 Fires all per-field calls concurrently. Fast without the batch JSON risk, but causes a higher CPU/RAM spike.",
+   "description": "<b>Per Field</b> — One model call per field. Slowest but most reliable. Best for small hardware or unstable models.<br><b>Batch</b> — One call for all fields at once. Fastest, but a single malformed response fails every field.<br><b>Batch with Fallback</b> — Tries batch first; automatically retries any failed field individually. Best of both worlds.<br><b>Parallel</b> — Fires all per-field calls concurrently. Fast without the batch JSON risk, but causes a higher CPU/RAM spike.",
    "fieldname": "extraction_mode",
    "fieldtype": "Select",
    "label": "Extraction Mode",
@@ -254,7 +251,7 @@
   {
    "default": "0",
    "depends_on": "eval:doc.ai_provider=='Ollama' || doc.enable_ollama_fallback==1",
-   "description": "Keep the Ollama model in RAM between requests. Eliminates cold-start delay (10\u201330 s) at the cost of permanent memory usage (amount varies by the Ollama model size set in the Ollama Configuration section).",
+   "description": "Keep the Ollama model in RAM between requests. Eliminates cold-start delay (10–30 s) at the cost of permanent memory usage (amount varies by the Ollama model size set in the Ollama Configuration section).",
    "fieldname": "keep_model_loaded",
    "fieldtype": "Check",
    "label": "Keep Model Loaded"
@@ -312,7 +309,7 @@
   },
   {
    "depends_on": "eval:doc.enable_ai_on_whatsapp==1",
-   "description": "WhatsApp-specific system prompt. Use plain text only \u2014 no markdown. WhatsApp renders asterisks and underscores literally.",
+   "description": "WhatsApp-specific system prompt. Use plain text only — no markdown. WhatsApp renders asterisks and underscores literally.",
    "fieldname": "whatsapp_system_prompt",
    "fieldtype": "Small Text",
    "label": "WhatsApp System Prompt"
@@ -339,7 +336,7 @@
   },
   {
    "default": "0",
-   "description": "Let the assistant prepare changes (create, update, submit, cancel, delete). Every change is shown to the user and runs only after they confirm it.",
+   "description": "Let the assistant prepare changes (create, update, submit, cancel, delete). Every change is shown to the user and runs only after they confirm it. Only users with the Intelligence Agent role can use it.",
    "fieldname": "allow_agent_mode",
    "fieldtype": "Check",
    "label": "Allow Agent Mode"
@@ -365,22 +362,6 @@
    "label": "Write with AI in Forms"
   },
   {
-   "fieldname": "access_section",
-   "fieldtype": "Section Break",
-   "label": "Access Control"
-  },
-  {
-   "description": "Roles allowed to see and use the widget. Leave empty to allow all logged-in users.",
-   "fieldname": "widget_roles",
-   "fieldtype": "Table",
-   "label": "Allowed Roles",
-   "options": "AI Widget Role"
-  },
-  {
-   "fieldname": "column_break_zned",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_lncl",
    "fieldtype": "Column Break"
   }
@@ -389,7 +370,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-11-01 01:40:00.000000",
+ "modified": "2026-11-04 18:00:00.000000",
  "modified_by": "Administrator",
  "module": "Intelligence",
  "name": "AI Settings",

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frappe Intelligence VERSION\n"
 "Report-Msgid-Bugs-To: bahnasyassem@gmail.com\n"
-"POT-Creation-Date: 2026-11-03 16:15+0307\n"
+"POT-Creation-Date: 2026-11-04 18:05+0307\n"
 "PO-Revision-Date: 2026-11-01 01:46+0307\n"
 "Last-Translator: bahnasyassem@gmail.com\n"
 "Language: ar\n"
@@ -37,7 +37,7 @@ msgid "1 step"
 msgstr "خطوة واحدة"
 
 #. Description of the 'Extraction Mode' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:248
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json
 msgid "<b>Per Field</b> — One model call per field. Slowest but most reliable. Best for small hardware or unstable models.<br><b>Batch</b> — One call for all fields at once. Fastest, but a single malformed response fails every field.<br><b>Batch with Fallback</b> — Tries batch first; automatically retries any failed field individually. Best of both worlds.<br><b>Parallel</b> — Fires all per-field calls concurrently. Fast without the batch JSON risk, but causes a higher CPU/RAM spike."
 msgstr "<b>لكل حقل</b> — استدعاء واحد للنموذج لكل حقل. الأبطأ لكنه الأكثر موثوقية. الأنسب للأجهزة المحدودة أو النماذج غير المستقرة.<br><b>دفعة واحدة</b> — استدعاء واحد لجميع الحقول معًا. الأسرع، لكن استجابة واحدة غير صالحة تُفشل جميع الحقول.<br><b>دفعة مع بديل</b> — يجرّب الدفعة أولًا، ثم يعيد تلقائيًا محاولة أي حقل فشل بشكل منفرد. يجمع مزايا الطريقتين.<br><b>متوازٍ</b> — يُطلق جميع استدعاءات الحقول في وقت واحد. سريع دون مخاطر JSON في وضع الدفعة، لكنه يسبب ارتفاعًا أكبر في استهلاك CPU/RAM."
 
@@ -60,7 +60,7 @@ msgstr "يحتاج المخطط إلى عدد من مجموعات البيانا
 msgid "A chart needs between 1 and {0} labels."
 msgstr "يحتاج المخطط إلى عدد من التسميات بين 1 و{0}."
 
-#: frappe_intelligence/public/js/tutorial/content.js:610
+#: frappe_intelligence/public/js/tutorial/content.js:614
 msgid "A developer adds a function to an app."
 msgstr "يضيف مطوّر دالة إلى أحد التطبيقات."
 
@@ -87,11 +87,11 @@ msgstr "تذكير لطيف…"
 
 #. Description of the 'Write with AI in Forms' (Check) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:362
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:359
 msgid "A sparkles button beside long text fields in forms: the user describes what the field should say and the AI writes it in place. Nothing is saved until the user saves the form."
 msgstr "زر بأيقونة اللمعات بجانب الحقول النصية الطويلة في النماذج: يصف المستخدم ما يجب أن يحتويه الحقل ويكتبه الذكاء الاصطناعي في مكانه. لا يُحفظ شيء حتى يحفظ المستخدم النموذج."
 
-#: frappe_intelligence/public/js/tutorial/content.js:493
+#: frappe_intelligence/public/js/tutorial/content.js:497
 msgid "A template tells the assistant what a kind of document looks like and which fields to read from it."
 msgstr "يخبر القالب المساعد بشكل نوع معيّن من المستندات والحقول التي يقرؤها منه."
 
@@ -99,7 +99,7 @@ msgstr "يخبر القالب المساعد بشكل نوع معيّن من ا�
 msgid "A workflow asks its questions one step at a time and ends with a filled form for you to check."
 msgstr "يطرح سير العمل أسئلته خطوة بخطوة، وينتهي بنموذج مملوء لتراجعه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:675
+#: frappe_intelligence/public/js/tutorial/content.js:679
 msgid "A workflow often left halfway may ask too much in one step."
 msgstr "سير العمل الذي يُترك كثيرًا في منتصفه قد يطلب الكثير في خطوة واحدة."
 
@@ -162,7 +162,7 @@ msgid "AI Processing Log"
 msgstr "سجل معالجة الذكاء الاصطناعي"
 
 #. Label of the provider_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:71
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:68
 msgid "AI Provider"
 msgstr "مزوّد خدمة الذكاء الاصطناعي"
 
@@ -179,7 +179,7 @@ msgstr "تحليلات جلسات الذكاء الاصطناعي"
 #. Name of a DocType
 #. Label of a Sidebar Item
 #. Label of a shortcut in the Intelligence Workspace
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:395
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:376
 #: frappe_intelligence/intelligence/sidebar/intelligence_setup/intelligence_setup.json:22
 #: frappe_intelligence/intelligence/workspace/intelligence/intelligence.json:54
 msgid "AI Settings"
@@ -189,11 +189,6 @@ msgstr "إعدادات الذكاء الاصطناعي"
 #: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:87
 msgid "AI Training Pair"
 msgstr "زوج تدريب الذكاء الاصطناعي"
-
-#. Name of a DocType
-#: frappe_intelligence/intelligence/doctype/ai_widget_role/ai_widget_role.json:25
-msgid "AI Widget Role"
-msgstr "دور مساعد الذكاء الاصطناعي"
 
 #. Name of a DocType
 #: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:150
@@ -216,7 +211,7 @@ msgid "AI Workflow Step"
 msgstr "خطوة سير عمل الذكاء الاصطناعي"
 
 #. Label of the whatsapp_workflow (Link) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:296
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:293
 msgid "AI Workflow for WhatsApp"
 msgstr "سير عمل الذكاء الاصطناعي لواتساب"
 
@@ -227,7 +222,7 @@ msgstr "قد يخطئ الذكاء الاصطناعي. تحقّق من الأر�
 
 #. Description of the 'OpenAI API Key' (Password) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:154
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:151
 msgid "API key from platform.openai.com, or from the compatible service set in Base URL."
 msgstr "مفتاح API من platform.openai.com، أو من الخدمة المتوافقة المحددة في الرابط الأساسي."
 
@@ -235,11 +230,6 @@ msgstr "مفتاح API من platform.openai.com، أو من الخدمة الم�
 #: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:51
 msgid "Abandoned"
 msgstr "متروكة"
-
-#. Label of the access_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:370
-msgid "Access Control"
-msgstr "التحكم في الوصول"
 
 #: frappe_intelligence/api/portal.py:52
 msgid "Access denied."
@@ -281,11 +271,11 @@ msgstr "أضف قيدًا أو وصفًا…"
 msgid "Add a question"
 msgstr "أضف سؤالًا"
 
-#: frappe_intelligence/public/js/tutorial/content.js:538
+#: frappe_intelligence/public/js/tutorial/content.js:542
 msgid "Add a requirement"
 msgstr "أضف متطلبًا"
 
-#: frappe_intelligence/public/js/tutorial/content.js:504
+#: frappe_intelligence/public/js/tutorial/content.js:508
 msgid "Add an extraction rule per field: a regex pattern, or a hint for the AI."
 msgstr "أضف قاعدة استخراج لكل حقل: نمط تعبير نمطي، أو تلميحًا للذكاء الاصطناعي."
 
@@ -293,11 +283,15 @@ msgstr "أضف قاعدة استخراج لكل حقل: نمط تعبير نمط
 msgid "Add line"
 msgstr "إضافة سطر"
 
-#: frappe_intelligence/public/js/tutorial/content.js:576
+#: frappe_intelligence/public/js/tutorial/content.js:580
 msgid "Add steps"
 msgstr "أضف الخطوات"
 
-#: frappe_intelligence/public/js/tutorial/content.js:503
+#: frappe_intelligence/public/js/tutorial/content.js:425
+msgid "Add the Intelligence User role to each person who may use the assistant, on their User form or through a Role Profile."
+msgstr "أضف صلاحية «مستخدم الذكاء الاصطناعي» لكل شخص يُسمح له باستخدام المساعد، من نموذج المستخدم أو عبر ملف صلاحيات."
+
+#: frappe_intelligence/public/js/tutorial/content.js:507
 msgid "Add the fields"
 msgstr "أضف الحقول"
 
@@ -319,7 +313,7 @@ msgid "Agent"
 msgstr "الوكيل"
 
 #. Label of the agent_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:338
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:335
 msgid "Agent Mode"
 msgstr "وضع الوكيل"
 
@@ -329,12 +323,11 @@ msgid "Agent Session"
 msgstr "جلسة الوكيل"
 
 #: frappe_intelligence/public/js/tutorial/content.js:288
-#: frappe_intelligence/public/js/tutorial/content.js:430
+#: frappe_intelligence/public/js/tutorial/content.js:431
 msgid "Agent mode"
 msgstr "وضع الوكيل"
 
-#: frappe_intelligence/agent/tools/changes.py:37
-#: frappe_intelligence/api/chat.py:127
+#: frappe_intelligence/utils/access.py:42
 msgid "Agent mode is turned off in AI Settings."
 msgstr "وضع الوكيل معطّل في إعدادات الذكاء الاصطناعي."
 
@@ -348,13 +341,9 @@ msgid "All {0} steps done"
 msgstr "اكتملت جميع الخطوات ({0})"
 
 #. Label of the allow_agent_mode (Check) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:345
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:342
 msgid "Allow Agent Mode"
 msgstr "السماح بوضع الوكيل"
-
-#: frappe_intelligence/public/js/tutorial/content.js:431
-msgid "Allow Agent Mode, and list Excluded DocTypes it may never change."
-msgstr "فعّل «السماح بوضع الوكيل»، وأدرج أنواع المستندات المستثناة التي لا يجوز له تغييرها."
 
 #. Label of the allow_desk (Check) field in DocType 'AI Workflow'
 #: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:62
@@ -370,12 +359,6 @@ msgstr "السماح: البوابة"
 #: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:74
 msgid "Allow: WhatsApp"
 msgstr "السماح: واتساب"
-
-#. Label of the widget_roles (Table) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:376
-#: frappe_intelligence/public/js/tutorial/content.js:423
-msgid "Allowed Roles"
-msgstr "الأدوار المسموح بها"
 
 #: frappe_intelligence/public/js/tutorial/demos.js:199
 msgid "And when should it be done?"
@@ -395,7 +378,7 @@ msgstr "لم يتم العثور على الإجابة في هذه المحاد�
 
 #. Description of the 'Claude API Key' (Password) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:178
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:175
 msgid "Anthropic API key. Get one at console.anthropic.com."
 msgstr "مفتاح API من Anthropic. احصل عليه من console.anthropic.com."
 
@@ -419,7 +402,7 @@ msgstr "وافق أو ارفض"
 msgid "Approved"
 msgstr "تمت الموافقة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:323
+#: frappe_intelligence/public/js/tutorial/content.js:324
 msgid "Arabic and English"
 msgstr "العربية والإنجليزية"
 
@@ -458,19 +441,19 @@ msgstr "وضع السؤال"
 msgid "Ask mode reads and explains. It never changes data."
 msgstr "وضع السؤال يقرأ ويشرح، ولا يغيّر البيانات أبدًا."
 
-#: frappe_intelligence/public/js/tutorial/content.js:396
+#: frappe_intelligence/public/js/tutorial/content.js:397
 msgid "Ask the assistant a question to check it answers."
 msgstr "اطرح على المساعد سؤالًا لتتأكد من أنه يجيب."
 
 #. Label of the widget_tab (Tab Break) field in DocType 'AI Settings'
 #. Label of the widget_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/boot.py:18
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:323
+#: frappe_intelligence/boot.py:19
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:320
 msgid "Assistant"
 msgstr "المساعد"
 
 #. Label of the assistant_name (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:333
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:330
 msgid "Assistant Name"
 msgstr "اسم المساعد"
 
@@ -484,7 +467,7 @@ msgstr "أرفق ملف PDF أو صورة أو ملفًا نصيًا. يعرض �
 msgid "Attach a file"
 msgstr "إرفاق ملف"
 
-#: frappe_intelligence/public/js/tutorial/content.js:511
+#: frappe_intelligence/public/js/tutorial/content.js:515
 msgid "Attach such a document in the panel and check what comes back."
 msgstr "أرفق مستندًا كهذا في اللوحة وراجع ما يعود."
 
@@ -525,17 +508,17 @@ msgid "Bad answer"
 msgstr "إجابة سيئة"
 
 #. Label of the openai_base_url (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:169
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:166
 msgid "Base URL"
 msgstr "الرابط الأساسي"
 
 #. Option for the 'Extraction Mode' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:252
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:249
 msgid "Batch"
 msgstr "دفعة واحدة"
 
 #. Option for the 'Extraction Mode' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:252
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:249
 msgid "Batch with Fallback"
 msgstr "دفعة مع بديل"
 
@@ -548,7 +531,7 @@ msgstr "دفعة مع بديل"
 msgid "Both"
 msgstr "كلاهما"
 
-#: frappe_intelligence/public/js/tutorial/content.js:565
+#: frappe_intelligence/public/js/tutorial/content.js:569
 msgid "Build a workflow"
 msgstr "ابنِ سير عمل"
 
@@ -580,7 +563,7 @@ msgstr "جارٍ إلغاء {doctype} {name}"
 msgid "Cannot reach {0} at {3}."
 msgstr "تعذّر الوصول إلى {0} على {3}."
 
-#: frappe_intelligence/public/js/tutorial/content.js:593
+#: frappe_intelligence/public/js/tutorial/content.js:597
 msgid "Changes reach conversations already in progress."
 msgstr "تصل التغييرات إلى المحادثات الجارية أيضًا."
 
@@ -620,12 +603,12 @@ msgid "Chart type must be one of: {0}"
 msgstr "يجب أن يكون نوع المخطط أحد الأنواع التالية: {0}"
 
 #. Label of the chat_tab (Tab Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:197
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:194
 msgid "Chat"
 msgstr "المحادثة"
 
 #. Label of the chat_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:202
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:199
 msgid "Chat Behaviour"
 msgstr "سلوك المحادثة"
 
@@ -637,30 +620,26 @@ msgstr "راجع النموذج"
 msgid "Check the values"
 msgstr "راجع القيم"
 
-#: frappe_intelligence/public/js/tutorial/content.js:638
+#: frappe_intelligence/public/js/tutorial/content.js:642
 msgid "Check what was read"
 msgstr "راجع ما قُرئ"
 
-#: frappe_intelligence/public/js/tutorial/content.js:391
+#: frappe_intelligence/public/js/tutorial/content.js:392
 msgid "Choose it and enter its API key and model."
 msgstr "اختره وأدخل مفتاح API والنموذج."
 
 #. Description of the 'Provider' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:75
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:72
 msgid "Choose the AI backend. Configure the matching section below."
 msgstr "اختر خدمة الذكاء الاصطناعي، ثم اضبط القسم المطابق أدناه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:379
+#: frappe_intelligence/public/js/tutorial/content.js:380
 msgid "Choose the AI provider"
 msgstr "اختر مزوّد الذكاء الاصطناعي"
 
-#: frappe_intelligence/public/js/tutorial/content.js:539
+#: frappe_intelligence/public/js/tutorial/content.js:543
 msgid "Choose the DocType and the document type it needs."
 msgstr "اختر نوع المستند ونوع الوثيقة الذي يحتاجه."
-
-#: frappe_intelligence/public/js/tutorial/content.js:418
-msgid "Choose who sees the assistant, whether Agent mode is allowed, what it may never touch, and whether forms get Write with AI."
-msgstr "حدّد من يرى المساعد، وهل وضع الوكيل مسموح، وما لا يجوز له لمسه، وهل تحصل النماذج على «اكتب بالذكاء الاصطناعي»."
 
 #. Label of the section_break_2 (Section Break) field in DocType 'AI Document
 #. Template'
@@ -669,22 +648,22 @@ msgid "Classification"
 msgstr "التصنيف"
 
 #. Option for the 'Provider' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:80
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:77
 msgid "Claude"
 msgstr "Claude"
 
 #. Label of the claude_api_key (Password) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:181
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:178
 msgid "Claude API Key"
 msgstr "مفتاح Claude API"
 
 #. Label of the claude_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:175
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:172
 msgid "Claude Configuration"
 msgstr "إعدادات Claude"
 
 #. Label of the claude_model (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:192
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:189
 msgid "Claude Model"
 msgstr "نموذج Claude"
 
@@ -755,7 +734,7 @@ msgid "Confidence Score"
 msgstr "درجة الثقة"
 
 #. Label of the confidence_threshold (Float) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:237
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:234
 msgid "Confidence Threshold"
 msgstr "حد الثقة"
 
@@ -841,13 +820,13 @@ msgstr "الاستخراج المصحَّح"
 msgid "Correction Source"
 msgstr "مصدر التصحيح"
 
-#: frappe_intelligence/public/js/tutorial/content.js:515
+#: frappe_intelligence/public/js/tutorial/content.js:519
 msgid "Corrections users make become training pairs for the template."
 msgstr "تصحيحات المستخدمين تصبح أزواج تدريب للقالب."
 
 #. Description of the 'Scope Similarity Threshold' (Float) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:241
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json
 msgid "Cosine similarity threshold (0.0–1.0) for scope enforcement. Messages scoring below this against the workflow scope_description are rejected as out-of-scope. Lower = more permissive."
 msgstr "حد تشابه جيب التمام (0.0–1.0) لتطبيق نطاق المحادثة. تُرفض الرسائل التي تقل درجتها عن هذا الحد مقارنةً بقيمة scope_description لسير العمل باعتبارها خارج النطاق. القيمة الأقل = تساهل أكبر."
 
@@ -864,7 +843,7 @@ msgstr "تعذّر إرسال الرسالة. يرجى المحاولة مرة �
 msgid "Counting {doctype}"
 msgstr "جارٍ عدّ {doctype}"
 
-#: frappe_intelligence/public/js/tutorial/content.js:615
+#: frappe_intelligence/public/js/tutorial/content.js:619
 msgid "Create a Post Processor with the document type and the function's path."
 msgstr "أنشئ معالجًا لاحقًا بنوع الوثيقة ومسار الدالة."
 
@@ -872,11 +851,11 @@ msgstr "أنشئ معالجًا لاحقًا بنوع الوثيقة ومسار 
 msgid "Create a ToDo for every overdue invoice"
 msgstr "أنشئ مهمة لكل فاتورة متأخرة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:465
+#: frappe_intelligence/public/js/tutorial/content.js:469
 msgid "Create a pack"
 msgstr "أنشئ حزمة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:498
+#: frappe_intelligence/public/js/tutorial/content.js:502
 msgid "Create a template"
 msgstr "أنشئ قالبًا"
 
@@ -902,11 +881,11 @@ msgstr "مفتاح الخطوة الحالية"
 
 #. Description of the 'System Prompt' (Long Text) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:205
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:202
 msgid "Custom AI persona for chat and voice replies. Leave empty to use the default assistant prompt."
 msgstr "شخصية مخصصة للذكاء الاصطناعي في ردود المحادثة والصوت. اتركه فارغًا لاستخدام موجّه المساعد الافتراضي."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:640
+#: frappe_intelligence/public/js/tutorial/demos.js:647
 msgid "Customer"
 msgstr "العميل"
 
@@ -926,7 +905,7 @@ msgstr ""
 "وشكرًا لكم."
 
 #. Description of the 'WhatsApp Account' (Link) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:281
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:278
 msgid "Default account used for AI-generated outgoing replies."
 msgstr "الحساب الافتراضي المستخدم للردود الصادرة التي ينشئها الذكاء الاصطناعي."
 
@@ -952,7 +931,7 @@ msgstr "صِف النص، مثلًا: تذكير لطيف بأن موعد الف
 msgid "Describe what the field should say."
 msgstr "صِف ما يجب أن يتضمنه الحقل."
 
-#: frappe_intelligence/public/js/tutorial/content.js:582
+#: frappe_intelligence/public/js/tutorial/content.js:586
 msgid "Describe what the workflow is for, so off-topic messages are turned away."
 msgstr "صِف الغرض من سير العمل، حتى تُرفض الرسائل الخارجة عن الموضوع."
 
@@ -968,11 +947,11 @@ msgstr "صِف بلغة بسيطة ما يتولاه سير العمل هذا. �
 #: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:35
 #: frappe_intelligence/public/js/tutorial/demos.js:166
 #: frappe_intelligence/public/js/tutorial/demos.js:244
-#: frappe_intelligence/public/js/tutorial/demos.js:721
+#: frappe_intelligence/public/js/tutorial/demos.js:728
 msgid "Description"
 msgstr "الوصف"
 
-#: frappe_intelligence/public/js/tutorial/content.js:566
+#: frappe_intelligence/public/js/tutorial/content.js:570
 msgid "Design the questions a guided workflow asks, the form it fills, and where it runs: desk, portal or WhatsApp."
 msgstr "صمّم الأسئلة التي يطرحها سير العمل الموجّه، والنموذج الذي يملؤه، ومكان تشغيله: سطح المكتب أو البوابة أو واتساب."
 
@@ -981,11 +960,6 @@ msgstr "صمّم الأسئلة التي يطرحها سير العمل المو
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:91
 msgid "Desk"
 msgstr "المكتب"
-
-#. Name of a role
-#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:168
-msgid "Desk User"
-msgstr "مستخدم المكتب"
 
 #. Description of the 'Context' (JSON) field in DocType 'AI Conversation
 #. Message'
@@ -1022,7 +996,7 @@ msgstr "نوع المستند"
 
 #. Description of the 'Excluded DocTypes' (Table MultiSelect) field in DocType
 #. 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:349
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:346
 msgid "DocTypes the assistant must never change, in addition to users, roles, permissions and these settings."
 msgstr "أنواع المستندات التي يجب ألا يغيّرها المساعد أبدًا، إضافةً إلى المستخدمين والأدوار والصلاحيات وهذه الإعدادات."
 
@@ -1064,15 +1038,15 @@ msgstr "مفتاح نوع المستند"
 msgid "Documents"
 msgstr "وثائق"
 
-#: frappe_intelligence/public/js/tutorial/content.js:554
+#: frappe_intelligence/public/js/tutorial/content.js:558
 msgid "Documents in the dock lists Document Requirements."
 msgstr "«وثائق» في الشريط يضم متطلبات المستندات."
 
-#: frappe_intelligence/public/js/tutorial/content.js:521
+#: frappe_intelligence/public/js/tutorial/content.js:525
 msgid "Documents in the dock opens Document Templates."
 msgstr "«وثائق» في الشريط يفتح قوالب المستندات."
 
-#: frappe_intelligence/public/js/tutorial/content.js:645
+#: frappe_intelligence/public/js/tutorial/content.js:649
 msgid "Documents in the dock, then Processing Log."
 msgstr "«وثائق» في الشريط، ثم سجل المعالجة."
 
@@ -1092,8 +1066,8 @@ msgstr "جارٍ رسم مخطط"
 #: frappe_intelligence/public/js/tutorial/demos.js:75
 #: frappe_intelligence/public/js/tutorial/demos.js:200
 #: frappe_intelligence/public/js/tutorial/demos.js:213
-#: frappe_intelligence/public/js/tutorial/demos.js:640
-#: frappe_intelligence/public/js/tutorial/demos.js:698
+#: frappe_intelligence/public/js/tutorial/demos.js:647
+#: frappe_intelligence/public/js/tutorial/demos.js:705
 msgid "Due Date"
 msgstr "تاريخ الاستحقاق"
 
@@ -1105,7 +1079,7 @@ msgstr "يظهر كل تغيير في بطاقة عليها «بحاجة إلى 
 msgid "Each dataset needs one number per label."
 msgstr "تحتاج كل مجموعة بيانات إلى رقم واحد لكل تسمية."
 
-#: frappe_intelligence/public/js/tutorial/content.js:577
+#: frappe_intelligence/public/js/tutorial/content.js:581
 msgid "Each step has a question, a target DocType and the fields it collects."
 msgstr "لكل خطوة سؤال ونوع مستند مستهدف والحقول التي تجمعها."
 
@@ -1118,12 +1092,12 @@ msgid "Edit flow"
 msgstr "تعديل النموذج"
 
 #. Label of the enable_ai_on_whatsapp (Check) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:277
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:274
 msgid "Enable AI on WhatsApp"
 msgstr "تفعيل الذكاء الاصطناعي على واتساب"
 
 #. Label of the enable_ollama_fallback (Check) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:89
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:86
 msgid "Enable Ollama Fallback"
 msgstr "تفعيل Ollama كبديل"
 
@@ -1150,11 +1124,11 @@ msgstr "خطأ"
 msgid "Error Message"
 msgstr "رسالة الخطأ"
 
-#: frappe_intelligence/public/js/tutorial/content.js:348
+#: frappe_intelligence/public/js/tutorial/content.js:349
 msgid "Every chat is kept, so you can go back to it later. Rating answers helps improve them."
 msgstr "تُحفظ كل محادثة لتعود إليها لاحقًا. تقييم الإجابات يساعد على تحسينها."
 
-#: frappe_intelligence/public/js/tutorial/content.js:639
+#: frappe_intelligence/public/js/tutorial/content.js:643
 msgid "Every reading is logged with its values and confidence; every correction becomes a training pair."
 msgstr "تُسجَّل كل قراءة بقيمها ودرجة الثقة فيها، وكل تصحيح يصبح زوج تدريب."
 
@@ -1164,9 +1138,13 @@ msgstr "كل قيمة تصحّحها تُحفظ، فتتحسن القراءة ا
 
 #. Label of the agent_excluded_doctypes (Table MultiSelect) field in DocType
 #. 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:352
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:349
 msgid "Excluded DocTypes"
 msgstr "أنواع المستندات المستثناة"
+
+#: frappe_intelligence/public/js/tutorial/content.js:445
+msgid "Excluded DocTypes in AI Settings are never changed, whoever asks."
+msgstr "أنواع المستندات المستثناة في إعدادات الذكاء الاصطناعي لا تُغيَّر أبدًا، أيًّا كان من يطلب."
 
 #. Label of the excluded_keywords (Long Text) field in DocType 'AI Workflow'
 #: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:141
@@ -1195,12 +1173,12 @@ msgstr "البيانات المستخرجة"
 
 #. Label of the extraction_section (Section Break) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:230
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:227
 msgid "Extraction Behaviour"
 msgstr "سلوك الاستخراج"
 
 #. Label of the extraction_mode (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:251
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:248
 msgid "Extraction Mode"
 msgstr "وضع الاستخراج"
 
@@ -1217,7 +1195,7 @@ msgstr "قواعد الاستخراج"
 msgid "Extraction Strategy"
 msgstr "استراتيجية الاستخراج"
 
-#: frappe_intelligence/public/js/tutorial/content.js:460
+#: frappe_intelligence/public/js/tutorial/content.js:464
 msgid "Facts, policies and answers the assistant can search, so it answers questions your records cannot."
 msgstr "حقائق وسياسات وإجابات يستطيع المساعد البحث فيها، ليجيب عن أسئلة لا تجيب عنها سجلاتك."
 
@@ -1290,11 +1268,11 @@ msgstr "الملفات التي أرسلها المستخدم مع هذه الر
 msgid "Filling in the {doctype} form"
 msgstr "جارٍ تعبئة نموذج {doctype}"
 
-#: frappe_intelligence/public/js/tutorial/content.js:480
+#: frappe_intelligence/public/js/tutorial/content.js:484
 msgid "Find Knowledge Packs"
 msgstr "اعثر على حزم المعرفة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:626
+#: frappe_intelligence/public/js/tutorial/content.js:630
 msgid "Find Post Processors"
 msgstr "اعثر على المعالجات اللاحقة"
 
@@ -1302,7 +1280,7 @@ msgstr "اعثر على المعالجات اللاحقة"
 msgid "Find the button"
 msgstr "اعثر على الزر"
 
-#: frappe_intelligence/public/js/tutorial/content.js:553
+#: frappe_intelligence/public/js/tutorial/content.js:557
 msgid "Find the requirements"
 msgstr "اعثر على المتطلبات"
 
@@ -1310,7 +1288,7 @@ msgstr "اعثر على المتطلبات"
 msgid "Find the sparkles"
 msgstr "اعثر على زر النجوم"
 
-#: frappe_intelligence/public/js/tutorial/content.js:520
+#: frappe_intelligence/public/js/tutorial/content.js:524
 msgid "Find the templates"
 msgstr "اعثر على القوالب"
 
@@ -1365,22 +1343,22 @@ msgid "Fully-qualified Python callable, e.g. hawya.intelligence.handlers.fill_fa
 msgstr "دالة Python قابلة للاستدعاء بمسارها الكامل، مثل hawya.intelligence.handlers.fill_facility_address"
 
 #. Option for the 'Provider' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:80
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:77
 msgid "Gemini"
 msgstr "Gemini"
 
 #. Label of the gemini_api_key (Password) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:102
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:99
 msgid "Gemini API Key"
 msgstr "مفتاح Gemini API"
 
 #. Label of the gemini_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:95
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:92
 msgid "Gemini Configuration"
 msgstr "إعدادات Gemini"
 
 #. Label of the gemini_model (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:114
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:111
 msgid "Gemini Model"
 msgstr "نموذج Gemini"
 
@@ -1392,13 +1370,21 @@ msgstr "ابدأ"
 msgid "Getting started"
 msgstr "البدء"
 
-#: frappe_intelligence/public/js/tutorial/content.js:470
+#: frappe_intelligence/public/js/tutorial/content.js:474
 msgid "Give it to a workflow"
 msgstr "أعطها لسير عمل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:499
+#: frappe_intelligence/public/js/tutorial/content.js:419
+msgid "Give people the Intelligence User role to use the assistant, and the Intelligence Agent role for Agent mode as well. Choose what Agent mode may never touch and whether forms get Write with AI."
+msgstr "امنح الأشخاص صلاحية «مستخدم الذكاء الاصطناعي» لاستخدام المساعد، وصلاحية «وكيل الذكاء الاصطناعي» لوضع الوكيل أيضًا. واختر ما لا يجوز لوضع الوكيل لمسه أبدًا، وهل تحصل النماذج على «اكتب بالذكاء الاصطناعي»."
+
+#: frappe_intelligence/public/js/tutorial/content.js:503
 msgid "Give the document type a key and the detection keywords printed on it."
 msgstr "أعطِ نوع الوثيقة مفتاحًا وكلمات الكشف المطبوعة عليها."
+
+#: frappe_intelligence/public/js/tutorial/content.js:424
+msgid "Give the role"
+msgstr "امنح الصلاحية"
 
 #. Option for the 'Feedback' (Select) field in DocType 'AI Conversation
 #. Message'
@@ -1418,7 +1404,7 @@ msgstr "من المفيد أن تعرف"
 
 #. Description of the 'Gemini API Key' (Password) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:99
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:96
 msgid "Google API key. Get one at aistudio.google.com (free tier available)."
 msgstr "مفتاح API من Google. احصل عليه من aistudio.google.com (تتوفر باقة مجانية)."
 
@@ -1444,7 +1430,7 @@ msgid "Hello, are you there?"
 msgstr "مرحبًا، هل أنت هنا؟"
 
 #: frappe_intelligence/public/js/tutorial/demos.js:69
-#: frappe_intelligence/public/js/tutorial/demos.js:479
+#: frappe_intelligence/public/js/tutorial/demos.js:486
 msgid "Here is what I read. Check the values, then use them."
 msgstr "هذا ما قرأته. راجع القيم ثم استخدمها."
 
@@ -1473,7 +1459,7 @@ msgstr "مستوى عالي"
 msgid "History"
 msgstr "السجل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:354
+#: frappe_intelligence/public/js/tutorial/content.js:355
 msgid "History at the top of the panel lists your recent conversations."
 msgstr "«السجل» أعلى اللوحة يعرض محادثاتك الأخيرة."
 
@@ -1503,7 +1489,7 @@ msgstr "كم عدد الأصناف المتوفرة في المخزون؟"
 msgid "How many open sales orders do we have?"
 msgstr "كم عدد أوامر البيع المفتوحة لدينا؟"
 
-#: frappe_intelligence/public/js/tutorial/content.js:665
+#: frappe_intelligence/public/js/tutorial/content.js:669
 msgid "How often each workflow is started, finished or left, and how many turns it takes."
 msgstr "كم مرة يُبدأ كل سير عمل أو يكتمل أو يُترك، وكم دورة يستغرق."
 
@@ -1538,13 +1524,13 @@ msgstr "توقفت بعد {0} خطوات. اطلب مني المتابعة إذ�
 
 #. Description of the 'Voice Transcription Language' (Data) field in DocType
 #. 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:222
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:219
 msgid "ISO 639-1 code for voice input (e.g. 'ar', 'en'). Leave empty to auto-detect."
 msgstr "رمز ISO 639-1 للإدخال الصوتي (مثل 'ar'، 'en'). اتركه فارغًا للكشف التلقائي."
 
 #. Description of the 'Enable Ollama Fallback' (Check) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:86
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:83
 msgid "If the selected provider fails (unreachable, wrong key, rate-limited), automatically retry with Ollama. Requires Ollama to be installed and running."
 msgstr "إذا فشل مزوّد الخدمة المحدد (تعذّر الوصول إليه، أو المفتاح غير صحيح، أو تجاوز حد الطلبات)، تُعاد المحاولة تلقائيًا باستخدام Ollama. يتطلب تثبيت Ollama وتشغيله."
 
@@ -1565,7 +1551,7 @@ msgstr "حسّن"
 msgid "In Agent mode the assistant can prepare changes: new records, edits, submissions. You approve each one before it happens."
 msgstr "في وضع الوكيل يستطيع المساعد تجهيز تغييرات: سجلات جديدة وتعديلات واعتمادات. توافق على كل تغيير قبل حدوثه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:471
+#: frappe_intelligence/public/js/tutorial/content.js:475
 msgid "In the Workflow Builder, add the pack to the workflows that need it."
 msgstr "في منشئ سير العمل، أضف الحزمة إلى مسارات العمل التي تحتاجها."
 
@@ -1592,6 +1578,11 @@ msgstr "يُضاف إلى موجّه النظام للوكيل. ويُستخدم
 msgid "Intelligence"
 msgstr "الذكاء الاصطناعي"
 
+#. Name of a role
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:176
+msgid "Intelligence Agent"
+msgstr "وكيل الذكاء الاصطناعي"
+
 #. Title of a Sidebar
 #: frappe_intelligence/intelligence/sidebar/intelligence_documents/intelligence_documents.json:80
 msgid "Intelligence Documents"
@@ -1601,6 +1592,11 @@ msgstr "مستندات الذكاء الاصطناعي"
 #: frappe_intelligence/intelligence/sidebar/intelligence_setup/intelligence_setup.json:64
 msgid "Intelligence Setup"
 msgstr "إعداد الذكاء الاصطناعي"
+
+#. Name of a role
+#: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:168
+msgid "Intelligence User"
+msgstr "مستخدم الذكاء الاصطناعي"
 
 #. Title of a Sidebar
 #: frappe_intelligence/intelligence/sidebar/intelligence_workflows/intelligence_workflows.json:48
@@ -1616,7 +1612,7 @@ msgstr "رابط ملف غير صالح. تُقبل فقط الروابط الت
 msgid "Invalid file URL. Only /files/ and /private/files/ are accepted."
 msgstr "رابط ملف غير صالح. لا يُقبل إلا /files/ و/private/files/."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:640
+#: frappe_intelligence/public/js/tutorial/demos.js:647
 msgid "Invoice"
 msgstr "فاتورة"
 
@@ -1651,11 +1647,11 @@ msgid "JSON object mapping fieldname to display label, e.g. {\"full_name\": \"Fu
 msgstr "كائن JSON يربط اسم الحقل بالتسمية المعروضة، مثل {\"full_name\": \"Full Name\", \"email\": \"Email\"}."
 
 #. Label of the keep_model_loaded (Check) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:260
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:257
 msgid "Keep Model Loaded"
 msgstr "إبقاء النموذج محمّلًا"
 
-#: frappe_intelligence/public/js/tutorial/content.js:475
+#: frappe_intelligence/public/js/tutorial/content.js:479
 msgid "Keep entries short; one fact per entry is easiest to find."
 msgstr "اجعل الإدخالات قصيرة؛ حقيقة واحدة في كل إدخال أسهل في العثور عليها."
 
@@ -1665,7 +1661,7 @@ msgstr "احتفظ به أو تراجع"
 
 #. Description of the 'Keep Model Loaded' (Check) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:257
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json
 msgid "Keep the Ollama model in RAM between requests. Eliminates cold-start delay (10–30 s) at the cost of permanent memory usage (amount varies by the Ollama model size set in the Ollama Configuration section)."
 msgstr "إبقاء نموذج Ollama في الذاكرة RAM بين الطلبات. يلغي تأخير بدء التشغيل البارد (10–30 ثانية) مقابل استهلاك دائم للذاكرة (يختلف مقداره حسب حجم نموذج Ollama المحدد في قسم إعدادات Ollama)."
 
@@ -1708,7 +1704,7 @@ msgstr "حزم المعرفة"
 msgid "Knowledge content retrieved as context for relevant chat queries."
 msgstr "محتوى معرفي يُسترجع كسياق لاستفسارات المحادثة ذات الصلة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:459
+#: frappe_intelligence/public/js/tutorial/content.js:463
 msgid "Knowledge packs"
 msgstr "حزم المعرفة"
 
@@ -1734,7 +1730,7 @@ msgstr "اللغة"
 
 #. Description of the 'Response Language' (Table) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:211
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:208
 msgid ""
 "Language the AI will use when replying to text and voice commands. \n"
 "Default: 'Auto' detects the language from each message."
@@ -1749,13 +1745,9 @@ msgid "Last User Message At"
 msgstr "وقت آخر رسالة من المستخدم"
 
 #. Description of the 'Base URL' (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:166
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:163
 msgid "Leave empty for OpenAI. Set it to use an OpenAI-compatible service such as Azure OpenAI, OpenRouter, Groq or a vLLM server."
 msgstr "اتركه فارغًا لاستخدام OpenAI. اضبطه لاستخدام خدمة متوافقة مع OpenAI مثل Azure OpenAI أو OpenRouter أو Groq أو خادم vLLM."
-
-#: frappe_intelligence/public/js/tutorial/content.js:424
-msgid "Leave empty for every desk user, or list the roles that may use the assistant."
-msgstr "اتركها فارغة لكل مستخدمي سطح المكتب، أو أدرج الأدوار التي يحق لها استخدام المساعد."
 
 #: frappe_intelligence/public/js/tutorial/components/StepPicture.vue:55
 msgid "Leave request"
@@ -1774,9 +1766,9 @@ msgid "Let it do the work"
 msgstr "دعه يعمل عنك"
 
 #. Description of the 'Allow Agent Mode' (Check) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:342
-msgid "Let the assistant prepare changes (create, update, submit, cancel, delete). Every change is shown to the user and runs only after they confirm it."
-msgstr "يتيح للمساعد تجهيز التغييرات (إنشاء، تحديث، اعتماد، إلغاء، حذف). يُعرض كل تغيير على المستخدم ولا يُنفَّذ إلا بعد تأكيده."
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:339
+msgid "Let the assistant prepare changes (create, update, submit, cancel, delete). Every change is shown to the user and runs only after they confirm it. Only users with the Intelligence Agent role can use it."
+msgstr "يتيح للمساعد تجهيز التغييرات (إنشاء، تحديث، اعتماد، إلغاء، حذف). يُعرض كل تغيير على المستخدم ولا يُنفَّذ إلا بعد تأكيده. لا يستخدمه إلا من لديه صلاحية «وكيل الذكاء الاصطناعي»."
 
 #. Label of the linked_doctype (Link) field in DocType 'AI Conversation'
 #. Label of the linked_doctype (Link) field in DocType 'AI Processing Log'
@@ -1819,11 +1811,11 @@ msgstr "جارٍ التحميل…"
 msgid "Long text fields in every form get a sparkles button. Say what the field should say and it is written in place."
 msgstr "تحصل الحقول النصية الطويلة في كل نموذج على زر النجوم. قل ما يجب أن يحتويه الحقل فيُكتب في مكانه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:649
+#: frappe_intelligence/public/js/tutorial/content.js:653
 msgid "Look at corrections"
 msgstr "اطّلع على التصحيحات"
 
-#: frappe_intelligence/public/js/tutorial/content.js:654
+#: frappe_intelligence/public/js/tutorial/content.js:658
 msgid "Low-confidence readings wait for a person to confirm them."
 msgstr "القراءات منخفضة الثقة تنتظر أن يؤكدها شخص."
 
@@ -1837,12 +1829,12 @@ msgstr "أفسح المجال"
 
 #. Description of the 'Enable AI on WhatsApp' (Check) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:274
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:271
 msgid "Master switch. When enabled, incoming WhatsApp messages are processed by the AI engine."
 msgstr "المفتاح الرئيسي. عند تفعيله، يعالج محرك الذكاء الاصطناعي رسائل واتساب الواردة."
 
 #. Label of the whatsapp_max_reply_chars (Int) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:305
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:302
 msgid "Max Reply Length (chars)"
 msgstr "أقصى طول للرد (بالأحرف)"
 
@@ -1880,7 +1872,7 @@ msgstr "أدنى درجة ثقة (0.0–1.0) لقبول استخراج المس�
 
 #. Description of the 'Confidence Threshold' (Float) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:234
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json
 msgid "Minimum confidence score (0.0–1.0) to auto-accept extraction results. Below this threshold the widget pauses and asks the user to review before post-processors fire."
 msgstr "أدنى درجة ثقة (0.0–1.0) لقبول نتائج الاستخراج تلقائيًا. إذا كانت الدرجة أقل من هذا الحد، يتوقف المساعد ويطلب من المستخدم المراجعة قبل تشغيل المعالجات اللاحقة."
 
@@ -1890,22 +1882,22 @@ msgid "Mode"
 msgstr "الوضع"
 
 #. Label of the model_tab (Tab Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:66
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:63
 msgid "Model"
 msgstr "النموذج"
 
 #. Description of the 'OpenAI Model' (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:160
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:157
 msgid "Model ID your OpenAI account (or compatible service) offers."
 msgstr "معرّف النموذج الذي يوفّره حسابك في OpenAI (أو خدمة متوافقة)."
 
 #. Description of the 'Claude Model' (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:189
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:186
 msgid "Model ID, for example claude-opus-5-5, claude-sonnet-5-5 or claude-haiku-5-5."
 msgstr "معرّف النموذج، مثل claude-opus-5-5 أو claude-sonnet-5-5 أو claude-haiku-5-5."
 
 #. Description of the 'Gemini Model' (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:111
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:108
 msgid "Model ID. gemini-2.0-flash is fast and cheap; gemini-1.5-pro is more capable."
 msgstr "معرّف النموذج. gemini-2.0-flash سريع ومنخفض التكلفة، وgemini-1.5-pro أعلى قدرة."
 
@@ -1916,11 +1908,11 @@ msgid "Model Preference"
 msgstr "تفضيل النموذج"
 
 #. Description of the 'Ollama Model' (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:131
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:128
 msgid "Model name to use for extraction and chat (must be pulled in Ollama)."
 msgstr "اسم النموذج المستخدم في الاستخراج والمحادثة (يجب تنزيله في Ollama)."
 
-#: frappe_intelligence/public/js/tutorial/content.js:466
+#: frappe_intelligence/public/js/tutorial/content.js:470
 msgid "Name it and add entries, each a topic and its content."
 msgstr "سمّها وأضف إدخالات، لكل منها موضوع ومحتوى."
 
@@ -1944,7 +1936,7 @@ msgstr "مهمة جديدة"
 msgid "New chat"
 msgstr "محادثة جديدة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:364
+#: frappe_intelligence/public/js/tutorial/content.js:365
 msgid "New chat starts an empty conversation."
 msgstr "«محادثة جديدة» تبدأ محادثة فارغة."
 
@@ -2048,7 +2040,7 @@ msgid "Nothing is saved until you save the form."
 msgstr "لا يُحفظ شيء حتى تحفظ النموذج."
 
 #: frappe_intelligence/public/js/tutorial/content.js:234
-#: frappe_intelligence/public/js/tutorial/content.js:317
+#: frappe_intelligence/public/js/tutorial/content.js:318
 msgid "Off"
 msgstr "إيقاف"
 
@@ -2062,22 +2054,22 @@ msgid "Off-topic · answered without AI"
 msgstr "خارج الموضوع · أُجيب دون الذكاء الاصطناعي"
 
 #. Option for the 'Provider' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:80
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:77
 msgid "Ollama"
 msgstr "Ollama"
 
 #. Label of the ollama_base_url (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:127
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:124
 msgid "Ollama Base URL"
 msgstr "عنوان URL الأساسي لـ Ollama"
 
 #. Label of the ollama_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:120
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:117
 msgid "Ollama Configuration"
 msgstr "إعدادات Ollama"
 
 #. Label of the ollama_model (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:134
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:131
 msgid "Ollama Model"
 msgstr "نموذج Ollama"
 
@@ -2086,7 +2078,7 @@ msgstr "نموذج Ollama"
 msgid "Ollama has no model {0}. Run: ollama pull {0}"
 msgstr "لا يوجد لدى Ollama النموذج {0}. شغّل: ollama pull {0}"
 
-#: frappe_intelligence/public/js/tutorial/content.js:380
+#: frappe_intelligence/public/js/tutorial/content.js:381
 msgid "One provider answers for the whole site: OpenAI, Claude, Gemini, or Ollama running on your own server."
 msgstr "مزوّد واحد يجيب للموقع كله: OpenAI أو Claude أو Gemini أو Ollama على خادمك."
 
@@ -2094,13 +2086,13 @@ msgstr "مزوّد واحد يجيب للموقع كله: OpenAI أو Claude أ�
 msgid "Only desk routes that start with /app/ can be opened."
 msgstr "لا يمكن فتح إلا مسارات المكتب التي تبدأ بـ /app/."
 
-#: frappe_intelligence/public/js/tutorial/content.js:385
-#: frappe_intelligence/public/js/tutorial/content.js:405
-#: frappe_intelligence/public/js/tutorial/content.js:447
+#: frappe_intelligence/public/js/tutorial/content.js:386
+#: frappe_intelligence/public/js/tutorial/content.js:406
+#: frappe_intelligence/public/js/tutorial/content.js:451
 msgid "Open AI Settings"
 msgstr "افتح إعدادات الذكاء الاصطناعي"
 
-#: frappe_intelligence/public/js/tutorial/content.js:353
+#: frappe_intelligence/public/js/tutorial/content.js:354
 msgid "Open History"
 msgstr "افتح السجل"
 
@@ -2120,7 +2112,7 @@ msgstr "أوامر البيع المفتوحة"
 msgid "Open the Assistant"
 msgstr "فتح المساعد"
 
-#: frappe_intelligence/public/js/tutorial/content.js:644
+#: frappe_intelligence/public/js/tutorial/content.js:648
 msgid "Open the Processing Log"
 msgstr "افتح سجل المعالجة"
 
@@ -2134,11 +2126,11 @@ msgstr "افتح المساعد"
 msgid "Open the assistant from the dock's sparkles button or with Ctrl + . on any page."
 msgstr "افتح المساعد من زره في الشريط الجانبي أو بالضغط على Ctrl + . في أي صفحة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:571
+#: frappe_intelligence/public/js/tutorial/content.js:575
 msgid "Open the builder"
 msgstr "افتح المنشئ"
 
-#: frappe_intelligence/public/js/tutorial/content.js:670
+#: frappe_intelligence/public/js/tutorial/content.js:674
 msgid "Open the report"
 msgstr "افتح التقرير"
 
@@ -2147,22 +2139,22 @@ msgid "Open this menu and choose Start a guided workflow. It is there once a wor
 msgstr "افتح هذه القائمة واختر «بدء سير عمل موجّه». يظهر هذا الخيار متى توفّر لك سير عمل."
 
 #. Option for the 'Provider' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:80
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:77
 msgid "OpenAI"
 msgstr "OpenAI"
 
 #. Label of the openai_api_key (Password) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:157
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:154
 msgid "OpenAI API Key"
 msgstr "مفتاح API لـ OpenAI"
 
 #. Label of the openai_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:151
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:148
 msgid "OpenAI Configuration"
 msgstr "إعدادات OpenAI"
 
 #. Label of the openai_model (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:163
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:160
 msgid "OpenAI Model"
 msgstr "نموذج OpenAI"
 
@@ -2225,7 +2217,7 @@ msgstr "الاستخراج الأصلي"
 msgid "Other topics"
 msgstr "مواضيع أخرى"
 
-#: frappe_intelligence/public/js/tutorial/content.js:368
+#: frappe_intelligence/public/js/tutorial/content.js:369
 msgid "Other users cannot see your conversations; System Managers can."
 msgstr "لا يرى المستخدمون الآخرون محادثاتك؛ يراها مديرو النظام."
 
@@ -2235,7 +2227,7 @@ msgstr "لا يرى المستخدمون الآخرون محادثاتك؛ ير�
 msgid "Out-of-Scope Reply"
 msgstr "رد خارج النطاق"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:640
+#: frappe_intelligence/public/js/tutorial/demos.js:647
 msgid "Outstanding Amount"
 msgstr "المبلغ المستحق"
 
@@ -2263,7 +2255,7 @@ msgid "Package File"
 msgstr "ملف الحزمة"
 
 #. Option for the 'Extraction Mode' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:252
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:249
 msgid "Parallel"
 msgstr "متوازٍ"
 
@@ -2285,15 +2277,15 @@ msgid "Pending"
 msgstr "قيد الانتظار"
 
 #. Option for the 'Extraction Mode' (Select) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:252
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:249
 msgid "Per Field"
 msgstr "لكل حقل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:441
+#: frappe_intelligence/public/js/tutorial/content.js:444
 msgid "Permissions still apply: the assistant never goes beyond what each user may do."
 msgstr "الصلاحيات تبقى سارية: لا يتجاوز المساعد أبدًا ما يحق لكل مستخدم."
 
-#: frappe_intelligence/public/js/tutorial/content.js:390
+#: frappe_intelligence/public/js/tutorial/content.js:391
 msgid "Pick the provider"
 msgstr "اختر المزوّد"
 
@@ -2335,7 +2327,7 @@ msgstr "مستخدم البوابة أو رقم واتساب الذي تتبع �
 msgid "Post Processors"
 msgstr "المعالجات اللاحقة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:603
+#: frappe_intelligence/public/js/tutorial/content.js:607
 msgid "Post processors"
 msgstr "المعالجات اللاحقة"
 
@@ -2406,7 +2398,7 @@ msgstr "التغيير المقترح"
 #. Label of the raw_provider (Data) field in DocType 'AI Conversation Message'
 #. Label of the ai_provider (Select) field in DocType 'AI Settings'
 #: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:122
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:79
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:76
 #: frappe_intelligence/public/js/tutorial/components/StepPicture.vue:106
 msgid "Provider"
 msgstr "مزوّد الخدمة"
@@ -2416,11 +2408,11 @@ msgstr "مزوّد الخدمة"
 msgid "Provider Payload"
 msgstr "بيانات مزوّد الخدمة"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:688
+#: frappe_intelligence/public/js/tutorial/demos.js:695
 msgid "Purchase Invoice"
 msgstr "فاتورة شراء"
 
-#: frappe_intelligence/public/js/tutorial/content.js:604
+#: frappe_intelligence/public/js/tutorial/content.js:608
 msgid "Python callbacks that fill or create records from a document's values once it has been read."
 msgstr "دوال Python تملأ السجلات أو تنشئها من قيم المستند بعد قراءته."
 
@@ -2430,7 +2422,7 @@ msgstr "دوال Python تملأ السجلات أو تنشئها من قيم ا
 msgid "Python-compatible regex to extract this field."
 msgstr "تعبير نمطي متوافق مع Python لاستخراج هذا الحقل."
 
-#: frappe_intelligence/public/js/tutorial/content.js:358
+#: frappe_intelligence/public/js/tutorial/content.js:359
 msgid "Rate an answer"
 msgstr "قيّم إجابة"
 
@@ -2449,7 +2441,7 @@ msgstr "النص الخام"
 msgid "Read a document"
 msgstr "اقرأ مستندًا"
 
-#: frappe_intelligence/public/js/tutorial/content.js:334
+#: frappe_intelligence/public/js/tutorial/content.js:335
 msgid "Read the reply"
 msgstr "اقرأ الرد"
 
@@ -2467,13 +2459,13 @@ msgid "Reading {doctype} fields"
 msgstr "جارٍ قراءة حقول {doctype}"
 
 #: frappe_intelligence/agent/tools/frappe_data.py:15
-#: frappe_intelligence/public/js/tutorial/demos.js:622
+#: frappe_intelligence/public/js/tutorial/demos.js:629
 #, python-brace-format
 msgid "Reading {doctype} list"
 msgstr "جارٍ قراءة قائمة {doctype}"
 
 #: frappe_intelligence/agent/tools/documents.py:40
-#: frappe_intelligence/public/js/tutorial/demos.js:621
+#: frappe_intelligence/public/js/tutorial/demos.js:628
 #, python-brace-format
 msgid "Reading {file_name}"
 msgstr "جارٍ قراءة {file_name}"
@@ -2490,7 +2482,7 @@ msgstr "سجّل سؤالك في اللوحة، فيُكتب لتراجعه قب
 msgid "Recording not found."
 msgstr "لم يتم العثور على التسجيل الصوتي."
 
-#: frappe_intelligence/public/js/tutorial/content.js:544
+#: frappe_intelligence/public/js/tutorial/content.js:548
 msgid "Records report their present and missing documents from what was read."
 msgstr "تعرض السجلات مستنداتها الموجودة والناقصة بناءً على ما قُرئ."
 
@@ -2506,7 +2498,7 @@ msgstr "تعبير نمطي"
 msgid "Regex Pattern"
 msgstr "نمط التعبير النمطي"
 
-#: frappe_intelligence/public/js/tutorial/content.js:614
+#: frappe_intelligence/public/js/tutorial/content.js:618
 msgid "Register it"
 msgstr "سجّله"
 
@@ -2567,11 +2559,11 @@ msgstr "ردّ، أو اطلب تعديلًا على المقترح…"
 msgid "Required Fields"
 msgstr "الحقول المطلوبة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:532
+#: frappe_intelligence/public/js/tutorial/content.js:536
 msgid "Required documents"
 msgstr "المستندات المطلوبة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:548
+#: frappe_intelligence/public/js/tutorial/content.js:552
 msgid "Requirements belong to a DocType, not to a workflow."
 msgstr "المتطلبات تخص نوع مستند، لا سير عمل."
 
@@ -2580,7 +2572,7 @@ msgid "Resize"
 msgstr "تغيير الحجم"
 
 #. Label of the response_language (Table) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:214
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:211
 msgid "Response Language"
 msgstr "لغة الرد"
 
@@ -2593,16 +2585,9 @@ msgid "Review needed"
 msgstr "المراجعة مطلوبة"
 
 #. Label of the role (Select) field in DocType 'AI Conversation Message'
-#. Label of the role (Link) field in DocType 'AI Widget Role'
 #: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:30
-#: frappe_intelligence/intelligence/doctype/ai_widget_role/ai_widget_role.json:15
 msgid "Role"
 msgstr "الدور"
-
-#. Description of the 'Allowed Roles' (Table) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:373
-msgid "Roles allowed to see and use the widget. Leave empty to allow all logged-in users."
-msgstr "الأدوار المسموح لها برؤية المساعد واستخدامه. اتركه فارغًا للسماح لجميع المستخدمين المسجّلين."
 
 #: frappe_intelligence/agent/tools/reports.py:72
 #, python-brace-format
@@ -2610,12 +2595,12 @@ msgid "Running {report_name}"
 msgstr "جارٍ تشغيل {report_name}"
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:70
-#: frappe_intelligence/public/js/tutorial/content.js:395
-#: frappe_intelligence/public/js/tutorial/demos.js:538
+#: frappe_intelligence/public/js/tutorial/content.js:396
+#: frappe_intelligence/public/js/tutorial/demos.js:545
 msgid "Save"
 msgstr "حفظ"
 
-#: frappe_intelligence/public/js/tutorial/content.js:588
+#: frappe_intelligence/public/js/tutorial/content.js:592
 msgid "Save and try"
 msgstr "احفظ وجرّب"
 
@@ -2640,7 +2625,7 @@ msgstr "قل ما تحتاجه من الملف، أو أرسله فقط."
 msgid "Say what you want"
 msgstr "قل ما تريد"
 
-#: frappe_intelligence/public/js/tutorial/content.js:533
+#: frappe_intelligence/public/js/tutorial/content.js:537
 msgid "Say which documents a DocType's records should have, so other apps can show what is still missing."
 msgstr "حدّد المستندات التي يجب أن تكون لسجلات نوع مستند، لتعرض التطبيقات الأخرى ما زال ناقصًا."
 
@@ -2662,7 +2647,7 @@ msgstr "وصف النطاق"
 
 #. Label of the scope_similarity_threshold (Float) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:244
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:241
 msgid "Scope Similarity Threshold"
 msgstr "حد تشابه النطاق"
 
@@ -2692,11 +2677,11 @@ msgid "Search…"
 msgstr "بحث…"
 
 #. Description of the 'Timeout (seconds)' (Int) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:142
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:139
 msgid "Seconds to wait for the AI provider before giving up."
 msgstr "عدد الثواني التي يُنتظر فيها مزوّد خدمة الذكاء الاصطناعي قبل التوقف."
 
-#: frappe_intelligence/public/js/tutorial/content.js:543
+#: frappe_intelligence/public/js/tutorial/content.js:547
 msgid "See what is missing"
 msgstr "اعرف ما ينقص"
 
@@ -2737,11 +2722,11 @@ msgstr "أرسل {0} ملفات كحد أقصى مع الرسالة."
 msgid "Session Analytics"
 msgstr "تحليلات الجلسات"
 
-#: frappe_intelligence/public/js/tutorial/content.js:671
+#: frappe_intelligence/public/js/tutorial/content.js:675
 msgid "Session Analytics in the Intelligence sidebar."
 msgstr "«تحليلات الجلسات» في الشريط الجانبي للذكاء."
 
-#: frappe_intelligence/public/js/tutorial/content.js:664
+#: frappe_intelligence/public/js/tutorial/content.js:668
 msgid "Session analytics"
 msgstr "تحليلات الجلسات"
 
@@ -2751,7 +2736,7 @@ msgstr "تحليلات الجلسات"
 msgid "Session that triggered this document processing job."
 msgstr "الجلسة التي بدأت مهمة معالجة هذا المستند."
 
-#: frappe_intelligence/public/js/tutorial/content.js:581
+#: frappe_intelligence/public/js/tutorial/content.js:585
 msgid "Set the scope"
 msgstr "حدّد النطاق"
 
@@ -2768,20 +2753,20 @@ msgstr "الإعداد"
 msgid "Setup"
 msgstr "الإعدادات"
 
-#: frappe_intelligence/public/js/tutorial/content.js:481
+#: frappe_intelligence/public/js/tutorial/content.js:485
 msgid "Setup in the dock lists Knowledge Packs."
 msgstr "«الإعدادات» في الشريط يضم حزم المعرفة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:627
+#: frappe_intelligence/public/js/tutorial/content.js:631
 msgid "Setup in the dock lists Post Processors."
 msgstr "«الإعدادات» في الشريط يضم المعالجات اللاحقة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:406
-#: frappe_intelligence/public/js/tutorial/content.js:448
+#: frappe_intelligence/public/js/tutorial/content.js:407
+#: frappe_intelligence/public/js/tutorial/content.js:452
 msgid "Setup in the dock opens AI Settings."
 msgstr "«الإعدادات» في الشريط يفتح إعدادات الذكاء الاصطناعي."
 
-#: frappe_intelligence/public/js/tutorial/content.js:386
+#: frappe_intelligence/public/js/tutorial/content.js:387
 msgid "Setup in the dock, then AI Settings."
 msgstr "«الإعدادات» في الشريط، ثم إعدادات الذكاء الاصطناعي."
 
@@ -2827,11 +2812,11 @@ msgstr "معرّف نصي يطابق قالب مستند الذكاء الاصط
 
 #. Description of the 'Max Reply Length (chars)' (Int) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:302
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:299
 msgid "Soft target. Replies longer than this are split into multiple messages."
 msgstr "حد تقريبي. تُقسَّم الردود الأطول من ذلك إلى عدة رسائل."
 
-#: frappe_intelligence/public/js/tutorial/content.js:313
+#: frappe_intelligence/public/js/tutorial/content.js:314
 msgid "Some DocTypes can be kept out of reach in AI Settings."
 msgstr "يمكن إبعاد بعض أنواع المستندات عن متناوله في إعدادات الذكاء الاصطناعي."
 
@@ -2843,11 +2828,11 @@ msgstr "تحدّث بدل الكتابة"
 msgid "Start a guided workflow"
 msgstr "بدء سير عمل موجّه"
 
-#: frappe_intelligence/public/js/tutorial/content.js:363
+#: frappe_intelligence/public/js/tutorial/content.js:364
 msgid "Start fresh"
 msgstr "ابدأ من جديد"
 
-#: frappe_intelligence/public/js/tutorial/content.js:589
+#: frappe_intelligence/public/js/tutorial/content.js:593
 msgid "Start it from the assistant panel."
 msgstr "ابدأه من لوحة المساعد."
 
@@ -2926,15 +2911,15 @@ msgstr "اعتماد {0} {1}"
 msgid "Submitting {doctype} {name}"
 msgstr "جارٍ اعتماد {doctype} {name}"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:691
+#: frappe_intelligence/public/js/tutorial/demos.js:698
 msgid "Supplier"
 msgstr "المورد"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:695
+#: frappe_intelligence/public/js/tutorial/demos.js:702
 msgid "Supplier Invoice Date"
 msgstr "تاريخ فاتورة المورد"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:692
+#: frappe_intelligence/public/js/tutorial/demos.js:699
 msgid "Supplier Invoice No"
 msgstr "رقم فاتورة المورد"
 
@@ -2949,14 +2934,14 @@ msgstr "انتقل إلى الوكيل"
 #: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:92
 #: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:61
 #: frappe_intelligence/intelligence/doctype/ai_processing_log/ai_processing_log.json:145
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:401
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:382
 #: frappe_intelligence/intelligence/doctype/ai_training_pair/ai_training_pair.json:98
 #: frappe_intelligence/intelligence/doctype/ai_workflow/ai_workflow.json:161
 msgid "System Manager"
 msgstr "مدير النظام"
 
 #. Label of the system_prompt (Long Text) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:208
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:205
 msgid "System Prompt"
 msgstr "موجّه النظام"
 
@@ -2969,7 +2954,7 @@ msgstr "موجّه النظام"
 msgid "Target DocType"
 msgstr "نوع المستند المستهدف"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:721
+#: frappe_intelligence/public/js/tutorial/demos.js:728
 msgid "Task"
 msgstr "مهمة"
 
@@ -2977,7 +2962,7 @@ msgstr "مهمة"
 msgid "Teach"
 msgstr "علّم"
 
-#: frappe_intelligence/public/js/tutorial/content.js:492
+#: frappe_intelligence/public/js/tutorial/content.js:496
 msgid "Teach it a document"
 msgstr "علّمه مستندًا"
 
@@ -3029,7 +3014,7 @@ msgstr "مستند Frappe الذي ينتمي إليه هذا السجل (تحد
 msgid "The answer arrives as it is written, with the records and reports it used."
 msgstr "تصل الإجابة أثناء كتابتها، مع السجلات والتقارير التي استخدمها."
 
-#: frappe_intelligence/public/js/tutorial/content.js:335
+#: frappe_intelligence/public/js/tutorial/content.js:336
 msgid "The answer comes back in the language you wrote in."
 msgstr "تأتي الإجابة باللغة التي كتبت بها."
 
@@ -3082,7 +3067,7 @@ msgstr "تعذّر رفع الملف."
 msgid "The form changed before the text was ready."
 msgstr "تغيّر النموذج قبل أن يجهز النص."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:654
+#: frappe_intelligence/public/js/tutorial/demos.js:661
 #, python-brace-format
 msgid "The oldest is from {0}."
 msgstr "أقدمها من {0}."
@@ -3145,7 +3130,7 @@ msgstr "تعذّر التحقق من هذه الإجابات. يرجى مراج�
 msgid "These answers did not pass this step's check."
 msgstr "لم تجتز هذه الإجابات التحقق الخاص بهذه الخطوة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:621
+#: frappe_intelligence/public/js/tutorial/content.js:625
 msgid "They run for documents read by the portal, WhatsApp and other apps."
 msgstr "تعمل على المستندات التي تقرؤها البوابة وواتساب والتطبيقات الأخرى."
 
@@ -3203,12 +3188,12 @@ msgstr "سير العمل هذا غير متاح هنا."
 msgid "This workflow was changed after this conversation started, so it cannot continue. Please start it again."
 msgstr "تم تغيير سير العمل هذا بعد بدء هذه المحادثة، لذلك لا يمكن متابعته. يرجى بدئه من جديد."
 
-#: frappe_intelligence/public/js/tutorial/content.js:359
+#: frappe_intelligence/public/js/tutorial/content.js:360
 msgid "Thumbs up for a good answer, thumbs down for a bad one."
 msgstr "إبهام لأعلى للإجابة الجيدة، ولأسفل للسيئة."
 
 #. Label of the request_timeout (Int) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:145
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:142
 msgid "Timeout (seconds)"
 msgstr "المهلة (بالثواني)"
 
@@ -3270,11 +3255,11 @@ msgstr "المواضيع"
 msgid "Training Pairs"
 msgstr "أزواج التدريب"
 
-#: frappe_intelligence/public/js/tutorial/content.js:650
+#: frappe_intelligence/public/js/tutorial/content.js:654
 msgid "Training Pairs list what was read next to what the user confirmed."
 msgstr "تعرض أزواج التدريب ما قُرئ بجانب ما أكّده المستخدم."
 
-#: frappe_intelligence/public/js/tutorial/content.js:510
+#: frappe_intelligence/public/js/tutorial/content.js:514
 msgid "Try it"
 msgstr "جرّبه"
 
@@ -3283,13 +3268,13 @@ msgstr "جرّبه"
 msgid "Try it now"
 msgstr "جرّبه الآن"
 
-#: frappe_intelligence/public/js/tutorial/content.js:436
+#: frappe_intelligence/public/js/tutorial/content.js:439
 msgid "Turn Write with AI in Forms on or off."
 msgstr "فعّل «اكتب بالذكاء الاصطناعي في النماذج» أو أوقفه."
 
-#: frappe_intelligence/public/js/assistant/components/Composer.vue:288
-msgid "Turned off in AI Settings."
-msgstr "معطّل في إعدادات الذكاء الاصطناعي."
+#: frappe_intelligence/public/js/tutorial/content.js:432
+msgid "Turn on Allow Agent Mode in AI Settings, and give the Intelligence Agent role to the people who may use it."
+msgstr "فعّل «السماح بوضع الوكيل» في إعدادات الذكاء الاصطناعي، وامنح صلاحية «وكيل الذكاء الاصطناعي» للأشخاص الذين يحق لهم استخدامه."
 
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:198
 msgid "Turning your recording into text…"
@@ -3308,7 +3293,7 @@ msgstr "الشرح"
 msgid "Type a question, for example: Which invoices are overdue?"
 msgstr "اكتب سؤالًا، مثلًا: ما الفواتير المتأخرة؟"
 
-#: frappe_intelligence/public/js/tutorial/content.js:330
+#: frappe_intelligence/public/js/tutorial/content.js:331
 msgid "Type or speak in Arabic or English."
 msgstr "اكتب أو تحدّث بالعربية أو الإنجليزية."
 
@@ -3317,7 +3302,7 @@ msgid "Type your answer…"
 msgstr "اكتب إجابتك…"
 
 #. Description of the 'Ollama Base URL' (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:124
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:121
 msgid "URL where the Ollama server is running."
 msgstr "عنوان URL الذي يعمل عليه خادم Ollama."
 
@@ -3431,7 +3416,7 @@ msgid "Video · {0}"
 msgstr "فيديو · {0}"
 
 #. Label of the voice_language (Data) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:225
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:222
 msgid "Voice Transcription Language"
 msgstr "لغة تحويل الصوت إلى نص"
 
@@ -3456,7 +3441,7 @@ msgstr "يحتاج الإدخال الصوتي إلى حزمة التفريغ ا
 msgid "What can you help me with?"
 msgstr "بماذا يمكنك مساعدتي؟"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:722
+#: frappe_intelligence/public/js/tutorial/demos.js:729
 msgid "What needs to be done?"
 msgstr "ما الذي يجب إنجازه؟"
 
@@ -3473,18 +3458,18 @@ msgstr "ما رآه المستخدم في بطاقة الموافقة."
 #. Option for the 'Channel' (Select) field in DocType 'AI Conversation'
 #. Label of the whatsapp_tab (Tab Break) field in DocType 'AI Settings'
 #: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:63
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:265
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:262
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:93
 msgid "WhatsApp"
 msgstr "WhatsApp"
 
 #. Label of the whatsapp_account (Link) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:284
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:281
 msgid "WhatsApp Account"
 msgstr "حساب واتساب"
 
 #. Label of the whatsapp_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:270
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:267
 msgid "WhatsApp Channel"
 msgstr "قناة واتساب"
 
@@ -3504,7 +3489,7 @@ msgstr "WhatsApp Flow الذي يُرسل لجمع بيانات منظمة عل�
 #. 'AI Settings'
 #. Label of the whatsapp_system_prompt (Small Text) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:311
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:308
 msgid "WhatsApp System Prompt"
 msgstr "موجّه النظام لواتساب"
 
@@ -3514,7 +3499,7 @@ msgstr "يتطلب تكامل واتساب تثبيت تطبيق frappe_whatsapp
 
 #. Description of the 'WhatsApp System Prompt' (Small Text) field in DocType
 #. 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:315
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json
 msgid "WhatsApp-specific system prompt. Use plain text only — no markdown. WhatsApp renders asterisks and underscores literally."
 msgstr "موجّه نظام خاص بواتساب. استخدم نصًا عاديًا فقط، دون Markdown. يعرض واتساب النجوم والشرطات السفلية كما هي."
 
@@ -3559,7 +3544,7 @@ msgstr "من أي الموردين اشترينا أكثر هذا العام؟"
 msgid "Who are our top 5 customers this quarter?"
 msgstr "من هم أفضل 5 عملاء لدينا هذا الربع؟"
 
-#: frappe_intelligence/public/js/tutorial/content.js:417
+#: frappe_intelligence/public/js/tutorial/content.js:418
 msgid "Who can use it"
 msgstr "من يستطيع استخدامه"
 
@@ -3567,7 +3552,7 @@ msgstr "من يستطيع استخدامه"
 msgid "Who is on leave this week?"
 msgstr "من في إجازة هذا الأسبوع؟"
 
-#: frappe_intelligence/public/js/tutorial/content.js:400
+#: frappe_intelligence/public/js/tutorial/content.js:401
 msgid "With Ollama, your data stays on your server."
 msgstr "مع Ollama تبقى بياناتك على خادمك."
 
@@ -3626,7 +3611,7 @@ msgstr "جلسة سير العمل التي أُرسل خلالها هذا ال�
 
 #. Description of the 'AI Workflow for WhatsApp' (Link) field in DocType 'AI
 #. Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:293
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:290
 msgid "Workflow that governs AI WhatsApp sessions."
 msgstr "سير العمل الذي يحكم جلسات الذكاء الاصطناعي على واتساب."
 
@@ -3640,7 +3625,7 @@ msgstr "عنوان سير العمل"
 msgid "Workflows"
 msgstr "مسارات العمل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:572
+#: frappe_intelligence/public/js/tutorial/content.js:576
 msgid "Workflows in the dock opens the Workflow Builder."
 msgstr "«مسارات العمل» في الشريط يفتح منشئ سير العمل."
 
@@ -3648,21 +3633,21 @@ msgstr "«مسارات العمل» في الشريط يفتح منشئ سير �
 msgid "Write"
 msgstr "كتابة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:324
+#: frappe_intelligence/public/js/tutorial/content.js:325
 msgid "Write in Arabic or English and the reply comes in the same language. When the desk is in Arabic, the panel reads right to left."
 msgstr "اكتب بالعربية أو الإنجليزية فيأتي الرد باللغة نفسها. عندما يكون سطح المكتب بالعربية، تُقرأ اللوحة من اليمين إلى اليسار."
 
-#: frappe_intelligence/public/js/tutorial/content.js:329
+#: frappe_intelligence/public/js/tutorial/content.js:330
 msgid "Write in your language"
 msgstr "اكتب بلغتك"
 
-#: frappe_intelligence/public/js/tutorial/content.js:609
+#: frappe_intelligence/public/js/tutorial/content.js:613
 msgid "Write the callback"
 msgstr "اكتب الدالة"
 
 #: frappe_intelligence/public/js/fi_field_writer.bundle.js:50
 #: frappe_intelligence/public/js/tutorial/content.js:196
-#: frappe_intelligence/public/js/tutorial/content.js:435
+#: frappe_intelligence/public/js/tutorial/content.js:438
 #: frappe_intelligence/public/js/tutorial/demos.js:132
 #: frappe_intelligence/public/js/tutorial/demos.js:133
 #: frappe_intelligence/public/js/tutorial/demos.js:136
@@ -3670,7 +3655,7 @@ msgid "Write with AI"
 msgstr "اكتب بالذكاء الاصطناعي"
 
 #. Label of the allow_field_writer (Check) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:365
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:362
 msgid "Write with AI in Forms"
 msgstr "اكتب بالذكاء الاصطناعي في النماذج"
 
@@ -3683,7 +3668,7 @@ msgid "Write with AI works on long text fields you can edit."
 msgstr "تعمل ميزة اكتب بالذكاء الاصطناعي على حقول النص الطويل التي يمكنك تعديلها."
 
 #. Label of the writer_section (Section Break) field in DocType 'AI Settings'
-#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:358
+#: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:355
 msgid "Writing Help"
 msgstr "المساعدة في الكتابة"
 
@@ -3704,7 +3689,7 @@ msgstr "نعم"
 msgid "Yes. Ask me about your records, reports or any screen."
 msgstr "نعم. اسألني عن سجلاتك أو تقاريرك أو أي شاشة."
 
-#: frappe_intelligence/utils/access.py:51
+#: frappe_intelligence/utils/access.py:54
 msgid "You are not allowed to use the assistant."
 msgstr "غير مسموح لك باستخدام المساعد."
 
@@ -3740,15 +3725,23 @@ msgstr "ليس لديك صلاحية للوصول إلى سجل المعالجة
 msgid "You do not have permission to read this record."
 msgstr "ليس لديك صلاحية لقراءة هذا السجل."
 
+#: frappe_intelligence/utils/access.py:44
+msgid "You have not been given Agent mode. Ask your administrator."
+msgstr "لم يُمنح لك وضع الوكيل. اطلبه من مسؤول النظام."
+
 #: frappe_intelligence/public/js/assistant/components/ChangeResult.vue:22
 msgid "You rejected"
 msgstr "رفضت"
 
-#: frappe_intelligence/public/js/tutorial/content.js:339
+#: frappe_intelligence/public/js/tutorial/content.js:340
 msgid "Your administrator can fix the reply language in AI Settings."
 msgstr "يستطيع مسؤول النظام تثبيت لغة الرد في إعدادات الذكاء الاصطناعي."
 
-#: frappe_intelligence/public/js/tutorial/content.js:347
+#: frappe_intelligence/public/js/tutorial/content.js:313
+msgid "Your administrator decides who may use Agent mode."
+msgstr "يحدد مسؤول النظام من يحق له استخدام وضع الوكيل."
+
+#: frappe_intelligence/public/js/tutorial/content.js:348
 msgid "Your conversations"
 msgstr "محادثاتك"
 
@@ -3825,7 +3818,7 @@ msgstr "واتساب"
 msgid "{0} API key is not set in AI Settings."
 msgstr "لم يتم تعيين مفتاح API الخاص بـ {0} في إعدادات الذكاء الاصطناعي."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:660
+#: frappe_intelligence/public/js/tutorial/demos.js:667
 #, python-brace-format
 msgid "{0} customers have overdue invoices: {1}."
 msgstr "{0} عملاء لديهم فواتير متأخرة: {1}."
@@ -3845,7 +3838,7 @@ msgstr "لا يوجد لدى {0} نموذج باسم {1}."
 msgid "{0} has none of these fields. Read its fields first."
 msgstr "لا يحتوي {0} على أي من هذه الحقول. اقرأ حقوله أولًا."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:652
+#: frappe_intelligence/public/js/tutorial/demos.js:659
 #, python-brace-format
 msgid "{0} invoices are overdue, {1} in all:"
 msgstr "{0} فواتير متأخرة، مجموعها {1}:"

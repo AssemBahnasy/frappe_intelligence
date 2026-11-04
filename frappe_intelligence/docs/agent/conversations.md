@@ -51,7 +51,7 @@ If the history still changed (an edited **AI Settings → System Prompt** mid-co
 
 ## Permissions and retention
 
-- **Desk User**: create, read, write, delete **own** conversations only. **System Manager**: all.
+- **Intelligence User**, **Intelligence Agent**: create, read, write, delete **own** conversations only. **System Manager**: all ([../setup/permissions.md](../setup/permissions.md)).
 - Old conversations are deleted after 90 days through **Log Settings** (`default_log_clearing_doctypes` hook, `clear_old_logs`); change the period there.
 - Idle workflow conversations become Abandoned after 7 days (`tasks.expire_old_sessions`).
 
