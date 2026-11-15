@@ -21,6 +21,7 @@ def after_install() -> None:
 	from frappe_intelligence.utils.requirement_seeder import seed_requirements
 
 	seed_requirements()  # no-op by default; integrating apps add entries
+	give_administrator_the_roles()
 
 	frappe.msgprint(
 		frappe._(
@@ -31,6 +32,15 @@ def after_install() -> None:
 	)
 
 	_print_checklist()
+
+
+def give_administrator_the_roles() -> None:
+	"""Administrator follows the roles ticked on its User form (utils/access.user_roles), so it is
+	given both, as ERPNext's after_install ticks every role for it (add_all_roles_to). A new install
+	runs no patch; an updated site's patch calls this too. Unticking them takes the assistant away."""
+	from frappe_intelligence.utils.access import AGENT_ROLE, USER_ROLE
+
+	frappe.get_doc("User", "Administrator").add_roles(USER_ROLE, AGENT_ROLE)
 
 
 # ---------------------------------------------------------------------------

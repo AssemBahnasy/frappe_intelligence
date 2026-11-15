@@ -20,6 +20,7 @@ Then choose a provider in **AI Settings** ([settings.md](settings.md)). The assi
 | Python packages (`pypdf`, `requests`, `openai`, `anthropic`, `google-genai`) | `pyproject.toml`; bench installs them with the app |
 | APT packages (`libgl1`, `libglib2.0-0`, `ffmpeg`) | `[deploy.dependencies.apt]`; Frappe Cloud installs them; only the optional packages use them |
 | Daily expiry of idle workflow conversations | `scheduler_events`; needs the scheduler |
+| The Intelligence User and Intelligence Agent roles, ticked for Administrator, as ERPNext ticks every role for it | `after_install` (`install.give_administrator_the_roles`); other users are given them on their User form ([permissions.md](permissions.md)) |
 
 ## Optional packages
 

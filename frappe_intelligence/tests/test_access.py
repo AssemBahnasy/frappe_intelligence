@@ -7,6 +7,7 @@ from unittest.mock import patch
 
 import frappe
 
+from frappe_intelligence import install
 from frappe_intelligence.api import chat
 from frappe_intelligence.patches.v1_0 import intelligence_user_role
 from frappe_intelligence.utils import access
@@ -51,6 +52,12 @@ class TestAdministrator(TestCase):
 	def test_ticked_role_opens_it(self):
 		with self.ticked([access.USER_ROLE]):
 			self.assertTrue(access.can_use_assistant("Administrator"))
+
+	def test_new_install_ticks_both_roles(self):
+		with patch.object(install.frappe, "get_doc") as get_doc:
+			install.give_administrator_the_roles()
+		get_doc.assert_called_once_with("User", "Administrator")
+		get_doc.return_value.add_roles.assert_called_once_with(access.USER_ROLE, access.AGENT_ROLE)
 
 	def test_agent_mode_needs_the_ticked_agent_role(self):
 		with self.ticked([access.USER_ROLE]), patch.object(access, "_", side_effect=lambda text: text):
@@ -109,6 +116,23 @@ class TestRolePatch(TestCase):
 
 	def test_allowed_roles_keep_only_their_users(self):
 		self.assertEqual(self.users(["Accounts User"], ["a@x.com", "b@x.com"], ["b@x.com"]), ["b@x.com"])
+
+	def test_grants_the_user_role_and_administrator_both(self):
+		with (
+			patch.object(intelligence_user_role.frappe.db, "table_exists", return_value=True),
+			patch.object(intelligence_user_role.frappe.db, "sql", return_value=[]),
+			patch.object(intelligence_user_role.frappe.db, "sql_ddl"),
+			patch.object(intelligence_user_role.frappe, "delete_doc"),
+			patch.object(
+				intelligence_user_role, "users_with_access", return_value=["Administrator", "a@x.com"]
+			),
+			patch.object(intelligence_user_role, "give_administrator_the_roles") as administrator,
+			patch.object(intelligence_user_role.frappe, "get_doc") as get_doc,
+		):
+			intelligence_user_role.execute()
+		administrator.assert_called_once()
+		get_doc.assert_called_once_with("User", "a@x.com")
+		get_doc.return_value.add_roles.assert_called_once_with(access.USER_ROLE)
 
 	def test_administrator_always_had_access(self):
 		self.assertEqual(self.users(["Accounts User"], ["Administrator", "a@x.com"], []), ["Administrator"])
