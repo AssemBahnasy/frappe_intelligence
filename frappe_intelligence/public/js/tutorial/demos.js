@@ -663,6 +663,8 @@ async function receivable_export() {
 		file_format: "Excel",
 		rows: (result || []).length,
 		delivery: "download",
+		can_export: true,
+		can_print: true,
 	};
 }
 

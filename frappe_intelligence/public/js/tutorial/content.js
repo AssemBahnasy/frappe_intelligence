@@ -98,7 +98,7 @@ export const TOPICS = [
 			{
 				title: __("Get it as a file"),
 				text: __(
-					"Ask for a report in Excel or CSV. A card under the answer downloads it through the report's own Export."
+					"Ask for a report as Excel, CSV or PDF, or to print it. A card under the answer does it through the report's own Export and Print."
 				),
 				picture: "answer",
 			},
@@ -106,7 +106,10 @@ export const TOPICS = [
 		tips: [
 			__("Ask mode reads and explains. It never changes data."),
 			__(
-				"Exporting a report needs the Export permission on it, as on the report's own page."
+				"Exporting a report needs the Export permission on it, and printing the Print permission, as on the report's own page."
+			),
+			__(
+				"Ask to print a document, such as an invoice: its print view opens, where you choose the print format and letterhead."
 			),
 			__("Leave this page out removes the page from your question."),
 			__("AI can make mistakes. Check important figures."),

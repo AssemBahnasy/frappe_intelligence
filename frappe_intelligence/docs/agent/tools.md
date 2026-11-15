@@ -11,11 +11,12 @@
 | `count_documents` | Frappe MCP | Like `frappe.get_count` |
 | `search_reports` | `reports.py` | Reports whose name matches, that the user may run |
 | `run_report` | `reports.py` | Columns and the first 50 rows; says when there are more |
-| `export_report` | `reports.py` | A download card under the answer: the report as Excel or CSV through Frappe's own Export, emailed when big; needs the Export right ([../panel/exports.md](../panel/exports.md)) |
+| `export_report` | `reports.py` | A card under the answer: the report as Excel or CSV through Frappe's own Export (emailed when big), and Print and PDF through the report page's own; each needs its right, Export or Print ([../panel/exports.md](../panel/exports.md)) |
 | `search_knowledge` | `knowledge.py` | Matching AI Knowledge Pack entries |
 | `read_document` | `documents.py` | A file's text; a template match pauses for the user to check the values ([../documents/review.md](../documents/review.md)). Called by the loop for every attached file |
 | `navigate` | `desk.py` | Browser opens a `/app/…` route |
 | `open_document` | `desk.py` | Browser opens a document's form |
+| `print_document` | `desk.py` | Browser opens a document's print view (format, letterhead, Print, PDF); needs the Print right on that record, as the form's Print button |
 | `new_document` | `desk.py` | Browser opens a new unsaved form with values filled in; the user saves; values the form's own scripts overwrite are put back, as for `fill_form` |
 | `fill_form` | `desk.py` | Browser fills values into the new form the user has open; keys are field names or labels; missing and read-only fields are left out and reported to the model; values the form's own scripts overwrite (e.g. the due date after the supplier) are put back |
 | `show_chart` | `desk.py` | Chart drawn under the answer (bar, line, pie, percentage, donut) |
@@ -63,4 +64,5 @@ Desk tools return `{"action": {...}, "status": "..."}`. The loop collects the ac
 | `new_doc` | `doctype`, `defaults` |
 | `fill_form` | `doctype`, `values`; a new form if the user has left the one they had open |
 | `chart` | `title`, `chart_type`, `labels`, `datasets[{name, values}]` |
-| `export_report` | `report_name`, `filters`, `file_format`, `rows` (none for a prepared report), `delivery` (`download`, `email`, `open`) |
+| `export_report` | `report_name`, `filters`, `file_format`, `rows` (none for a prepared report), `delivery` (`download`, `email`, `print`, `open`), `can_export`, `can_print` |
+| `print_view` | `doctype`, `name` |

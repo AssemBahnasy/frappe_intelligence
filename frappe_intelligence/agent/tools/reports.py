@@ -48,9 +48,10 @@ def run_report(arguments: dict) -> dict:
 
 
 def export_report(arguments: dict) -> dict:
-	"""A download card for the panel. The browser downloads through Frappe's own Export
-	(frappe.desk.query_report.export_query), which runs the report again; here only the rights are
-	checked and the rows counted, so a big report is emailed instead."""
+	"""A card for the panel to take a report away: download it (Frappe's Export), print it or save
+	it as a PDF (the report page's own Print and PDF). Each shows only with the user's right on the
+	report's DocType, as on the report page; here the rights are checked and the rows counted, and
+	the browser runs Frappe's own code."""
 	report_name = arguments["report_name"]
 	file_format = arguments.get("file_format") or "Excel"
 	if file_format not in EXPORT_FORMATS:
@@ -62,28 +63,25 @@ def export_report(arguments: dict) -> dict:
 		raise ToolError(_("Report {0} does not exist.").format(report_name))
 	if report.report_type not in EXPORT_TYPES:
 		raise ToolError(_("Only Query and Script reports can be exported from here."))
-	if not frappe.permissions.can_export(report.ref_doctype):
+	can_export = bool(frappe.permissions.can_export(report.ref_doctype))
+	can_print = frappe.has_permission(report.ref_doctype, "print")
+	if not (can_export or can_print):
 		raise ToolError(
-			_("The user may not export {0}: their role is not allowed to export {1}.").format(
+			_("The user may not export or print {0}: their role has neither right on {1}.").format(
 				report_name, report.ref_doctype
 			)
 		)
 
 	filters = arguments.get("filters") or {}
 	result = run_query_report(report_name, filters=dict(filters))
-	if result.get("prepared_report"):
-		rows, delivery = None, "open"
-		status = (
-			"This report is prepared in the background: the card opens it, and the user exports it there."
-		)
+	prepared = bool(result.get("prepared_report"))
+	rows = None if prepared else len(result.get("result") or [])
+	if prepared:
+		delivery = "open"
+	elif not can_export:
+		delivery = "print"
 	else:
-		rows = len(result.get("result") or [])
 		delivery = "email" if rows > EMAIL_ROWS else "download"
-		status = (
-			f"A card under your answer lets the user download {rows} rows as {file_format}."
-			if delivery == "download"
-			else f"{rows} rows is too many to wait for: the card lets the user have Frappe email them the file."
-		)
 	action = {
 		"type": "export_report",
 		"report_name": report_name,
@@ -91,8 +89,27 @@ def export_report(arguments: dict) -> dict:
 		"file_format": file_format,
 		"rows": rows,
 		"delivery": delivery,
+		"can_export": can_export,
+		"can_print": can_print and not prepared,
 	}
-	return {"action": action, "status": status}
+	return {"action": action, "status": _status(action, report.ref_doctype)}
+
+
+def _status(action: dict, ref_doctype: str) -> str:
+	"""What the model is told the card offers, so its answer matches."""
+	offers = {
+		"open": "This report is prepared in the background: the card opens it, and the user exports or prints it there.",
+		"print": (
+			f"The user may not export {ref_doctype}, so there is no file to download; say so. "
+			f"The card lets them print the {action['rows']} rows or save them as a PDF."
+		),
+		"email": f"{action['rows']} rows is too many to wait for: the card lets the user have Frappe email them the file.",
+		"download": f"A card under your answer lets the user download {action['rows']} rows as {action['file_format']}.",
+	}
+	status = offers[action["delivery"]]
+	if action["can_print"] and action["delivery"] != "print":
+		status += " It can also print the report or save it as a PDF."
+	return status
 
 
 def _row(row, columns: list[dict]) -> list:
@@ -126,9 +143,10 @@ TOOLS = [
 	AgentTool(
 		name="export_report",
 		description=(
-			"Give the user a Query or Script report as an Excel or CSV file: shows a download card "
-			"under your answer, with the same filters as run_report. Use it whenever the user asks "
-			"to export, download or get a report as a file; never paste the rows instead."
+			"Give the user a Query or Script report to take away: a card under your answer downloads "
+			"it as Excel or CSV, prints it or saves it as a PDF, each as the user's rights allow, "
+			"with the same filters as run_report. Use it whenever the user asks to export, download, "
+			"print or get a report as a file or PDF; never paste the rows instead."
 		),
 		parameters={
 			"type": "object",

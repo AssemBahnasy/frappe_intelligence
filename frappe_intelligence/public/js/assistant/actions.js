@@ -5,6 +5,7 @@ const SETTLE_MS = 300;
 const HANDLERS = {
 	set_route: ({ route }) => open_route(route),
 	open_form: ({ doctype, name }) => frappe.set_route("Form", doctype, name),
+	print_view: ({ doctype, name }) => frappe.set_route("print", doctype, name),
 	new_doc: ({ doctype, defaults }) => open_new_form(doctype, defaults),
 	fill_form,
 	chart: () => {}, // drawn under the answer

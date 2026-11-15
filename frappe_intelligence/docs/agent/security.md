@@ -12,7 +12,8 @@ The agent acts as the signed-in user:
 
 - Frappe MCP tools go through REST API v2 with the user's permissions, including user permissions and "if owner" rules.
 - `run_report` uses `frappe.desk.query_report.run`, which checks the report and its reference DocType.
-- `export_report` also needs the Export right on the reference DocType (`frappe.permissions.can_export`), checked before the card is shown and again by Frappe's `export_query` when the user downloads.
+- `export_report` offers Download only with the Export right on the reference DocType (`frappe.permissions.can_export`, checked again by Frappe's `export_query`), and Print and PDF only with the Print right; with neither it refuses.
+- `print_document` needs the Print right on the record, as the form's Print button does, although Frappe's own PDF endpoint also accepts Read (`www/printview.py: validate_print_permission`).
 - `open_document` checks the DocType permission before saying whether a record exists.
 - `new_document` checks create permission; nothing is saved without the user.
 - Write tools exist only in Agent mode (off unless **AI Settings → Allow Agent Mode** and the user has the **Intelligence Agent** role), and `execute()` refuses a tool outside the conversation's mode even if a model asks for it.

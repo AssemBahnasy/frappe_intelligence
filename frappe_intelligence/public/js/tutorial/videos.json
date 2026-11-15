@@ -59,22 +59,22 @@
   "ar": {
    "duration": 32.6,
    "steps": [
-    1,
-    6.6,
+    1.1,
+    6.7,
     13.4,
     17.2
    ],
-   "version": "2c66f2f2"
+   "version": "16edb7bb"
   },
   "en": {
-   "duration": 33,
+   "duration": 32.6,
    "steps": [
-    1.1,
-    7.1,
-    14,
-    17.7
+    0.2,
+    6.6,
+    13.6,
+    17.3
    ],
-   "version": "6e9940ba"
+   "version": "73b7aa82"
   }
  },
  "build-workflow": {

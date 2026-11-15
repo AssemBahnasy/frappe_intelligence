@@ -1,5 +1,5 @@
 <template>
-	<Card :label="__('Report export')" :note="note">
+	<Card :label="__('Report export')" :note="false">
 		<template #header>
 			<Icon name="file-spreadsheet" />
 			<span class="fi-card-title" dir="auto">{{ __(action.report_name) }}</span>
@@ -10,7 +10,7 @@
 				<dt>{{ filter.label }}</dt>
 				<dd dir="auto">{{ filter.value }}</dd>
 			</template>
-			<template v-if="action.delivery !== 'open'">
+			<template v-if="downloads">
 				<dt class="fi-format-label">{{ __("Format") }}</dt>
 				<dd>
 					<div class="fi-format" role="group" :aria-label="__('Format')">
@@ -27,16 +27,36 @@
 				</dd>
 			</template>
 		</dl>
+		<div class="fi-export-note">
+			<span v-if="done_note" class="fi-export-done">
+				<Icon name="check" size="xs" />{{ done_note }}
+			</span>
+			<template v-else>{{ note }}</template>
+		</div>
 		<div v-if="error" class="fi-export-error" role="alert">{{ error }}</div>
-		<template v-if="done_note" #note>
-			<span class="fi-export-done"><Icon name="check" size="xs" />{{ done_note }}</span>
-		</template>
 		<template #actions>
+			<template v-if="action.can_print">
+				<button
+					type="button"
+					class="fi-button subtle"
+					@click="print_report(action, 'Print')"
+				>
+					<Icon name="printer" size="xs" />{{ __("Print") }}
+				</button>
+				<button
+					type="button"
+					class="fi-button subtle"
+					@click="print_report(action, 'PDF')"
+				>
+					<Icon name="file-text" size="xs" />{{ __("PDF") }}
+				</button>
+			</template>
+			<span class="fi-export-spacer"></span>
 			<button type="button" class="fi-button subtle" @click="open_report(action)">
 				{{ __("Open report") }}
 			</button>
 			<button
-				v-if="action.delivery !== 'open'"
+				v-if="downloads"
 				type="button"
 				class="fi-button"
 				:class="done_note ? 'subtle' : 'solid'"
@@ -52,7 +72,7 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { download_report, email_report, filter_rows, open_report } from "../exports";
+import { download_report, email_report, filter_rows, open_report, print_report } from "../exports";
 import Card from "./Card.vue";
 import Icon from "./Icon.vue";
 
@@ -63,6 +83,8 @@ const busy = ref(false);
 const done_at = ref("");
 const error = ref("");
 const emailing = props.action.delivery === "email";
+// A file to take: the user has the Export right (cards from before Print had no "print" delivery).
+const downloads = ["download", "email"].includes(props.action.delivery);
 
 const filters = computed(() => filter_rows(props.action.filters));
 const rows = computed(() => {
@@ -71,10 +93,14 @@ const rows = computed(() => {
 	return count === 1 ? __("1 row") : __("{0} rows", [format_number(count, null, 0)]);
 });
 const note = computed(() => {
-	if (props.action.delivery === "open")
-		return __("Prepared in the background: open it and use Export there");
+	const { delivery, can_print } = props.action;
+	if (delivery === "open") return __("Prepared in the background: open it and use Export there");
+	if (delivery === "print")
+		return __("Frappe's own Print and PDF, run again with these filters");
 	if (emailing) return __("Too big to wait for: Frappe emails you a link");
-	return __("Frappe's own Export, run again with these filters");
+	return can_print
+		? __("Frappe's own Export, Print and PDF, run again with these filters")
+		: __("Frappe's own Export, run again with these filters");
 });
 const done_note = computed(() => {
 	if (!done_at.value) return "";
@@ -149,10 +175,18 @@ async function deliver() {
 	box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--outline-gray-3);
 	color: var(--ink-gray-9);
 }
+.fi-export-note {
+	padding: 0 12px 12px;
+	font-size: var(--text-xs);
+	color: var(--ink-gray-6);
+}
 .fi-export-done {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
+}
+.fi-export-spacer {
+	flex: 1;
 }
 .fi-export-done :deep(.fi-icon) {
 	color: var(--ink-green-6);

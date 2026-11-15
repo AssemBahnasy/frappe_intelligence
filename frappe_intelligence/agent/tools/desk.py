@@ -1,5 +1,5 @@
-"""Actions the browser performs for the user: open a page, a form or a new document, fill the form
-the user has open, or draw a chart."""
+"""Actions the browser performs for the user: open a page, a form, a document's print view or a new
+document, fill the form the user has open, or draw a chart."""
 
 from __future__ import annotations
 
@@ -34,6 +34,21 @@ def open_document(arguments: dict) -> dict:
 	frappe.has_permission(doctype, "read", name, throw=True)
 	return _action(
 		{"type": "open_form", "doctype": doctype, "name": name}, "The form is opening for the user."
+	)
+
+
+def print_document(arguments: dict) -> dict:
+	"""Frappe's print view, where the user picks the format and letterhead and prints or saves a PDF.
+	The Print right is required, as for the form's Print button, though Frappe's own PDF endpoint
+	also takes Read (www/printview.py: validate_print_permission)."""
+	doctype, name = arguments["doctype"], arguments["name"]
+	frappe.has_permission(doctype, "print", throw=True)
+	if not frappe.db.exists(doctype, name):
+		raise ToolError(_("{0} {1} does not exist.").format(doctype, name))
+	frappe.has_permission(doctype, "print", name, throw=True)
+	return _action(
+		{"type": "print_view", "doctype": doctype, "name": name},
+		"The print view is opening for the user: they choose the print format and letterhead, then print or save a PDF.",
 	)
 
 
@@ -106,6 +121,17 @@ TOOLS = [
 		parameters={"type": "object", "properties": DOCUMENT, "required": ["doctype", "name"]},
 		run=open_document,
 		label=_lt("Opening {doctype} {name}"),
+		browser_action=True,
+	),
+	AgentTool(
+		name="print_document",
+		description=(
+			"Open a document's print view for the user to print it or save it as a PDF, with the "
+			"print format and letterhead they choose. For a report, use export_report instead."
+		),
+		parameters={"type": "object", "properties": DOCUMENT, "required": ["doctype", "name"]},
+		run=print_document,
+		label=_lt("Opening the print view of {doctype} {name}"),
 		browser_action=True,
 	),
 	AgentTool(

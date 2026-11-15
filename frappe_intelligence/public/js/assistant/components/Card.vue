@@ -3,9 +3,7 @@
 		<header class="fi-card-header"><slot name="header" /></header>
 		<slot />
 		<footer class="fi-card-footer">
-			<span class="fi-card-note"
-				><slot name="note">{{ note }}</slot></span
-			>
+			<span v-if="note !== false" class="fi-card-note">{{ note }}</span>
 			<slot name="actions" />
 		</footer>
 	</section>
@@ -13,7 +11,11 @@
 
 <script setup>
 // The frame shared by cards that wait for the user: a change to approve, a document to review.
-defineProps({ label: { type: String, required: true }, note: { type: String, default: "" } });
+// `note` false: no note, and the card lays out its own footer row.
+defineProps({
+	label: { type: String, required: true },
+	note: { type: [String, Boolean], default: "" },
+});
 </script>
 
 <style scoped>
@@ -54,6 +56,7 @@ defineProps({ label: { type: String, required: true }, note: { type: String, def
 }
 .fi-card-footer {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	gap: 8px;
 	padding: 10px 12px;

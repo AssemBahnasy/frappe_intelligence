@@ -18,8 +18,8 @@ fi_launcher.bundle.js                                 always loaded (app_include
 | `assistant/panel.js` | Host class: open, close, toggle, destroy |
 | `assistant/store.js` | Pinia store: conversation, turns, the running answer, `fi_assistant` events, history, feedback, workflow progress |
 | `assistant/page_context.js` | The page sent as context and the chip label |
-| `assistant/actions.js` | Browser actions (`set_route`, `open_form`, `new_doc`, `fill_form`) |
-| `assistant/exports.js` | Downloading, emailing and opening an exported report ([exports.md](exports.md)) |
+| `assistant/actions.js` | Browser actions (`set_route`, `open_form`, `print_view`, `new_doc`, `fill_form`) |
+| `assistant/exports.js` | The report card's Download, Email, Print, PDF and Open report ([exports.md](exports.md)) |
 | `assistant/tables.js` | Sortable, paged tables in answers; number columns at the end |
 | `assistant/bidi.js` | Numbers and codes isolated inside right-to-left answers |
 | `assistant/voice.js` | Recording and transcribing voice input |

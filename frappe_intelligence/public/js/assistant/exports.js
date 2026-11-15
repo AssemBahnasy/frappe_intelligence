@@ -1,5 +1,6 @@
-// A report the agent exported (agent/tools/reports.py: export_report), through Frappe's own Export:
-// frappe.desk.query_report.export_query runs the report again and checks the Export right.
+// A report the agent offered (agent/tools/reports.py: export_report), through Frappe's own code:
+// Export is frappe.desk.query_report.export_query, which runs the report again and checks the
+// Export right; Print and PDF are the report page's own menu items.
 
 const EXPORT_METHOD = "frappe.desk.query_report.export_query";
 const EXTENSIONS = { Excel: "xlsx", CSV: "csv" };
@@ -50,6 +51,47 @@ export function email_report(action, file_format) {
 export function open_report({ report_name, filters }) {
 	frappe.route_options = { ...(filters || {}) };
 	frappe.set_route("query-report", report_name);
+}
+
+const REPORT_WAIT_MS = 30000;
+
+// "Print" or "PDF": the report opens with these filters, then its own menu item opens Frappe's print
+// settings (query_report.js: get_menu_items), shown, as there, only with the Print right.
+export async function print_report(action, kind) {
+	const before = frappe.query_report?.last_ajax;
+	open_report(action);
+	const report = await loaded(action.report_name, before);
+	if (!report)
+		return frappe.show_alert({ message: __("The report did not load."), indicator: "red" });
+	if (!report.data?.length) {
+		return frappe.show_alert({
+			message: __("The report has no rows to print."),
+			indicator: "orange",
+		});
+	}
+	report.menu_items.find((item) => item.label === __(kind))?.action();
+}
+
+// The report page once its new run has finished and is drawn: a run started after `before`, no
+// longer pending, and the loading screen gone (refresh() hides it last).
+function loaded(report_name, before) {
+	const started = Date.now();
+	return new Promise((resolve) => {
+		const check = () => {
+			const report = frappe.query_report;
+			const run = report?.last_ajax;
+			const done =
+				report?.report_name === report_name &&
+				run &&
+				run !== before &&
+				run.state?.() !== "pending" &&
+				!report.$loading?.is(":visible");
+			if (done) return resolve(run.state() === "resolved" ? report : null);
+			if (Date.now() - started > REPORT_WAIT_MS) return resolve(null);
+			setTimeout(check, 200);
+		};
+		check();
+	});
 }
 
 // The filters as label and value, for the card.
