@@ -23,6 +23,7 @@ Translations merge in the site's install order (`frappe/translate.py get_transla
 |---|---|---|
 | Due Date (Frappe) | بسبب تاريخ ("because of date") | تاريخ الاستحقاق |
 | Supplier Invoice Date (ERPNext) | المورد فاتورة التسجيل | تاريخ فاتورة المورد |
+| Format (Frappe) | شكل ("shape") | الصيغة |
 
 ## Values that vary by language
 

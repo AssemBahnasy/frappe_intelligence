@@ -3,7 +3,9 @@
 		<header class="fi-card-header"><slot name="header" /></header>
 		<slot />
 		<footer class="fi-card-footer">
-			<span class="fi-card-note">{{ note }}</span>
+			<span class="fi-card-note"
+				><slot name="note">{{ note }}</slot></span
+			>
 			<slot name="actions" />
 		</footer>
 	</section>

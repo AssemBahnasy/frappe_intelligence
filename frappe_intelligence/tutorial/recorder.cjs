@@ -281,6 +281,7 @@ class Actor {
 				answer: text,
 				steps: finished,
 				proposals,
+				actions,
 			});
 		if (workflow) this.chat.workflow = workflow;
 		await event({
@@ -372,7 +373,8 @@ const turn = (id, t, created, decisions = {}) => ({
 		...p,
 		status: decisions[p.call_id] || "pending",
 	})),
-	actions: [],
+	// The stored answer keeps its browser actions, so a chart or an export card stays on reload.
+	actions: t.actions || [],
 	answer: t.answer,
 	report: t.report || "",
 	pending: false,

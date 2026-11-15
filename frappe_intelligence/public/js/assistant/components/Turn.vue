@@ -45,6 +45,7 @@
 		></div>
 
 		<ChartBlock v-for="(chart, i) in charts" :key="i" :chart="chart" />
+		<ExportCard v-for="(action, i) in exports" :key="`export-${i}`" :action="action" />
 
 		<div v-if="turn.error" class="fi-error" role="alert">{{ turn.error }}</div>
 		<div v-else-if="turn.stopped && !turn.pending" class="fi-meta">{{ __("Stopped.") }}</div>
@@ -85,6 +86,7 @@ import { useAssistant } from "../store";
 import { enhance_tables } from "../tables";
 import ChangeResult from "./ChangeResult.vue";
 import ChartBlock from "./ChartBlock.vue";
+import ExportCard from "./ExportCard.vue";
 import FileChip from "./FileChip.vue";
 import Icon from "./Icon.vue";
 import ProposalCard from "./ProposalCard.vue";
@@ -103,6 +105,9 @@ const full_text = computed(() =>
 	[props.turn.answer, props.turn.report].filter(Boolean).join("\n\n")
 );
 const charts = computed(() => (props.turn.actions || []).filter((a) => a.type === "chart"));
+const exports = computed(() =>
+	(props.turn.actions || []).filter((a) => a.type === "export_report")
+);
 const thinking = computed(() => {
 	const t = props.turn;
 	const step_running = t.steps.some((s) => s.status === "running");

@@ -95,9 +95,19 @@ export const TOPICS = [
 				),
 				picture: "context",
 			},
+			{
+				title: __("Get it as a file"),
+				text: __(
+					"Ask for a report in Excel or CSV. A card under the answer downloads it through the report's own Export."
+				),
+				picture: "answer",
+			},
 		],
 		tips: [
 			__("Ask mode reads and explains. It never changes data."),
+			__(
+				"Exporting a report needs the Export permission on it, as on the report's own page."
+			),
 			__("Leave this page out removes the page from your question."),
 			__("AI can make mistakes. Check important figures."),
 		],

@@ -57,22 +57,24 @@
  },
  "ask": {
   "ar": {
-   "duration": 19.5,
+   "duration": 32.6,
    "steps": [
-    1.1,
-    6.7,
-    13.4
+    1,
+    6.6,
+    13.4,
+    17.2
    ],
-   "version": "f3edc016"
+   "version": "2c66f2f2"
   },
   "en": {
-   "duration": 20,
+   "duration": 33,
    "steps": [
     1.1,
     7.1,
-    14
+    14,
+    17.7
    ],
-   "version": "849944c8"
+   "version": "6e9940ba"
   }
  },
  "build-workflow": {

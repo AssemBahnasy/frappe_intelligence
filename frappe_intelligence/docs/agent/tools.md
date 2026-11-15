@@ -11,6 +11,7 @@
 | `count_documents` | Frappe MCP | Like `frappe.get_count` |
 | `search_reports` | `reports.py` | Reports whose name matches, that the user may run |
 | `run_report` | `reports.py` | Columns and the first 50 rows; says when there are more |
+| `export_report` | `reports.py` | A download card under the answer: the report as Excel or CSV through Frappe's own Export, emailed when big; needs the Export right ([../panel/exports.md](../panel/exports.md)) |
 | `search_knowledge` | `knowledge.py` | Matching AI Knowledge Pack entries |
 | `read_document` | `documents.py` | A file's text; a template match pauses for the user to check the values ([../documents/review.md](../documents/review.md)). Called by the loop for every attached file |
 | `navigate` | `desk.py` | Browser opens a `/app/…` route |
@@ -62,3 +63,4 @@ Desk tools return `{"action": {...}, "status": "..."}`. The loop collects the ac
 | `new_doc` | `doctype`, `defaults` |
 | `fill_form` | `doctype`, `values`; a new form if the user has left the one they had open |
 | `chart` | `title`, `chart_type`, `labels`, `datasets[{name, values}]` |
+| `export_report` | `report_name`, `filters`, `file_format`, `rows` (none for a prepared report), `delivery` (`download`, `email`, `open`) |

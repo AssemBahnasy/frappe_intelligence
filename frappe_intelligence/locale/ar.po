@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frappe Intelligence VERSION\n"
 "Report-Msgid-Bugs-To: bahnasyassem@gmail.com\n"
-"POT-Creation-Date: 2026-11-04 18:05+0307\n"
+"POT-Creation-Date: 2026-11-15 15:16+0307\n"
 "PO-Revision-Date: 2026-11-01 01:46+0307\n"
 "Last-Translator: bahnasyassem@gmail.com\n"
 "Language: ar\n"
@@ -32,6 +32,10 @@ msgstr "+ سير عمل جديد"
 msgid "0.0 – 1.0 aggregate confidence of the extraction."
 msgstr "درجة الثقة الإجمالية للاستخراج من 0.0 إلى 1.0."
 
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:71
+msgid "1 row"
+msgstr "صف واحد"
+
 #: frappe_intelligence/public/js/assistant/components/Steps.vue:49
 msgid "1 step"
 msgstr "خطوة واحدة"
@@ -46,7 +50,7 @@ msgstr "<b>لكل حقل</b> — استدعاء واحد للنموذج لكل �
 msgid "<span class=\"h4\"><b>Conversations</b></span>"
 msgstr "<span class=\"h4\"><b>المحادثات</b></span>"
 
-#: frappe_intelligence/public/js/tutorial/content.js:135
+#: frappe_intelligence/public/js/tutorial/content.js:143
 msgid "A card lists what was read. Fix any value that is wrong."
 msgstr "تعرض بطاقة ما قُرئ. صحّح أي قيمة خاطئة."
 
@@ -60,23 +64,23 @@ msgstr "يحتاج المخطط إلى عدد من مجموعات البيانا
 msgid "A chart needs between 1 and {0} labels."
 msgstr "يحتاج المخطط إلى عدد من التسميات بين 1 و{0}."
 
-#: frappe_intelligence/public/js/tutorial/content.js:614
+#: frappe_intelligence/public/js/tutorial/content.js:622
 msgid "A developer adds a function to an app."
 msgstr "يضيف مطوّر دالة إلى أحد التطبيقات."
 
-#: frappe_intelligence/public/js/tutorial/content.js:147
+#: frappe_intelligence/public/js/tutorial/content.js:155
 msgid "A document that matches a template comes back with exactly that template's fields."
 msgstr "المستند المطابق لقالب يعود بحقول ذلك القالب نفسها."
 
-#: frappe_intelligence/public/js/tutorial/content.js:223
+#: frappe_intelligence/public/js/tutorial/content.js:231
 msgid "A field you edit while the text is being written is never overwritten."
 msgstr "الحقل الذي تعدّله أثناء كتابة النص لا يُستبدل أبدًا."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:83
+#: frappe_intelligence/public/js/tutorial/demos.js:99
 msgid "A new Purchase Invoice is open with these values."
 msgstr "فُتحت فاتورة شراء جديدة بهذه القيم."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:138
+#: frappe_intelligence/public/js/tutorial/demos.js:154
 #, python-brace-format
 msgid "A polite reminder that invoice {0} is overdue"
 msgstr "تذكير لطيف بأن موعد سداد الفاتورة {0} قد فات"
@@ -91,15 +95,15 @@ msgstr "تذكير لطيف…"
 msgid "A sparkles button beside long text fields in forms: the user describes what the field should say and the AI writes it in place. Nothing is saved until the user saves the form."
 msgstr "زر بأيقونة اللمعات بجانب الحقول النصية الطويلة في النماذج: يصف المستخدم ما يجب أن يحتويه الحقل ويكتبه الذكاء الاصطناعي في مكانه. لا يُحفظ شيء حتى يحفظ المستخدم النموذج."
 
-#: frappe_intelligence/public/js/tutorial/content.js:497
+#: frappe_intelligence/public/js/tutorial/content.js:505
 msgid "A template tells the assistant what a kind of document looks like and which fields to read from it."
 msgstr "يخبر القالب المساعد بشكل نوع معيّن من المستندات والحقول التي يقرؤها منه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:241
+#: frappe_intelligence/public/js/tutorial/content.js:249
 msgid "A workflow asks its questions one step at a time and ends with a filled form for you to check."
 msgstr "يطرح سير العمل أسئلته خطوة بخطوة، وينتهي بنموذج مملوء لتراجعه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:679
+#: frappe_intelligence/public/js/tutorial/content.js:687
 msgid "A workflow often left halfway may ask too much in one step."
 msgstr "سير العمل الذي يُترك كثيرًا في منتصفه قد يطلب الكثير في خطوة واحدة."
 
@@ -216,7 +220,7 @@ msgid "AI Workflow for WhatsApp"
 msgstr "سير عمل الذكاء الاصطناعي لواتساب"
 
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:107
-#: frappe_intelligence/public/js/tutorial/content.js:102
+#: frappe_intelligence/public/js/tutorial/content.js:110
 msgid "AI can make mistakes. Check important figures."
 msgstr "قد يخطئ الذكاء الاصطناعي. تحقّق من الأرقام المهمة."
 
@@ -238,6 +242,10 @@ msgstr "تم رفض الوصول."
 #: frappe_intelligence/agent/suggestions.py:15
 msgid "Accounts"
 msgstr "الحسابات"
+
+#: frappe_intelligence/public/js/tutorial/demos.js:54
+msgid "Accounts Receivable is ready to download."
+msgstr "تقرير الحسابات المدينة جاهز للتحميل."
 
 #. Option for the 'Status' (Select) field in DocType 'AI Conversation'
 #: frappe_intelligence/intelligence/doctype/ai_conversation/ai_conversation.json:51
@@ -267,15 +275,15 @@ msgstr "إضافة خطوة"
 msgid "Add a constraint or description…"
 msgstr "أضف قيدًا أو وصفًا…"
 
-#: frappe_intelligence/public/js/tutorial/content.js:157
+#: frappe_intelligence/public/js/tutorial/content.js:165
 msgid "Add a question"
 msgstr "أضف سؤالًا"
 
-#: frappe_intelligence/public/js/tutorial/content.js:542
+#: frappe_intelligence/public/js/tutorial/content.js:550
 msgid "Add a requirement"
 msgstr "أضف متطلبًا"
 
-#: frappe_intelligence/public/js/tutorial/content.js:508
+#: frappe_intelligence/public/js/tutorial/content.js:516
 msgid "Add an extraction rule per field: a regex pattern, or a hint for the AI."
 msgstr "أضف قاعدة استخراج لكل حقل: نمط تعبير نمطي، أو تلميحًا للذكاء الاصطناعي."
 
@@ -283,15 +291,15 @@ msgstr "أضف قاعدة استخراج لكل حقل: نمط تعبير نمط
 msgid "Add line"
 msgstr "إضافة سطر"
 
-#: frappe_intelligence/public/js/tutorial/content.js:580
+#: frappe_intelligence/public/js/tutorial/content.js:588
 msgid "Add steps"
 msgstr "أضف الخطوات"
 
-#: frappe_intelligence/public/js/tutorial/content.js:425
+#: frappe_intelligence/public/js/tutorial/content.js:433
 msgid "Add the Intelligence User role to each person who may use the assistant, on their User form or through a Role Profile."
 msgstr "أضف صلاحية «مستخدم الذكاء الاصطناعي» لكل شخص يُسمح له باستخدام المساعد، من نموذج المستخدم أو عبر ملف صلاحيات."
 
-#: frappe_intelligence/public/js/tutorial/content.js:507
+#: frappe_intelligence/public/js/tutorial/content.js:515
 msgid "Add the fields"
 msgstr "أضف الحقول"
 
@@ -308,7 +316,7 @@ msgstr "متقدم"
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:48
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:285
 #: frappe_intelligence/public/js/tutorial/components/StepPicture.vue:78
-#: frappe_intelligence/public/js/tutorial/demos.js:260
+#: frappe_intelligence/public/js/tutorial/demos.js:276
 msgid "Agent"
 msgstr "الوكيل"
 
@@ -322,16 +330,16 @@ msgstr "وضع الوكيل"
 msgid "Agent Session"
 msgstr "جلسة الوكيل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:288
-#: frappe_intelligence/public/js/tutorial/content.js:431
+#: frappe_intelligence/public/js/tutorial/content.js:296
+#: frappe_intelligence/public/js/tutorial/content.js:439
 msgid "Agent mode"
 msgstr "وضع الوكيل"
 
-#: frappe_intelligence/utils/access.py:42
+#: frappe_intelligence/utils/access.py:52
 msgid "Agent mode is turned off in AI Settings."
 msgstr "وضع الوكيل معطّل في إعدادات الذكاء الاصطناعي."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:209
+#: frappe_intelligence/public/js/tutorial/demos.js:225
 msgid "All set. Here is your ToDo to check and save."
 msgstr "تم. هذه مهمتك لتراجعها وتحفظها."
 
@@ -360,15 +368,15 @@ msgstr "السماح: البوابة"
 msgid "Allow: WhatsApp"
 msgstr "السماح: واتساب"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:199
+#: frappe_intelligence/public/js/tutorial/demos.js:215
 msgid "And when should it be done?"
 msgstr "ومتى يجب إنجازها؟"
 
-#: frappe_intelligence/public/js/tutorial/content.js:253
+#: frappe_intelligence/public/js/tutorial/content.js:261
 msgid "Answer"
 msgstr "أجب"
 
-#: frappe_intelligence/public/js/tutorial/content.js:254
+#: frappe_intelligence/public/js/tutorial/content.js:262
 msgid "Answer each question. The bar shows the step you are on, and quick replies save typing."
 msgstr "أجب عن كل سؤال. يعرض الشريط الخطوة التي أنت فيها، والردود السريعة توفّر عليك الكتابة."
 
@@ -392,7 +400,7 @@ msgstr "مُطبَّق"
 msgid "Approval"
 msgstr "الموافقة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:304
+#: frappe_intelligence/public/js/tutorial/content.js:312
 msgid "Approve or reject"
 msgstr "وافق أو ارفض"
 
@@ -402,7 +410,7 @@ msgstr "وافق أو ارفض"
 msgid "Approved"
 msgstr "تمت الموافقة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:324
+#: frappe_intelligence/public/js/tutorial/content.js:332
 msgid "Arabic and English"
 msgstr "العربية والإنجليزية"
 
@@ -432,16 +440,20 @@ msgstr "اسأل عن بياناتك"
 msgid "Ask about your data, or describe a task…"
 msgstr "اسأل عن بياناتك أو صِف مهمة…"
 
-#: frappe_intelligence/public/js/tutorial/content.js:109
+#: frappe_intelligence/public/js/tutorial/content.js:100
+msgid "Ask for a report in Excel or CSV. A card under the answer downloads it through the report's own Export."
+msgstr "اطلب تقريرًا بصيغة Excel أو CSV. بطاقة تحت الإجابة تحمّله عبر التصدير الخاص بالتقرير نفسه."
+
+#: frappe_intelligence/public/js/tutorial/content.js:117
 msgid "Ask mode"
 msgstr "وضع السؤال"
 
-#: frappe_intelligence/public/js/tutorial/content.js:100
-#: frappe_intelligence/public/js/tutorial/content.js:110
+#: frappe_intelligence/public/js/tutorial/content.js:107
+#: frappe_intelligence/public/js/tutorial/content.js:118
 msgid "Ask mode reads and explains. It never changes data."
 msgstr "وضع السؤال يقرأ ويشرح، ولا يغيّر البيانات أبدًا."
 
-#: frappe_intelligence/public/js/tutorial/content.js:397
+#: frappe_intelligence/public/js/tutorial/content.js:405
 msgid "Ask the assistant a question to check it answers."
 msgstr "اطرح على المساعد سؤالًا لتتأكد من أنه يجيب."
 
@@ -457,7 +469,7 @@ msgstr "المساعد"
 msgid "Assistant Name"
 msgstr "اسم المساعد"
 
-#: frappe_intelligence/public/js/tutorial/content.js:119
+#: frappe_intelligence/public/js/tutorial/content.js:127
 msgid "Attach a PDF, a photo or a text file. The assistant shows what it read, you check the values, and only the values you confirm are used."
 msgstr "أرفق ملف PDF أو صورة أو ملفًا نصيًا. يعرض المساعد ما قرأه، فتراجع القيم، ولا يُستخدم إلا ما تؤكده."
 
@@ -467,11 +479,11 @@ msgstr "أرفق ملف PDF أو صورة أو ملفًا نصيًا. يعرض �
 msgid "Attach a file"
 msgstr "إرفاق ملف"
 
-#: frappe_intelligence/public/js/tutorial/content.js:515
+#: frappe_intelligence/public/js/tutorial/content.js:523
 msgid "Attach such a document in the panel and check what comes back."
 msgstr "أرفق مستندًا كهذا في اللوحة وراجع ما يعود."
 
-#: frappe_intelligence/public/js/tutorial/content.js:129
+#: frappe_intelligence/public/js/tutorial/content.js:137
 msgid "Attach the file"
 msgstr "أرفق الملف"
 
@@ -503,7 +515,7 @@ msgstr "مهمة الخلفية التي تجيب الآن؛ فارغ عند ع�
 msgid "Bad"
 msgstr "سيئة"
 
-#: frappe_intelligence/public/js/assistant/components/Turn.vue:113
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:118
 msgid "Bad answer"
 msgstr "إجابة سيئة"
 
@@ -531,7 +543,7 @@ msgstr "دفعة مع بديل"
 msgid "Both"
 msgstr "كلاهما"
 
-#: frappe_intelligence/public/js/tutorial/content.js:569
+#: frappe_intelligence/public/js/tutorial/content.js:577
 msgid "Build a workflow"
 msgstr "ابنِ سير عمل"
 
@@ -539,7 +551,7 @@ msgstr "ابنِ سير عمل"
 msgid "Buying"
 msgstr "المشتريات"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:162
+#: frappe_intelligence/public/js/tutorial/demos.js:178
 msgid "Call Gulf Paper Co. about their overdue invoice"
 msgstr "الاتصال بشركة Gulf Paper Co. بشأن فاتورتها المتأخرة"
 
@@ -563,7 +575,7 @@ msgstr "جارٍ إلغاء {doctype} {name}"
 msgid "Cannot reach {0} at {3}."
 msgstr "تعذّر الوصول إلى {0} على {3}."
 
-#: frappe_intelligence/public/js/tutorial/content.js:597
+#: frappe_intelligence/public/js/tutorial/content.js:605
 msgid "Changes reach conversations already in progress."
 msgstr "تصل التغييرات إلى المحادثات الجارية أيضًا."
 
@@ -612,19 +624,19 @@ msgstr "المحادثة"
 msgid "Chat Behaviour"
 msgstr "سلوك المحادثة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:260
+#: frappe_intelligence/public/js/tutorial/content.js:268
 msgid "Check the form"
 msgstr "راجع النموذج"
 
-#: frappe_intelligence/public/js/tutorial/content.js:134
+#: frappe_intelligence/public/js/tutorial/content.js:142
 msgid "Check the values"
 msgstr "راجع القيم"
 
-#: frappe_intelligence/public/js/tutorial/content.js:642
+#: frappe_intelligence/public/js/tutorial/content.js:650
 msgid "Check what was read"
 msgstr "راجع ما قُرئ"
 
-#: frappe_intelligence/public/js/tutorial/content.js:392
+#: frappe_intelligence/public/js/tutorial/content.js:400
 msgid "Choose it and enter its API key and model."
 msgstr "اختره وأدخل مفتاح API والنموذج."
 
@@ -633,11 +645,11 @@ msgstr "اختره وأدخل مفتاح API والنموذج."
 msgid "Choose the AI backend. Configure the matching section below."
 msgstr "اختر خدمة الذكاء الاصطناعي، ثم اضبط القسم المطابق أدناه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:380
+#: frappe_intelligence/public/js/tutorial/content.js:388
 msgid "Choose the AI provider"
 msgstr "اختر مزوّد الذكاء الاصطناعي"
 
-#: frappe_intelligence/public/js/tutorial/content.js:543
+#: frappe_intelligence/public/js/tutorial/content.js:551
 msgid "Choose the DocType and the document type it needs."
 msgstr "اختر نوع المستند ونوع الوثيقة الذي يحتاجه."
 
@@ -671,19 +683,19 @@ msgstr "نموذج Claude"
 msgid "Clear"
 msgstr "مسح"
 
-#: frappe_intelligence/public/js/tutorial/content.js:295
+#: frappe_intelligence/public/js/tutorial/content.js:303
 msgid "Click Ask in the message box and choose Agent."
 msgstr "اضغط «سؤال» في مربع الرسالة واختر «الوكيل»."
 
-#: frappe_intelligence/public/js/tutorial/content.js:130
+#: frappe_intelligence/public/js/tutorial/content.js:138
 msgid "Click Attach a file and pick a PDF, a photo or a text file."
 msgstr "اضغط «إرفاق ملف» واختر ملف PDF أو صورة أو ملفًا نصيًا."
 
-#: frappe_intelligence/public/js/tutorial/content.js:178
+#: frappe_intelligence/public/js/tutorial/content.js:186
 msgid "Click it again. Your words appear in the message box."
 msgstr "اضغط عليه مرة أخرى. تظهر كلماتك في مربع الرسالة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:173
+#: frappe_intelligence/public/js/tutorial/content.js:181
 msgid "Click the microphone beside the message box and speak."
 msgstr "اضغط الميكروفون بجانب مربع الرسالة وتحدّث."
 
@@ -745,8 +757,8 @@ msgstr "حد الثقة (تجاوز)"
 
 #: frappe_intelligence/public/js/assistant/components/ProposalCard.vue:30
 #: frappe_intelligence/public/js/tutorial/components/StepPicture.vue:73
-#: frappe_intelligence/public/js/tutorial/demos.js:278
-#: frappe_intelligence/public/js/tutorial/demos.js:279
+#: frappe_intelligence/public/js/tutorial/demos.js:294
+#: frappe_intelligence/public/js/tutorial/demos.js:295
 msgid "Confirm"
 msgstr "تأكيد"
 
@@ -799,12 +811,12 @@ msgstr "تابع من حيث توقفت · الفصل {0}"
 msgid "Conversations"
 msgstr "المحادثات"
 
-#: frappe_intelligence/public/js/assistant/components/Turn.vue:55
 #: frappe_intelligence/public/js/assistant/components/Turn.vue:56
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:57
 msgid "Copy as Markdown"
 msgstr "نسخ بتنسيق Markdown"
 
-#: frappe_intelligence/public/js/tutorial/content.js:183
+#: frappe_intelligence/public/js/tutorial/content.js:191
 msgid "Correct anything misheard, then send it like any message."
 msgstr "صحّح ما أُسيء سماعه، ثم أرسله كأي رسالة."
 
@@ -820,7 +832,7 @@ msgstr "الاستخراج المصحَّح"
 msgid "Correction Source"
 msgstr "مصدر التصحيح"
 
-#: frappe_intelligence/public/js/tutorial/content.js:519
+#: frappe_intelligence/public/js/tutorial/content.js:527
 msgid "Corrections users make become training pairs for the template."
 msgstr "تصحيحات المستخدمين تصبح أزواج تدريب للقالب."
 
@@ -843,19 +855,19 @@ msgstr "تعذّر إرسال الرسالة. يرجى المحاولة مرة �
 msgid "Counting {doctype}"
 msgstr "جارٍ عدّ {doctype}"
 
-#: frappe_intelligence/public/js/tutorial/content.js:619
+#: frappe_intelligence/public/js/tutorial/content.js:627
 msgid "Create a Post Processor with the document type and the function's path."
 msgstr "أنشئ معالجًا لاحقًا بنوع الوثيقة ومسار الدالة."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:264
+#: frappe_intelligence/public/js/tutorial/demos.js:280
 msgid "Create a ToDo for every overdue invoice"
 msgstr "أنشئ مهمة لكل فاتورة متأخرة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:469
+#: frappe_intelligence/public/js/tutorial/content.js:477
 msgid "Create a pack"
 msgstr "أنشئ حزمة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:502
+#: frappe_intelligence/public/js/tutorial/content.js:510
 msgid "Create a template"
 msgstr "أنشئ قالبًا"
 
@@ -864,7 +876,7 @@ msgstr "أنشئ قالبًا"
 msgid "Create {0}"
 msgstr "إنشاء {0}"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:284
+#: frappe_intelligence/public/js/tutorial/demos.js:300
 #, python-brace-format
 msgid "Created {0} ToDos. The one you rejected was not created."
 msgstr "أُنشئت {0} مهام، ولم تُنشأ المهمة التي رفضتها."
@@ -885,11 +897,11 @@ msgstr "مفتاح الخطوة الحالية"
 msgid "Custom AI persona for chat and voice replies. Leave empty to use the default assistant prompt."
 msgstr "شخصية مخصصة للذكاء الاصطناعي في ردود المحادثة والصوت. اتركه فارغًا لاستخدام موجّه المساعد الافتراضي."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:647
+#: frappe_intelligence/public/js/tutorial/demos.js:687
 msgid "Customer"
 msgstr "العميل"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:147
+#: frappe_intelligence/public/js/tutorial/demos.js:163
 #, python-brace-format
 msgid ""
 "Dear {0},\n"
@@ -919,11 +931,11 @@ msgstr "حذف {0} {1}"
 msgid "Deleting {doctype} {name}"
 msgstr "جارٍ حذف {doctype} {name}"
 
-#: frappe_intelligence/public/js/tutorial/content.js:299
+#: frappe_intelligence/public/js/tutorial/content.js:307
 msgid "Describe the task"
 msgstr "صِف المهمة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:208
+#: frappe_intelligence/public/js/tutorial/content.js:216
 msgid "Describe the text, for example: a polite reminder that the invoice is due."
 msgstr "صِف النص، مثلًا: تذكير لطيف بأن موعد الفاتورة قد حان."
 
@@ -931,7 +943,7 @@ msgstr "صِف النص، مثلًا: تذكير لطيف بأن موعد الف
 msgid "Describe what the field should say."
 msgstr "صِف ما يجب أن يتضمنه الحقل."
 
-#: frappe_intelligence/public/js/tutorial/content.js:586
+#: frappe_intelligence/public/js/tutorial/content.js:594
 msgid "Describe what the workflow is for, so off-topic messages are turned away."
 msgstr "صِف الغرض من سير العمل، حتى تُرفض الرسائل الخارجة عن الموضوع."
 
@@ -945,13 +957,13 @@ msgstr "صِف بلغة بسيطة ما يتولاه سير العمل هذا. �
 #. Label of the description (Small Text) field in DocType 'AI Post Processor'
 #: frappe_intelligence/intelligence/doctype/ai_knowledge_pack/ai_knowledge_pack.json:48
 #: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:35
-#: frappe_intelligence/public/js/tutorial/demos.js:166
-#: frappe_intelligence/public/js/tutorial/demos.js:244
-#: frappe_intelligence/public/js/tutorial/demos.js:728
+#: frappe_intelligence/public/js/tutorial/demos.js:182
+#: frappe_intelligence/public/js/tutorial/demos.js:260
+#: frappe_intelligence/public/js/tutorial/demos.js:768
 msgid "Description"
 msgstr "الوصف"
 
-#: frappe_intelligence/public/js/tutorial/content.js:570
+#: frappe_intelligence/public/js/tutorial/content.js:578
 msgid "Design the questions a guided workflow asks, the form it fills, and where it runs: desk, portal or WhatsApp."
 msgstr "صمّم الأسئلة التي يطرحها سير العمل الموجّه، والنموذج الذي يملؤه، ومكان تشغيله: سطح المكتب أو البوابة أو واتساب."
 
@@ -1038,15 +1050,15 @@ msgstr "مفتاح نوع المستند"
 msgid "Documents"
 msgstr "وثائق"
 
-#: frappe_intelligence/public/js/tutorial/content.js:558
+#: frappe_intelligence/public/js/tutorial/content.js:566
 msgid "Documents in the dock lists Document Requirements."
 msgstr "«وثائق» في الشريط يضم متطلبات المستندات."
 
-#: frappe_intelligence/public/js/tutorial/content.js:525
+#: frappe_intelligence/public/js/tutorial/content.js:533
 msgid "Documents in the dock opens Document Templates."
 msgstr "«وثائق» في الشريط يفتح قوالب المستندات."
 
-#: frappe_intelligence/public/js/tutorial/content.js:649
+#: frappe_intelligence/public/js/tutorial/content.js:657
 msgid "Documents in the dock, then Processing Log."
 msgstr "«وثائق» في الشريط، ثم سجل المعالجة."
 
@@ -1054,6 +1066,20 @@ msgstr "«وثائق» في الشريط، ثم سجل المعالجة."
 #: frappe_intelligence/public/js/tutorial/tour.js:36
 msgid "Done"
 msgstr "مُنجز"
+
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:87
+#: frappe_intelligence/public/js/tutorial/demos.js:59
+msgid "Download"
+msgstr "تحميل"
+
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:86
+msgid "Download again"
+msgstr "تحميل مرة أخرى"
+
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:81
+#, python-brace-format
+msgid "Downloaded at {0}"
+msgstr "حُمّل الساعة {0}"
 
 #: frappe_intelligence/public/js/tutorial/content.js:51
 msgid "Drag the panel's inner edge to make it wider or narrower."
@@ -1063,15 +1089,15 @@ msgstr "اسحب الحافة الداخلية للوحة لتوسيعها أو 
 msgid "Drawing a chart"
 msgstr "جارٍ رسم مخطط"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:75
-#: frappe_intelligence/public/js/tutorial/demos.js:200
-#: frappe_intelligence/public/js/tutorial/demos.js:213
-#: frappe_intelligence/public/js/tutorial/demos.js:647
-#: frappe_intelligence/public/js/tutorial/demos.js:705
+#: frappe_intelligence/public/js/tutorial/demos.js:91
+#: frappe_intelligence/public/js/tutorial/demos.js:216
+#: frappe_intelligence/public/js/tutorial/demos.js:229
+#: frappe_intelligence/public/js/tutorial/demos.js:687
+#: frappe_intelligence/public/js/tutorial/demos.js:745
 msgid "Due Date"
 msgstr "تاريخ الاستحقاق"
 
-#: frappe_intelligence/public/js/tutorial/content.js:305
+#: frappe_intelligence/public/js/tutorial/content.js:313
 msgid "Each change shows as a card marked Needs approval. Confirm it, or Reject it."
 msgstr "يظهر كل تغيير في بطاقة عليها «بحاجة إلى موافقة». اضغط «تأكيد» أو «رفض»."
 
@@ -1079,7 +1105,7 @@ msgstr "يظهر كل تغيير في بطاقة عليها «بحاجة إلى 
 msgid "Each dataset needs one number per label."
 msgstr "تحتاج كل مجموعة بيانات إلى رقم واحد لكل تسمية."
 
-#: frappe_intelligence/public/js/tutorial/content.js:581
+#: frappe_intelligence/public/js/tutorial/content.js:589
 msgid "Each step has a question, a target DocType and the fields it collects."
 msgstr "لكل خطوة سؤال ونوع مستند مستهدف والحقول التي تجمعها."
 
@@ -1090,6 +1116,10 @@ msgstr "تعديل كنص خام"
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/StepEditor/WhatsAppFlow.vue:37
 msgid "Edit flow"
 msgstr "تعديل النموذج"
+
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:85
+msgid "Email it to me"
+msgstr "أرسله إلى بريدي"
 
 #. Label of the enable_ai_on_whatsapp (Check) field in DocType 'AI Settings'
 #: frappe_intelligence/intelligence/doctype/ai_settings/ai_settings.json:274
@@ -1124,15 +1154,15 @@ msgstr "خطأ"
 msgid "Error Message"
 msgstr "رسالة الخطأ"
 
-#: frappe_intelligence/public/js/tutorial/content.js:349
+#: frappe_intelligence/public/js/tutorial/content.js:357
 msgid "Every chat is kept, so you can go back to it later. Rating answers helps improve them."
 msgstr "تُحفظ كل محادثة لتعود إليها لاحقًا. تقييم الإجابات يساعد على تحسينها."
 
-#: frappe_intelligence/public/js/tutorial/content.js:643
+#: frappe_intelligence/public/js/tutorial/content.js:651
 msgid "Every reading is logged with its values and confidence; every correction becomes a training pair."
 msgstr "تُسجَّل كل قراءة بقيمها ودرجة الثقة فيها، وكل تصحيح يصبح زوج تدريب."
 
-#: frappe_intelligence/public/js/tutorial/content.js:146
+#: frappe_intelligence/public/js/tutorial/content.js:154
 msgid "Every value you correct is kept, so the next reading is better."
 msgstr "كل قيمة تصحّحها تُحفظ، فتتحسن القراءة التالية."
 
@@ -1142,7 +1172,7 @@ msgstr "كل قيمة تصحّحها تُحفظ، فتتحسن القراءة ا
 msgid "Excluded DocTypes"
 msgstr "أنواع المستندات المستثناة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:445
+#: frappe_intelligence/public/js/tutorial/content.js:453
 msgid "Excluded DocTypes in AI Settings are never changed, whoever asks."
 msgstr "أنواع المستندات المستثناة في إعدادات الذكاء الاصطناعي لا تُغيَّر أبدًا، أيًّا كان من يطلب."
 
@@ -1160,9 +1190,17 @@ msgstr "ترتيب التنفيذ؛ الرقم الأصغر يُنفَّذ أو�
 msgid "Exit"
 msgstr "خروج"
 
-#: frappe_intelligence/public/js/tutorial/content.js:269
+#: frappe_intelligence/public/js/tutorial/content.js:277
 msgid "Exit leaves the workflow at any time."
 msgstr "«خروج» يغادر سير العمل في أي وقت."
+
+#: frappe_intelligence/public/js/tutorial/demos.js:48
+msgid "Export Accounts Receivable to Excel"
+msgstr "صدّر تقرير الحسابات المدينة إلى Excel"
+
+#: frappe_intelligence/public/js/tutorial/content.js:108
+msgid "Exporting a report needs the Export permission on it, as on the report's own page."
+msgstr "تصدير التقرير يحتاج إلى صلاحية التصدير عليه، كما في صفحة التقرير نفسها."
 
 #. Label of the section_break_3 (Section Break) field in DocType 'AI Processing
 #. Log'
@@ -1195,7 +1233,7 @@ msgstr "قواعد الاستخراج"
 msgid "Extraction Strategy"
 msgstr "استراتيجية الاستخراج"
 
-#: frappe_intelligence/public/js/tutorial/content.js:464
+#: frappe_intelligence/public/js/tutorial/content.js:472
 msgid "Facts, policies and answers the assistant can search, so it answers questions your records cannot."
 msgstr "حقائق وسياسات وإجابات يستطيع المساعد البحث فيها، ليجيب عن أسئلة لا تجيب عنها سجلاتك."
 
@@ -1268,19 +1306,19 @@ msgstr "الملفات التي أرسلها المستخدم مع هذه الر
 msgid "Filling in the {doctype} form"
 msgstr "جارٍ تعبئة نموذج {doctype}"
 
-#: frappe_intelligence/public/js/tutorial/content.js:484
+#: frappe_intelligence/public/js/tutorial/content.js:492
 msgid "Find Knowledge Packs"
 msgstr "اعثر على حزم المعرفة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:630
+#: frappe_intelligence/public/js/tutorial/content.js:638
 msgid "Find Post Processors"
 msgstr "اعثر على المعالجات اللاحقة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:202
+#: frappe_intelligence/public/js/tutorial/content.js:210
 msgid "Find the button"
 msgstr "اعثر على الزر"
 
-#: frappe_intelligence/public/js/tutorial/content.js:557
+#: frappe_intelligence/public/js/tutorial/content.js:565
 msgid "Find the requirements"
 msgstr "اعثر على المتطلبات"
 
@@ -1288,7 +1326,7 @@ msgstr "اعثر على المتطلبات"
 msgid "Find the sparkles"
 msgstr "اعثر على زر النجوم"
 
-#: frappe_intelligence/public/js/tutorial/content.js:524
+#: frappe_intelligence/public/js/tutorial/content.js:532
 msgid "Find the templates"
 msgstr "اعثر على القوالب"
 
@@ -1301,7 +1339,7 @@ msgstr "اطوِ قائمة المواضيع"
 msgid "Follow the answer"
 msgstr "تابع الإجابة"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:245
+#: frappe_intelligence/public/js/tutorial/demos.js:261
 #, python-brace-format
 msgid "Follow up invoice {0} with {1}"
 msgstr "متابعة الفاتورة {0} مع {1}"
@@ -1312,11 +1350,16 @@ msgstr "متابعة الفاتورة {0} مع {1}"
 msgid "For a change the assistant proposed: waiting for the user, approved or rejected."
 msgstr "لتغيير اقترحه المساعد: بانتظار المستخدم، أو تمت الموافقة عليه، أو رُفض."
 
-#: frappe_intelligence/public/js/tutorial/content.js:300
+#: frappe_intelligence/public/js/tutorial/content.js:308
 msgid "For example: create a ToDo for every overdue invoice."
 msgstr "مثلًا: أنشئ مهمة لكل فاتورة متأخرة."
 
-#: frappe_intelligence/install.py:27
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:14
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:16
+msgid "Format"
+msgstr "الصيغة"
+
+#: frappe_intelligence/install.py:28
 msgid "Frappe Intelligence installed. Open AI Settings to configure your AI provider (Ollama or Claude). Run  bench fi-check-deps  to verify dependencies."
 msgstr "تم تثبيت Frappe Intelligence. افتح إعدادات الذكاء الاصطناعي لإعداد مزوّد الخدمة (Ollama أو Claude). شغّل  bench fi-check-deps  للتحقق من المتطلبات."
 
@@ -1325,6 +1368,14 @@ msgstr "تم تثبيت Frappe Intelligence. افتح إعدادات الذكا�
 #: frappe_intelligence/intelligence/doctype/ai_workflow_step/ai_workflow_step.json:53
 msgid "Frappe document type to create or update at this step."
 msgstr "نوع مستند Frappe الذي يُنشأ أو يُحدَّث في هذه الخطوة."
+
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:81
+msgid "Frappe is emailing you a link"
+msgstr "يرسل Frappe رابطًا إلى بريدك"
+
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:77
+msgid "Frappe's own Export, run again with these filters"
+msgstr "تصدير Frappe نفسه، يُعاد تشغيله بهذه المرشحات"
 
 #. Description of the 'Knowledge Entries' (Table) field in DocType 'AI
 #. Knowledge Pack'
@@ -1362,6 +1413,10 @@ msgstr "إعدادات Gemini"
 msgid "Gemini Model"
 msgstr "نموذج Gemini"
 
+#: frappe_intelligence/public/js/tutorial/content.js:99
+msgid "Get it as a file"
+msgstr "احصل عليه ملفًا"
+
 #: frappe_intelligence/public/js/tutorial/content.js:19
 msgid "Get started"
 msgstr "ابدأ"
@@ -1370,19 +1425,19 @@ msgstr "ابدأ"
 msgid "Getting started"
 msgstr "البدء"
 
-#: frappe_intelligence/public/js/tutorial/content.js:474
+#: frappe_intelligence/public/js/tutorial/content.js:482
 msgid "Give it to a workflow"
 msgstr "أعطها لسير عمل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:419
+#: frappe_intelligence/public/js/tutorial/content.js:427
 msgid "Give people the Intelligence User role to use the assistant, and the Intelligence Agent role for Agent mode as well. Choose what Agent mode may never touch and whether forms get Write with AI."
 msgstr "امنح الأشخاص صلاحية «مستخدم الذكاء الاصطناعي» لاستخدام المساعد، وصلاحية «وكيل الذكاء الاصطناعي» لوضع الوكيل أيضًا. واختر ما لا يجوز لوضع الوكيل لمسه أبدًا، وهل تحصل النماذج على «اكتب بالذكاء الاصطناعي»."
 
-#: frappe_intelligence/public/js/tutorial/content.js:503
+#: frappe_intelligence/public/js/tutorial/content.js:511
 msgid "Give the document type a key and the detection keywords printed on it."
 msgstr "أعطِ نوع الوثيقة مفتاحًا وكلمات الكشف المطبوعة عليها."
 
-#: frappe_intelligence/public/js/tutorial/content.js:424
+#: frappe_intelligence/public/js/tutorial/content.js:432
 msgid "Give the role"
 msgstr "امنح الصلاحية"
 
@@ -1392,9 +1447,9 @@ msgstr "امنح الصلاحية"
 msgid "Good"
 msgstr "جيدة"
 
-#: frappe_intelligence/public/js/assistant/components/Turn.vue:112
-#: frappe_intelligence/public/js/tutorial/demos.js:356
-#: frappe_intelligence/public/js/tutorial/demos.js:357
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:117
+#: frappe_intelligence/public/js/tutorial/demos.js:372
+#: frappe_intelligence/public/js/tutorial/demos.js:373
 msgid "Good answer"
 msgstr "إجابة جيدة"
 
@@ -1408,7 +1463,7 @@ msgstr "من المفيد أن تعرف"
 msgid "Google API key. Get one at aistudio.google.com (free tier available)."
 msgstr "مفتاح API من Google. احصل عليه من aistudio.google.com (تتوفر باقة مجانية)."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:185
+#: frappe_intelligence/public/js/tutorial/demos.js:201
 msgid "Got it. How urgent is it?"
 msgstr "حسنًا. ما مدى استعجالها؟"
 
@@ -1417,7 +1472,7 @@ msgid "Guided workflow"
 msgstr "سير عمل موجّه"
 
 #: frappe_intelligence/public/js/assistant/components/EmptyState.vue:26
-#: frappe_intelligence/public/js/tutorial/content.js:240
+#: frappe_intelligence/public/js/tutorial/content.js:248
 msgid "Guided workflows"
 msgstr "سير العمل الموجّه"
 
@@ -1425,12 +1480,12 @@ msgstr "سير العمل الموجّه"
 msgid "HR"
 msgstr "الموارد البشرية"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:387
+#: frappe_intelligence/public/js/tutorial/demos.js:403
 msgid "Hello, are you there?"
 msgstr "مرحبًا، هل أنت هنا؟"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:69
-#: frappe_intelligence/public/js/tutorial/demos.js:486
+#: frappe_intelligence/public/js/tutorial/demos.js:85
+#: frappe_intelligence/public/js/tutorial/demos.js:502
 msgid "Here is what I read. Check the values, then use them."
 msgstr "هذا ما قرأته. راجع القيم ثم استخدمها."
 
@@ -1448,8 +1503,8 @@ msgstr "استدلالي"
 msgid "Hide raw text"
 msgstr "إخفاء النص الخام"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:167
-#: frappe_intelligence/public/js/tutorial/demos.js:247
+#: frappe_intelligence/public/js/tutorial/demos.js:183
+#: frappe_intelligence/public/js/tutorial/demos.js:263
 msgid "High"
 msgstr "مستوى عالي"
 
@@ -1459,7 +1514,7 @@ msgstr "مستوى عالي"
 msgid "History"
 msgstr "السجل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:355
+#: frappe_intelligence/public/js/tutorial/content.js:363
 msgid "History at the top of the panel lists your recent conversations."
 msgstr "«السجل» أعلى اللوحة يعرض محادثاتك الأخيرة."
 
@@ -1489,7 +1544,7 @@ msgstr "كم عدد الأصناف المتوفرة في المخزون؟"
 msgid "How many open sales orders do we have?"
 msgstr "كم عدد أوامر البيع المفتوحة لدينا؟"
 
-#: frappe_intelligence/public/js/tutorial/content.js:669
+#: frappe_intelligence/public/js/tutorial/content.js:677
 msgid "How often each workflow is started, finished or left, and how many turns it takes."
 msgstr "كم مرة يُبدأ كل سير عمل أو يكتمل أو يُترك، وكم دورة يستغرق."
 
@@ -1547,11 +1602,11 @@ msgstr "تم استيراد {0} قالب، وتخطي {1} (موجودة مسبق
 msgid "Improve"
 msgstr "حسّن"
 
-#: frappe_intelligence/public/js/tutorial/content.js:289
+#: frappe_intelligence/public/js/tutorial/content.js:297
 msgid "In Agent mode the assistant can prepare changes: new records, edits, submissions. You approve each one before it happens."
 msgstr "في وضع الوكيل يستطيع المساعد تجهيز تغييرات: سجلات جديدة وتعديلات واعتمادات. توافق على كل تغيير قبل حدوثه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:475
+#: frappe_intelligence/public/js/tutorial/content.js:483
 msgid "In the Workflow Builder, add the pack to the workflows that need it."
 msgstr "في منشئ سير العمل، أضف الحزمة إلى مسارات العمل التي تحتاجها."
 
@@ -1559,7 +1614,7 @@ msgstr "في منشئ سير العمل، أضف الحزمة إلى مسارا�
 msgid "In the dock, next to search and notifications."
 msgstr "في الشريط، بجانب البحث والإشعارات."
 
-#: frappe_intelligence/public/js/tutorial/content.js:247
+#: frappe_intelligence/public/js/tutorial/content.js:255
 msgid "In the panel, pick a workflow under Guided workflows, or choose Start a guided workflow from the mode menu."
 msgstr "في اللوحة، اختر سير عمل تحت «سير العمل الموجّه»، أو اختر «بدء سير عمل موجّه» من قائمة الوضع."
 
@@ -1612,7 +1667,7 @@ msgstr "رابط ملف غير صالح. تُقبل فقط الروابط الت
 msgid "Invalid file URL. Only /files/ and /private/files/ are accepted."
 msgstr "رابط ملف غير صالح. لا يُقبل إلا /files/ و/private/files/."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:647
+#: frappe_intelligence/public/js/tutorial/demos.js:687
 msgid "Invoice"
 msgstr "فاتورة"
 
@@ -1651,11 +1706,11 @@ msgstr "كائن JSON يربط اسم الحقل بالتسمية المعروض
 msgid "Keep Model Loaded"
 msgstr "إبقاء النموذج محمّلًا"
 
-#: frappe_intelligence/public/js/tutorial/content.js:479
+#: frappe_intelligence/public/js/tutorial/content.js:487
 msgid "Keep entries short; one fact per entry is easiest to find."
 msgstr "اجعل الإدخالات قصيرة؛ حقيقة واحدة في كل إدخال أسهل في العثور عليها."
 
-#: frappe_intelligence/public/js/tutorial/content.js:214
+#: frappe_intelligence/public/js/tutorial/content.js:222
 msgid "Keep it or undo"
 msgstr "احتفظ به أو تراجع"
 
@@ -1704,7 +1759,7 @@ msgstr "حزم المعرفة"
 msgid "Knowledge content retrieved as context for relevant chat queries."
 msgstr "محتوى معرفي يُسترجع كسياق لاستفسارات المحادثة ذات الصلة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:463
+#: frappe_intelligence/public/js/tutorial/content.js:471
 msgid "Knowledge packs"
 msgstr "حزم المعرفة"
 
@@ -1757,7 +1812,7 @@ msgstr "طلب إجازة"
 msgid "Leave this page out"
 msgstr "استبعاد هذه الصفحة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:101
+#: frappe_intelligence/public/js/tutorial/content.js:109
 msgid "Leave this page out removes the page from your question."
 msgstr "«استبعاد هذه الصفحة» يزيل الصفحة من سؤالك."
 
@@ -1807,15 +1862,15 @@ msgstr "جارٍ تحميل سير العمل…"
 msgid "Loading…"
 msgstr "جارٍ التحميل…"
 
-#: frappe_intelligence/public/js/tutorial/content.js:197
+#: frappe_intelligence/public/js/tutorial/content.js:205
 msgid "Long text fields in every form get a sparkles button. Say what the field should say and it is written in place."
 msgstr "تحصل الحقول النصية الطويلة في كل نموذج على زر النجوم. قل ما يجب أن يحتويه الحقل فيُكتب في مكانه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:653
+#: frappe_intelligence/public/js/tutorial/content.js:661
 msgid "Look at corrections"
 msgstr "اطّلع على التصحيحات"
 
-#: frappe_intelligence/public/js/tutorial/content.js:658
+#: frappe_intelligence/public/js/tutorial/content.js:666
 msgid "Low-confidence readings wait for a person to confirm them."
 msgstr "القراءات منخفضة الثقة تنتظر أن يؤكدها شخص."
 
@@ -1912,7 +1967,7 @@ msgstr "تفضيل النموذج"
 msgid "Model name to use for extraction and chat (must be pulled in Ollama)."
 msgstr "اسم النموذج المستخدم في الاستخراج والمحادثة (يجب تنزيله في Ollama)."
 
-#: frappe_intelligence/public/js/tutorial/content.js:470
+#: frappe_intelligence/public/js/tutorial/content.js:478
 msgid "Name it and add entries, each a topic and its content."
 msgstr "سمّها وأضف إدخالات، لكل منها موضوع ومحتوى."
 
@@ -1926,7 +1981,7 @@ msgstr "تلميح بلغة طبيعية يُمرَّر إلى نموذج الر
 msgid "Needs approval"
 msgstr "بحاجة إلى موافقة"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:241
+#: frappe_intelligence/public/js/tutorial/demos.js:257
 msgid "New ToDo"
 msgstr "مهمة جديدة"
 
@@ -1936,7 +1991,7 @@ msgstr "مهمة جديدة"
 msgid "New chat"
 msgstr "محادثة جديدة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:365
+#: frappe_intelligence/public/js/tutorial/content.js:373
 msgid "New chat starts an empty conversation."
 msgstr "«محادثة جديدة» تبدأ محادثة فارغة."
 
@@ -1987,6 +2042,10 @@ msgstr "لم يتم العثور على نماذج واتساب. أنشئ واح
 msgid "No conversations yet"
 msgstr "لا توجد محادثات بعد"
 
+#: frappe_intelligence/public/js/assistant/exports.js:37
+msgid "No data to export. Try other filters."
+msgstr "لا توجد بيانات للتصدير. جرّب مرشحات أخرى."
+
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/KnowledgePanel.vue:22
 msgid "No knowledge packs assigned."
 msgstr "لم تُعيَّن أي حزم معرفة."
@@ -2023,7 +2082,7 @@ msgstr "لا توجد مسارات عمل بعد."
 msgid "None"
 msgstr "لا شيء"
 
-#: frappe_intelligence/public/js/tutorial/content.js:282
+#: frappe_intelligence/public/js/tutorial/content.js:290
 msgid "None yet"
 msgstr "لا يوجد بعد"
 
@@ -2035,12 +2094,12 @@ msgstr "غير موجود — أدخله أو اتركه فارغًا"
 msgid "Nothing is saved until you confirm."
 msgstr "لن يُحفظ شيء حتى تؤكد."
 
-#: frappe_intelligence/public/js/tutorial/content.js:222
+#: frappe_intelligence/public/js/tutorial/content.js:230
 msgid "Nothing is saved until you save the form."
 msgstr "لا يُحفظ شيء حتى تحفظ النموذج."
 
-#: frappe_intelligence/public/js/tutorial/content.js:234
-#: frappe_intelligence/public/js/tutorial/content.js:318
+#: frappe_intelligence/public/js/tutorial/content.js:242
+#: frappe_intelligence/public/js/tutorial/content.js:326
 msgid "Off"
 msgstr "إيقاف"
 
@@ -2078,25 +2137,29 @@ msgstr "نموذج Ollama"
 msgid "Ollama has no model {0}. Run: ollama pull {0}"
 msgstr "لا يوجد لدى Ollama النموذج {0}. شغّل: ollama pull {0}"
 
-#: frappe_intelligence/public/js/tutorial/content.js:381
+#: frappe_intelligence/public/js/tutorial/content.js:389
 msgid "One provider answers for the whole site: OpenAI, Claude, Gemini, or Ollama running on your own server."
 msgstr "مزوّد واحد يجيب للموقع كله: OpenAI أو Claude أو Gemini أو Ollama على خادمك."
+
+#: frappe_intelligence/agent/tools/reports.py:64
+msgid "Only Query and Script reports can be exported from here."
+msgstr "لا يمكن التصدير من هنا إلا لتقارير الاستعلام والتقارير البرمجية."
 
 #: frappe_intelligence/agent/tools/desk.py:24
 msgid "Only desk routes that start with /app/ can be opened."
 msgstr "لا يمكن فتح إلا مسارات المكتب التي تبدأ بـ /app/."
 
-#: frappe_intelligence/public/js/tutorial/content.js:386
-#: frappe_intelligence/public/js/tutorial/content.js:406
-#: frappe_intelligence/public/js/tutorial/content.js:451
+#: frappe_intelligence/public/js/tutorial/content.js:394
+#: frappe_intelligence/public/js/tutorial/content.js:414
+#: frappe_intelligence/public/js/tutorial/content.js:459
 msgid "Open AI Settings"
 msgstr "افتح إعدادات الذكاء الاصطناعي"
 
-#: frappe_intelligence/public/js/tutorial/content.js:354
+#: frappe_intelligence/public/js/tutorial/content.js:362
 msgid "Open History"
 msgstr "افتح السجل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:203
+#: frappe_intelligence/public/js/tutorial/content.js:211
 msgid "Open a form. The sparkles sit beside the label of a long text field."
 msgstr "افتح نموذجًا. زر النجوم بجانب عنوان الحقل النصي الطويل."
 
@@ -2104,7 +2167,11 @@ msgstr "افتح نموذجًا. زر النجوم بجانب عنوان الح�
 msgid "Open it"
 msgstr "افتحه"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:342
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:36
+msgid "Open report"
+msgstr "فتح التقرير"
+
+#: frappe_intelligence/public/js/tutorial/demos.js:358
 msgid "Open sales orders"
 msgstr "أوامر البيع المفتوحة"
 
@@ -2112,12 +2179,12 @@ msgstr "أوامر البيع المفتوحة"
 msgid "Open the Assistant"
 msgstr "فتح المساعد"
 
-#: frappe_intelligence/public/js/tutorial/content.js:648
+#: frappe_intelligence/public/js/tutorial/content.js:656
 msgid "Open the Processing Log"
 msgstr "افتح سجل المعالجة"
 
 #: frappe_intelligence/public/js/tutorial/content.js:34
-#: frappe_intelligence/public/js/tutorial/content.js:124
+#: frappe_intelligence/public/js/tutorial/content.js:132
 msgid "Open the assistant"
 msgstr "افتح المساعد"
 
@@ -2126,15 +2193,15 @@ msgstr "افتح المساعد"
 msgid "Open the assistant from the dock's sparkles button or with Ctrl + . on any page."
 msgstr "افتح المساعد من زره في الشريط الجانبي أو بالضغط على Ctrl + . في أي صفحة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:575
+#: frappe_intelligence/public/js/tutorial/content.js:583
 msgid "Open the builder"
 msgstr "افتح المنشئ"
 
-#: frappe_intelligence/public/js/tutorial/content.js:674
+#: frappe_intelligence/public/js/tutorial/content.js:682
 msgid "Open the report"
 msgstr "افتح التقرير"
 
-#: frappe_intelligence/public/js/tutorial/content.js:276
+#: frappe_intelligence/public/js/tutorial/content.js:284
 msgid "Open this menu and choose Start a guided workflow. It is there once a workflow is ready for you."
 msgstr "افتح هذه القائمة واختر «بدء سير عمل موجّه». يظهر هذا الخيار متى توفّر لك سير عمل."
 
@@ -2183,7 +2250,7 @@ msgstr "الرسالة الافتتاحية التي تظهر عند دخول ا
 msgid "Opening {doctype} {name}"
 msgstr "جارٍ فتح {doctype} {name}"
 
-#: frappe_intelligence/public/js/tutorial/content.js:229
+#: frappe_intelligence/public/js/tutorial/content.js:237
 msgid "Opens a new ToDo. The sparkles sit beside its long text field."
 msgstr "يفتح مهمة جديدة. زر النجوم بجانب حقلها النصي الطويل."
 
@@ -2217,7 +2284,7 @@ msgstr "الاستخراج الأصلي"
 msgid "Other topics"
 msgstr "مواضيع أخرى"
 
-#: frappe_intelligence/public/js/tutorial/content.js:369
+#: frappe_intelligence/public/js/tutorial/content.js:377
 msgid "Other users cannot see your conversations; System Managers can."
 msgstr "لا يرى المستخدمون الآخرون محادثاتك؛ يراها مديرو النظام."
 
@@ -2227,11 +2294,11 @@ msgstr "لا يرى المستخدمون الآخرون محادثاتك؛ ير�
 msgid "Out-of-Scope Reply"
 msgstr "رد خارج النطاق"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:647
+#: frappe_intelligence/public/js/tutorial/demos.js:687
 msgid "Outstanding Amount"
 msgstr "المبلغ المستحق"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:319
+#: frappe_intelligence/public/js/tutorial/demos.js:335
 msgid "Overdue invoices"
 msgstr "الفواتير المتأخرة"
 
@@ -2281,15 +2348,15 @@ msgstr "قيد الانتظار"
 msgid "Per Field"
 msgstr "لكل حقل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:444
+#: frappe_intelligence/public/js/tutorial/content.js:452
 msgid "Permissions still apply: the assistant never goes beyond what each user may do."
 msgstr "الصلاحيات تبقى سارية: لا يتجاوز المساعد أبدًا ما يحق لكل مستخدم."
 
-#: frappe_intelligence/public/js/tutorial/content.js:391
+#: frappe_intelligence/public/js/tutorial/content.js:399
 msgid "Pick the provider"
 msgstr "اختر المزوّد"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:161
+#: frappe_intelligence/public/js/tutorial/demos.js:177
 msgid "Plan a follow-up"
 msgstr "تخطيط متابعة"
 
@@ -2327,13 +2394,27 @@ msgstr "مستخدم البوابة أو رقم واتساب الذي تتبع �
 msgid "Post Processors"
 msgstr "المعالجات اللاحقة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:607
+#: frappe_intelligence/public/js/tutorial/content.js:615
 msgid "Post processors"
 msgstr "المعالجات اللاحقة"
+
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:75
+msgid "Prepared in the background: open it and use Export there"
+msgstr "يُعدّ في الخلفية: افتحه واستخدم التصدير هناك"
 
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:287
 msgid "Prepares changes. You approve each one first."
 msgstr "يُعدّ التغييرات، وتوافق على كل منها أولًا."
+
+#: frappe_intelligence/agent/tools/reports.py:141
+#: frappe_intelligence/public/js/tutorial/demos.js:646
+#, python-brace-format
+msgid "Preparing the export of {report_name}"
+msgstr "تجهيز تصدير {report_name}"
+
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:84
+msgid "Preparing…"
+msgstr "جارٍ التجهيز…"
 
 #: frappe_intelligence/public/js/tutorial/content.js:57
 msgid "Press Escape to close it."
@@ -2357,10 +2438,10 @@ msgstr "الصفحة السابقة"
 msgid "Previous: {0}"
 msgstr "السابق: {0}"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:167
-#: frappe_intelligence/public/js/tutorial/demos.js:188
-#: frappe_intelligence/public/js/tutorial/demos.js:190
-#: frappe_intelligence/public/js/tutorial/demos.js:247
+#: frappe_intelligence/public/js/tutorial/demos.js:183
+#: frappe_intelligence/public/js/tutorial/demos.js:204
+#: frappe_intelligence/public/js/tutorial/demos.js:206
+#: frappe_intelligence/public/js/tutorial/demos.js:263
 msgid "Priority"
 msgstr "أفضلية"
 
@@ -2408,11 +2489,11 @@ msgstr "مزوّد الخدمة"
 msgid "Provider Payload"
 msgstr "بيانات مزوّد الخدمة"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:695
+#: frappe_intelligence/public/js/tutorial/demos.js:735
 msgid "Purchase Invoice"
 msgstr "فاتورة شراء"
 
-#: frappe_intelligence/public/js/tutorial/content.js:608
+#: frappe_intelligence/public/js/tutorial/content.js:616
 msgid "Python callbacks that fill or create records from a document's values once it has been read."
 msgstr "دوال Python تملأ السجلات أو تنشئها من قيم المستند بعد قراءته."
 
@@ -2422,7 +2503,7 @@ msgstr "دوال Python تملأ السجلات أو تنشئها من قيم ا
 msgid "Python-compatible regex to extract this field."
 msgstr "تعبير نمطي متوافق مع Python لاستخراج هذا الحقل."
 
-#: frappe_intelligence/public/js/tutorial/content.js:359
+#: frappe_intelligence/public/js/tutorial/content.js:367
 msgid "Rate an answer"
 msgstr "قيّم إجابة"
 
@@ -2437,15 +2518,15 @@ msgstr "نص OCR الخام"
 msgid "Raw Text"
 msgstr "النص الخام"
 
-#: frappe_intelligence/public/js/tutorial/content.js:118
+#: frappe_intelligence/public/js/tutorial/content.js:126
 msgid "Read a document"
 msgstr "اقرأ مستندًا"
 
-#: frappe_intelligence/public/js/tutorial/content.js:335
+#: frappe_intelligence/public/js/tutorial/content.js:343
 msgid "Read the reply"
 msgstr "اقرأ الرد"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:63
+#: frappe_intelligence/public/js/tutorial/demos.js:79
 msgid "Read this invoice"
 msgstr "اقرأ هذه الفاتورة"
 
@@ -2459,13 +2540,13 @@ msgid "Reading {doctype} fields"
 msgstr "جارٍ قراءة حقول {doctype}"
 
 #: frappe_intelligence/agent/tools/frappe_data.py:15
-#: frappe_intelligence/public/js/tutorial/demos.js:629
+#: frappe_intelligence/public/js/tutorial/demos.js:669
 #, python-brace-format
 msgid "Reading {doctype} list"
 msgstr "جارٍ قراءة قائمة {doctype}"
 
 #: frappe_intelligence/agent/tools/documents.py:40
-#: frappe_intelligence/public/js/tutorial/demos.js:628
+#: frappe_intelligence/public/js/tutorial/demos.js:644
 #, python-brace-format
 msgid "Reading {file_name}"
 msgstr "جارٍ قراءة {file_name}"
@@ -2474,7 +2555,7 @@ msgstr "جارٍ قراءة {file_name}"
 msgid "Reads and explains. Never changes data."
 msgstr "يقرأ ويشرح، ولا يغيّر البيانات أبدًا."
 
-#: frappe_intelligence/public/js/tutorial/content.js:167
+#: frappe_intelligence/public/js/tutorial/content.js:175
 msgid "Record your question in the panel. It is written out for you to check before you send it."
 msgstr "سجّل سؤالك في اللوحة، فيُكتب لتراجعه قبل إرساله."
 
@@ -2482,7 +2563,7 @@ msgstr "سجّل سؤالك في اللوحة، فيُكتب لتراجعه قب
 msgid "Recording not found."
 msgstr "لم يتم العثور على التسجيل الصوتي."
 
-#: frappe_intelligence/public/js/tutorial/content.js:548
+#: frappe_intelligence/public/js/tutorial/content.js:556
 msgid "Records report their present and missing documents from what was read."
 msgstr "تعرض السجلات مستنداتها الموجودة والناقصة بناءً على ما قُرئ."
 
@@ -2498,13 +2579,13 @@ msgstr "تعبير نمطي"
 msgid "Regex Pattern"
 msgstr "نمط التعبير النمطي"
 
-#: frappe_intelligence/public/js/tutorial/content.js:618
+#: frappe_intelligence/public/js/tutorial/content.js:626
 msgid "Register it"
 msgstr "سجّله"
 
 #: frappe_intelligence/public/js/assistant/components/ProposalCard.vue:21
 #: frappe_intelligence/public/js/tutorial/components/StepPicture.vue:72
-#: frappe_intelligence/public/js/tutorial/demos.js:280
+#: frappe_intelligence/public/js/tutorial/demos.js:296
 msgid "Reject"
 msgstr "رفض"
 
@@ -2552,6 +2633,15 @@ msgstr "الرد الذي يُرسل فورًا عندما تكون رسالة �
 msgid "Reply, or ask for a change to the proposal…"
 msgstr "ردّ، أو اطلب تعديلًا على المقترح…"
 
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:2
+msgid "Report export"
+msgstr "تصدير التقرير"
+
+#: frappe_intelligence/agent/tools/reports.py:62
+#, python-brace-format
+msgid "Report {0} does not exist."
+msgstr "التقرير {0} غير موجود."
+
 #. Label of the section_break_fields (Section Break) field in DocType 'AI
 #. Workflow Step'
 #. Label of the required_fields (JSON) field in DocType 'AI Workflow Step'
@@ -2559,11 +2649,11 @@ msgstr "ردّ، أو اطلب تعديلًا على المقترح…"
 msgid "Required Fields"
 msgstr "الحقول المطلوبة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:536
+#: frappe_intelligence/public/js/tutorial/content.js:544
 msgid "Required documents"
 msgstr "المستندات المطلوبة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:552
+#: frappe_intelligence/public/js/tutorial/content.js:560
 msgid "Requirements belong to a DocType, not to a workflow."
 msgstr "المتطلبات تخص نوع مستند، لا سير عمل."
 
@@ -2589,23 +2679,23 @@ msgstr "المراجعة مطلوبة"
 msgid "Role"
 msgstr "الدور"
 
-#: frappe_intelligence/agent/tools/reports.py:72
+#: frappe_intelligence/agent/tools/reports.py:122
 #, python-brace-format
 msgid "Running {report_name}"
 msgstr "جارٍ تشغيل {report_name}"
 
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:70
-#: frappe_intelligence/public/js/tutorial/content.js:396
-#: frappe_intelligence/public/js/tutorial/demos.js:545
+#: frappe_intelligence/public/js/tutorial/content.js:404
+#: frappe_intelligence/public/js/tutorial/demos.js:561
 msgid "Save"
 msgstr "حفظ"
 
-#: frappe_intelligence/public/js/tutorial/content.js:592
+#: frappe_intelligence/public/js/tutorial/content.js:600
 msgid "Save and try"
 msgstr "احفظ وجرّب"
 
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:106
-#: frappe_intelligence/public/js/tutorial/content.js:268
+#: frappe_intelligence/public/js/tutorial/content.js:276
 msgid "Saved after every answer. You can leave and come back."
 msgstr "يُحفظ بعد كل إجابة، ويمكنك المغادرة والعودة."
 
@@ -2617,15 +2707,15 @@ msgstr "حُفظ كمسودة. الاعتماد يكون منك."
 msgid "Saving…"
 msgstr "جارٍ الحفظ…"
 
-#: frappe_intelligence/public/js/tutorial/content.js:158
+#: frappe_intelligence/public/js/tutorial/content.js:166
 msgid "Say what you need from the file, or just send it."
 msgstr "قل ما تحتاجه من الملف، أو أرسله فقط."
 
-#: frappe_intelligence/public/js/tutorial/content.js:207
+#: frappe_intelligence/public/js/tutorial/content.js:215
 msgid "Say what you want"
 msgstr "قل ما تريد"
 
-#: frappe_intelligence/public/js/tutorial/content.js:537
+#: frappe_intelligence/public/js/tutorial/content.js:545
 msgid "Say which documents a DocType's records should have, so other apps can show what is still missing."
 msgstr "حدّد المستندات التي يجب أن تكون لسجلات نوع مستند، لتعرض التطبيقات الأخرى ما زال ناقصًا."
 
@@ -2664,7 +2754,7 @@ msgstr "ابحث في المواضيع"
 msgid "Searching DocTypes"
 msgstr "جارٍ البحث في أنواع المستندات"
 
-#: frappe_intelligence/agent/tools/reports.py:58
+#: frappe_intelligence/agent/tools/reports.py:108
 msgid "Searching reports"
 msgstr "جارٍ البحث في التقارير"
 
@@ -2681,7 +2771,7 @@ msgstr "بحث…"
 msgid "Seconds to wait for the AI provider before giving up."
 msgstr "عدد الثواني التي يُنتظر فيها مزوّد خدمة الذكاء الاصطناعي قبل التوقف."
 
-#: frappe_intelligence/public/js/tutorial/content.js:547
+#: frappe_intelligence/public/js/tutorial/content.js:555
 msgid "See what is missing"
 msgstr "اعرف ما ينقص"
 
@@ -2706,7 +2796,7 @@ msgid "Selling"
 msgstr "المبيعات"
 
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:97
-#: frappe_intelligence/public/js/tutorial/content.js:182
+#: frappe_intelligence/public/js/tutorial/content.js:190
 msgid "Send"
 msgstr "إرسال"
 
@@ -2722,11 +2812,11 @@ msgstr "أرسل {0} ملفات كحد أقصى مع الرسالة."
 msgid "Session Analytics"
 msgstr "تحليلات الجلسات"
 
-#: frappe_intelligence/public/js/tutorial/content.js:675
+#: frappe_intelligence/public/js/tutorial/content.js:683
 msgid "Session Analytics in the Intelligence sidebar."
 msgstr "«تحليلات الجلسات» في الشريط الجانبي للذكاء."
 
-#: frappe_intelligence/public/js/tutorial/content.js:668
+#: frappe_intelligence/public/js/tutorial/content.js:676
 msgid "Session analytics"
 msgstr "تحليلات الجلسات"
 
@@ -2736,7 +2826,7 @@ msgstr "تحليلات الجلسات"
 msgid "Session that triggered this document processing job."
 msgstr "الجلسة التي بدأت مهمة معالجة هذا المستند."
 
-#: frappe_intelligence/public/js/tutorial/content.js:585
+#: frappe_intelligence/public/js/tutorial/content.js:593
 msgid "Set the scope"
 msgstr "حدّد النطاق"
 
@@ -2753,20 +2843,20 @@ msgstr "الإعداد"
 msgid "Setup"
 msgstr "الإعدادات"
 
-#: frappe_intelligence/public/js/tutorial/content.js:485
+#: frappe_intelligence/public/js/tutorial/content.js:493
 msgid "Setup in the dock lists Knowledge Packs."
 msgstr "«الإعدادات» في الشريط يضم حزم المعرفة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:631
+#: frappe_intelligence/public/js/tutorial/content.js:639
 msgid "Setup in the dock lists Post Processors."
 msgstr "«الإعدادات» في الشريط يضم المعالجات اللاحقة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:407
-#: frappe_intelligence/public/js/tutorial/content.js:452
+#: frappe_intelligence/public/js/tutorial/content.js:415
+#: frappe_intelligence/public/js/tutorial/content.js:460
 msgid "Setup in the dock opens AI Settings."
 msgstr "«الإعدادات» في الشريط يفتح إعدادات الذكاء الاصطناعي."
 
-#: frappe_intelligence/public/js/tutorial/content.js:387
+#: frappe_intelligence/public/js/tutorial/content.js:395
 msgid "Setup in the dock, then AI Settings."
 msgstr "«الإعدادات» في الشريط، ثم إعدادات الذكاء الاصطناعي."
 
@@ -2816,11 +2906,11 @@ msgstr "معرّف نصي يطابق قالب مستند الذكاء الاصط
 msgid "Soft target. Replies longer than this are split into multiple messages."
 msgstr "حد تقريبي. تُقسَّم الردود الأطول من ذلك إلى عدة رسائل."
 
-#: frappe_intelligence/public/js/tutorial/content.js:314
+#: frappe_intelligence/public/js/tutorial/content.js:322
 msgid "Some DocTypes can be kept out of reach in AI Settings."
 msgstr "يمكن إبعاد بعض أنواع المستندات عن متناوله في إعدادات الذكاء الاصطناعي."
 
-#: frappe_intelligence/public/js/tutorial/content.js:166
+#: frappe_intelligence/public/js/tutorial/content.js:174
 msgid "Speak instead of typing"
 msgstr "تحدّث بدل الكتابة"
 
@@ -2828,20 +2918,20 @@ msgstr "تحدّث بدل الكتابة"
 msgid "Start a guided workflow"
 msgstr "بدء سير عمل موجّه"
 
-#: frappe_intelligence/public/js/tutorial/content.js:364
+#: frappe_intelligence/public/js/tutorial/content.js:372
 msgid "Start fresh"
 msgstr "ابدأ من جديد"
 
-#: frappe_intelligence/public/js/tutorial/content.js:593
+#: frappe_intelligence/public/js/tutorial/content.js:601
 msgid "Start it from the assistant panel."
 msgstr "ابدأه من لوحة المساعد."
 
-#: frappe_intelligence/public/js/tutorial/content.js:246
-#: frappe_intelligence/public/js/tutorial/content.js:275
+#: frappe_intelligence/public/js/tutorial/content.js:254
+#: frappe_intelligence/public/js/tutorial/content.js:283
 msgid "Start one"
 msgstr "ابدأ واحدًا"
 
-#: frappe_intelligence/public/js/tutorial/content.js:172
+#: frappe_intelligence/public/js/tutorial/content.js:180
 msgid "Start recording"
 msgstr "ابدأ التسجيل"
 
@@ -2885,7 +2975,7 @@ msgid "Stock"
 msgstr "المخزون"
 
 #: frappe_intelligence/public/js/assistant/components/Composer.vue:90
-#: frappe_intelligence/public/js/tutorial/content.js:177
+#: frappe_intelligence/public/js/tutorial/content.js:185
 msgid "Stop"
 msgstr "إيقاف"
 
@@ -2893,7 +2983,7 @@ msgstr "إيقاف"
 msgid "Stop recording"
 msgstr "إيقاف التسجيل"
 
-#: frappe_intelligence/public/js/assistant/components/Turn.vue:50
+#: frappe_intelligence/public/js/assistant/components/Turn.vue:51
 msgid "Stopped."
 msgstr "تم الإيقاف."
 
@@ -2911,19 +3001,19 @@ msgstr "اعتماد {0} {1}"
 msgid "Submitting {doctype} {name}"
 msgstr "جارٍ اعتماد {doctype} {name}"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:698
+#: frappe_intelligence/public/js/tutorial/demos.js:738
 msgid "Supplier"
 msgstr "المورد"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:702
+#: frappe_intelligence/public/js/tutorial/demos.js:742
 msgid "Supplier Invoice Date"
 msgstr "تاريخ فاتورة المورد"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:699
+#: frappe_intelligence/public/js/tutorial/demos.js:739
 msgid "Supplier Invoice No"
 msgstr "رقم فاتورة المورد"
 
-#: frappe_intelligence/public/js/tutorial/content.js:294
+#: frappe_intelligence/public/js/tutorial/content.js:302
 msgid "Switch to Agent"
 msgstr "انتقل إلى الوكيل"
 
@@ -2954,7 +3044,7 @@ msgstr "موجّه النظام"
 msgid "Target DocType"
 msgstr "نوع المستند المستهدف"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:728
+#: frappe_intelligence/public/js/tutorial/demos.js:768
 msgid "Task"
 msgstr "مهمة"
 
@@ -2962,7 +3052,7 @@ msgstr "مهمة"
 msgid "Teach"
 msgstr "علّم"
 
-#: frappe_intelligence/public/js/tutorial/content.js:496
+#: frappe_intelligence/public/js/tutorial/content.js:504
 msgid "Teach it a document"
 msgstr "علّمه مستندًا"
 
@@ -3014,11 +3104,11 @@ msgstr "مستند Frappe الذي ينتمي إليه هذا السجل (تحد
 msgid "The answer arrives as it is written, with the records and reports it used."
 msgstr "تصل الإجابة أثناء كتابتها، مع السجلات والتقارير التي استخدمها."
 
-#: frappe_intelligence/public/js/tutorial/content.js:336
+#: frappe_intelligence/public/js/tutorial/content.js:344
 msgid "The answer comes back in the language you wrote in."
 msgstr "تأتي الإجابة باللغة التي كتبت بها."
 
-#: frappe_intelligence/public/js/tutorial/content.js:312
+#: frappe_intelligence/public/js/tutorial/content.js:320
 msgid "The assistant can only change what you could change yourself."
 msgstr "لا يستطيع المساعد تغيير إلا ما تستطيع تغييره بنفسك."
 
@@ -3039,7 +3129,7 @@ msgstr "المساعد غير متاح لك. اطلب الوصول من مسؤو
 msgid "The assistant is still answering in this conversation."
 msgstr "لا يزال المساعد يجيب في هذه المحادثة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:145
+#: frappe_intelligence/public/js/tutorial/content.js:153
 msgid "The assistant only reads files you are allowed to open."
 msgstr "لا يقرأ المساعد إلا الملفات المسموح لك بفتحها."
 
@@ -3055,6 +3145,11 @@ msgstr "يوجد المساعد في لوحة بجانب كل صفحة من سط
 msgid "The browser was not allowed to use the microphone."
 msgstr "لم يُسمح للمتصفح باستخدام الميكروفون."
 
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:100
+#: frappe_intelligence/public/js/assistant/exports.js:89
+msgid "The export did not work."
+msgstr "لم ينجح التصدير."
+
 #: frappe_intelligence/agent/tools/documents.py:24
 msgid "The file could not be read. It may be damaged or empty."
 msgstr "تعذّرت قراءة الملف. قد يكون تالفًا أو فارغًا."
@@ -3067,7 +3162,11 @@ msgstr "تعذّر رفع الملف."
 msgid "The form changed before the text was ready."
 msgstr "تغيّر النموذج قبل أن يجهز النص."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:661
+#: frappe_intelligence/agent/tools/reports.py:57
+msgid "The format must be Excel or CSV."
+msgstr "يجب أن تكون الصيغة Excel أو CSV."
+
+#: frappe_intelligence/public/js/tutorial/demos.js:701
 #, python-brace-format
 msgid "The oldest is from {0}."
 msgstr "أقدمها من {0}."
@@ -3090,11 +3189,11 @@ msgstr "صيغة الدور الخاصة بمزوّد الخدمة، وتُعا�
 msgid "The recording could not be turned into text."
 msgstr "تعذّر تحويل التسجيل إلى نص."
 
-#: frappe_intelligence/public/js/tutorial/content.js:187
+#: frappe_intelligence/public/js/tutorial/content.js:195
 msgid "The recording is deleted once it has been turned into text."
 msgstr "يُحذف التسجيل بعد تحويله إلى نص."
 
-#: frappe_intelligence/public/js/tutorial/content.js:125
+#: frappe_intelligence/public/js/tutorial/content.js:133
 msgid "The sparkles in the dock, or Ctrl+. on any page."
 msgstr "زر النجوم في الشريط، أو Ctrl+. في أي صفحة."
 
@@ -3104,7 +3203,7 @@ msgstr "زر النجوم في الشريط، أو Ctrl+. في أي صفحة."
 msgid "The specific record this log was created for."
 msgstr "السجل المحدد الذي أُنشئ هذا السجل من أجله."
 
-#: frappe_intelligence/public/js/tutorial/content.js:215
+#: frappe_intelligence/public/js/tutorial/content.js:223
 msgid "The text appears in the field. Undo puts the old text back. Save the form as usual."
 msgstr "يظهر النص في الحقل. «تراجع» يعيد النص القديم. احفظ النموذج كالمعتاد."
 
@@ -3115,6 +3214,11 @@ msgstr "تعذّرت كتابة النص. يرجى المحاولة مرة أخ�
 #: frappe_intelligence/agent/tools/__init__.py:142
 msgid "The tool failed unexpectedly."
 msgstr "فشلت الأداة بشكل غير متوقع."
+
+#: frappe_intelligence/agent/tools/reports.py:67
+#, python-brace-format
+msgid "The user may not export {0}: their role is not allowed to export {1}."
+msgstr "لا يمكن للمستخدم تصدير {0}: دوره لا يسمح بتصدير {1}."
 
 #. Description of the 'Feedback' (Select) field in DocType 'AI Conversation
 #. Message'
@@ -3130,7 +3234,7 @@ msgstr "تعذّر التحقق من هذه الإجابات. يرجى مراج�
 msgid "These answers did not pass this step's check."
 msgstr "لم تجتز هذه الإجابات التحقق الخاص بهذه الخطوة."
 
-#: frappe_intelligence/public/js/tutorial/content.js:625
+#: frappe_intelligence/public/js/tutorial/content.js:633
 msgid "They run for documents read by the portal, WhatsApp and other apps."
 msgstr "تعمل على المستندات التي تقرؤها البوابة وواتساب والتطبيقات الأخرى."
 
@@ -3166,7 +3270,7 @@ msgstr "هذا ليس موضوعًا في الشرح."
 msgid "This page"
 msgstr "هذه الصفحة"
 
-#: frappe_intelligence/agent/tools/reports.py:32
+#: frappe_intelligence/agent/tools/reports.py:36
 msgid "This report is prepared in the background. Ask the user to open it from the desk."
 msgstr "يُعَدّ هذا التقرير في الخلفية. اطلب من المستخدم فتحه من المكتب."
 
@@ -3188,7 +3292,7 @@ msgstr "سير العمل هذا غير متاح هنا."
 msgid "This workflow was changed after this conversation started, so it cannot continue. Please start it again."
 msgstr "تم تغيير سير العمل هذا بعد بدء هذه المحادثة، لذلك لا يمكن متابعته. يرجى بدئه من جديد."
 
-#: frappe_intelligence/public/js/tutorial/content.js:360
+#: frappe_intelligence/public/js/tutorial/content.js:368
 msgid "Thumbs up for a good answer, thumbs down for a bad one."
 msgstr "إبهام لأعلى للإجابة الجيدة، ولأسفل للسيئة."
 
@@ -3204,6 +3308,10 @@ msgstr "المهلة (بالثواني)"
 #: frappe_intelligence/intelligence/page/ai_workflow_builder/components/WorkflowHeader.vue:6
 msgid "Title"
 msgstr "العنوان"
+
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:76
+msgid "Too big to wait for: Frappe emails you a link"
+msgstr "أكبر من أن تنتظره: يرسل Frappe رابطًا إلى بريدك"
 
 #. Label of the tool_name (Data) field in DocType 'AI Conversation Message'
 #: frappe_intelligence/intelligence/doctype/ai_conversation_message/ai_conversation_message.json:48
@@ -3232,7 +3340,7 @@ msgstr "استدعاءات الأدوات التي طلبها المساعد: [{
 msgid "Tool {0} is not available in {1} mode."
 msgstr "الأداة {0} غير متاحة في وضع {1}."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:336
+#: frappe_intelligence/public/js/tutorial/demos.js:352
 msgid "Top customers this quarter"
 msgstr "أكبر العملاء هذا الربع"
 
@@ -3255,11 +3363,11 @@ msgstr "المواضيع"
 msgid "Training Pairs"
 msgstr "أزواج التدريب"
 
-#: frappe_intelligence/public/js/tutorial/content.js:654
+#: frappe_intelligence/public/js/tutorial/content.js:662
 msgid "Training Pairs list what was read next to what the user confirmed."
 msgstr "تعرض أزواج التدريب ما قُرئ بجانب ما أكّده المستخدم."
 
-#: frappe_intelligence/public/js/tutorial/content.js:514
+#: frappe_intelligence/public/js/tutorial/content.js:522
 msgid "Try it"
 msgstr "جرّبه"
 
@@ -3268,11 +3376,11 @@ msgstr "جرّبه"
 msgid "Try it now"
 msgstr "جرّبه الآن"
 
-#: frappe_intelligence/public/js/tutorial/content.js:439
+#: frappe_intelligence/public/js/tutorial/content.js:447
 msgid "Turn Write with AI in Forms on or off."
 msgstr "فعّل «اكتب بالذكاء الاصطناعي في النماذج» أو أوقفه."
 
-#: frappe_intelligence/public/js/tutorial/content.js:432
+#: frappe_intelligence/public/js/tutorial/content.js:440
 msgid "Turn on Allow Agent Mode in AI Settings, and give the Intelligence Agent role to the people who may use it."
 msgstr "فعّل «السماح بوضع الوكيل» في إعدادات الذكاء الاصطناعي، وامنح صلاحية «وكيل الذكاء الاصطناعي» للأشخاص الذين يحق لهم استخدامه."
 
@@ -3293,7 +3401,7 @@ msgstr "الشرح"
 msgid "Type a question, for example: Which invoices are overdue?"
 msgstr "اكتب سؤالًا، مثلًا: ما الفواتير المتأخرة؟"
 
-#: frappe_intelligence/public/js/tutorial/content.js:331
+#: frappe_intelligence/public/js/tutorial/content.js:339
 msgid "Type or speak in Arabic or English."
 msgstr "اكتب أو تحدّث بالعربية أو الإنجليزية."
 
@@ -3308,7 +3416,7 @@ msgstr "عنوان URL الذي يعمل عليه خادم Ollama."
 
 #: frappe_intelligence/public/js/fi_field_writer.bundle.js:146
 #: frappe_intelligence/public/js/tutorial/components/StepPicture.vue:130
-#: frappe_intelligence/public/js/tutorial/demos.js:154
+#: frappe_intelligence/public/js/tutorial/demos.js:170
 msgid "Undo"
 msgstr "تراجع"
 
@@ -3363,17 +3471,17 @@ msgstr "ارفع ملف JSON لحزمة معرفة لاستيراد جميع ا�
 msgid "Uploading…"
 msgstr "جارٍ الرفع…"
 
-#: frappe_intelligence/public/js/tutorial/content.js:139
+#: frappe_intelligence/public/js/tutorial/content.js:147
 msgid "Use them"
 msgstr "استخدمها"
 
 #: frappe_intelligence/public/js/assistant/components/ReviewCard.vue:41
 #: frappe_intelligence/public/js/tutorial/components/StepPicture.vue:48
-#: frappe_intelligence/public/js/tutorial/demos.js:79
+#: frappe_intelligence/public/js/tutorial/demos.js:95
 msgid "Use these values"
 msgstr "استخدام هذه القيم"
 
-#: frappe_intelligence/public/js/tutorial/content.js:140
+#: frappe_intelligence/public/js/tutorial/content.js:148
 msgid "Use these values fills the open form, or opens a new one."
 msgstr "«استخدام هذه القيم» يملأ النموذج المفتوح أو يفتح نموذجًا جديدًا."
 
@@ -3441,7 +3549,7 @@ msgstr "يحتاج الإدخال الصوتي إلى حزمة التفريغ ا
 msgid "What can you help me with?"
 msgstr "بماذا يمكنك مساعدتي؟"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:729
+#: frappe_intelligence/public/js/tutorial/demos.js:769
 msgid "What needs to be done?"
 msgstr "ما الذي يجب إنجازه؟"
 
@@ -3503,11 +3611,11 @@ msgstr "يتطلب تكامل واتساب تثبيت تطبيق frappe_whatsapp
 msgid "WhatsApp-specific system prompt. Use plain text only — no markdown. WhatsApp renders asterisks and underscores literally."
 msgstr "موجّه نظام خاص بواتساب. استخدم نصًا عاديًا فقط، دون Markdown. يعرض واتساب النجوم والشرطات السفلية كما هي."
 
-#: frappe_intelligence/public/js/tutorial/content.js:261
+#: frappe_intelligence/public/js/tutorial/content.js:269
 msgid "When the steps are done, a new form opens with your answers. Check it and save it."
 msgstr "عند انتهاء الخطوات، يُفتح نموذج جديد بإجاباتك. راجعه واحفظه."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:114
+#: frappe_intelligence/public/js/tutorial/demos.js:130
 msgid "Which customers have overdue invoices?"
 msgstr "أي العملاء لديهم فواتير متأخرة؟"
 
@@ -3516,7 +3624,7 @@ msgid "Which customers owe the most right now?"
 msgstr "أي العملاء عليهم أكبر المبالغ المستحقة حاليًا؟"
 
 #: frappe_intelligence/public/js/tutorial/demos.js:35
-#: frappe_intelligence/public/js/tutorial/demos.js:329
+#: frappe_intelligence/public/js/tutorial/demos.js:345
 msgid "Which invoices are overdue?"
 msgstr "ما الفواتير المتأخرة؟"
 
@@ -3544,7 +3652,7 @@ msgstr "من أي الموردين اشترينا أكثر هذا العام؟"
 msgid "Who are our top 5 customers this quarter?"
 msgstr "من هم أفضل 5 عملاء لدينا هذا الربع؟"
 
-#: frappe_intelligence/public/js/tutorial/content.js:418
+#: frappe_intelligence/public/js/tutorial/content.js:426
 msgid "Who can use it"
 msgstr "من يستطيع استخدامه"
 
@@ -3552,7 +3660,7 @@ msgstr "من يستطيع استخدامه"
 msgid "Who is on leave this week?"
 msgstr "من في إجازة هذا الأسبوع؟"
 
-#: frappe_intelligence/public/js/tutorial/content.js:401
+#: frappe_intelligence/public/js/tutorial/content.js:409
 msgid "With Ollama, your data stays on your server."
 msgstr "مع Ollama تبقى بياناتك على خادمك."
 
@@ -3625,7 +3733,7 @@ msgstr "عنوان سير العمل"
 msgid "Workflows"
 msgstr "مسارات العمل"
 
-#: frappe_intelligence/public/js/tutorial/content.js:576
+#: frappe_intelligence/public/js/tutorial/content.js:584
 msgid "Workflows in the dock opens the Workflow Builder."
 msgstr "«مسارات العمل» في الشريط يفتح منشئ سير العمل."
 
@@ -3633,24 +3741,24 @@ msgstr "«مسارات العمل» في الشريط يفتح منشئ سير �
 msgid "Write"
 msgstr "كتابة"
 
-#: frappe_intelligence/public/js/tutorial/content.js:325
+#: frappe_intelligence/public/js/tutorial/content.js:333
 msgid "Write in Arabic or English and the reply comes in the same language. When the desk is in Arabic, the panel reads right to left."
 msgstr "اكتب بالعربية أو الإنجليزية فيأتي الرد باللغة نفسها. عندما يكون سطح المكتب بالعربية، تُقرأ اللوحة من اليمين إلى اليسار."
 
-#: frappe_intelligence/public/js/tutorial/content.js:330
+#: frappe_intelligence/public/js/tutorial/content.js:338
 msgid "Write in your language"
 msgstr "اكتب بلغتك"
 
-#: frappe_intelligence/public/js/tutorial/content.js:613
+#: frappe_intelligence/public/js/tutorial/content.js:621
 msgid "Write the callback"
 msgstr "اكتب الدالة"
 
 #: frappe_intelligence/public/js/fi_field_writer.bundle.js:50
-#: frappe_intelligence/public/js/tutorial/content.js:196
-#: frappe_intelligence/public/js/tutorial/content.js:438
-#: frappe_intelligence/public/js/tutorial/demos.js:132
-#: frappe_intelligence/public/js/tutorial/demos.js:133
-#: frappe_intelligence/public/js/tutorial/demos.js:136
+#: frappe_intelligence/public/js/tutorial/content.js:204
+#: frappe_intelligence/public/js/tutorial/content.js:446
+#: frappe_intelligence/public/js/tutorial/demos.js:148
+#: frappe_intelligence/public/js/tutorial/demos.js:149
+#: frappe_intelligence/public/js/tutorial/demos.js:152
 msgid "Write with AI"
 msgstr "اكتب بالذكاء الاصطناعي"
 
@@ -3685,11 +3793,11 @@ msgstr "كُتب"
 msgid "Yes"
 msgstr "نعم"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:389
+#: frappe_intelligence/public/js/tutorial/demos.js:405
 msgid "Yes. Ask me about your records, reports or any screen."
 msgstr "نعم. اسألني عن سجلاتك أو تقاريرك أو أي شاشة."
 
-#: frappe_intelligence/utils/access.py:54
+#: frappe_intelligence/utils/access.py:64
 msgid "You are not allowed to use the assistant."
 msgstr "غير مسموح لك باستخدام المساعد."
 
@@ -3725,7 +3833,7 @@ msgstr "ليس لديك صلاحية للوصول إلى سجل المعالجة
 msgid "You do not have permission to read this record."
 msgstr "ليس لديك صلاحية لقراءة هذا السجل."
 
-#: frappe_intelligence/utils/access.py:44
+#: frappe_intelligence/utils/access.py:54
 msgid "You have not been given Agent mode. Ask your administrator."
 msgstr "لم يُمنح لك وضع الوكيل. اطلبه من مسؤول النظام."
 
@@ -3733,15 +3841,15 @@ msgstr "لم يُمنح لك وضع الوكيل. اطلبه من مسؤول ا�
 msgid "You rejected"
 msgstr "رفضت"
 
-#: frappe_intelligence/public/js/tutorial/content.js:340
+#: frappe_intelligence/public/js/tutorial/content.js:348
 msgid "Your administrator can fix the reply language in AI Settings."
 msgstr "يستطيع مسؤول النظام تثبيت لغة الرد في إعدادات الذكاء الاصطناعي."
 
-#: frappe_intelligence/public/js/tutorial/content.js:313
+#: frappe_intelligence/public/js/tutorial/content.js:321
 msgid "Your administrator decides who may use Agent mode."
 msgstr "يحدد مسؤول النظام من يحق له استخدام وضع الوكيل."
 
-#: frappe_intelligence/public/js/tutorial/content.js:348
+#: frappe_intelligence/public/js/tutorial/content.js:356
 msgid "Your conversations"
 msgstr "محادثاتك"
 
@@ -3818,7 +3926,7 @@ msgstr "واتساب"
 msgid "{0} API key is not set in AI Settings."
 msgstr "لم يتم تعيين مفتاح API الخاص بـ {0} في إعدادات الذكاء الاصطناعي."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:667
+#: frappe_intelligence/public/js/tutorial/demos.js:707
 #, python-brace-format
 msgid "{0} customers have overdue invoices: {1}."
 msgstr "{0} عملاء لديهم فواتير متأخرة: {1}."
@@ -3838,12 +3946,12 @@ msgstr "لا يوجد لدى {0} نموذج باسم {1}."
 msgid "{0} has none of these fields. Read its fields first."
 msgstr "لا يحتوي {0} على أي من هذه الحقول. اقرأ حقوله أولًا."
 
-#: frappe_intelligence/public/js/tutorial/demos.js:659
+#: frappe_intelligence/public/js/tutorial/demos.js:699
 #, python-brace-format
 msgid "{0} invoices are overdue, {1} in all:"
 msgstr "{0} فواتير متأخرة، مجموعها {1}:"
 
-#: frappe_intelligence/public/js/tutorial/demos.js:270
+#: frappe_intelligence/public/js/tutorial/demos.js:286
 #, python-brace-format
 msgid "{0} invoices are overdue. Here is a ToDo for each:"
 msgstr "{0} فواتير متأخرة. هذه مهمة لكل منها:"
@@ -3897,6 +4005,7 @@ msgid "{0} request failed: {4}"
 msgstr "فشل طلب {0}: {4}"
 
 #: frappe_intelligence/agent/tools/changes.py:76
+#: frappe_intelligence/public/js/assistant/components/ExportCard.vue:71
 #, python-brace-format
 msgid "{0} rows"
 msgstr "{0} صفوف"

@@ -42,6 +42,22 @@ export const DEMOS = {
 			{ zoom: "context", scale: 1.6 },
 			{ hover: "context" },
 			{ wait: 1800 },
+			{ step: 3 },
+			{ zoom: "composer", scale: 1.5 },
+			{ click: "composer" },
+			{ type: __("Export Accounts Receivable to Excel") },
+			{ click: "send" },
+			{ zoom: "panel", scale: 1.25 },
+			{
+				reply: {
+					steps: [exporting("Accounts Receivable")],
+					text: __("Accounts Receivable is ready to download."),
+					actions: [await receivable_export()],
+				},
+			},
+			{ wait: 900 },
+			{ hover: { button: __("Download") } },
+			{ wait: 1800 },
 			{ zoom: null },
 			{ wait: 1200 },
 		],
@@ -626,6 +642,30 @@ export const DEMOS = {
 // The label the assistant shows while reading a list (agent/tools/frappe_data.py).
 // … and while reading a file (agent/tools/documents.py).
 const reading_file = (name) => __("Reading {file_name}").replace("{file_name}", name);
+const exporting = (report) =>
+	__("Preparing the export of {report_name}").replace("{report_name}", __(report));
+
+// The card export_report (agent/tools/reports.py) gives, with the site's own row count.
+async function receivable_export() {
+	const filters = {
+		company: frappe.defaults.get_default("company"),
+		report_date: frappe.datetime.get_today(),
+		ageing_based_on: "Due Date",
+	};
+	const { result } = await frappe.xcall("frappe.desk.query_report.run", {
+		report_name: "Accounts Receivable",
+		filters,
+	});
+	return {
+		type: "export_report",
+		report_name: "Accounts Receivable",
+		filters,
+		file_format: "Excel",
+		rows: (result || []).length,
+		delivery: "download",
+	};
+}
+
 const reading_list = (doctype) => __("Reading {doctype} list").replace("{doctype}", __(doctype));
 
 async function overdue_rows() {

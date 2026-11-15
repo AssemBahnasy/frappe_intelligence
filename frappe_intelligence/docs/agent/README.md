@@ -24,7 +24,7 @@ api/chat.send_message                                              ← returns {
 
 | Mode | Tools | Status |
 |---|---|---|
-| Ask | Read data, run reports, search knowledge, open pages and new forms | Built |
+| Ask | Read data, run and export reports, search knowledge, open pages and new forms | Built |
 | Agent | Ask tools plus changes the user approves ([approvals.md](approvals.md)) | Built |
 | Workflow | No tools: answers are read into the workflow's steps ([../workflows/README.md](../workflows/README.md)) | Built |
 
@@ -50,7 +50,7 @@ api/chat.send_message                                              ← returns {
 | `agent/suggestions.py` | Starter questions by role |
 | `agent/tools/__init__.py` | `AgentTool`, registry, `execute()` |
 | `agent/tools/frappe_data.py` | Frappe's MCP data tools, reused |
-| `agent/tools/reports.py` | `search_reports`, `run_report` |
+| `agent/tools/reports.py` | `search_reports`, `run_report`, `export_report` |
 | `agent/tools/knowledge.py` | `search_knowledge` (AI Knowledge Packs) |
 | `agent/tools/desk.py` | Browser actions: `navigate`, `open_document`, `new_document`, `show_chart` |
 | `agent/tools/changes.py` | Agent mode changes: create, update, delete, submit, cancel |

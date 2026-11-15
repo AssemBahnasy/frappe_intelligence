@@ -8,6 +8,7 @@ const HANDLERS = {
 	new_doc: ({ doctype, defaults }) => open_new_form(doctype, defaults),
 	fill_form,
 	chart: () => {}, // drawn under the answer
+	export_report: () => {}, // a download card under the answer (exports.js)
 };
 
 // Into the new form the user has open; if they have left it, a new form gets the values instead.
