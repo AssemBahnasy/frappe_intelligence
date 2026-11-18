@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Frappe Intelligence VERSION\n"
 "Report-Msgid-Bugs-To: bahnasyassem@gmail.com\n"
-"POT-Creation-Date: 2026-11-17 18:10+0307\n"
-"PO-Revision-Date: 2026-11-17 18:10+0307\n"
+"POT-Creation-Date: 2026-11-18 11:53+0307\n"
+"PO-Revision-Date: 2026-11-18 11:53+0307\n"
 "Last-Translator: bahnasyassem@gmail.com\n"
 "Language-Team: bahnasyassem@gmail.com\n"
 "MIME-Version: 1.0\n"
@@ -87,7 +87,7 @@ msgstr ""
 msgid "A polite reminder…"
 msgstr ""
 
-#: frappe_intelligence/agent/tools/sheets.py:35
+#: frappe_intelligence/agent/tools/sheets.py:36
 msgid "A sheet is built only from records read in this conversation: read them with your tools first."
 msgstr ""
 
@@ -665,7 +665,7 @@ msgstr ""
 msgid "Check what was read"
 msgstr ""
 
-#: frappe_intelligence/agent/tools/sheets.py:67
+#: frappe_intelligence/agent/tools/sheets.py:69
 msgid "Checking your Export rights"
 msgstr ""
 
@@ -1441,6 +1441,10 @@ msgstr ""
 #. 'AI Post Processor'
 #: frappe_intelligence/intelligence/doctype/ai_post_processor/ai_post_processor.json:30
 msgid "Fully-qualified Python callable, e.g. hawya.intelligence.handlers.fill_facility_address"
+msgstr ""
+
+#: frappe_intelligence/corrected_translations.py:7
+msgid "GL Entry"
 msgstr ""
 
 #. Option for the 'Provider' (Select) field in DocType 'AI Settings'
@@ -2471,7 +2475,7 @@ msgstr ""
 msgid "Preparing the export of {report_name}"
 msgstr ""
 
-#: frappe_intelligence/agent/tools/sheets.py:88
+#: frappe_intelligence/agent/tools/sheets.py:90
 msgid "Preparing the sheet"
 msgstr ""
 

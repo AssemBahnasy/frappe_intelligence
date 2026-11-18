@@ -17,13 +17,14 @@ bench compile-po-to-mo --app frappe_intelligence --locale ar
 
 ### Strings Frappe or ERPNext already translate
 
-Translations merge in the site's install order (`frappe/translate.py get_translations_from_apps`), and this app comes after Frappe and ERPNext, so its entry for a shared string wins across the whole desk. Use their wording, so a word reads the same on their forms and in the app. The exception is a translation that is plainly wrong: correct it here and keep the list below.
+Translations merge in the site's install order (`frappe/translate.py get_translations_from_apps`), and this app comes after Frappe and ERPNext, so its entry for a shared string wins across the whole desk. Use their wording, so a word reads the same on their forms and in the app. The exception is a translation that is plainly wrong: correct it here and keep the list below. A string the app shows only at run time, such as a DocType's name, is also listed in `corrected_translations.py`, or extraction drops its entry.
 
 | String | Theirs | Here |
 |---|---|---|
 | Due Date (Frappe) | بسبب تاريخ ("because of date") | تاريخ الاستحقاق |
 | Supplier Invoice Date (ERPNext) | المورد فاتورة التسجيل | تاريخ فاتورة المورد |
 | Format (Frappe) | شكل ("shape") | الصيغة |
+| GL Entry (ERPNext) | GL الدخول ("GL the entering") | قيد دفتر الأستاذ |
 
 ## Values that vary by language
 
