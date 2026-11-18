@@ -12,6 +12,8 @@
 | `search_reports` | `reports.py` | Reports whose name matches, that the user may run |
 | `run_report` | `reports.py` | Columns and the first 50 rows; says when there are more |
 | `export_report` | `reports.py` | A card under the answer: the report as Excel or CSV through Frappe's own Export (emailed when big), and Print and PDF through the report page's own; each needs its right, Export or Print ([../panel/exports.md](../panel/exports.md)) |
+| `check_export_rights` | `sheets.py` | The user's Export right on each DocType; called before compiling a sheet ([../panel/sheets.md](../panel/sheets.md)) |
+| `export_sheet` | `sheets.py` | A download card for a table the agent compiled from what the conversation read; needs Export on every DocType read ([../panel/sheets.md](../panel/sheets.md)) |
 | `search_knowledge` | `knowledge.py` | Matching AI Knowledge Pack entries |
 | `read_document` | `documents.py` | A file's text; a template match pauses for the user to check the values ([../documents/review.md](../documents/review.md)). Called by the loop for every attached file |
 | `navigate` | `desk.py` | Browser opens a `/app/…` route |
@@ -40,10 +42,11 @@ AgentTool(
 	browser_action=False,    # True: the result's "action" is performed by the browser
 	preview=None,            # a change: builds the approval card; run waits for the user
 	review=False,            # True: the result's "review" card pauses the turn for the user
+	with_context=False,      # True: run(arguments, ToolContext(conversation, call_id))
 )
 ```
 
-Add it to the module's `TOOLS` list. `registry()` collects `TOOLS` from `frappe_data`, `reports`, `knowledge`, `documents`, `desk` and `changes`; add a new module there. A label can name any argument, e.g. `{file_name}`; a missing one shows as empty.
+Add it to the module's `TOOLS` list. `registry()` collects `TOOLS` from `frappe_data`, `reports`, `sheets`, `knowledge`, `documents`, `desk` and `changes`; add a new module there. A label can name any argument, e.g. `{file_name}`; a missing one shows as empty.
 
 ## Errors (`execute()`)
 
@@ -66,3 +69,4 @@ Desk tools return `{"action": {...}, "status": "..."}`. The loop collects the ac
 | `chart` | `title`, `chart_type`, `labels`, `datasets[{name, values}]` |
 | `export_report` | `report_name`, `filters`, `file_format`, `rows` (none for a prepared report), `delivery` (`download`, `email`, `print`, `open`), `can_export`, `can_print` |
 | `print_view` | `doctype`, `name` |
+| `export_sheet` | `conversation`, `call_id`, `title`, `columns`, `row_count`, `built_from`, `file_format` (the rows stay in the call's arguments) |

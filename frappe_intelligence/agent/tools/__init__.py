@@ -37,6 +37,8 @@ class AgentTool:
 	preview: Callable[[dict], dict] | None = None
 	# The result may carry a `review` card: the turn then waits for the user to check it.
 	review: bool = False
+	# `run` also takes a ToolContext: the conversation and this call's id.
+	with_context: bool = False
 
 	@property
 	def needs_approval(self) -> bool:
@@ -65,6 +67,12 @@ class _Blank(dict):
 		return ""
 
 
+@dataclass(frozen=True)
+class ToolContext:
+	conversation: Any
+	call_id: str
+
+
 @dataclass
 class Outcome:
 	content: str = ""
@@ -75,9 +83,17 @@ class Outcome:
 
 
 def registry() -> dict[str, AgentTool]:
-	from frappe_intelligence.agent.tools import changes, desk, documents, frappe_data, knowledge, reports
+	from frappe_intelligence.agent.tools import (
+		changes,
+		desk,
+		documents,
+		frappe_data,
+		knowledge,
+		reports,
+		sheets,
+	)
 
-	modules = (frappe_data, reports, knowledge, documents, desk, changes)
+	modules = (frappe_data, reports, sheets, knowledge, documents, desk, changes)
 	return {tool.name: tool for module in modules for tool in module.TOOLS}
 
 
@@ -96,13 +112,14 @@ def needs_approval(name: str) -> bool:
 	return bool(tool and tool.needs_approval)
 
 
-def execute(name: str, arguments: dict, mode: str) -> Outcome:
+def execute(name: str, arguments: dict, mode: str, context: ToolContext | None = None) -> Outcome:
 	"""Run the tool. A failed run is rolled back so a half-made change never stays."""
 	tool, outcome = _available(name, mode)
 	if not tool:
 		return outcome
 	frappe.db.savepoint(SAVEPOINT)
-	result = _guarded(name, lambda: tool.run(arguments), outcome)
+	run = (lambda: tool.run(arguments, context)) if tool.with_context else (lambda: tool.run(arguments))
+	result = _guarded(name, run, outcome)
 	if outcome.is_error:
 		frappe.db.rollback(save_point=SAVEPOINT)
 	else:

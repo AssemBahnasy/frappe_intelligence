@@ -10,6 +10,7 @@ The assistant lives in a panel docked to the right of the desk (left in right-to
 | Guided workflows in the panel | [../workflows/desk.md](../workflows/desk.md) |
 | Voice input | [voice.md](voice.md) |
 | Exporting and printing a report: the report card | [exports.md](exports.md) |
+| Sheets the assistant compiles, and the Export rights they need | [sheets.md](sheets.md) |
 | Arabic, right to left, the reply language | [language.md](language.md) |
 
 Answers come from the agent ([../agent/README.md](../agent/README.md)) and stream through the `fi_assistant` events ([../agent/live-replies.md](../agent/live-replies.md)).

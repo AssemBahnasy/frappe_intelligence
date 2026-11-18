@@ -6,7 +6,7 @@ import json
 from dataclasses import replace
 from types import SimpleNamespace as NS
 from unittest import TestCase
-from unittest.mock import MagicMock, patch
+from unittest.mock import ANY, MagicMock, patch
 
 import frappe
 
@@ -124,7 +124,7 @@ class TestLoop(TestCase):
 		self.assertEqual(result.reply, "There are 3.")
 		self.assertEqual([(s.tool, s.status) for s in result.steps], [("count_documents", "done")])
 		self.assertEqual([s.status for s in steps], ["running", "done"])
-		execute_tool.assert_called_once_with("count_documents", {"doctype": "Customer"}, "Ask")
+		execute_tool.assert_called_once_with("count_documents", {"doctype": "Customer"}, "Ask", ANY)
 		self.assertEqual([m.role for m in conversation.messages], ["user", "assistant", "tool", "assistant"])
 		self.assertEqual(len(checkpoints), 3)
 
@@ -199,7 +199,7 @@ class TestApprovals(TestCase):
 			loop.Hooks(on_step=steps.append),
 			approved=approved,
 		)
-		execute_tool.assert_called_once_with("create_document", {"doctype": "Customer"}, "Ask")
+		execute_tool.assert_called_once_with("create_document", {"doctype": "Customer"}, "Ask", ANY)
 		self.assertEqual(row.content, '{"created": "ACC-PAY-1"}')
 		self.assertEqual([s.status for s in steps], ["running", "done"])
 		self.assertEqual(result.reply, "Created ACC-PAY-1.")
@@ -212,7 +212,7 @@ class TestAttachments(TestCase):
 	def test_files_are_read_before_the_model_is_asked(self):
 		provider = ScriptedProvider(Reply(text="It is a bill from Gulf Pack."))
 		result, conversation, execute_tool = run(provider, attachments=[FILE])
-		execute_tool.assert_called_once_with("read_document", FILE, "Ask")
+		execute_tool.assert_called_once_with("read_document", FILE, "Ask", ANY)
 		self.assertEqual([m.role for m in conversation.messages], ["user", "assistant", "tool", "assistant"])
 		self.assertEqual(conversation.messages[1].tool_calls[0].name, "read_document")
 		self.assertEqual(len(provider.calls[0][0]), 3)  # the model sees the reading

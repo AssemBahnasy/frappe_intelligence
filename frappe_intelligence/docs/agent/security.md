@@ -13,6 +13,7 @@ The agent acts as the signed-in user:
 - Frappe MCP tools go through REST API v2 with the user's permissions, including user permissions and "if owner" rules.
 - `run_report` uses `frappe.desk.query_report.run`, which checks the report and its reference DocType.
 - `export_report` offers Download only with the Export right on the reference DocType (`frappe.permissions.can_export`, checked again by Frappe's `export_query`), and Print and PDF only with the Print right; with neither it refuses.
+- A compiled sheet needs the Export right on every DocType the conversation read, worked out from its stored tool calls; checked before compiling, when the card is made and at each download ([../panel/sheets.md](../panel/sheets.md)).
 - `print_document` needs the Print right on the record, as the form's Print button does, although Frappe's own PDF endpoint also accepts Read (`www/printview.py: validate_print_permission`).
 - `open_document` checks the DocType permission before saying whether a record exists.
 - `new_document` checks create permission; nothing is saved without the user.

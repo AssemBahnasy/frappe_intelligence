@@ -45,7 +45,10 @@
 		></div>
 
 		<ChartBlock v-for="(chart, i) in charts" :key="i" :chart="chart" />
-		<ExportCard v-for="(action, i) in exports" :key="`export-${i}`" :action="action" />
+		<template v-for="(action, i) in files" :key="`file-${i}`">
+			<SheetCard v-if="action.type === 'export_sheet'" :action="action" />
+			<ExportCard v-else :action="action" />
+		</template>
 
 		<div v-if="turn.error" class="fi-error" role="alert">{{ turn.error }}</div>
 		<div v-else-if="turn.stopped && !turn.pending" class="fi-meta">{{ __("Stopped.") }}</div>
@@ -91,6 +94,7 @@ import FileChip from "./FileChip.vue";
 import Icon from "./Icon.vue";
 import ProposalCard from "./ProposalCard.vue";
 import ReviewCard from "./ReviewCard.vue";
+import SheetCard from "./SheetCard.vue";
 import Steps from "./Steps.vue";
 
 const props = defineProps({ turn: { type: Object, required: true } });
@@ -105,8 +109,9 @@ const full_text = computed(() =>
 	[props.turn.answer, props.turn.report].filter(Boolean).join("\n\n")
 );
 const charts = computed(() => (props.turn.actions || []).filter((a) => a.type === "chart"));
-const exports = computed(() =>
-	(props.turn.actions || []).filter((a) => a.type === "export_report")
+const FILE_ACTIONS = ["export_report", "export_sheet"];
+const files = computed(() =>
+	(props.turn.actions || []).filter((a) => FILE_ACTIONS.includes(a.type))
 );
 const thinking = computed(() => {
 	const t = props.turn;

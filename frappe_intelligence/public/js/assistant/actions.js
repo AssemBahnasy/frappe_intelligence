@@ -10,6 +10,7 @@ const HANDLERS = {
 	fill_form,
 	chart: () => {}, // drawn under the answer
 	export_report: () => {}, // a download card under the answer (exports.js)
+	export_sheet: () => {}, // the same, for a sheet the agent compiled
 };
 
 // Into the new form the user has open; if they have left it, a new form gets the values instead.

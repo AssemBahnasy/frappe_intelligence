@@ -51,6 +51,7 @@ api/chat.send_message                                              ← returns {
 | `agent/tools/__init__.py` | `AgentTool`, registry, `execute()` |
 | `agent/tools/frappe_data.py` | Frappe's MCP data tools, reused |
 | `agent/tools/reports.py` | `search_reports`, `run_report`, `export_report` |
+| `agent/tools/sheets.py` | `check_export_rights`, `export_sheet` (rules in `agent/sheets.py`) |
 | `agent/tools/knowledge.py` | `search_knowledge` (AI Knowledge Packs) |
 | `agent/tools/desk.py` | Browser actions: `navigate`, `open_document`, `print_document`, `new_document`, `show_chart` |
 | `agent/tools/changes.py` | Agent mode changes: create, update, delete, submit, cancel |

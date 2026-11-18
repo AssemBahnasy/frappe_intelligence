@@ -19,13 +19,13 @@ fi_launcher.bundle.js                                 always loaded (app_include
 | `assistant/store.js` | Pinia store: conversation, turns, the running answer, `fi_assistant` events, history, feedback, workflow progress |
 | `assistant/page_context.js` | The page sent as context and the chip label |
 | `assistant/actions.js` | Browser actions (`set_route`, `open_form`, `print_view`, `new_doc`, `fill_form`) |
-| `assistant/exports.js` | The report card's Download, Email, Print, PDF and Open report ([exports.md](exports.md)) |
+| `assistant/exports.js` | The report card's Download, Email, Print, PDF and Open report ([exports.md](exports.md)); a compiled sheet's Download ([sheets.md](sheets.md)) |
 | `assistant/tables.js` | Sortable, paged tables in answers; number columns at the end |
 | `assistant/bidi.js` | Numbers and codes isolated inside right-to-left answers |
 | `assistant/voice.js` | Recording and transcribing voice input |
 | `assistant/uploads.js` | Uploading attached files and recordings |
 | `shared/background.js` | Waiting for a background job's result (also used by Write with AI) |
-| `assistant/components/` | `Panel`, `MessageList`, `Turn`, `Steps`, `ChartBlock`, `ExportCard`, `EmptyState`, `Composer`, `Icon`, `Card`, `ProposalCard`, `ReviewCard`, `ChangeResult`, `FileChip`, `WorkflowBar` |
+| `assistant/components/` | `Panel`, `MessageList`, `Turn`, `Steps`, `ChartBlock`, `FileCard`, `ExportCard`, `SheetCard`, `EmptyState`, `Composer`, `Icon`, `Card`, `ProposalCard`, `ReviewCard`, `ChangeResult`, `FileChip`, `WorkflowBar` |
 
 ## Server side
 

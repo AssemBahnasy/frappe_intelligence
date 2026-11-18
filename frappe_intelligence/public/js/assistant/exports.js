@@ -1,6 +1,7 @@
-// A report the agent offered (agent/tools/reports.py: export_report), through Frappe's own code:
-// Export is frappe.desk.query_report.export_query, which runs the report again and checks the
-// Export right; Print and PDF are the report page's own menu items.
+// Files the agent hands the user, through Frappe's own code. A report (agent/tools/reports.py:
+// export_report): Export is frappe.desk.query_report.export_query, which runs the report again and
+// checks the Export right; Print and PDF are the report page's own menu items. A sheet it compiled
+// (agent/tools/sheets.py: export_sheet): api/sheets.py builds it with Frappe's make_xlsx.
 
 const EXPORT_METHOD = "frappe.desk.query_report.export_query";
 const EXTENSIONS = { Excel: "xlsx", CSV: "csv" };
@@ -24,19 +25,41 @@ function log_export({ report_name, filters }, file_format) {
 	});
 }
 
-// Fetched rather than posted as a form, so the card knows when the file has arrived or why it failed.
-export async function download_report(action, file_format) {
+export function download_report(action, file_format) {
 	log_export(action, file_format);
-	const response = await fetch(`/api/method/${EXPORT_METHOD}`, {
+	return fetch_file(
+		EXPORT_METHOD,
+		export_args(action, file_format),
+		`${__(action.report_name)}.${EXTENSIONS[file_format]}`
+	);
+}
+
+// The server checks the Export rights again, logs the export and builds the file.
+export function download_sheet({ conversation, call_id, title }, file_format) {
+	return fetch_file(
+		"frappe_intelligence.api.sheets.download_sheet",
+		{ conversation, call_id, file_format },
+		`${title}.${EXTENSIONS[file_format]}`
+	);
+}
+
+// Fetched rather than posted as a form, so the card knows when the file has arrived or why it failed.
+async function fetch_file(method, args, file_name) {
+	const response = await fetch(`/api/method/${method}`, {
 		method: "POST",
 		headers: { "X-Frappe-CSRF-Token": frappe.csrf_token, Accept: "application/json" },
-		body: new URLSearchParams(export_args(action, file_format)),
+		body: new URLSearchParams(args),
 	});
 	const type = response.headers.get("Content-Type") || "";
 	if (!response.ok) throw new Error(await server_message(response));
 	// Frappe answers "No data to export" with a web page instead of a file.
 	if (type.includes("text/html")) throw new Error(__("No data to export. Try other filters."));
-	save(await response.blob(), `${__(action.report_name)}.${EXTENSIONS[file_format]}`);
+	save(await response.blob(), file_name);
+}
+
+export function row_count(count) {
+	if (count == null) return "";
+	return count === 1 ? __("1 row") : __("{0} rows", [format_number(count, null, 0)]);
 }
 
 // Frappe prepares the file in the background and emails the user a link; it shows its own message.

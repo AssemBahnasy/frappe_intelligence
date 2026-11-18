@@ -111,6 +111,9 @@ export const TOPICS = [
 			__(
 				"Ask to print a document, such as an invoice: its print view opens, where you choose the print format and letterhead."
 			),
+			__(
+				"Ask for a table no report gives, such as sales against target, as Excel: the assistant checks your Export rights first, then compiles it and shows the same rows in its answer."
+			),
 			__("Leave this page out removes the page from your question."),
 			__("AI can make mistakes. Check important figures."),
 		],

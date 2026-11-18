@@ -12,7 +12,14 @@ from dataclasses import dataclass, field
 from frappe import _
 
 from frappe_intelligence.agent import prompts
-from frappe_intelligence.agent.tools import execute, needs_approval, propose, step_label, tools_for
+from frappe_intelligence.agent.tools import (
+	ToolContext,
+	execute,
+	needs_approval,
+	propose,
+	step_label,
+	tools_for,
+)
 from frappe_intelligence.providers import ProviderError, Reply, get_provider
 from frappe_intelligence.providers.base import OnText
 
@@ -142,7 +149,7 @@ def _run_tools(conversation, reply: Reply, hooks: Hooks, result: TurnResult) -> 
 def _execute(conversation, call, label: str, hooks: Hooks, result: TurnResult, row=None) -> None:
 	"""Run a tool call and store its result; `row` is an approved proposal waiting for it."""
 	_record(result, hooks, Step(call.id, call.name, label, "running"), announce_only=True)
-	outcome = execute(call.name, call.arguments, conversation.mode)
+	outcome = execute(call.name, call.arguments, conversation.mode, ToolContext(conversation, call.id))
 	if row is not None:
 		row.content, row.is_error = outcome.content, int(outcome.is_error)
 	elif outcome.review:
