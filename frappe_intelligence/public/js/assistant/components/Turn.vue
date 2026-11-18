@@ -228,7 +228,8 @@ function copy() {
 .fi-markdown :deep(.fi-table) {
 	border: 1px solid var(--outline-gray-1);
 	border-radius: 10px;
-	overflow: hidden;
+	/* a table too wide for the panel scrolls instead of being cut off */
+	overflow-x: auto;
 	margin-bottom: 8px;
 }
 .fi-markdown :deep(table) {
@@ -264,6 +265,8 @@ function copy() {
 .fi-markdown :deep(.fi-num) {
 	text-align: end;
 	font-variant-numeric: tabular-nums;
+	/* a figure never breaks across lines; text columns wrap instead */
+	white-space: nowrap;
 }
 .fi-markdown :deep(.fi-table-pager) {
 	display: flex;

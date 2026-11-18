@@ -30,7 +30,7 @@ A greeting with the user's first name and up to two groups of starter questions 
 
 - Markdown from `frappe.markdown` (sanitised by Frappe).
 - Steps fold into one line, e.g. "Reading Customer list · Counting Customer · 2 steps"; clicking opens the list.
-- Tables are sortable by any column and show five rows a page with "1–5 of 7"; number columns line up at the end.
+- Tables are sortable by any column and show five rows a page with "1–5 of 7"; number columns line up at the end and a figure never breaks across lines (text columns wrap; a table still too wide scrolls sideways).
 - In an Arabic answer, numbers, dates and codes keep their order ([language.md](language.md)).
 - Links to desk records and reports open in the desk without reloading.
 - Charts from `show_chart` are drawn with `frappe.utils.make_chart`, which uses the theme's palette.
