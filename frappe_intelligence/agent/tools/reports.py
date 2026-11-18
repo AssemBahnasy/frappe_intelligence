@@ -29,6 +29,14 @@ def search_reports(arguments: dict) -> list[dict]:
 	return permitted[:SEARCH_LIMIT]
 
 
+def report_doctype(arguments: dict) -> str | None:
+	"""A report's rows count as its reference DocType's data, as in Frappe's report export
+	(frappe.desk.query_report.export_query)."""
+	if report_name := arguments.get("report_name"):
+		return frappe.db.get_value("Report", report_name, "ref_doctype")
+	return None
+
+
 def run_report(arguments: dict) -> dict:
 	result = run_query_report(arguments["report_name"], filters=arguments.get("filters") or {})
 	if result.get("prepared_report"):
@@ -139,6 +147,7 @@ TOOLS = [
 		},
 		run=run_report,
 		label=_lt("Running {report_name}"),
+		reads=report_doctype,
 	),
 	AgentTool(
 		name="export_report",
@@ -160,5 +169,6 @@ TOOLS = [
 		run=export_report,
 		label=_lt("Preparing the export of {report_name}"),
 		browser_action=True,
+		reads=report_doctype,
 	),
 ]

@@ -15,16 +15,27 @@ def check_export_rights(arguments: dict) -> dict:
 	unknown = [doctype for doctype in doctypes if not frappe.db.exists("DocType", doctype)]
 	if unknown:
 		raise ToolError(_("No such DocType: {0}. Search for its name first.").format(", ".join(unknown)))
-	rights = sheets.export_rights(doctypes)
+	tables = sheets.child_tables(doctypes)
+	rights = sheets.export_rights([doctype for doctype in doctypes if doctype not in tables])
 	refused = [doctype for doctype, allowed in rights.items() if not allowed]
-	return {
-		"export": rights,
-		"next": (
+	out = {"export": rights}
+	if tables:
+		out["child_tables"] = {
+			table: f"A table inside {', '.join(sorted(set(parents)))}, with no rights of its own: its rows come with the document you read it from."
+			for table, parents in tables.items()
+		}
+	if refused:
+		out["next"] = (
 			f"The user may not export {', '.join(refused)}: tell them, read nothing, and offer to show the result in your answer instead."
-			if refused
-			else "The user may export all of them: read the records, then call export_sheet."
-		),
-	}
+		)
+	elif tables:
+		out["next"] = (
+			"Read each child table through its document, and make sure that DocType was checked here "
+			"(call check_export_rights with it if not). Then read the records and call export_sheet."
+		)
+	else:
+		out["next"] = "The user may export all of them: read the records, then call export_sheet."
+	return out
 
 
 def export_sheet(arguments: dict, context: ToolContext) -> dict:
@@ -58,7 +69,9 @@ TOOLS = [
 		name="check_export_rights",
 		description=(
 			"Whether the user may export each DocType (the Export right). Call it first whenever the "
-			"user wants data you will compile as a file, with every DocType you plan to read."
+			"user wants data you will compile as a file, with every DocType you plan to list, open or "
+			"run a report on. Fields you take through a link or a child table come with that DocType. "
+			"A child table has no right of its own: name the document you read it through."
 		),
 		parameters={
 			"type": "object",

@@ -4,6 +4,7 @@ The rules every change follows. They come from Frappe's own apps (Frappe, ERPNex
 
 | Concern | Doc |
 |---|---|
+| Frappe decides: obey Frappe's rules, logic and algorithms through its own functions | [frappe-rules.md](frappe-rules.md) |
 | Code layout, separation of concerns, DRY, Python and form-script style | [code.md](code.md) |
 | UI: mockups first, Vue in the desk, icons, right to left | [ui.md](ui.md) |
 | Translations and values that vary by language | [translations.md](translations.md) |

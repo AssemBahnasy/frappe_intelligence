@@ -1,47 +1,46 @@
 """Sheets the assistant compiles: a table it built from the records it read, downloadable as Excel
-or CSV. The rows stay in the conversation, in the export_sheet call's arguments; the file is made by
-Frappe's own builders on each download. Taking one away needs the Export right on every DocType the
-conversation read (docs/panel/sheets.md)."""
+or CSV. Who may take one follows Frappe's own export rules, decided by Frappe's functions at run time
+(docs/panel/sheets.md)."""
 
 from __future__ import annotations
 
 import frappe
 from frappe import _
+from frappe.desk.form.linked_with import get_parent_doctypes
 from frappe.utils.xlsxutils import make_xlsx
+
+from frappe_intelligence.agent.tools import registry
 
 SHEET_TOOL = "export_sheet"
 FORMATS = {"Excel": "xlsx", "CSV": "csv"}
 MAX_ROWS = 5000
 MAX_COLUMNS = 50
-# Tools that read records, and the argument naming their DocType.
-DOCTYPE_READS = {"list_documents": "doctype", "get_document": "doctype", "count_documents": "doctype"}
-REPORT_READS = {"run_report", "export_report"}
 
 
 def read_doctypes(conversation, until_call_id: str | None = None) -> list[str]:
-	"""The DocTypes whose records the conversation read, in order, up to the given call: from the
-	tool calls it stores, not from what the model says."""
+	"""The DocTypes whose records the conversation read, in order, up to the given call: from the tool
+	calls it stores, each tool saying what it reads (AgentTool.reads), not from what the model says."""
+	tools = registry()
 	found: list[str] = []
 	for call in _calls(conversation):
 		if call.get("id") == until_call_id:
 			break
-		doctype = _doctype_read(call)
+		tool = tools.get(call.get("name"))
+		doctype = tool.reads(call.get("arguments") or {}) if tool and tool.reads else None
 		if doctype and doctype not in found:
 			found.append(doctype)
 	return found
 
 
-def _doctype_read(call: dict) -> str | None:
-	arguments = call.get("arguments") or {}
-	if call.get("name") in DOCTYPE_READS:
-		return arguments.get(DOCTYPE_READS[call["name"]])
-	if call.get("name") in REPORT_READS and arguments.get("report_name"):
-		return frappe.db.get_value("Report", arguments["report_name"], "ref_doctype")
-	return None
+def child_tables(doctypes: list[str]) -> dict[str, list[str]]:
+	"""The child tables among the DocTypes, each with the DocTypes it sits in. Frappe gives a child
+	table no rights of its own and checks its parent instead (frappe.permissions.has_child_permission)."""
+	return get_parent_doctypes([doctype for doctype in doctypes if frappe.is_table(doctype)])
 
 
 def export_rights(doctypes: list[str]) -> dict[str, bool]:
-	"""The user's Export right on each DocType, as the desk's Export buttons check it."""
+	"""The user's Export right on each DocType, as Frappe's report export checks it
+	(frappe.desk.query_report.export_query); Export on one's own records only is not enough."""
 	return {doctype: bool(frappe.permissions.can_export(doctype)) for doctype in doctypes}
 
 

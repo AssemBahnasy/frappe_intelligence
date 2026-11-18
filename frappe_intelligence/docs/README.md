@@ -37,6 +37,7 @@ Each folder has a README that is only an index; each file covers one concern.
 | Task | Read first |
 |---|---|
 | Any change | [guidelines/](guidelines/README.md) |
+| A permission, or any rule Frappe already decides | [guidelines/frappe-rules.md](guidelines/frappe-rules.md) |
 | A new or changed feature | its topic in [tutorial/content.md](tutorial/content.md) |
 | A new tool for the assistant | [agent/tools.md](agent/tools.md), [agent/security.md](agent/security.md) |
 | A new AI provider | [providers/adding-a-provider.md](providers/adding-a-provider.md) |

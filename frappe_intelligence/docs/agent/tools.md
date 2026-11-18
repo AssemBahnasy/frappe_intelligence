@@ -12,7 +12,7 @@
 | `search_reports` | `reports.py` | Reports whose name matches, that the user may run |
 | `run_report` | `reports.py` | Columns and the first 50 rows; says when there are more |
 | `export_report` | `reports.py` | A card under the answer: the report as Excel or CSV through Frappe's own Export (emailed when big), and Print and PDF through the report page's own; each needs its right, Export or Print ([../panel/exports.md](../panel/exports.md)) |
-| `check_export_rights` | `sheets.py` | The user's Export right on each DocType; called before compiling a sheet ([../panel/sheets.md](../panel/sheets.md)) |
+| `check_export_rights` | `sheets.py` | The user's Export right on each DocType (a child table is sent to the documents it sits in); called before compiling a sheet ([../panel/sheets.md](../panel/sheets.md)) |
 | `export_sheet` | `sheets.py` | A download card for a table the agent compiled from what the conversation read; needs Export on every DocType read ([../panel/sheets.md](../panel/sheets.md)) |
 | `search_knowledge` | `knowledge.py` | Matching AI Knowledge Pack entries |
 | `read_document` | `documents.py` | A file's text; a template match pauses for the user to check the values ([../documents/review.md](../documents/review.md)). Called by the loop for every attached file |
@@ -43,10 +43,11 @@ AgentTool(
 	preview=None,            # a change: builds the approval card; run waits for the user
 	review=False,            # True: the result's "review" card pauses the turn for the user
 	with_context=False,      # True: run(arguments, ToolContext(conversation, call_id))
+	reads=None,              # (arguments) -> the DocType whose records it returns; counted for sheets
 )
 ```
 
-Add it to the module's `TOOLS` list. `registry()` collects `TOOLS` from `frappe_data`, `reports`, `sheets`, `knowledge`, `documents`, `desk` and `changes`; add a new module there. A label can name any argument, e.g. `{file_name}`; a missing one shows as empty.
+Add it to the module's `TOOLS` list. A tool that returns records sets `reads`, so a sheet built after it checks the Export right on that DocType. `registry()` collects `TOOLS` from `frappe_data`, `reports`, `sheets`, `knowledge`, `documents`, `desk` and `changes`; add a new module there. A label can name any argument, e.g. `{file_name}`; a missing one shows as empty.
 
 ## Errors (`execute()`)
 

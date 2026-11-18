@@ -20,7 +20,7 @@ The full map of packages is in [../overview/code-map.md](../overview/code-map.md
 - **Separation of concerns.** An endpoint never holds business logic; a feature package never talks to an AI service directly (only `providers/` does).
 - **DRY: one source per fact.** Each tool, provider, setting and rule is declared once and read everywhere else. Prefer data-driven rules to repeated code.
 - **Reuse Frappe.** Use Frappe's own APIs (its MCP data tools, `rate_limit`, `frappe.enqueue`, realtime, desk components) before writing an equivalent.
-- **Permissions come from Frappe.** Every endpoint checks access on the server; data is read the way REST API v2 allows ([../agent/security.md](../agent/security.md)).
+- **Permissions come from Frappe.** Every endpoint checks access on the server; data is read the way REST API v2 allows ([../agent/security.md](../agent/security.md)). Any rule Frappe already decides is asked of Frappe ([frappe-rules.md](frappe-rules.md)).
 - **Few comments.** Short docstrings that say why; no comment that restates the code.
 
 ## Python

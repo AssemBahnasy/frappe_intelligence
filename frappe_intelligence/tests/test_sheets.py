@@ -54,6 +54,26 @@ class TestReadDoctypes(TestCase):
 		doc = conversation(READ_INVOICES, SHEET_CALL, READ_PERSON)
 		self.assertEqual(sheets.read_doctypes(doc, "c1"), ["Sales Invoice"])
 
+	def test_fields_through_links_and_child_tables_come_with_the_listed_doctype(self):
+		# As in Frappe's Report view export: the Export right on the listed DocType covers them.
+		fields = ["name", "allocated_to.full_name as assignee", "`tabHas Role`.role"]
+		doc = conversation({"name": "list_documents", "arguments": {"doctype": "ToDo", "fields": fields}})
+		self.assertEqual(sheets.read_doctypes(doc), ["ToDo"])
+
+	def test_tools_that_return_no_records_count_nothing(self):
+		doc = conversation(
+			{"name": "get_doctype_schema", "arguments": {"doctype": "Sales Invoice"}},
+			{"name": "search_doctypes", "arguments": {"query": "invoice"}},
+		)
+		self.assertEqual(sheets.read_doctypes(doc), [])
+
+	def test_each_tool_that_returns_records_says_which(self):
+		tools = registry()
+		readers = {name for name, tool in tools.items() if tool.reads}
+		self.assertEqual(
+			readers, {"list_documents", "get_document", "count_documents", "run_report", "export_report"}
+		)
+
 	def test_a_report_counts_as_its_doctype(self):
 		doc = conversation({"name": "run_report", "arguments": {"report_name": "Accounts Receivable"}})
 		with patch.object(sheets.frappe.db, "get_value", return_value="Sales Invoice"):
@@ -72,6 +92,13 @@ class TestCheckExportRights(TestCase):
 
 	def test_all_allowed(self):
 		self.assertIn("export_sheet", self.check(["Sales Person"])["next"])
+
+	def test_a_child_table_is_not_refused_but_sent_to_its_parent(self):
+		# Frappe gives a child table no rights of its own, so can_export would always refuse it.
+		out = self.check(["Has Role", "User"], **{"Has Role": False})
+		self.assertEqual(out["export"], {"User": True})
+		self.assertIn("User", out["child_tables"]["Has Role"])
+		self.assertNotIn("read nothing", out["next"])
 
 
 class TestExportSheet(TestCase):

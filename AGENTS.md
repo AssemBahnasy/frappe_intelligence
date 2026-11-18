@@ -5,6 +5,7 @@ Before changing anything in this repository, read [frappe_intelligence/docs/READ
 The rules that matter most:
 
 - **Frappe's way.** Follow the layout and style of Frappe, ERPNext, HRMS and CRM; check every mechanism in Frappe's source before relying on it.
+- **Frappe decides.** A rule Frappe already has (who may read, export, print or change, child tables, validation) is taken from Frappe's own function at run time, never re-implemented or hard-coded ([frappe_intelligence/docs/guidelines/frappe-rules.md](frappe_intelligence/docs/guidelines/frappe-rules.md)).
 - **Separation of concerns and DRY.** Endpoints in `api/` only check access and inputs; logic lives in the feature packages; only `providers/` talks to an AI service.
 - **UI needs an approved mockup** before any implementation code.
 - **One step at a time.** Build, verify (tests, migrate, build, browser), document, then stop for review.

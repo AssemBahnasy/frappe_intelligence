@@ -12,16 +12,22 @@ Download                api/sheets.py: the same check again → Frappe's make_xl
 
 ## Rules
 
-| Rule | Enforced by |
-|---|---|
-| Before reading anything, the agent checks the Export right on every DocType it plans to use, and stops if one is refused | the system prompt (`agent/prompts.py`), `check_export_rights` |
-| A sheet needs the Export right (`frappe.permissions.can_export`) on every DocType the conversation read before it, taken from the stored tool calls, not from what the model says | `sheets.read_doctypes`, `sheets.ensure_exportable`, in `export_sheet` and again at each download |
-| A report read counts as its reference DocType | `sheets.read_doctypes` |
-| A sheet is built only after records were read in the conversation | `export_sheet` |
-| 1 to 50 columns, 1 to 5,000 rows, one value per column | `sheets.validate_sheet` |
-| Only the conversation's owner (or System Manager) can download it | `api/sheets.download_sheet` (AI Conversation permissions) |
-| Each download is logged in Access Log as an Export, with the sheet's title | `api/sheets.download_sheet` |
-| Text that looks like a formula stays text | Frappe's `make_xlsx` and `get_csv_bytes` |
+Who may take a sheet is decided by Frappe's own export rules, through Frappe's functions at run time ([../guidelines/frappe-rules.md](../guidelines/frappe-rules.md)). The app adds no permission rule of its own.
+
+| Rule | Frappe's rule it follows | Enforced by |
+|---|---|---|
+| A sheet needs the Export right on every DocType the conversation read before it | Exports check `frappe.permissions.can_export` (`desk/reportview._export_query`, `desk/query_report.export_query`) | `sheets.ensure_exportable`, in `export_sheet` and again at each download |
+| What was read comes from the stored tool calls: each tool declares the DocType it returns (`AgentTool.reads`), not what the model says | | `sheets.read_doctypes` |
+| A report read counts as its reference DocType | The report export checks Export on `ref_doctype` | `reports.report_doctype` |
+| Fields taken through a link (`project.project_name`) or a child table (`sales_team.sales_person`) come with the DocType listed | The Report view exports such fields under the listed DocType's right; the query engine leaves out the ones the user may not read (`database/query.py: apply_field_permissions`) | Frappe's `get_list` |
+| A child table (Sales Team) is never checked by itself; the agent is told the documents it sits in | A child table has no rights of its own: Frappe checks its parent (`permissions.has_child_permission`); parents from `desk/form/linked_with.get_parent_doctypes` | `sheets.child_tables`, `check_export_rights` |
+| Export on one's own records only is not enough | The report export allows it neither (`can_export` without `is_owner`); a compiled row has no single owner | `sheets.export_rights` |
+| Before reading anything, the agent checks the Export rights and stops if one is refused | | the system prompt (`agent/prompts.py`), `check_export_rights` |
+| A sheet is built only after records were read in the conversation | | `export_sheet` |
+| 1 to 50 columns, 1 to 5,000 rows, one value per column | | `sheets.validate_sheet` |
+| Only the conversation's owner (or System Manager) can download it | AI Conversation permissions | `api/sheets.download_sheet` |
+| Each download is logged in Access Log as an Export, with the sheet's title | `make_access_log`, as the desk's exports do | `api/sheets.download_sheet` |
+| Text that looks like a formula stays text | `make_xlsx`, `get_csv_bytes` | Frappe |
 
 ## Where the sheet lives
 

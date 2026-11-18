@@ -39,6 +39,9 @@ class AgentTool:
 	review: bool = False
 	# `run` also takes a ToolContext: the conversation and this call's id.
 	with_context: bool = False
+	# The DocType whose records a call returns, if any: a sheet built after it needs the Export right
+	# on that DocType (agent/sheets.py).
+	reads: Callable[[dict], str | None] | None = None
 
 	@property
 	def needs_approval(self) -> bool:
